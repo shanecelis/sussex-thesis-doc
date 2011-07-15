@@ -8,9 +8,22 @@ makeLinearPiecewise[points_] :=
     Function[{x},Evaluate[Piecewise[Map[{linearFit[#1, {1,x}, x] // Chop, #[[1,1]]<= x< #[[2,1]]}&,Partition[points,2,1]], 0.1] ]
             ]
 
+makeDiffLinearPiecewise[points_] :=
+    Function[{x},Evaluate[Piecewise[Map[{diffLinearFit[#1, {1,x}, x] // Chop, #[[1,1]]<= x< #[[2,1]]}&,Partition[points,2,1]], 0] ]
+            ]
+
+
 
 linearFit[{{a_,b_},{c_,d_}}, fun_, var_] := (.1 + .9 If[a == c,d,
                                                (d - b)/(c - a) (var - a) + b ])
+
+
+(* need to know the step size in order to actually do this right. *)
+diffLinearFit[{{a_,b_},{c_,d_}}, fun_, var_] := 
+    If[a == c,
+       d,
+       (d - b)/(c - a)]
+
 
 
 Options[showExperiment] = Options[Plot];
@@ -73,11 +86,19 @@ experiment[Bo] := {
 
 experimentPoints[a_, timeShift_] := 
     Module[{tpts, fpts},
-           tpts = Map[PadRight[#,3,{{1.1,0}}]&,tailGrowth /. experiment[a]];
-           fpts = Map[PadRight[#,3,{{1.1,0}}]&,feetGrowth /. experiment[a]];
+           tpts = Map[PadRight[#,3,{#[[-1]]}]&,tailGrowth /. experiment[a]];
+           fpts = Map[PadRight[#,3,{#[[-1]]}]&,feetGrowth /. experiment[a]];
            tpts = Map[{timeShift,1} #&, tpts, {2}];
            fpts = Map[{timeShift,1}#&, fpts, {2}];
            Map[Identity,MapThread[{#1,#2}&, {tpts, fpts}]]]
+
+experimentInit[a_] := 
+    Module[{tinits, finits},
+           tinits = Map[#[[1,2]]&,(tailGrowth /. experiment[a])];
+           finits = Map[#[[1,2]]&,(feetGrowth /. experiment[a])];
+           MapThread[{#1,#2}&, {tinits, finits}]]
+           
+
 
 
 experimentFuncs[a_, timeShift_] := 

@@ -252,9 +252,11 @@ makeFrogCTRNNSolver[] :=
           ]
 
 
-morphPreParams[{tailPoints_, footPoints_}] := {
-    l -> makeLinearPiecewise[tailPoints][t] lmax,
-    fl -> makeLinearPiecewise[footPoints][t] flmax,
+morphPreParams[(*{tailPoints_, footPoints_}*)] := {
+(*    l -> makeLinearPiecewise[tailPoints][t] lmax,
+    fl -> makeLinearPiecewise[footPoints][t] flmax,*)
+    l -> lg[t] lmax,
+    fl -> fg[t] lmax,
     (*Tq4 ->  0 alwaysKick +  legCollision  +   Tmax Clip[ys[nodeCount][t]]*)
     Tq4 ->  tailTorqueCTRNN [q4[t]]+ Tmax Clip[ys[1][t]],
     Tq5 ->  footTorqueCTRNN [q5[t]]+ Tmax Clip[ys[2][t]],
@@ -271,7 +273,7 @@ makeFrogMorphSolver[] :=
            tailPoints = Partition[tvars = Array[tv,{3 * 2}],2];
            footPoints = Partition[fvars = Array[fv,{3 * 2}],2];
 
-           {peqns,pvars} =eqnsForFrog[preParams -> morphPreParams[{tailPoints, footPoints}]];
+           {peqns,pvars} =eqnsForFrog[preParams -> morphPreParams[]];
            target = {tx,ty};
            sensors = { (* 10 + 4  = 14 *)
                        Norm[{u1[#], u2[#]}]&, 
@@ -292,7 +294,9 @@ makeFrogMorphSolver[] :=
            ctrnn[[3]] = makeLinSensorInputs[ctrnn, sensors];
            {ceqns, cvars} = eqnsForCTRNN[ctrnn];
            ctrnn[[3]] = {};
-           
+           geqns = {lg'[t] == makeDiffLinearPiecewise[tailPoints][t],
+                    fg'[t] == makeDiffLinearPiecewise[footPoints][t]};
+           gvars = {lg[t], fg[t]};
 
            (*eqns = solveEqnsForDotVars[peqns~Join~ceqns /. Clip -> myClip, pvars~Join~cvars, t];*)
 
@@ -303,7 +307,7 @@ makeFrogMorphSolver[] :=
               makeEulerSolverWithConstantsC[eqns, pvars~Join~cvars, t, 0.001
                                          (*,postProcess -> postProcessFrog*)]*)
 
-           diff = makeDiffFuncWithConstantsC[peqns~Join~ceqns /. {Clip -> myClip, qpart -> Part}, pvars~Join~cvars, t, joinFlat[ctrnn,target,tvars,fvars]];
+           diff = makeDiffFuncWithConstantsC[peqns~Join~ceqns~Join~geqns /. Clip -> myClip, pvars~Join~cvars~Join~gvars, t, joinFlat[ctrnn,target,tvars,fvars]];
            (*step = makeEulerStepWithConstantsC[diff];*)
            step = makeRungeKuttaStepWithConstantsC[diff];
            makeIntegratorC[step, 0.01]
@@ -366,6 +370,14 @@ animateData[data_, OptionsPattern[preParams -> {}]] :=
            times = data[[All, 1]];
            timePerFrame = (Max[times] - Min[times])/Length[times];
            ListAnimate[Map[drawFrog[#[[2;;2 + 8 - 1]],r //. myParams, l //. myParams, fl //. myParams] /. t -> #[[1]] &, data], 1/timePerFrame]]
+
+animateMorph[data_, OptionsPattern[preParams -> {}]] := 
+    Module[{times, timePerFrame, myParams},
+           myParams = OptionValue[preParams]~Join~params;
+           times = data[[All, 1]];
+           timePerFrame = (Max[times] - Min[times])/Length[times];
+           ListAnimate[Map[drawFrog[#[[2;;2 + 8 - 1]],r //. myParams, #[[-2]] lmax //. myParams, #[[-1]] flmax //. myParams] /. t -> #[[1]] &, data], 1/timePerFrame]]
+
 
 
 showDataStats[data_] := 

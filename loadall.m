@@ -11,6 +11,7 @@ loadall[] := Module[{},
 << "ctrnn.m";
 << "frog-simulation.m";
 << "export-c-code.m";
+<< "runge-kutta.m";
 << "experiments.m";
 "loaded."]
 

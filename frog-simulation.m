@@ -42,7 +42,7 @@ drawFrog[{q1_,q2_,q3_,q4_, q5_, q6_, q7_, q8_}, r_,l_, fl_, OptionsPattern[{show
            If[OptionValue[plotRange] === None,
               range =  7(r ){{-1,1},{-1,1}},
               range = OptionValue[plotRange]];
-           Graphics[{{FaceForm[bodyColour], EdgeForm[None],Rotate[{{FaceForm[tailColour],tail},{FaceForm[footColour],foot5, foot6, foot7, foot8}}, q3, {q1, q2}] },{FaceForm[bodyColour],body}, 
+           Graphics[{{FaceForm[bodyColour], {FaceForm[bodyColour],body}, EdgeForm[None],Rotate[{{FaceForm[tailColour],tail},{FaceForm[footColour],foot5, foot6, foot7, foot8}}, q3, {q1, q2}] }, 
                      distanceLine
                     }, PlotRange -> range]]
 
@@ -63,6 +63,7 @@ params = {r -> 0.025 m,
           freq -> .5/(2 Pi (lmax/(.1g))^.5),
           g -> 9.8 m/s^2,
           Tmax -> (l/lmax)^2 .02 kg m/s^2,
+          Tfmax -> (fl/flmax)^5 .02 kg m/s^2,
           Fr -> 0.01,
 	
           Tq4 ->  tailTorque[q4[t]],
@@ -189,10 +190,10 @@ runWithCTRNN[ctrnnArg_, ctrnnState_, ICs_, tmax_, opts :OptionsPattern[{preParam
            ctrnn  = ctrnnArg;
            {peqns,pvars} =eqnsForFrog[ICs, preParams -> {
                Tq4 ->  tailTorqueCTRNN [q4[t]]+ Tmax Clip[ys[1][t]],
-               Tq5 ->  footTorqueCTRNN [q5[t]]+ Tmax Clip[ys[2][t]],
-               Tq6 ->  footTorqueCTRNN [q6[t]]+ Tmax Clip[ys[3][t]],
-               Tq7 ->  footTorqueCTRNN [q7[t]]+ Tmax Clip[ys[4][t]],
-               Tq8 ->  footTorqueCTRNN [q8[t]]+ Tmax Clip[ys[5][t]]
+               Tq5 ->  footTorqueCTRNN [q5[t]]+ Tfmax Clip[ys[2][t]],
+               Tq6 ->  footTorqueCTRNN [q6[t]]+ Tfmax Clip[ys[3][t]],
+               Tq7 ->  footTorqueCTRNN [q7[t]]+ Tfmax Clip[ys[4][t]],
+               Tq8 ->  footTorqueCTRNN [q8[t]]+ Tfmax Clip[ys[5][t]]
                                                         }];
            (*target = {1,0};*)
            sensors = { (* 10 + 4  = 14 *)
