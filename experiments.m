@@ -5,12 +5,12 @@
 
 
 makeLinearPiecewise[points_] :=
-    Function[{x},Evaluate[Piecewise[Map[{linearFit[#1, {1,x}, x] // Chop, #[[1,1]]<= x< #[[2,1]]}&,Partition[points,2,1]]] ]
+    Function[{x},Evaluate[Piecewise[Map[{linearFit[#1, {1,x}, x] // Chop, #[[1,1]]<= x< #[[2,1]]}&,Partition[points,2,1]], 0.1] ]
             ]
 
 
-linearFit[{{a_,b_},{c_,d_}}, fun_, var_] := If[a == c,d,
-                                               (d - b)/(c - a) (var - a) + b ]
+linearFit[{{a_,b_},{c_,d_}}, fun_, var_] := (.1 + .9 If[a == c,d,
+                                               (d - b)/(c - a) (var - a) + b ])
 
 
 Options[showExperiment] = Options[Plot];
@@ -78,6 +78,10 @@ experimentPoints[a_, timeShift_] :=
            tpts = Map[{timeShift,1} #&, tpts, {2}];
            fpts = Map[{timeShift,1}#&, fpts, {2}];
            Map[Identity,MapThread[{#1,#2}&, {tpts, fpts}]]]
+
+
+experimentFuncs[a_, timeShift_] := 
+    Map[makeLinearPiecewise, experimentPoints[a, timeShift],{2}]
 
 
 showAllExperiments[] := 
