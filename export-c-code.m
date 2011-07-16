@@ -258,18 +258,18 @@ morphPreParams[(*{tailPoints_, footPoints_}*)] := {
     l -> lg[t] lmax,
     fl -> fg[t] lmax,
     (*Tq4 ->  0 alwaysKick +  legCollision  +   Tmax Clip[ys[nodeCount][t]]*)
-    Tq4 ->  tailTorqueCTRNN [q4[t]]+ Tmax Clip[ys[1][t]],
-    Tq5 ->  footTorqueCTRNN [q5[t]]+ Tmax Clip[ys[2][t]],
-    Tq6 ->  footTorqueCTRNN [q6[t]]+ Tmax Clip[ys[3][t]],
-    Tq7 ->  footTorqueCTRNN [q7[t]]+ Tmax Clip[ys[4][t]],
-    Tq8 ->  footTorqueCTRNN [q8[t]]+ Tmax Clip[ys[5][t]]
+    Tq4 ->  0tailTorqueCTRNN [q4[t]]+ Tmax Clip[ys[1][t]],
+    Tq5 ->  0footTorqueCTRNN [q5[t]]+ Tmax Clip[ys[2][t]],
+    Tq6 ->  0footTorqueCTRNN [q6[t]]+ Tmax Clip[ys[3][t]],
+    Tq7 ->  0footTorqueCTRNN [q7[t]]+ Tmax Clip[ys[4][t]],
+    Tq8 ->  0footTorqueCTRNN [q8[t]]+ Tmax Clip[ys[5][t]]
                                                    };
 
 (*morphPreParams[*)
 
 
 makeFrogMorphSolver[] := 
-    Module[{peqns, pvars, ceqns, cvars, ctrnn, eqns, target, sensors, motorCoefficients, sensorCoefficients, ctrnnLength, tailPoints, footPoints,tvars,fvars, tv,fv, tx,ty, subrules, diff, step},
+    Module[{peqns, pvars, ceqns, cvars, ctrnn, eqns, target, sensors, motorCoefficients, sensorCoefficients, ctrnnLength, tailPoints, footPoints,tvars,fvars, tv,fv, tx,ty, subrules, diff, step, collision, newstep},
            tailPoints = Partition[tvars = Array[tv,{3 * 2}],2];
            footPoints = Partition[fvars = Array[fv,{3 * 2}],2];
 
@@ -307,10 +307,15 @@ makeFrogMorphSolver[] :=
               makeEulerSolverWithConstantsC[eqns, pvars~Join~cvars, t, 0.001
                                          (*,postProcess -> postProcessFrog*)]*)
 
-           diff = makeDiffFuncWithConstantsC[peqns~Join~ceqns~Join~geqns /. Clip -> myClip, pvars~Join~cvars~Join~gvars, t, joinFlat[ctrnn,target,tvars,fvars]];
+           eqns = peqns~Join~ceqns~Join~geqns /. Clip -> myClip;
+           diff = makeDiffFuncWithConstantsC[eqns, pvars~Join~cvars~Join~gvars, t, joinFlat[ctrnn,target,tvars,fvars]];
            (*step = makeEulerStepWithConstantsC[diff];*)
            step = makeRungeKuttaStepWithConstantsC[diff];
-           makeIntegratorC[step, 0.01]
+           collision = makeProcessCollisionC[Length[eqns] + 1];
+           newstep = Compile[{{s, _Real, 1}, {h, _Real, 0}, {c, _Real, 1}},
+                             collision[step[s, h, c]],
+                             Evaluate[myCompileOptions]];
+           makeIntegratorC[newstep, 0.01]
           ]
 
 
@@ -324,18 +329,35 @@ postProcessFrog[stateA_] :=
           ]
 
 
-processCollision[state_, qlimb_] := If[(state[[qlimb]] > Pi/2 && state[[qlimb + 8]] > 0) || (state[[qlimb]] < -Pi/2 && state[[qlimb + 8]] < 0),
 
-                                       Module[{s},
-                                              s = state;
-                                              s[[qlimb + 8]] = -.8 s[[qlimb + 8]];
-                                              s],
-                                       state]
+processCollision[state_, qlimb_] := 
+    If[(state[[qlimb]] > Pi/2 && state[[qlimb + 8]] > 0) 
+       || (state[[qlimb]] < -Pi/2 && state[[qlimb + 8]] < 0),
+       
+       Module[{s},
+              s = state;
+              s[[qlimb + 8]] = -.8 s[[qlimb + 8]];
+              s],
+       state]
 
 
-processCollision2[state_List, qlimb_] := If[4<= qlimb - 8 <= 8 && ((state[[qlimb - 8]] > Pi/2 && state[[qlimb ]] > 0) || (state[[qlimb - 8]] < -Pi/2 && state[[qlimb ]] < 0)),
-                                            -.8,
-                                            1]
+processCollision2[state_List, qlimb_] := 
+    If[4<= qlimb - 8 - 1<= 8 
+       && ((state[[qlimb - 8]] > Pi/2 && state[[qlimb ]] > 0) 
+           || (state[[qlimb - 8]] < -Pi/2 && state[[qlimb ]] < 0)),
+       -.8,
+       1]
+
+
+processCollision[state_] :=
+    state Map[processCollision2[state, #]&, Range[1,Length[state]]]
+
+
+
+makeProcessCollisionC[stateLength_] :=
+    Quiet[Compile[{{s, _Real, 1}},
+                  Evaluate[processCollision[Table[s[[i]], {i, stateLength}]]],
+                  Evaluate[myCompileOptions]], {Part::partd}]
 
 
 plotConfigurationData[data_] := 

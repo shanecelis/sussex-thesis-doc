@@ -105,6 +105,10 @@ experimentFuncs[a_, timeShift_] :=
     Map[makeLinearPiecewise, experimentPoints[a, timeShift],{2}]
 
 
+experimentDiffFuncs[a_, timeShift_] := 
+    Map[makeDiffLinearPiecewise, experimentPoints[a, timeShift],{2}]
+
+
 showAllExperiments[] := 
     Module[{experiments,plots},
            experiments = {0,1,Ap,Bp,Ao,Bo};

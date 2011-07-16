@@ -63,7 +63,7 @@ params = {r -> 0.025 m,
           freq -> .5/(2 Pi (lmax/(.1g))^.5),
           g -> 9.8 m/s^2,
           Tmax -> (l/lmax)^2 .02 kg m/s^2,
-          Tfmax -> (fl/flmax)^5 .02 kg m/s^2,
+          Tfmax -> (fl/flmax)^2 .02 kg m/s^2,
           Fr -> 0.01,
 	
           Tq4 ->  tailTorque[q4[t]],
