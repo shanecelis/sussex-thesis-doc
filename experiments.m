@@ -13,9 +13,12 @@ makeDiffLinearPiecewise[points_] :=
             ]
 
 
+minimumLimbLength = .1;
 
-linearFit[{{a_,b_},{c_,d_}}, fun_, var_] := (.1 + .9 If[a == c,d,
-                                               (d - b)/(c - a) (var - a) + b ])
+
+linearFit[{{a_,b_},{c_,d_}}, fun_, var_] := If[a == c,
+                                               d,
+                                               (d - b)/(c - a) (var - a) + b ]
 
 
 (* need to know the step size in order to actually do this right. *)
@@ -25,80 +28,126 @@ diffLinearFit[{{a_,b_},{c_,d_}}, fun_, var_] :=
        (d - b)/(c - a)]
 
 
-
 Options[showExperiment] = Options[Plot];
 
 
-showExperiment[phases_,timeShift_:1, opts:OptionsPattern[]] := 
-    Module[{tailGrowths, feetGrowths, tlpw,maxtime, flpw, phaseLines},
+showExperiment[phases_, timeShift_:1, opts:OptionsPattern[]] := 
+    Module[{tailGrowths, feetGrowths, tlpw,maxtime, flpw, phaseLines, visualSeparation},
            tailGrowths = tailGrowth /. phases;
            feetGrowths = feetGrowth /. phases;
-
-           tlpw = Join@@MapIndexed[Function[{a,b},Map[{timeShift, 1}(# + {b[[1]] - 1, .02})&, a]], tailGrowths];
-           flpw = Join@@MapIndexed[Function[{a,b},Map[{timeShift,1}(# + {b[[1]] - 1, 0})&, a]], feetGrowths];
+           visualSeparation = 0.01;
+           tlpw = Join@@MapIndexed[Function[{a,b},
+                                            Map[{timeShift, 1}(# + {b[[1]] - 1, .01})&, a]], 
+                                   tailGrowths];
+           flpw = Join@@MapIndexed[Function[{a,b},
+                                            Map[{timeShift, 1}(# + {b[[1]] - 1, -.01 })&, a]], 
+                                   feetGrowths];
 
            maxtime =  Transpose[tlpw][[1]] //Max;
-           phaseLines = Map[{Text["p" <> ToString[#], {(# -.5)timeShift, 0}],Line[{{# timeShift, -0.1}, {# timeShift,1.1}}]}&, Range[Length[phases]]];
+           phaseLines = Map[{Text["p" <> ToString[#], 
+                                  {(# -.5)timeShift, 0}], 
+                             Line[{{# timeShift, -0.1}, 
+                                   {# timeShift, 1.1}}]}&, 
+                            Range[Length[phases]]];
            Plot[{makeLinearPiecewise[tlpw][x], 
-                 makeLinearPiecewise[flpw][x]}, {x, 0,maxtime}, PlotStyle -> {tailColour, footColour}, AxesOrigin -> {0,-.1} ,
-                Epilog -> {Dashed, phaseLines}, opts
+                 makeLinearPiecewise[flpw][x]}, 
+                {x, 0, maxtime}, 
+                PlotStyle -> {{Thick, tailColour}, {Thick,footColour}}, 
+                (*PlotRange -> {Automatic, {-.1, 1.1}},*)
+                AxesOrigin -> {0,-.1},
+                Epilog -> {Dashed, phaseLines}, 
+                opts
                 (*PlotLegend -> {"tail", "foot"}, LegendPosition -> {1.1, -0.4}*)]
           ]
 
 
-experiment[0] := {{tailGrowth -> {{0,0}, {1,0}}, feetGrowth -> {{0,1}, {1,1}}}}
+experimentIdeal[0] := {{tailGrowth -> {{0,0}, {1,0}}, feetGrowth -> {{0,1}, {1,1}}}}
 
 
-experiment[1] := {{tailGrowth -> {{0,1}, {1,1}}, feetGrowth -> {{0,1}, {1,1}}}}
+experimentIdeal[1] := {{tailGrowth -> {{0,1}, {1,1}}, feetGrowth -> {{0,1}, {1,1}}}}
 
 
-experiment[Ap] := {
-    {tailGrowth -> {{0,1}, {1,1}}, feetGrowth -> {{0,0}, {1,0}}},
+experimentIdeal[Ap] := {
+    {tailGrowth -> {{0,1}, {1,1}}, feetGrowth -> {{0,0},   {1,0}}},
     {tailGrowth -> {{0,1}, {1,1}}, feetGrowth -> {{0,1/3}, {1,1/3}}},
     {tailGrowth -> {{0,1}, {1,1}}, feetGrowth -> {{0,2/3}, {1,2/3}}},
     {tailGrowth -> {{0,1}, {1,1}}, feetGrowth -> {{0,3/3}, {1,3/3}}}
                   }
 
 
-experiment[Bp] := {
-    {tailGrowth -> {{0,1}, {1,1}}, feetGrowth -> {{0,0}, {1,0}}},
+experimentIdeal[Bp] := {
+    {tailGrowth -> {{0,1},   {1,1}},   feetGrowth -> {{0,0},   {1,0}}},
     {tailGrowth -> {{0,2/3}, {1,2/3}}, feetGrowth -> {{0,1/3}, {1,1/3}}},
     {tailGrowth -> {{0,1/3}, {1,1/3}}, feetGrowth -> {{0,2/3}, {1,2/3}}},
-    {tailGrowth -> {{0,0}, {1,0}}, feetGrowth -> {{0,3/3}, {1,3/3}}}
+    {tailGrowth -> {{0,0},   {1,0}},   feetGrowth -> {{0,3/3}, {1,3/3}}}
                   }
 
 
-experiment[Ao] := {
+experimentIdeal[Ao] := {
     {tailGrowth -> {{0,1}, {1,1}}, feetGrowth -> {{0,0}, {1,1}}},
-    {tailGrowth -> {{0,1}, {1,1}}, feetGrowth -> {{0,0},{2/3,1}, {1,1}}},
-    {tailGrowth -> {{0,1}, {1,1}}, feetGrowth -> {{0,0},{1/3,1} {1,1}}},
+    {tailGrowth -> {{0,1}, {1,1}}, feetGrowth -> {{0,0}, {2/3,1}, {1,1}}},
+    {tailGrowth -> {{0,1}, {1,1}}, feetGrowth -> {{0,0}, {1/3,1} {1,1}}},
     {tailGrowth -> {{0,1}, {1,1}}, feetGrowth -> {{0,1}, {1,1}}}
                   }
 
 
-experiment[Bo] := {
-    {tailGrowth -> {{0,1}, {1,1}}, feetGrowth -> {{0,0}, {1,1}}},
-    {tailGrowth -> {{0,1},{2/3,1}, {1,0}}, feetGrowth -> {{0,0},{2/3,1}, {1,1}}},
-    {tailGrowth -> {{0,1}, {1/3,1},{1,0}}, feetGrowth -> {{0,0},{1/3,1} {1,1}}},
-    {tailGrowth -> {{0,0}, {1,0}}, feetGrowth -> {{0,1}, {1,1}}}
+experimentIdeal[Bo] := {
+    {tailGrowth -> {{0,1}, {1,1}},          feetGrowth -> {{0,0}, {1,1}}},
+    {tailGrowth -> {{0,1}, {2/3,1}, {1,0}}, feetGrowth -> {{0,0}, {2/3,1}, {1,1}}},
+    {tailGrowth -> {{0,1}, {1/3,1}, {1,0}}, feetGrowth -> {{0,0}, {1/3,1}, {1,1}}},
+    {tailGrowth -> {{0,0}, {1,0}},          feetGrowth -> {{0,1}, {1,1}}}
                   }
 
 
+rescaleYPoints[points_, {min_, max_}] := 
+    Module[{xs, ys},
+           {xs, ys} = Transpose[points];
+           Transpose[{xs, Map[Rescale[#, {0, 1}, {min, max}] &, ys]}]]
+
+
+rescaleYPoint[point_, {min_, max_}] := 
+    {point[[1]], Rescale[point[[2]], {0, 1}, {min, max}]}
+
+
+adjustExperiments[{minLimb_, maxLimb_}] := 
+    Module[{experiments = {0, 1, Ap, Ao, Bp, Bo}},
+           Map[Function[{exp}, 
+                      experiment[exp] := Map[rescaleYPoint[#, {minLimb, maxLimb}] &, 
+                                              experimentIdeal[exp], {4}]], 
+               experiments];]
+
+
+adjustExperiments[{minimumLimbLength, 1}]
+
+
 experimentPoints[a_, timeShift_] := 
-    Module[{tpts, fpts},
+    Module[{tpts, fpts, points},
            tpts = Map[PadRight[#,3,{#[[-1]]}]&,tailGrowth /. experiment[a]];
            fpts = Map[PadRight[#,3,{#[[-1]]}]&,feetGrowth /. experiment[a]];
            tpts = Map[{timeShift,1} #&, tpts, {2}];
            fpts = Map[{timeShift,1}#&, fpts, {2}];
-           Map[Identity,MapThread[{#1,#2}&, {tpts, fpts}]]]
+           points = Map[Identity,MapThread[{#1,#2}&, {tpts, fpts}]]]
+
+
+experimentPoints[a_, timeShift_, phase_] := 
+    Module[{points},
+           points = experimentPoints[a,timeShift];
+           Assert[phase >= 0 && phase <= Length[points]];
+           If[phase == 0,
+              {Length[points]},
+              points[[phase]]]
+          ]
+
 
 experimentInit[a_] := 
     Module[{tinits, finits},
            tinits = Map[#[[1,2]]&,(tailGrowth /. experiment[a])];
            finits = Map[#[[1,2]]&,(feetGrowth /. experiment[a])];
            MapThread[{#1,#2}&, {tinits, finits}]]
-           
 
+
+experimentInit[a_, phase_] :=
+    experimentInit[a][[phase]]
 
 
 experimentFuncs[a_, timeShift_] := 
@@ -112,6 +161,31 @@ experimentDiffFuncs[a_, timeShift_] :=
 showAllExperiments[] := 
     Module[{experiments,plots},
            experiments = {0,1,Ap,Bp,Ao,Bo};
-           plots = Map[showExperiment[experiment[#], PlotLabel -> ToString[#]]&, experiments];
-           Grid [Partition[plots,3,3, {1,1}, ""]]]
+           plots = Map[showExperiment[experiment[#], 
+                                      1, 
+                                      PlotLabel -> ToString[#], 
+                                      ImageSize -> 300]&, 
+                       experiments];
+           Grid [Partition[plots,2,2, {1,1}, ""]]]
+
+
+makeExperiments[] := 
+    Module[{experiments = {0, 1, Ap, Bp, Ao, Bo}},
+           Function[{x, tmax, phase}, 
+                    Evaluate[
+                        Piecewise[(MapIndexed[{makeExperimentPointsWhich[#, tmax, phase], 
+                                               x == First[#2]} &, experiments]), {-2}]]]]
+
+
+makeExperimentsC[] := 
+    Block[{tmax},
+          Compile[{{x, _Integer, 0}, {tmax, _Real, 0}, {phase, _Integer, 0}},
+                  Evaluate[makeExperiments[][x, tmax, phase]]]]
+
+
+makeExperimentPointsWhich[a_, timeShift_, phase_] := 
+    Piecewise[
+        Map[{Flatten[experimentPoints[a, timeShift, #]], phase == #} &, 
+            Range[0, Length[experimentPoints[a, timeShift]]]], {-1}]
+
 

@@ -53,10 +53,15 @@ makeDiffFuncWithConstantsC[eqns_, vars_, var_, constants_] :=
 
 
 (* Hard to make this work since HoldAll is used *)
-myCompileOptions = CompilationOptions -> {
-    "InlineExternalDefinitions" -> True, 
-    "InlineCompiledFunctions" -> True, 
-    "ExpressionOptimization" -> False};
+myCompileOptions = Sequence[
+    CompilationOptions -> {
+        "InlineExternalDefinitions" -> True, 
+        "InlineCompiledFunctions" -> True, 
+        "ExpressionOptimization" -> True }, 
+    "RuntimeOptions" ->  { 
+        "RuntimeErrorHandler" :> Throw[$Failed]
+                         }
+                           ];
 
 
 makeEulerStepWithConstants[stepper_] := 
@@ -117,8 +122,6 @@ makeEulerSolverWithConstants[eqns_, vars_,var_, h_, opts: OptionsPattern[]] :=
           ]
 
 
-
-
 joinFlat[x__] := Flatten[Join@@List[x]]
 
 
@@ -149,7 +152,7 @@ qpart[a_,i_] := Quiet[Part[a,i], {Part::partd}]
 
 
 myClip[x_] := myClip[x, {-1, 1}]
-    myClip[x_, {min_, max_}] := Piecewise[{{max,x > max},{min, x < min}, {x, True}}]
+myClip[x_, {min_, max_}] := Piecewise[{{max,x > max},{min, x < min}, {x, True}}]
 
 
 substituteRules[vars_, v_] := 
@@ -252,33 +255,31 @@ makeFrogCTRNNSolver[] :=
           ]
 
 
-morphPreParams[(*{tailPoints_, footPoints_}*)] := {
-(*    l -> makeLinearPiecewise[tailPoints][t] lmax,
-    fl -> makeLinearPiecewise[footPoints][t] flmax,*)
-    l -> lg[t] lmax,
-    fl -> fg[t] lmax,
-    (*Tq4 ->  0 alwaysKick +  legCollision  +   Tmax Clip[ys[nodeCount][t]]*)
-    Tq4 ->  0tailTorqueCTRNN [q4[t]]+ Tmax Clip[ys[1][t]],
-    Tq5 ->  0footTorqueCTRNN [q5[t]]+ Tmax Clip[ys[2][t]],
-    Tq6 ->  0footTorqueCTRNN [q6[t]]+ Tmax Clip[ys[3][t]],
-    Tq7 ->  0footTorqueCTRNN [q7[t]]+ Tmax Clip[ys[4][t]],
-    Tq8 ->  0footTorqueCTRNN [q8[t]]+ Tmax Clip[ys[5][t]]
-                                                   };
-
-(*morphPreParams[*)
-
-
 makeFrogMorphSolver[] := 
-    Module[{peqns, pvars, ceqns, cvars, ctrnn, eqns, target, sensors, motorCoefficients, sensorCoefficients, ctrnnLength, tailPoints, footPoints,tvars,fvars, tv,fv, tx,ty, subrules, diff, step, collision, newstep},
+    Module[{peqns, pvars, ceqns, cvars, ctrnn, eqns, target, sensors, 
+            motorCoefficients, sensorCoefficients, ctrnnLength, tailPoints, 
+            footPoints, tvars, fvars, tv, fv, tx, ty, subrules, diff, step, 
+            collision, newstep, reqns, rvars},
            tailPoints = Partition[tvars = Array[tv,{3 * 2}],2];
            footPoints = Partition[fvars = Array[fv,{3 * 2}],2];
 
-           {peqns,pvars} =eqnsForFrog[preParams -> morphPreParams[]];
+           {peqns,pvars} =eqnsForFrog[preParams -> {
+               l -> lg[t] lmax,
+               fl -> fg[t] lmax,
+               (*Tq4 ->  0 alwaysKick + legCollision + Tmax Clip[ys[nodeCount][t]]*)
+               Tq4 ->  0tailTorqueCTRNN [q4[t]]+ Tmax Clip[ys[1][t]],
+               Tq5 ->  0footTorqueCTRNN [q5[t]]+ Tmax Clip[ys[2][t]],
+               Tq6 ->  0footTorqueCTRNN [q6[t]]+ Tmax Clip[ys[3][t]],
+               Tq7 ->  0footTorqueCTRNN [q7[t]]+ Tmax Clip[ys[4][t]],
+               Tq8 ->  0footTorqueCTRNN [q8[t]]+ Tmax Clip[ys[5][t]]
+                                                   }];
            target = {tx,ty};
-           sensors = { (* 10 + 4  = 14 *)
+           sensors = { (* 14 sensors (should length of tail be included?) *)
                        Norm[{u1[#], u2[#]}]&, 
                        u3[#]&, 
-                       Norm[target - {q1[#], q2[#]} ]&, VectorAngle[target - {q1[#], q2[#]}, {-Sin[q3[#]],Cos[q3[#]]}]&,
+                       Norm[target - {q1[#], q2[#]} ]&, 
+                       VectorAngle[target - {q1[#], q2[#]}, 
+                                   {-Sin[q3[#]],Cos[q3[#]]}]&,
                        q4[#]/(Pi/2)&,
                        u4[#]&,
                        q5[#]/(Pi/2)&,
@@ -298,6 +299,9 @@ makeFrogMorphSolver[] :=
                     fg'[t] == makeDiffLinearPiecewise[footPoints][t]};
            gvars = {lg[t], fg[t]};
 
+           reqns = {r[1]'[t] == Norm[target - {q1[t], q2[t]} ]};
+           rvars = {r[1][t]};
+
            (*eqns = solveEqnsForDotVars[peqns~Join~ceqns /. Clip -> myClip, pvars~Join~cvars, t];*)
 
            (*
@@ -307,23 +311,98 @@ makeFrogMorphSolver[] :=
               makeEulerSolverWithConstantsC[eqns, pvars~Join~cvars, t, 0.001
                                          (*,postProcess -> postProcessFrog*)]*)
 
-           eqns = peqns~Join~ceqns~Join~geqns /. Clip -> myClip;
-           diff = makeDiffFuncWithConstantsC[eqns, pvars~Join~cvars~Join~gvars, t, joinFlat[ctrnn,target,tvars,fvars]];
+           eqns = peqns~Join~ceqns~Join~geqns~Join~reqns /. Clip -> myClip;
+           diff = makeDiffFuncWithConstantsC[eqns, pvars~Join~cvars~Join~gvars~Join~rvars, t, 
+                                             joinFlat[ctrnn,target,tvars,fvars]];
            (*step = makeEulerStepWithConstantsC[diff];*)
            step = makeRungeKuttaStepWithConstantsC[diff];
            collision = makeProcessCollisionC[Length[eqns] + 1];
            newstep = Compile[{{s, _Real, 1}, {h, _Real, 0}, {c, _Real, 1}},
                              collision[step[s, h, c]],
                              Evaluate[myCompileOptions]];
-           makeIntegratorC[newstep, 0.01]
+           makeIntegratorC[newstep, 0.02]
           ]
+
+makeFrogMKGSSolver[] := 
+    Module[{peqns, pvars, ceqns, cvars, ctrnn, eqns, target, sensors, 
+            motorCoefficients, sensorCoefficients, ctrnnLength, tailPoints, 
+            footPoints, tvars, fvars, tv, fv, tx, ty, subrules, diff, step, 
+            collision, newstep, reqns, rvars},
+           tailPoints = Partition[tvars = Array[tv,{3 * 2}],2];
+           footPoints = Partition[fvars = Array[fv,{3 * 2}],2];
+
+           {peqns,pvars} =eqnsForFrog[preParams -> {
+               m -> mcon,
+               kg -> kgcon,
+               s -> scon,
+               l -> lg[t] lmax,
+               fl -> fg[t] lmax,
+               (*Tq4 ->  0 alwaysKick + legCollision + Tmax Clip[ys[nodeCount][t]]*)
+               Tq4 ->  0tailTorqueCTRNN [q4[t]]+ Tmax Clip[ys[1][t]],
+               Tq5 ->  0footTorqueCTRNN [q5[t]]+ Tmax Clip[ys[2][t]],
+               Tq6 ->  0footTorqueCTRNN [q6[t]]+ Tmax Clip[ys[3][t]],
+               Tq7 ->  0footTorqueCTRNN [q7[t]]+ Tmax Clip[ys[4][t]],
+               Tq8 ->  0footTorqueCTRNN [q8[t]]+ Tmax Clip[ys[5][t]]
+                                                   }];
+           target = {tx,ty};
+           sensors = { (* 14 sensors (should length of tail be included?) *)
+                       Norm[{u1[#], u2[#]}]&, 
+                       u3[#]&, 
+                       Norm[target - {q1[#], q2[#]} ]&, 
+                       VectorAngle[target - {q1[#], q2[#]}, 
+                                   {-Sin[q3[#]],Cos[q3[#]]}]&,
+                       q4[#]/(Pi/2)&,
+                       u4[#]&,
+                       q5[#]/(Pi/2)&,
+                       u5[#]&, 
+                       q6[#]/(Pi/2)&,
+                       u6[#]&, 
+                       q7[#]/(Pi/2)&,
+                       u7[#]&, 
+                       q8[#]/(Pi/2)&,
+                       u8[#]&
+                     };
+           ctrnn  = makeSymbolicCTRNNLinSensor[nodeCount,Length[sensors]];
+           ctrnn[[3]] = makeLinSensorInputs[ctrnn, sensors];
+           {ceqns, cvars} = eqnsForCTRNN[ctrnn];
+           ctrnn[[3]] = {};
+           geqns = {lg'[t] == makeDiffLinearPiecewise[tailPoints][t],
+                    fg'[t] == makeDiffLinearPiecewise[footPoints][t]};
+           gvars = {lg[t], fg[t]};
+
+           reqns = {r[1]'[t] == Norm[target - {q1[t], q2[t]} ]};
+           rvars = {r[1][t]};
+
+           (*eqns = solveEqnsForDotVars[peqns~Join~ceqns /. Clip -> myClip, pvars~Join~cvars, t];*)
+
+           (*
+           subrules = substituteRules[joinFlat[ctrnn,target,tvars,fvars], c];
+           eqns = peqns~Join~ceqns /.  subrules /. Clip -> myClip;
+
+              makeEulerSolverWithConstantsC[eqns, pvars~Join~cvars, t, 0.001
+                                         (*,postProcess -> postProcessFrog*)]*)
+
+           eqns = peqns~Join~ceqns~Join~geqns~Join~reqns /. Clip -> myClip;
+           diff = makeDiffFuncWithConstantsC[eqns, pvars~Join~cvars~Join~gvars~Join~rvars, t, 
+                                             joinFlat[ctrnn,target,tvars,fvars, {mcon, kgcon, scon}]];
+           (*step = makeEulerStepWithConstantsC[diff];*)
+           step = makeRungeKuttaStepWithConstantsC[diff];
+           collision = makeProcessCollisionC[Length[eqns] + 1];
+           newstep = Compile[{{s, _Real, 1}, {h, _Real, 0}, {c, _Real, 1}},
+                             collision[step[s, h, c]],
+                             Evaluate[myCompileOptions]];
+           makeIntegratorC[newstep, 0.02]
+          ]
+
 
 
 postProcessFrog[stateA_] := 
     Module[{fixNeurons, state},
            state = stateA;
 
-           fixNeurons = mapOnlyIndices[myClip[#, {-2,2}]&, state, Range[pstateCount + 2, pstateCount + 2 + nodeCount - 1]];
+           fixNeurons = mapOnlyIndices[myClip[#, {-2,2}]&, state, 
+                                       Range[pstateCount + 2, 
+                                             pstateCount + 2 + nodeCount - 1]];
            (*fixNeurons  = state;*)
            state Map[processCollision2[fixNeurons, #]&, Range[0,pstateCount + nodeCount]]
           ]
@@ -393,24 +472,64 @@ animateData[data_, OptionsPattern[preParams -> {}]] :=
            timePerFrame = (Max[times] - Min[times])/Length[times];
            ListAnimate[Map[drawFrog[#[[2;;2 + 8 - 1]],r //. myParams, l //. myParams, fl //. myParams] /. t -> #[[1]] &, data], 1/timePerFrame]]
 
+
 animateMorph[data_, OptionsPattern[preParams -> {}]] := 
     Module[{times, timePerFrame, myParams},
            myParams = OptionValue[preParams]~Join~params;
            times = data[[All, 1]];
            timePerFrame = (Max[times] - Min[times])/Length[times];
-           ListAnimate[Map[drawFrog[#[[2;;2 + 8 - 1]],r //. myParams, #[[-2]] lmax //. myParams, #[[-1]] flmax //. myParams] /. t -> #[[1]] &, data], 1/timePerFrame]]
-
+           ListAnimate[Map[drawFrog[#[[2;;2 + 8 - 1]],r //. myParams, #[[1 + pstateCount + nodeCount + 1]] lmax //. myParams, #[[1 + pstateCount + nodeCount + 2]] flmax //. myParams] /. t -> #[[1]] &, data], 1/timePerFrame, AnimationRepetitions -> 1]]
 
 
 showDataStats[data_] := 
-    Module[{max, min, header},
-           header = {t,q1,q2,q3,q4,q5,q6,q7,q8,
+    Module[{max, min, mean, header},
+           
+           header = PadRight[{t,q1,q2,q3,q4,q5,q6,q7,q8,
                      u1,u2,u3,u4,u5,u6,u7,u8,
-                     ys1,ys2,ys3,ys4,ys5};
+                     ys1,ys2,ys3,ys4,ys5}, Dimensions[data][[2]], x];
            max = Map[Max, Transpose[data]];
            min = Map[Min, Transpose[data]];
-           {header, min, max} // TableForm]
+           mean = Map[Mean, Transpose[data]];
+           {header, min, mean, max} // TableForm]
 
+
+computeDistance[data_, target_] :=
+    Map[Norm[{#[[2]], #[[3]]} - target]&, data]
+
+
+myArray[var_, len_] := 
+    Table[var~qpart~i, {i, len}]
+
+targetCount = 2;
+limbLengthsCount = 2;
+growthCount = 2 * 3 * 2;
+recordCount = 1;
+stateCount =   1 + pstateCount + nodeCount  + limbLengthsCount +  recordCount;
+constantsCount = len + targetCount + growthCount ;
+
+makeGeneToCTRNNSolverC[frogSolver_] := 
+    Block[{state, constants, time},
+    Module[{carr = myArray[constants, constantsCount],
+            ctrnn},
+           ctrnn = geneToCTRNNLinSensor[carr[[1;;len]]];
+           With[{solver = frogSolver,
+                 carr2 = joinFlat[ctrnn,carr[[len + 1;;-1]]]
+                },
+
+                Compile[{{state, _Real, 1}, 
+                         {time, _Real, 0},
+                         {constants, _Real, 1}}, 
+                        solver[state, time, carr2],
+                        Evaluate[myCompileOptions]]]]]
+
+
+exportToC[compiledFun_, filenamePrefix_] := 
+    {CCodeGenerate[compiledFun, filenamePrefix, 
+                   "CodeTarget" -> "WolframRTL"],
+     CCodeGenerate[compiledFun, filenamePrefix, 
+                   "CodeTarget" -> "WolframRTLHeader"]}
+
+     
 
 (* ::Title:: *)
 (*Export to C Frog*)
