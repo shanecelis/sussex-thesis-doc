@@ -3,24 +3,36 @@
 CPPFLAGS = -g -I/Applications/Mathematica.app/SystemFiles/IncludeFiles/C
 
 #LDFLAGS = -L/Applications/Mathematica.app/SystemFiles/Libraries/MacOSX-x86-64 -lWolframRTL_Static_Minimal
-LDFLAGS = -L/Applications/Mathematica.app/SystemFiles/Libraries/MacOSX-x86-64 -lWolframRTL -L. 
+LDFLAGS = -L/Applications/Mathematica.app/SystemFiles/Libraries/MacOSX-x86-64 -lWolframRTL -L. -lalps -lstdc++
 #-lrunSimulation
 
-# -lalps -lstdc++
+# 
 #LDFLAGS = -L/Applications/Mathematica.app/SystemFiles/Libraries/MacOSX-x86 -lWolframRTL -L. -ltadpoleSolver
 
 
-OBJS = bga.o ctrnn.o experiments.o export-c-code.o frog-simulation.o loadall.o tadpole_eqns4.o tadpole_eqns4_dotsolved.o runge-kutta.o runSimulation.o
+OBJS = bga.mo ctrnn.mo experiments.mo export-c-code.mo frog-simulation.mo loadall.mo tadpole_eqns4.mo tadpole_eqns4_dotsolved.mo runge-kutta.mo runSimulation.o frog-ga.mo
 
-all: $(OBJS) run-simulation
+all: $(OBJS) run-sim-main alps_frog
 
-%.o : %.m
+%.mo : %.m
 	mathload $< > $@
+
 
 clean:
 	$(RM) $(OBJS)
 
-run-simulation: run-simulation.o runSimulation.o
+run-simulation.o: run-simulation.c run-simulation.h
 
-run: run-simulation
-	DYLD_LIBRARY_PATH=/Applications/Mathematica.app/SystemFiles/Libraries/MacOSX-x86-64:. ./run-simulation
+run-sim-main: run-sim-main.o run-simulation.o runSimulation.o experiments.o
+
+alps_frog: alps_frog.o run-simulation.o runSimulation.o experiments.o
+
+run: run-sim-main
+	DYLD_LIBRARY_PATH=/Applications/Mathematica.app/SystemFiles/Libraries/MacOSX-x86-64:. ./run-sim-main
+
+
+debug: run-sim-main
+	DYLD_LIBRARY_PATH=/Applications/Mathematica.app/SystemFiles/Libraries/MacOSX-x86-64:. gdb --args ./run-sim-main
+
+runalps: alps_frog
+	DYLD_LIBRARY_PATH=/Applications/Mathematica.app/SystemFiles/Libraries/MacOSX-x86-64:. ./alps_frog

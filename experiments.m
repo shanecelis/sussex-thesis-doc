@@ -112,9 +112,9 @@ rescaleYPoint[point_, {min_, max_}] :=
 adjustExperiments[{minLimb_, maxLimb_}] := 
     Module[{experiments = {0, 1, Ap, Ao, Bp, Bo}},
            Map[Function[{exp}, 
-                      experiment[exp] := Map[rescaleYPoint[#, {minLimb, maxLimb}] &, 
+                      experiment[exp] = Map[rescaleYPoint[#, {minLimb, maxLimb}] &, 
                                               experimentIdeal[exp], {4}]], 
-               experiments];]
+               experiments]]
 
 
 adjustExperiments[{minimumLimbLength, 1}]
@@ -178,7 +178,7 @@ makeExperiments[] :=
 
 
 makeExperimentsC[] := 
-    Block[{tmax},
+    Block[{tmax, phase, x},
           Compile[{{x, _Integer, 0}, {tmax, _Real, 0}, {phase, _Integer, 0}},
                   Evaluate[makeExperiments[][x, tmax, phase]]]]
 

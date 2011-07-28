@@ -59,7 +59,9 @@ myCompileOptions = Sequence[
         "InlineCompiledFunctions" -> True, 
         "ExpressionOptimization" -> True }, 
     "RuntimeOptions" ->  { 
-        "RuntimeErrorHandler" :> Throw[$Failed]
+        "RuntimeErrorHandler" :> Throw[$Failed],
+        "CatchMachineOverflow" -> True,
+        "CatchMachineUnderflow" -> True
                          }
                            ];
 
@@ -500,12 +502,13 @@ computeDistance[data_, target_] :=
 myArray[var_, len_] := 
     Table[var~qpart~i, {i, len}]
 
-targetCount = 2;
+targetCount      = 2;
 limbLengthsCount = 2;
-growthCount = 2 * 3 * 2;
-recordCount = 1;
-stateCount =   1 + pstateCount + nodeCount  + limbLengthsCount +  recordCount;
-constantsCount = len + targetCount + growthCount ;
+growthCount      = 2 * 3 * 2;
+pointsCount      = growthCount;
+recordCount      = 1;
+stateCount       = 1 + pstateCount + nodeCount  + limbLengthsCount + recordCount;
+constantsCount   = len + targetCount + growthCount ;
 
 makeGeneToCTRNNSolverC[frogSolver_] := 
     Block[{state, constants, time},
@@ -545,3 +548,9 @@ exportToC[compiledFun_, filenamePrefix_] :=
 
 (* ::Input:: *)
 (*cheader=CCodeGenerate[frogSolver,"frogSolver", "CodeTarget" -> "WolframRTLHeader"]*)
+
+
+valuesToCCode[name_, values_] := 
+    StringJoin[MapIndexed[
+        ToString[StringForm["``[``] = ``; ", name, #2[[1]] - 1, CForm[#1 // N]]]&,
+        Flatten[values]]]
