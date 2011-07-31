@@ -59,7 +59,7 @@ myCompileOptions = Sequence[
         "InlineCompiledFunctions" -> True, 
         "ExpressionOptimization" -> True }, 
     "RuntimeOptions" ->  { 
-        "RuntimeErrorHandler" :> Throw[$Failed],
+        (*"RuntimeErrorHandler" :> Throw[$Failed],*)
         "CatchMachineOverflow" -> True,
         "CatchMachineUnderflow" -> True
                          }
@@ -131,6 +131,11 @@ NVectorQ[x_] := VectorQ[x,NumericQ]
 
 
 runSolver[solver_, init_, deltat_, c_, maxt_] :=NestList[solver[#, deltat, c]&, init, Ceiling[maxt/deltat]]
+
+
+
+runSolver2[solver_, init_, maxt_, c_, deltat_] :=NestList[solver[#, deltat, c]&, init, Ceiling[maxt/deltat]]
+
 
 
 Options[makeEulerSolverWithConstantsC] = Options[makeEulerSolverWithConstants] = {postProcess -> Identity, externalFunctions -> {}};
@@ -256,6 +261,7 @@ makeFrogCTRNNSolver[] :=
            makeIntegratorC[step, 0.01]
           ]
 
+RK4StepSize = 0.02;
 
 makeFrogMorphSolver[] := 
     Module[{peqns, pvars, ceqns, cvars, ctrnn, eqns, target, sensors, 
@@ -322,48 +328,51 @@ makeFrogMorphSolver[] :=
            newstep = Compile[{{s, _Real, 1}, {h, _Real, 0}, {c, _Real, 1}},
                              collision[step[s, h, c]],
                              Evaluate[myCompileOptions]];
-           makeIntegratorC[newstep, 0.02]
+           (* was stable with 0.02 *)
+           makeIntegratorC[newstep, RK4StepSize]
           ]
 
 makeFrogMKGSSolver[] := 
     Module[{peqns, pvars, ceqns, cvars, ctrnn, eqns, target, sensors, 
             motorCoefficients, sensorCoefficients, ctrnnLength, tailPoints, 
             footPoints, tvars, fvars, tv, fv, tx, ty, subrules, diff, step, 
-            collision, newstep, reqns, rvars},
+            collision, newstep, reqns, rvars, myPreParams},
            tailPoints = Partition[tvars = Array[tv,{3 * 2}],2];
            footPoints = Partition[fvars = Array[fv,{3 * 2}],2];
 
-           {peqns,pvars} =eqnsForFrog[preParams -> {
-               m -> mcon,
-               kg -> kgcon,
-               s -> scon,
-               l -> lg[t] lmax,
-               fl -> fg[t] lmax,
+           myPreParams = {
+               m     -> mcon,
+               kg    -> kgcon,
+               s     -> scon,
+               l     -> lg[t] lmax,
+               fl    -> fg[t] flmax,
                (*Tq4 ->  0 alwaysKick + legCollision + Tmax Clip[ys[nodeCount][t]]*)
-               Tq4 ->  0tailTorqueCTRNN [q4[t]]+ Tmax Clip[ys[1][t]],
-               Tq5 ->  0footTorqueCTRNN [q5[t]]+ Tmax Clip[ys[2][t]],
-               Tq6 ->  0footTorqueCTRNN [q6[t]]+ Tmax Clip[ys[3][t]],
-               Tq7 ->  0footTorqueCTRNN [q7[t]]+ Tmax Clip[ys[4][t]],
-               Tq8 ->  0footTorqueCTRNN [q8[t]]+ Tmax Clip[ys[5][t]]
-                                                   }];
+               Tq4   -> Tmax    Clip[ys[1][t]],
+               Tq5   -> 0 Tfmax Clip[ys[2][t]],
+               Tq6   -> 0 Tfmax Clip[ys[3][t]],
+               Tq7   -> 0 Tfmax Clip[ys[4][t]],
+               Tq8   -> 0 Tfmax Clip[ys[5][t]]
+                         };
+           {peqns,pvars} =eqnsForFrog[preParams -> myPreParams];
            target = {tx,ty};
            sensors = { (* 14 sensors (should length of tail be included?) *)
-                       Norm[{u1[#], u2[#]}]&, 
-                       u3[#]&, 
-                       Norm[target - {q1[#], q2[#]} ]&, 
+                       Norm[{u1[#], u2[#]}]/(m/s)&, 
+                       u3[#]/(1/s)&, 
+                       Norm[target - {q1[#], q2[#]} ]/m&, 
                        VectorAngle[target - {q1[#], q2[#]}, 
                                    {-Sin[q3[#]],Cos[q3[#]]}]&,
                        q4[#]/(Pi/2)&,
-                       u4[#]&,
+                       u4[#]/(1/s)&,
                        q5[#]/(Pi/2)&,
-                       u5[#]&, 
+                       u5[#]/(1/s)&, 
                        q6[#]/(Pi/2)&,
-                       u6[#]&, 
+                       u6[#]/(1/s)&, 
                        q7[#]/(Pi/2)&,
-                       u7[#]&, 
+                       u7[#]/(1/s)&, 
                        q8[#]/(Pi/2)&,
-                       u8[#]&
-                     };
+                       u8[#]/(1/s)&
+                     } //. myPreParams;
+           (*{m -> 1, s -> 1}*);
            ctrnn  = makeSymbolicCTRNNLinSensor[nodeCount,Length[sensors]];
            ctrnn[[3]] = makeLinSensorInputs[ctrnn, sensors];
            {ceqns, cvars} = eqnsForCTRNN[ctrnn];
@@ -385,15 +394,19 @@ makeFrogMKGSSolver[] :=
                                          (*,postProcess -> postProcessFrog*)]*)
 
            eqns = peqns~Join~ceqns~Join~geqns~Join~reqns /. Clip -> myClip;
-           diff = makeDiffFuncWithConstantsC[eqns, pvars~Join~cvars~Join~gvars~Join~rvars, t, 
-                                             joinFlat[ctrnn,target,tvars,fvars, {mcon, kgcon, scon}]];
+           diff = makeDiffFuncWithConstantsC[eqns, 
+                                             pvars~Join~cvars~Join~gvars~Join~rvars, 
+                                             t, 
+                                             joinFlat[ctrnn,target,tvars,fvars, 
+                                                      {mcon, kgcon, scon}]];
            (*step = makeEulerStepWithConstantsC[diff];*)
            step = makeRungeKuttaStepWithConstantsC[diff];
            collision = makeProcessCollisionC[Length[eqns] + 1];
            newstep = Compile[{{s, _Real, 1}, {h, _Real, 0}, {c, _Real, 1}},
                              collision[step[s, h, c]],
                              Evaluate[myCompileOptions]];
-           makeIntegratorC[newstep, 0.02]
+           makeIntegratorC[newstep, RK4StepSize]
+           (*diff*)
           ]
 
 

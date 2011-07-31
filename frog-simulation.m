@@ -51,26 +51,26 @@ drawFrog[{q1_,q2_,q3_,q4_, q5_, q6_, q7_, q8_}, r_,l_, fl_, OptionsPattern[{show
 params = {r       -> 0.025 m, 
           l       -> lmax,
           lmax    -> 0.06 m,
-          Ia      -> ma r^2/2 kg m^2, (* where did I get these formulas? *)
-          Ib      -> mb l^2/3 kg m^2,
+          Ia      -> ma (r^2)/2, (* where did I get these formulas? *)
+          Ib      -> mb (l^2)/3,
           ma      -> 0.0195 kg,
-          mb      ->   0.1 ma,
+          mb      -> 0.1 ma,
           d       -> 2 r,
           Cdcirc  -> 0.3,
           Cdplate -> 1.98,
           rho     -> 999.1026 kg/m^3 (d),
           g       -> 9.8 m/s^2,
-          Tmax    -> (l/lmax)^2 .02 kg m/s^2, (* this (l/lmax)^2 is dubious *)
-          Tfmax   -> (fl/flmax)^2 .02 kg m/s^2,
+          Tmax    -> (0(l/lmax)^2 + 1) .001 kg (m/s)^2, (* this (l/lmax)^2 is dubious *)
+          Tfmax   -> (0(fl/flmax)^2 + 1) .001 kg (m/s)^2,
           
 (*          Fr    -> 0.01,
           P       -> 1/freq,
           freq    -> .5/(2 Pi (lmax/(.1g))^.5),
 	
-          Tq4     ->  tailTorque[q4[t]],
  *)
+          Tq4     ->  tailTorque[q4[t]],
 
-          Ic      -> mc fl^2/3 kg m^2,
+          Ic      -> mc (fl^2)/3,
           mc      -> mb,
           fl      -> flmax,
           flmax   -> lmax,
@@ -79,9 +79,11 @@ params = {r       -> 0.025 m,
           Tq7     -> footTorque[q7[t]], 
           Tq8     -> footTorque[q8[t]],
 
+          m -> 1, kg -> 1, s -> 1
           (*m     -> 10, kg -> 1, s -> 1*)
           (*m     -> 32, kg -> 20, s -> 1*)
-          m       -> 100, kg -> 100, s -> 1
+          (*m       -> 100, kg -> 100, s -> 1*)
+
 
          };
 

@@ -469,12 +469,11 @@
                         u2[t] + d*Cos[q4[t]]*u3[t] + l*(u3[t] + u4[t]))]*
                     (2.*Cos[q3[t] + q4[t]]*u1[t] + 2.*Sin[q3[t] + q4[t]]*
                       u2[t] + d*Cos[q4[t]]*u3[t] + l*(u3[t] + u4[t]))) - 
-                 1.*Ib*(-1.570796*Cdcirc*d*rho*u3[t] - 0.0625*Cdplate*rho*
-                    Abs[l*(2.*Cos[q3[t] + q4[t]]*u1[t] + 2.*Sin[q3[t] + 
-                          q4[t]]*u2[t] + d*Cos[q4[t]]*u3[t] + l*(u3[t] + 
-                         u4[t]))]*(2.*d*Cos[q3[t]]*u1[t] + 2.*l*Cos[q3[t] + 
-                        q4[t]]*u1[t] + 2.*d*Sin[q3[t]]*u2[t] + 2.*l*
-                      Sin[q3[t] + q4[t]]*u2[t] + d^2*u3[t] + 2.*d*l*
+                 1.*Ib*(-0.0625*Cdplate*rho*Abs[l*(2.*Cos[q3[t] + q4[t]]*
+                        u1[t] + 2.*Sin[q3[t] + q4[t]]*u2[t] + d*Cos[q4[t]]*
+                        u3[t] + l*(u3[t] + u4[t]))]*(2.*d*Cos[q3[t]]*u1[t] + 
+                     2.*l*Cos[q3[t] + q4[t]]*u1[t] + 2.*d*Sin[q3[t]]*u2[t] + 
+                     2.*l*Sin[q3[t] + q4[t]]*u2[t] + d^2*u3[t] + 2.*d*l*
                       Cos[q4[t]]*u3[t] + d*l*Cos[q4[t]]*u4[t] + l^2*(u3[t] + 
                        u4[t])) + 0.0625*Cdplate*rho*Abs[fl*(2.*Sin[2.356194 + 
                           q3[t] + q5[t]]*u1[t] + 2.*(Cos[q3[t]]*Sin[
@@ -1523,12 +1522,11 @@
                          u2[t] + d*Cos[q4[t]]*u3[t] + l*(u3[t] + u4[t]))]*
                      (2.*Cos[q3[t] + q4[t]]*u1[t] + 2.*Sin[q3[t] + q4[t]]*
                        u2[t] + d*Cos[q4[t]]*u3[t] + l*(u3[t] + u4[t]))) - 
-                  1.*Ib*(-1.570796*Cdcirc*d*rho*u3[t] - 0.0625*Cdplate*rho*
-                     Abs[l*(2.*Cos[q3[t] + q4[t]]*u1[t] + 2.*Sin[q3[t] + 
-                          q4[t]]*u2[t] + d*Cos[q4[t]]*u3[t] + l*(u3[t] + 
-                          u4[t]))]*(2.*d*Cos[q3[t]]*u1[t] + 2.*l*Cos[q3[t] + 
-                         q4[t]]*u1[t] + 2.*d*Sin[q3[t]]*u2[t] + 2.*l*
-                       Sin[q3[t] + q4[t]]*u2[t] + d^2*u3[t] + 2.*d*l*
+                  1.*Ib*(-0.0625*Cdplate*rho*Abs[l*(2.*Cos[q3[t] + q4[t]]*
+                         u1[t] + 2.*Sin[q3[t] + q4[t]]*u2[t] + d*Cos[q4[t]]*
+                         u3[t] + l*(u3[t] + u4[t]))]*(2.*d*Cos[q3[t]]*u1[t] + 
+                      2.*l*Cos[q3[t] + q4[t]]*u1[t] + 2.*d*Sin[q3[t]]*u2[t] + 
+                      2.*l*Sin[q3[t] + q4[t]]*u2[t] + d^2*u3[t] + 2.*d*l*
                        Cos[q4[t]]*u3[t] + d*l*Cos[q4[t]]*u4[t] + 
                       l^2*(u3[t] + u4[t])) + 0.0625*Cdplate*rho*
                      Abs[fl*(2.*Sin[2.356194 + q3[t] + q5[t]]*u1[t] + 
@@ -2839,12 +2837,11 @@
                          u2[t] + d*Cos[q4[t]]*u3[t] + l*(u3[t] + u4[t]))]*
                      (2.*Cos[q3[t] + q4[t]]*u1[t] + 2.*Sin[q3[t] + q4[t]]*
                        u2[t] + d*Cos[q4[t]]*u3[t] + l*(u3[t] + u4[t]))) - 
-                  1.*Ib*(-1.570796*Cdcirc*d*rho*u3[t] - 0.0625*Cdplate*rho*
-                     Abs[l*(2.*Cos[q3[t] + q4[t]]*u1[t] + 2.*Sin[q3[t] + 
-                          q4[t]]*u2[t] + d*Cos[q4[t]]*u3[t] + l*(u3[t] + 
-                          u4[t]))]*(2.*d*Cos[q3[t]]*u1[t] + 2.*l*Cos[q3[t] + 
-                         q4[t]]*u1[t] + 2.*d*Sin[q3[t]]*u2[t] + 2.*l*
-                       Sin[q3[t] + q4[t]]*u2[t] + d^2*u3[t] + 2.*d*l*
+                  1.*Ib*(-0.0625*Cdplate*rho*Abs[l*(2.*Cos[q3[t] + q4[t]]*
+                         u1[t] + 2.*Sin[q3[t] + q4[t]]*u2[t] + d*Cos[q4[t]]*
+                         u3[t] + l*(u3[t] + u4[t]))]*(2.*d*Cos[q3[t]]*u1[t] + 
+                      2.*l*Cos[q3[t] + q4[t]]*u1[t] + 2.*d*Sin[q3[t]]*u2[t] + 
+                      2.*l*Sin[q3[t] + q4[t]]*u2[t] + d^2*u3[t] + 2.*d*l*
                        Cos[q4[t]]*u3[t] + d*l*Cos[q4[t]]*u4[t] + 
                       l^2*(u3[t] + u4[t])) + 0.0625*Cdplate*rho*
                      Abs[fl*(2.*Sin[2.356194 + q3[t] + q5[t]]*u1[t] + 
@@ -4107,12 +4104,11 @@
                          u2[t] + d*Cos[q4[t]]*u3[t] + l*(u3[t] + u4[t]))]*
                      (2.*Cos[q3[t] + q4[t]]*u1[t] + 2.*Sin[q3[t] + q4[t]]*
                        u2[t] + d*Cos[q4[t]]*u3[t] + l*(u3[t] + u4[t]))) - 
-                  1.*Ib*(-1.570796*Cdcirc*d*rho*u3[t] - 0.0625*Cdplate*rho*
-                     Abs[l*(2.*Cos[q3[t] + q4[t]]*u1[t] + 2.*Sin[q3[t] + 
-                          q4[t]]*u2[t] + d*Cos[q4[t]]*u3[t] + l*(u3[t] + 
-                          u4[t]))]*(2.*d*Cos[q3[t]]*u1[t] + 2.*l*Cos[q3[t] + 
-                         q4[t]]*u1[t] + 2.*d*Sin[q3[t]]*u2[t] + 2.*l*
-                       Sin[q3[t] + q4[t]]*u2[t] + d^2*u3[t] + 2.*d*l*
+                  1.*Ib*(-0.0625*Cdplate*rho*Abs[l*(2.*Cos[q3[t] + q4[t]]*
+                         u1[t] + 2.*Sin[q3[t] + q4[t]]*u2[t] + d*Cos[q4[t]]*
+                         u3[t] + l*(u3[t] + u4[t]))]*(2.*d*Cos[q3[t]]*u1[t] + 
+                      2.*l*Cos[q3[t] + q4[t]]*u1[t] + 2.*d*Sin[q3[t]]*u2[t] + 
+                      2.*l*Sin[q3[t] + q4[t]]*u2[t] + d^2*u3[t] + 2.*d*l*
                        Cos[q4[t]]*u3[t] + d*l*Cos[q4[t]]*u4[t] + 
                       l^2*(u3[t] + u4[t])) + 0.0625*Cdplate*rho*
                      Abs[fl*(2.*Sin[2.356194 + q3[t] + q5[t]]*u1[t] + 
@@ -5382,12 +5378,11 @@
                          u2[t] + d*Cos[q4[t]]*u3[t] + l*(u3[t] + u4[t]))]*
                      (2.*Cos[q3[t] + q4[t]]*u1[t] + 2.*Sin[q3[t] + q4[t]]*
                        u2[t] + d*Cos[q4[t]]*u3[t] + l*(u3[t] + u4[t]))) - 
-                  1.*Ib*(-1.570796*Cdcirc*d*rho*u3[t] - 0.0625*Cdplate*rho*
-                     Abs[l*(2.*Cos[q3[t] + q4[t]]*u1[t] + 2.*Sin[q3[t] + 
-                          q4[t]]*u2[t] + d*Cos[q4[t]]*u3[t] + l*(u3[t] + 
-                          u4[t]))]*(2.*d*Cos[q3[t]]*u1[t] + 2.*l*Cos[q3[t] + 
-                         q4[t]]*u1[t] + 2.*d*Sin[q3[t]]*u2[t] + 2.*l*
-                       Sin[q3[t] + q4[t]]*u2[t] + d^2*u3[t] + 2.*d*l*
+                  1.*Ib*(-0.0625*Cdplate*rho*Abs[l*(2.*Cos[q3[t] + q4[t]]*
+                         u1[t] + 2.*Sin[q3[t] + q4[t]]*u2[t] + d*Cos[q4[t]]*
+                         u3[t] + l*(u3[t] + u4[t]))]*(2.*d*Cos[q3[t]]*u1[t] + 
+                      2.*l*Cos[q3[t] + q4[t]]*u1[t] + 2.*d*Sin[q3[t]]*u2[t] + 
+                      2.*l*Sin[q3[t] + q4[t]]*u2[t] + d^2*u3[t] + 2.*d*l*
                        Cos[q4[t]]*u3[t] + d*l*Cos[q4[t]]*u4[t] + 
                       l^2*(u3[t] + u4[t])) + 0.0625*Cdplate*rho*
                      Abs[fl*(2.*Sin[2.356194 + q3[t] + q5[t]]*u1[t] + 
@@ -6657,12 +6652,11 @@
                          u2[t] + d*Cos[q4[t]]*u3[t] + l*(u3[t] + u4[t]))]*
                      (2.*Cos[q3[t] + q4[t]]*u1[t] + 2.*Sin[q3[t] + q4[t]]*
                        u2[t] + d*Cos[q4[t]]*u3[t] + l*(u3[t] + u4[t]))) - 
-                  1.*Ib*(-1.570796*Cdcirc*d*rho*u3[t] - 0.0625*Cdplate*rho*
-                     Abs[l*(2.*Cos[q3[t] + q4[t]]*u1[t] + 2.*Sin[q3[t] + 
-                          q4[t]]*u2[t] + d*Cos[q4[t]]*u3[t] + l*(u3[t] + 
-                          u4[t]))]*(2.*d*Cos[q3[t]]*u1[t] + 2.*l*Cos[q3[t] + 
-                         q4[t]]*u1[t] + 2.*d*Sin[q3[t]]*u2[t] + 2.*l*
-                       Sin[q3[t] + q4[t]]*u2[t] + d^2*u3[t] + 2.*d*l*
+                  1.*Ib*(-0.0625*Cdplate*rho*Abs[l*(2.*Cos[q3[t] + q4[t]]*
+                         u1[t] + 2.*Sin[q3[t] + q4[t]]*u2[t] + d*Cos[q4[t]]*
+                         u3[t] + l*(u3[t] + u4[t]))]*(2.*d*Cos[q3[t]]*u1[t] + 
+                      2.*l*Cos[q3[t] + q4[t]]*u1[t] + 2.*d*Sin[q3[t]]*u2[t] + 
+                      2.*l*Sin[q3[t] + q4[t]]*u2[t] + d^2*u3[t] + 2.*d*l*
                        Cos[q4[t]]*u3[t] + d*l*Cos[q4[t]]*u4[t] + 
                       l^2*(u3[t] + u4[t])) + 0.0625*Cdplate*rho*
                      Abs[fl*(2.*Sin[2.356194 + q3[t] + q5[t]]*u1[t] + 
@@ -7932,12 +7926,11 @@
                          u2[t] + d*Cos[q4[t]]*u3[t] + l*(u3[t] + u4[t]))]*
                      (2.*Cos[q3[t] + q4[t]]*u1[t] + 2.*Sin[q3[t] + q4[t]]*
                        u2[t] + d*Cos[q4[t]]*u3[t] + l*(u3[t] + u4[t]))) - 
-                  1.*Ib*(-1.570796*Cdcirc*d*rho*u3[t] - 0.0625*Cdplate*rho*
-                     Abs[l*(2.*Cos[q3[t] + q4[t]]*u1[t] + 2.*Sin[q3[t] + 
-                          q4[t]]*u2[t] + d*Cos[q4[t]]*u3[t] + l*(u3[t] + 
-                          u4[t]))]*(2.*d*Cos[q3[t]]*u1[t] + 2.*l*Cos[q3[t] + 
-                         q4[t]]*u1[t] + 2.*d*Sin[q3[t]]*u2[t] + 2.*l*
-                       Sin[q3[t] + q4[t]]*u2[t] + d^2*u3[t] + 2.*d*l*
+                  1.*Ib*(-0.0625*Cdplate*rho*Abs[l*(2.*Cos[q3[t] + q4[t]]*
+                         u1[t] + 2.*Sin[q3[t] + q4[t]]*u2[t] + d*Cos[q4[t]]*
+                         u3[t] + l*(u3[t] + u4[t]))]*(2.*d*Cos[q3[t]]*u1[t] + 
+                      2.*l*Cos[q3[t] + q4[t]]*u1[t] + 2.*d*Sin[q3[t]]*u2[t] + 
+                      2.*l*Sin[q3[t] + q4[t]]*u2[t] + d^2*u3[t] + 2.*d*l*
                        Cos[q4[t]]*u3[t] + d*l*Cos[q4[t]]*u4[t] + 
                       l^2*(u3[t] + u4[t])) + 0.0625*Cdplate*rho*
                      Abs[fl*(2.*Sin[2.356194 + q3[t] + q5[t]]*u1[t] + 
@@ -9207,12 +9200,11 @@
                          u2[t] + d*Cos[q4[t]]*u3[t] + l*(u3[t] + u4[t]))]*
                      (2.*Cos[q3[t] + q4[t]]*u1[t] + 2.*Sin[q3[t] + q4[t]]*
                        u2[t] + d*Cos[q4[t]]*u3[t] + l*(u3[t] + u4[t]))) - 
-                  1.*Ib*(-1.570796*Cdcirc*d*rho*u3[t] - 0.0625*Cdplate*rho*
-                     Abs[l*(2.*Cos[q3[t] + q4[t]]*u1[t] + 2.*Sin[q3[t] + 
-                          q4[t]]*u2[t] + d*Cos[q4[t]]*u3[t] + l*(u3[t] + 
-                          u4[t]))]*(2.*d*Cos[q3[t]]*u1[t] + 2.*l*Cos[q3[t] + 
-                         q4[t]]*u1[t] + 2.*d*Sin[q3[t]]*u2[t] + 2.*l*
-                       Sin[q3[t] + q4[t]]*u2[t] + d^2*u3[t] + 2.*d*l*
+                  1.*Ib*(-0.0625*Cdplate*rho*Abs[l*(2.*Cos[q3[t] + q4[t]]*
+                         u1[t] + 2.*Sin[q3[t] + q4[t]]*u2[t] + d*Cos[q4[t]]*
+                         u3[t] + l*(u3[t] + u4[t]))]*(2.*d*Cos[q3[t]]*u1[t] + 
+                      2.*l*Cos[q3[t] + q4[t]]*u1[t] + 2.*d*Sin[q3[t]]*u2[t] + 
+                      2.*l*Sin[q3[t] + q4[t]]*u2[t] + d^2*u3[t] + 2.*d*l*
                        Cos[q4[t]]*u3[t] + d*l*Cos[q4[t]]*u4[t] + 
                       l^2*(u3[t] + u4[t])) + 0.0625*Cdplate*rho*
                      Abs[fl*(2.*Sin[2.356194 + q3[t] + q5[t]]*u1[t] + 

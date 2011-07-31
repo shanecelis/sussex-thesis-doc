@@ -145,38 +145,46 @@ fitnessToTarget[iOrGene_,target_] :=
               fitness]
           ]
 
+argsForTarget[gene_, target_, tmax_] :=     
+    Module[{experiment, phase, args},
+           experiment = Bp;
+           phase = 1; 
+           args = {
+               joinFlat[{0} (* time *), 
+                        Table[0.01,{pstateCount}] (* pvars *),
+                        makeZeroCTRNNState[nodeCount] (* cvars *), 
+                        experimentInit[experiment, phase] (* gvars: 
+                                                             tail and feet sizes *),
+                        {0.} (* rvars: initial recording variables *)],
+               tmax, 
+               joinFlat[gene, 
+                        target, 
+                        experimentPoints[experiment, tmax, phase]]};
+           args]
+
+
+keepGoodChance = 0.01;
+keepFailedChance = 1.;
 
 (*
    Calculate the mean distance using the diff 
 *)
 fitnessToTarget2[i_, target_] := 
     Module[{ (*endState,*) n, tmax, fitness, experiment, phase, args},
-           tmax = 20.;
-           experiment = Bp;
-           phase = 1; 
-           fitness = Catch[
-
-               args = {
-                   joinFlat[{0} (* time *), 
-                            Table[0.01,{pstateCount}] (* pvars *),
-                            makeZeroCTRNNState[nodeCount] (* cvars *), 
-                            experimentInit[experiment, phase] (* gvars: 
-                                                                            tail and feet sizes *),
-                            {0.} (* rvars: initial recording variables *)],
-                   tmax, 
-                   joinFlat[genes[[i]], 
-                            target, 
-                            experimentPoints[experiment, tmax, phase]]};
-               endState = runSimulation@@args;
-
-               endState[[-1]]/(tmax (* * Max[0.001,Norm[target]] *))];
+           tmax = 20.0;
+           args = argsForTarget[genes[[i]], target, tmax];
+           fitness = Catch[endState = runSimulation@@args;
+                           endState[[-1]]/(tmax * Norm[target])];
            If[fitness === $Failed,
-              failedArgs = Join[{args}, failedArgs];
+              If[RandomReal[{0,1}] < keepFailedChance,
+                 failedArgs = Join[{args}, failedArgs]];
               1000,
-			If[RandomReal[{0,1}] < 0.1,
-              goodArgs = Join[{args}, goodArgs]];
+              If[RandomReal[{0,1}] < keepGoodChance,
+                 goodArgs = Join[{args}, goodArgs]];
               fitness]
           ] 
+
+fitnessToTopTarget[i_] := evaluateToTarget[i, {0, 1} (.1m) //. params]
 
 
 fitnessToMultipleTargets[iOrGene_] := 
@@ -187,7 +195,8 @@ fitnessToMultipleTargets[iOrGene_] :=
 
 
 Clear[evaluate,evaluateToTarget];
-evaluate = fitnessToMultipleTargets;
+(*evaluate = fitnessToMultipleTargets;*)
+evaluate = fitnessToTopTarget;
 evaluateToTarget = fitnessToTarget2;
 
 

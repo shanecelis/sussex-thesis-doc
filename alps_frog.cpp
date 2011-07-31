@@ -31,19 +31,20 @@ double run_frog(const vector<double>& genes, double targetx, double targety)
   for (int i = 0; i < STATE_COUNT; i++) {
     state[i] = 0.01;
   }
+  state[0] = 0.0;
   state[RECORD_BEGIN] = 0.0;
 
   constants[TARGET_BEGIN] = targetx;
   constants[TARGET_BEGIN + 1] = targety;
   experiment_points("Ao", timeMax, 1, constants + POINTS_BEGIN);
-  experiment_init(constants + POINTS_BEGIN, 
-                  state + TAILSTATE_BEGIN, 
-                  state + TAILSTATE_BEGIN + 1);
+  experiment_init_state(constants + POINTS_BEGIN, 
+                        state + TAILSTATE_BEGIN, 
+                        state + TAILSTATE_BEGIN + 1);
 
   err = run_simulation(state, timeMax, constants, result);
 
   if (err) {
-    return -1.;
+    return 666.6;
   } else {
     return result[RECORD_BEGIN]/timeMax;
   }
@@ -52,14 +53,14 @@ double run_frog(const vector<double>& genes, double targetx, double targety)
 bool evaluate_frog(vector<double>& fitness, const vector<double>& genes)
 {
   double dist = 0.0;
-  dist = max(dist, run_frog(genes, 0.0, 1.0 * METERS));
-  dist = max(dist, run_frog(genes, -1.0 * METERS, 0.0));
-  dist = max(dist, run_frog(genes, 0.0, -1.0 * METERS));
-  dist = max(dist, run_frog(genes, 1.0 * METERS, 0.0));
+  dist = max(dist, run_frog(genes, 0.0, 0.1 * METERS));
+  // dist = max(dist, run_frog(genes, -0.1 * METERS, 0.0));
+  // dist = max(dist, run_frog(genes, 0.0, -0.1 * METERS));
+  // dist = max(dist, run_frog(genes, 0.1 * METERS, 0.0));
 
-  fitness[0] = dist/(1 * METERS);
+  fitness[0] = dist/(0.1 * METERS);
 
-  cout <<  "fitness " << fitness[0] << endl;
+  //cout <<  "fitness " << fitness[0] << endl;
   return true;
 }
 
@@ -106,7 +107,7 @@ void setup_pop_gen(Individual* individ_config, AlpsGen* pop)
     layer_def.set_tourn_size(2);
     pop->set_recomb_prob(0.5);
     pop->set_rec_rand2_prob(1.0); // 1.0
-    pop->set_print_results_rate(400); // 400
+    pop->set_print_results_rate(100); // 400
 
   } else if (type == 2) {
     Number_Layers = 5;
@@ -146,9 +147,9 @@ void setup_pop_gen(Individual* individ_config, AlpsGen* pop)
                           Number_Layers, layer_def);
   pop->print_layers();
   pop->set_num_runs(1);
-//pop->set_max_gen(2525);
+  pop->set_max_gen(2500);
   //pop->set_max_gen(100);
-  pop->set_max_gen(1);
+  //pop->set_max_gen(1);
 }
 
 void *ea_engine(void *arg1)
@@ -214,6 +215,7 @@ int main(int argc, char **argv) {
     
   (void) argc;
   (void) argv;
+  sim_init();
   if (argc == 2) {
     Individ_Real *individ = new Individ_Real(10);    
     individ->read(argv[1]);
@@ -224,6 +226,7 @@ int main(int argc, char **argv) {
   } else {
     ea_engine(0);
   }
+  sim_uninit();
   return 0;
 }
 
