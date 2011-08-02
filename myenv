@@ -1,0 +1,2 @@
+export DYLD_LIBRARY_PATH=/Applications/Mathematica.app/SystemFiles/Libraries/MacOSX-x86-64:.
+export PATH=$(pwd):$PATH

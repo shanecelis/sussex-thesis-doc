@@ -1,0 +1,12 @@
+#!/bin/bash
+# run-expr-all
+
+if [ $# -ne 1 ]; then
+    echo "usage: run-expr-all <results-name>" >&2;
+    exit 2;
+fi
+
+
+for exp in 0 1 Ap Ao Bp Bo; do 
+    run-expr $exp "$1"
+done

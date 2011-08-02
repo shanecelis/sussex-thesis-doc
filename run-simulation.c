@@ -102,6 +102,19 @@ void experiment_init_state(double *points, double *t0, double *f0)
   *f0 = points[2 * 3 + 1];
 }
 
+int experiment_phase_count(const char *expName, int *phase_count)
+{
+  double results[POINTS_COUNT]; // XXX this is a bit off.  
+  int err;
+  err = experiment_points(expName, 0.0, 0, results);
+  if (err) {
+    return err;
+  } else {
+    *phase_count = (int) results[0];
+    return 0;
+  }
+}
+
 int experiment_points(const char *expName, double timeMax, 
                       int phase, double *pointsResult) 
 {

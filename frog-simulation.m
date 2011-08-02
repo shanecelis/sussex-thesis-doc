@@ -23,11 +23,30 @@ footColour = Nest[Lighter,Blue,2];
 bodyColour = LightGray;
 
 
-drawTadpole = drawFrog;
+isWithinRange[{a_, b_}, x_] := 
+    IntervalMemberQ[Interval[{a, b}], x]
 
 
-drawFrog[{q1_,q2_,q3_,q4_, q5_, q6_, q7_, q8_}, r_,l_, fl_, OptionsPattern[{showDistance -> True, plotRange -> None}]] := 
-    Module[{body, tail, limb, foot5, foot6, foot7, foot8, distanceLine, range},
+pointWithinRanges[{xs_, ys_}, pt_] := 
+    And @@ MapThread[isWithinRange, {{xs, ys}, pt}]
+
+
+chooseRange[range_, points_, nextRangeFunc_] := 
+    If[And @@ Map[pointWithinRanges[range, #] &, points],
+       range,
+       chooseRange[nextRangeFunc[range], points, nextRangeFunc]]
+
+
+Options[drawFrog] = {showDistance -> False, 
+                     plotRange    -> Automatic,
+                     toTarget     -> None,
+                     showStart    -> False,
+                     showTarget   -> None};
+
+drawFrog[{q1_,q2_,q3_,q4_, q5_, q6_, q7_, q8_}, r_, l_, fl_, 
+         OptionsPattern[]] := 
+    Module[{body, tail, limb, foot5, foot6, foot7, foot8, distanceLine, 
+            range, target},
            body = Disk[{q1,q2},r 1.05 ];
            limb = Rotate[rectangle[0, 0 , 0.2 r , 1, 0],0,{0,0}];
            tail = Translate[Rotate[Scale[limb, {1, l}], q4, {0, l/2}], {q1, q2 - r -l/2 }];
@@ -36,14 +55,40 @@ drawFrog[{q1_,q2_,q3_,q4_, q5_, q6_, q7_, q8_}, r_,l_, fl_, OptionsPattern[{show
            foot6 = Rotate[srt[limb, {1, fl}, q6, {0, fl/2}, {q1, q2 - r - fl/2}], 3Pi/4, {q1, q2}];
            foot7 = Rotate[srt[limb, {1, fl}, q7, {0, fl/2}, {q1, q2 - r - fl/2}], 5Pi/4, {q1, q2}];
            foot8 = Rotate[srt[limb, {1, fl}, q8, {0, fl/2}, {q1, q2 - r - fl/2}], 7Pi/4, {q1, q2}];
-           If[OptionValue[showDistance],
-              distanceLine = {Black, Line[{{0,0},{q1,q2}}]},
-              distanceLine = {}];
-           If[OptionValue[plotRange] === None,
-              range =  7(r ){{-1,1},{-1,1}},
-              range = OptionValue[plotRange]];
-           Graphics[{{FaceForm[bodyColour], {FaceForm[bodyColour],body}, EdgeForm[None],Rotate[{{FaceForm[tailColour],tail},{FaceForm[footColour],foot5, foot6, foot7, foot8}}, q3, {q1, q2}] }, 
-                     distanceLine
+           target = {0,0};
+           distanceLine = If[OptionValue[showDistance] === True,
+                             {Black, Line[{{0,0},{q1,q2}}]},
+                             {}];
+           targetLine = If[OptionValue[toTarget] === None,
+                           {},
+                           target = OptionValue[toTarget];
+                           {Black, Line[{{q1,q2},target}]}];
+           startDisk = If[OptionValue[showStart] === False,
+                          {},
+                          {Disk[{0,0}, .1 r]}];
+
+           targetDisk = If[OptionValue[showTarget] === None,
+                           {},
+                           target = OptionValue[showTarget];
+                           {Disk[target, .1 r]}];
+                            
+           range = If[OptionValue[plotRange] === Automatic,
+                      chooseRange[7(r ){{-1,1},{-1,1}}, 
+                                  {{q1,q2}, {0,0}, target}, 
+                                  2#&],
+                      OptionValue[plotRange]];
+
+           Graphics[{
+               {FaceForm[bodyColour], 
+                {FaceForm[bodyColour],body}, 
+                EdgeForm[None],
+                Rotate[{{FaceForm[tailColour],tail},
+                        {FaceForm[footColour],foot5, foot6, foot7, foot8}}, 
+                       q3, {q1, q2}] }, 
+               distanceLine,
+               targetLine,
+               startDisk,
+               targetDisk,
                     }, PlotRange -> range]]
 
 
@@ -60,8 +105,8 @@ params = {r       -> 0.025 m,
           Cdplate -> 1.98,
           rho     -> 999.1026 kg/m^3 (d),
           g       -> 9.8 m/s^2,
-          Tmax    -> (0(l/lmax)^2 + 1) .001 kg (m/s)^2, (* this (l/lmax)^2 is dubious *)
-          Tfmax   -> (0(fl/flmax)^2 + 1) .001 kg (m/s)^2,
+          Tmax    -> (0(l/lmax)^2 + 1) .00001 kg (m/s)^2, (* this (l/lmax)^2 is dubious *)
+          Tfmax   -> (0(fl/flmax)^2 + 1) .00001 kg (m/s)^2,
           
 (*          Fr    -> 0.01,
           P       -> 1/freq,

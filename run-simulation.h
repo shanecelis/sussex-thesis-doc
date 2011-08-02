@@ -1,6 +1,6 @@
 /* run-simulation.h */
 
-#define METERS           100.0
+#define METERS           1.0
 
 // state info
 #define STATE_COUNT      25
@@ -18,6 +18,8 @@
 int sim_init();
 
 int sim_uninit();
+
+int experiment_phase_count(const char *expName, int *phase_count);
 
 int experiment_points(const char *expName, double timeMax, 
                       int phase, double *pointsResult);

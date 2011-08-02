@@ -17,6 +17,8 @@ geneCount = nodeCount^2 + 2 nodeCount + 1; (* number of gene elements *)
 (* LinSensor geneCount *)
 geneCount = nodeCount^2 + 2 nodeCount + sensorCount * motorCount;
 
+getGene[i_Integer] := genes[[i]]
+getGene[i_List] := i
 
 geneToCTRNN[i_] := geneToCTRNN[genes[[i]]]
     geneToCTRNN[gene_List] := 
@@ -122,36 +124,13 @@ initPop[] := (genes = RandomReal[{0, 1}, {pop, len}];evaluationCache = Table[Non
          Norm[target - {q1,q2}]
         ]*)
 
-
-fitnessToTarget[iOrGene_,target_] := 
-    Module[{ctrnn, (*endState,*)n, range, tmax, q1s,q2s, q3s, q4s, sensorCoeff, fitness(*, sol*)},
-           ctrnn = geneToCTRNNLinSensor[iOrGene];
-           (*sensorCoeff = geneToSensorCoefficients[i];*)
-           tmax = 20.;
-           (* need to give the initial state *)
-           (*ctrnn[[3]] = Table[0, {nodeCount}];*)
-           (*target = {0, -2};*)
-           fitness = Catch[endState = frogSolver[Table[0.01,{pstateCount + 1}]~Join~makeZeroCTRNNState[nodeCount], tmax, Flatten[ctrnn]~Join~target];
-                           (*sol = runWithCTRNN[ctrnn, Table[0.,{nodeCount}],
-                             Table[0.01, {pstateCount}], tmax];
-                             {q1s, q2s} = {q1[t], q2[t]} /. sol /. t -> tmax;*)
-                           q1s = endState[[2]];
-                           q2s = endState[[3]];
-                           q3s = endState[[4]];
-                           q4s = endState[[5]];
-                           Norm[target - {q1s,q2s}]];
-           If[fitness === $Failed,
-              1000,
-              fitness]
-          ]
-
-argsForTarget[gene_, target_, tmax_] :=     
+argsForTarget[gene_, target_, tmax_, expName_, phaseArg_] :=     
     Module[{experiment, phase, args},
-           experiment = Bp;
-           phase = 1; 
+           experiment = expName;
+           phase = phaseArg; 
            args = {
                joinFlat[{0} (* time *), 
-                        Table[0.01,{pstateCount}] (* pvars *),
+                        Table[0.0,{pstateCount}] (* pvars *),
                         makeZeroCTRNNState[nodeCount] (* cvars *), 
                         experimentInit[experiment, phase] (* gvars: 
                                                              tail and feet sizes *),
@@ -169,28 +148,28 @@ keepFailedChance = 1.;
 (*
    Calculate the mean distance using the diff 
 *)
-fitnessToTarget2[i_, target_] := 
-    Module[{ (*endState,*) n, tmax, fitness, experiment, phase, args},
-           tmax = 20.0;
-           args = argsForTarget[genes[[i]], target, tmax];
+fitnessToTarget[i_, target_, experiment_, phase_] := 
+    Module[{ (*endState,*) n, tmax, fitness, args},
+           tmax = 10.0;
+           args = argsForTarget[getGene[i], target, tmax, experiment, phase];
            fitness = Catch[endState = runSimulation@@args;
                            endState[[-1]]/(tmax * Norm[target])];
            If[fitness === $Failed,
               If[RandomReal[{0,1}] < keepFailedChance,
                  failedArgs = Join[{args}, failedArgs]];
-              1000,
+              666.6,
               If[RandomReal[{0,1}] < keepGoodChance,
                  goodArgs = Join[{args}, goodArgs]];
               fitness]
           ] 
 
-fitnessToTopTarget[i_] := evaluateToTarget[i, {0, 1} (.1m) //. params]
+fitnessToTopTarget[i_] := evaluateToTarget[i, {0, 1} (.1m) //. params, expName, phase]
 
 
 fitnessToMultipleTargets[iOrGene_] := 
     Module[{initTarget, targets},
-           initTarget = {0, 1} (.1m) //. params;
-           targets = {{0,0}}~Join~NestList[RotationMatrix[Pi/4]. #&, initTarget, 3];
+           initTarget = {0, 1} (.2m) //. params;
+           targets = NestList[RotationMatrix[Pi/4]. #&, initTarget, 3];
            Max[Map[evaluateToTarget[iOrGene, #]&, targets]]]
 
 

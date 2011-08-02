@@ -1,0 +1,17 @@
+#!/bin/bash
+# run-expr
+
+if [ $# -ne 1 ] && [ $# -ne 2 ]; then
+    echo "usage: run-expr <experiment name> [results-dir]" >&2;
+    exit 2;
+fi
+expName="$1";
+count=1;
+resultsDir=".";
+if [ $# -eq 2 ]; then
+    resultsDir="$2";
+fi
+mkdir -p "$resultsDir/$expName";
+for ((i = 1; i <= $count; i++)); do 
+    alps_frog "$expName" "$resultsDir/$expName/$i.pop" | tee "$resultsDir/$expName/$i.out"
+done

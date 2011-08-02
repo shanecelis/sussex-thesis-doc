@@ -3,6 +3,7 @@
 */
 
 #include "alps/alps.h"
+#include "alps/sstate.h"
 #include "alps/gen.h"
 #include "alps/layer.h"
 #include "alps/individ_real.h"
@@ -17,26 +18,34 @@ extern "C" {
 #include "run-simulation.h"
 }
 
-double run_frog(const vector<double>& genes, double targetx, double targety)
+static int evaluation_count = 0;
+
+double run_frog(const vector<double>& genes, 
+                double targetx, double targety, 
+                const char *expName, 
+                int phase)
 {
   int err;
   double constants[CONSTANTS_COUNT], state[STATE_COUNT], result[STATE_COUNT];
 
-  double timeMax = 20.;
+  double timeMax = 10.;
 
   for (int i = 0; i < GENE_COUNT; i++) {
     constants[i] = genes[i];
   }
 
   for (int i = 0; i < STATE_COUNT; i++) {
-    state[i] = 0.01;
+    state[i] = 0.0;
   }
   state[0] = 0.0;
   state[RECORD_BEGIN] = 0.0;
+  
+  // const char *expName = "Ao";
+  // int phase = 1;
 
   constants[TARGET_BEGIN] = targetx;
   constants[TARGET_BEGIN + 1] = targety;
-  experiment_points("Ao", timeMax, 1, constants + POINTS_BEGIN);
+  experiment_points(expName, timeMax, phase, constants + POINTS_BEGIN);
   experiment_init_state(constants + POINTS_BEGIN, 
                         state + TAILSTATE_BEGIN, 
                         state + TAILSTATE_BEGIN + 1);
@@ -50,10 +59,13 @@ double run_frog(const vector<double>& genes, double targetx, double targety)
   }
 }
 
-bool evaluate_frog(vector<double>& fitness, const vector<double>& genes)
+bool evaluate_frog(vector<double>& fitness, 
+                   const vector<double>& genes, 
+                   const char* expName, int phase)
 {
   double dist = 0.0;
-  dist = max(dist, run_frog(genes, 0.0, 0.1 * METERS));
+  dist = max(dist, run_frog(genes, 0.0, 0.1 * METERS, 
+                            expName, phase));
   // dist = max(dist, run_frog(genes, -0.1 * METERS, 0.0));
   // dist = max(dist, run_frog(genes, 0.0, -0.1 * METERS));
   // dist = max(dist, run_frog(genes, 0.1 * METERS, 0.0));
@@ -64,19 +76,20 @@ bool evaluate_frog(vector<double>& fitness, const vector<double>& genes)
   return true;
 }
 
-bool evaluate_frog_multi(vector<double>& fitness, const vector<double>& genes)
-{
-  fitness[0] = 3. + 0. * run_frog(genes, 1.0, 1.0);
-  fitness[1] = 2. + 0. *run_frog(genes, 1.0, 0.0);
-  fitness[2] = run_frog(genes, 0.0, 1.0);
-  fitness[3] = run_frog(genes, -1.0, 0.0);
-  fitness[4] = run_frog(genes, 0.0, -1.0);
+// bool evaluate_frog_multi(vector<double>& fitness, const vector<double>& genes)
+// {
+//   fitness[0] = 3. + 0. * run_frog(genes, 1.0, 1.0);
+//   fitness[1] = 2. + 0. *run_frog(genes, 1.0, 0.0);
+//   fitness[2] = run_frog(genes, 0.0, 1.0);
+//   fitness[3] = run_frog(genes, -1.0, 0.0);
+//   fitness[4] = run_frog(genes, 0.0, -1.0);
 
-  return true;
-}
+//   return true;
+// }
 
 
-bool evaluate_individ(vector<double>& fitness, Individual* individ)
+bool evaluate_individ(vector<double>& fitness, Individual* individ, 
+                      const char *expName, int phase)
 {
   if (individ == NULL) {
     cerr << "evo_real :: evaluate_individ() - error, null individ sent.\n";
@@ -84,17 +97,19 @@ bool evaluate_individ(vector<double>& fitness, Individual* individ)
     return false;
   }
 
-  bool res = evaluate_frog(fitness, ((Individ_Real*)individ)->get_genes());
+  bool res = evaluate_frog(fitness, ((Individ_Real*)individ)->get_genes(), 
+                           expName, phase);
+  evaluation_count++;
 
   return res;
 }
 
-void setup_pop_gen(Individual* individ_config, AlpsGen* pop)
+void setup_pop_gen(Individual* individ_config, AlpsSState* pop)
 {
   (void) individ_config;
-  pop->set_save_best(true);
+  //pop->set_save_best(true);
   AlpsLayer layer_def;
-  int type = 1;
+  int type = 2;
   int age_gap = 5;
   int age_scheme = ALPS_AGING_FIBONACCI1;
   int Number_Layers = -1;
@@ -112,16 +127,16 @@ void setup_pop_gen(Individual* individ_config, AlpsGen* pop)
   } else if (type == 2) {
     Number_Layers = 5;
     age_gap = 3; //4
-    age_scheme = ALPS_AGING_EXP3;
+    //age_scheme = ALPS_AGING_EXP3;
     layer_def.set_select_type(ALPS_SELECT_TOURN);
     //    layer_def.set_select_type(ALPS_SELECT_DC);
-    layer_def.set_size(40);
+    layer_def.set_size(10);
     layer_def.set_elitism(1);
     layer_def.set_tourn_size(2);
     layer_def.set_prob_select_prev(0.2);
     pop->set_recomb_prob(0.5);
     pop->set_rec_rand2_prob(1.0);
-    pop->set_print_results_rate(10);
+    //pop->set_print_results_rate(10);
 
   } else if (type == 3) {
     Number_Layers = 10;
@@ -145,39 +160,46 @@ void setup_pop_gen(Individual* individ_config, AlpsGen* pop)
 
   pop->config_layers_same(age_scheme, age_gap,
                           Number_Layers, layer_def);
-  pop->print_layers();
+  //pop->print_layers();
   pop->set_num_runs(1);
   pop->set_max_gen(2500);
   //pop->set_max_gen(100);
   //pop->set_max_gen(1);
 }
 
-void *ea_engine(void *arg1)
+int ea_engine(const char *exp_name, const char *pop_save)
 {
-  (void) arg1; // getting rid of unused parameter warning.
-  cout << "EA engine started.\n";
-
   int Number_Genes = GENE_COUNT; // minus the size of the target
-  
+  //const char *exp_name = "Ap";
+  int phase = 1;
+  int phase_count;
+  int err;
+  err = experiment_phase_count(exp_name, &phase_count);
+  if (err) {
+    cerr << "error: phase count failed (" << err << ")" << endl;
+    err;
+  }
+
   Individ_Real *individ_config = new Individ_Real(Number_Genes);
   individ_config->set_init_minmax(0.0, 1.0);
   individ_config->set_minmax(0.0, 1.0);
 
-  cout <<  "individ_config " << individ_config << endl;
-  individ_config->write(cout);
+  // cout <<  "individ_config " << individ_config << endl;
+  // individ_config->write(cout);
 
   vector<double> fitness;
-  fitness.resize(5); // multi objective
+  fitness.resize(1); 
 
   // Configure a generational ALPS population:
-  Alps *Population = new AlpsGen("frog", individ_config);
-  setup_pop_gen(individ_config, (AlpsGen*)Population);
+  //Alps *Population = new AlpsGen("frog", individ_config);
+  Alps *Population = new AlpsSState("frog", individ_config);
+  setup_pop_gen(individ_config, (AlpsSState*)Population);
 
   // Population->set_print_debug(true);
   Population->set_minimize();
   //Population->set_maximize();
-  Population->write_header(cout);
-
+  //Population->write_header(cout);
+  
   while (!Population->is_finished()) {
     int index;
     Individual* individ;
@@ -192,42 +214,29 @@ void *ea_engine(void *arg1)
 
     vector<double> fitness;
     fitness.resize(5);
-    int result = evaluate_individ(fitness, individ);
+    int result = evaluate_individ(fitness, individ, exp_name, phase);
     if (result == false) {
       // Error evaluating this individual.
       Population->evaluate_error(index, individ);
     } else {
       // Evaluated successfully.
       Population->insert_evaluated(fitness, index, individ, 0);
+      if (fitness[0] < 0.5) {
+        // Finished with this stage possibly complete.
+        cerr << "XXX End of phase " << phase << " evaluation count " << evaluation_count << endl;
+        cout << phase << " " << evaluation_count << endl;
+        phase++;
+        if (phase > phase_count)
+          break;
+      }
     }
   }
   //cout << "Best individual:" << endl;
-
+  //cout << "XXX Final evaluation count " << evaluation_count << endl;
   //Population->write_best_individ();
-  Population->write("last-population.txt");
+  Population->write(pop_save);
 
-  printf("EA engine ended.\n");
+  //printf("EA engine ended.\n");
 
   return 0;
 }
-
-int main(int argc, char **argv) {
-    
-  (void) argc;
-  (void) argv;
-  sim_init();
-  if (argc == 2) {
-    Individ_Real *individ = new Individ_Real(10);    
-    individ->read(argv[1]);
-    vector<double> fitness;
-    fitness.resize(5);
-    evaluate_individ(fitness, individ);
-    cout << "fitness: " << fitness[0] << endl;
-  } else {
-    ea_engine(0);
-  }
-  sim_uninit();
-  return 0;
-}
-
-
