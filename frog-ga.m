@@ -163,6 +163,17 @@ fitnessToTarget[i_, target_, experiment_, phase_] :=
               fitness]
           ] 
 
+fitnessToTargetData[i_, target_, experiment_, phase_] := 
+    Module[{ (*endState,*) n, tmax, fitness, args, data},
+           tmax = 10.0;
+           args = argsForTarget[getGene[i], target, tmax, experiment, phase];
+           data = Catch[runSolver2[runSimulation, Sequence@@args, 0.1]];
+           data
+          ] 
+
+
+
+
 fitnessToTopTarget[i_] := evaluateToTarget[i, {0, 1} (.1m) //. params, expName, phase]
 
 

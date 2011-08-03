@@ -26,17 +26,8 @@ int main(int argc, char **argv) {
     
   sim_init();
 
-  int err = ea_engine(argv[1], argv[2]);
-  // if (argc == 2) {
-  //    Individ_Real *individ = new Individ_Real(10);    
-  //   individ->read(argv[1]);
-  //   vector<double> fitness;
-  //   fitness.resize(5);
-  //   // evaluate_individ(fitness, individ);
-  //   cout << "fitness: " << fitness[0] << endl;
-  // } else {
-  //   ea_engine(0);
-  // }
+  int err = ea_engine(argv[1], 0, false, argv[2]);
+
   sim_uninit();
   return err;
 }

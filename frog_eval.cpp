@@ -18,19 +18,38 @@ extern "C" {
 
 int main(int argc, char **argv) {
 
-  if (argc != 4) {
-    cerr << "usage: eval_frog <individual.ind> <experiment-name> <phase>" << endl;
+  if (argc < 3 || argc > 6) {
+    cerr << "usage: eval_frog <individual.ind> <experiment-name> [phase] [target-index] [lobotomise]" << endl;
     return 2;
   }
-    
+  int err = 0;
+  const char *exp_name = argv[2];
+  int phase = 1;
+  bool lobotomise = false;
+  int target_index = 0;
+  Individ_Real *individ = new Individ_Real(GENE_COUNT);    
+  vector<double> fitness;
+
   sim_init();
 
-  Individ_Real *individ = new Individ_Real(GENE_COUNT);    
   individ->read(argv[1]);
-  vector<double> fitness;
   fitness.resize(1);
-  int err = 0;
-  if (evaluate_individ(fitness, individ, argv[2], atoi(argv[3]))) {
+
+  if (argc >= 4) {
+    phase = atoi(argv[3]);
+  }
+  if (argc >= 5) {
+    target_index = atoi(argv[4]);
+  }
+  if (argc >= 6) {
+    lobotomise = (atoi(argv[5]) == 1);
+  }
+  if (evaluate_frog(fitness, 
+                    individ, 
+                    exp_name,
+                    phase,
+                    target_index, 
+                    lobotomise)) {
     cout << "fitness: " << fitness[0] << endl;
   } else {
     err = 1;

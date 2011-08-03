@@ -38,6 +38,7 @@ makeDiffFuncWithConstants[eqns_, vars_, var_, constants_] :=
            Function[{b, c},
                     Evaluate[
                         Module[{rules = substituteRules[constants, c]},
+                               Sow[rules];
                                {1}~Join~body /. MapThread[#1 :>  b~Part~#2&, {{var}~Join~vars, Range[n + 1]}] /. rules]
                             ]
                    ]  
@@ -353,13 +354,14 @@ makeFrogMorphSolver[] :=
            {peqns,pvars} = eqnsForFrog[preParams -> myPreParams];
            target = {tx,ty};
            sensors = { (* 14 sensors (should length of tail be included?) *)
-                       Norm[{u1[#], u2[#]}]/(m/s)&, 
-                       u3[#]/(1/s)&, 
-                       Norm[target - {q1[#], q2[#]} ]/m&, 
+                       Norm[{u1[#], u2[#]}]/(m/s)&, (* current tranlational speed *)
+                       u3[#]/(1/s)&, (* current rotational speed *)
+                       Norm[target - {q1[#], q2[#]} ]/m&, (* distance to target *)
                        VectorAngle[  target - {q1[#], q2[#]}, 
-                                   {-Sin[q3[#]], Cos[q3[#]]}]&,
-                       q4[#]/(Pi/2)&,
-                       u4[#]/(1/s)&,
+                                   {-Sin[q3[#]], Cos[q3[#]]}]&, (* angle to target *)
+                       q4[#]/(Pi/2)&, (* tail position *)
+                       u4[#]/(1/s)&, (* tail speed *)
+
                        q5[#]/(Pi/2)&,
                        u5[#]/(1/s)&, 
                        q6[#]/(Pi/2)&,
@@ -628,7 +630,7 @@ exportToC[compiledFun_, filenamePrefix_] :=
                    "CodeTarget" -> "WolframRTL"],
      CCodeGenerate[compiledFun, filenamePrefix, 
                    "CodeTarget" -> "WolframRTLHeader"]}
-
+ 
      
 
 (* ::Title:: *)

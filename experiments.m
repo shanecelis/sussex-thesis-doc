@@ -61,10 +61,13 @@ showExperiment[phases_, timeShift_:1, opts:OptionsPattern[]] :=
           ]
 
 
-experimentIdeal[0] := {{tailGrowth -> {{0,0}, {1,0}}, feetGrowth -> {{0,1}, {1,1}}}}
+experimentNames = {An, Bn, Ap, Bp, Ao, Bo};
 
 
-experimentIdeal[1] := {{tailGrowth -> {{0,1}, {1,1}}, feetGrowth -> {{0,1}, {1,1}}}}
+experimentIdeal[Bn] := {{tailGrowth -> {{0,0}, {1,0}}, feetGrowth -> {{0,1}, {1,1}}}}
+
+
+experimentIdeal[An] := {{tailGrowth -> {{0,1}, {1,1}}, feetGrowth -> {{0,1}, {1,1}}}}
 
 
 experimentIdeal[Ap] := {
@@ -110,11 +113,10 @@ rescaleYPoint[point_, {min_, max_}] :=
 
 
 adjustExperiments[{minLimb_, maxLimb_}] := 
-    Module[{experiments = {0, 1, Ap, Ao, Bp, Bo}},
-           Map[Function[{exp}, 
-                      experiment[exp] = Map[rescaleYPoint[#, {minLimb, maxLimb}] &, 
-                                              experimentIdeal[exp], {4}]], 
-               experiments]]
+    Map[Function[{exp}, 
+                 experiment[exp] = Map[rescaleYPoint[#, {minLimb, maxLimb}] &, 
+                                       experimentIdeal[exp], {4}]], 
+        experimentNames]
 
 
 adjustExperiments[{minimumLimbLength, 1}]
@@ -159,22 +161,21 @@ experimentDiffFuncs[a_, timeShift_] :=
 
 
 showAllExperiments[] := 
-    Module[{experiments,plots},
-           experiments = {0,1,Ap,Bp,Ao,Bo};
+    Module[{plots},
            plots = Map[showExperiment[experiment[#], 
                                       1, 
                                       PlotLabel -> ToString[#], 
                                       ImageSize -> 300]&, 
-                       experiments];
+                       experimentNames];
            Grid [Partition[plots,2,2, {1,1}, ""]]]
 
 
 makeExperiments[] := 
-    Module[{experiments = {0, 1, Ap, Bp, Ao, Bo}},
+    Block[{tmax, phase, x},
            Function[{x, tmax, phase}, 
-                    Evaluate[
-                        Piecewise[(MapIndexed[{makeExperimentPointsWhich[#, tmax, phase], 
-                                               x == First[#2]} &, experiments]), {-2}]]]]
+             Evaluate[
+                 Piecewise[(MapIndexed[{makeExperimentPointsWhich[#, tmax, phase], 
+                                        x == First[#2]} &, experimentNames]), {-2}]]]]
 
 
 makeExperimentsC[] := 
@@ -187,5 +188,3 @@ makeExperimentPointsWhich[a_, timeShift_, phase_] :=
     Piecewise[
         Map[{Flatten[experimentPoints[a, timeShift, #]], phase == #} &, 
             Range[0, Length[experimentPoints[a, timeShift]]]], {-1}]
-
-

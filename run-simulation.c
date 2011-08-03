@@ -1,3 +1,6 @@
+/*
+  run-simulation.c
+*/
 #include <stdio.h>
 #include "runSimulation.h"
 #include "WolframRTL.h"
@@ -68,8 +71,6 @@ int sim_uninit()
 
   Uninitialize_runSimulation(libData);
 
-
-
 clean_init:
 clean_constants:
   libData->MTensor_free(constants);
@@ -83,7 +84,7 @@ clean_state:
 
 int experiment_name(const char *name)
 {
-  char *names[] = { "0", "1", "Ap", "Bp", "Ao", "Bo" };
+  char *names[] = { "An", "Bn", "Ap", "Bp", "Ao", "Bo" };
   int i, nameCount = 6;
   for (i = 0; i < nameCount; i++)
   {
@@ -104,7 +105,8 @@ void experiment_init_state(double *points, double *t0, double *f0)
 
 int experiment_phase_count(const char *expName, int *phase_count)
 {
-  double results[POINTS_COUNT]; // XXX this is a bit off.  
+  double results[POINTS_COUNT]; // XXX this is a bit off.  It will
+                                // only return 1 list value.
   int err;
   err = experiment_points(expName, 0.0, 0, results);
   if (err) {
@@ -145,12 +147,13 @@ int run_simulation(double *stateArg, double timeArg, double *constantsArg,
       stateData[i] = stateArg[i];
   } else {
     for(i = 0; i < STATE_COUNT; i++)
-      stateData[i] = 0.01;
+      stateData[i] = 0.0;
+    stateData[22] = 1.0; // tail length
+    stateData[23] = 1.0; // feet length
+    stateData[24] = 0.0; // recording variable
+
   }
     
-  stateData[22] = 1.0; // tail length
-  stateData[23] = 0.1; // feet length
-  stateData[24] = 0.0; // recording variable
 
   data = libData->MTensor_getRealData( constants );
   if (constantsArg) {
@@ -169,23 +172,7 @@ int run_simulation(double *stateArg, double timeArg, double *constantsArg,
   //
   // http://rcabreral.blogspot.com/2011/04/mathematica-as-c-code-generator.html
 
-  char *expName = "Bo";
-  mint phase = 3;
-  mreal time = 20.0;
-
-  experiment_points(expName, time, phase, pointsData);
-  for (i = 0; i < POINTS_COUNT; i++) {
-    data[CONSTANTS_COUNT - POINTS_COUNT + i] = pointsData[i];
-  }
-
-  experiment_init_state(pointsData, 
-                        stateData + TAILSTATE_BEGIN, 
-                        stateData + TAILSTATE_BEGIN + 1);
-
-
-  // Copy this points data into the constants array.
-
-  err = runSimulation(libData, state, time, constants, &results);
+  err = runSimulation(libData, state, timeArg, constants, &results);
 
   data = libData->MTensor_getRealData( results );
   for(i = 0; i < STATE_COUNT; i++) {
@@ -194,4 +181,21 @@ int run_simulation(double *stateArg, double timeArg, double *constantsArg,
 
 
   return err;
+}
+
+/*
+  Given the constants array, it places zeros such that the tail brain
+  and feet brain will operate independently.
+ */
+void lobotomise_brains(double *constants)
+{
+  /* These indexes were found in 'Lobotomise NNs.nb'. */
+     
+  int indexes[] = {1, 2, 3, 4, 5, 10, 15, 20, 53, 54, 67, 68, 81, 82, 
+                   95, 96, 41, 42, 43, 44, 45, 46, 47, 48};
+  int i, index_count = 24;
+
+  for (i = 0; i < index_count; i++) {
+    constants[indexes[i]] = 0.0;
+  }
 }

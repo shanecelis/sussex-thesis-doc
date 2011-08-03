@@ -2,6 +2,8 @@
 
 #define METERS           1.0
 
+#define TARGET_DISTANCE  (0.2 * METERS)
+
 // state info
 #define STATE_COUNT      25
 #define TAILSTATE_BEGIN  22
@@ -28,3 +30,5 @@ void experiment_init_state(double *points, double *t0, double *f0);
 
 int run_simulation(double *stateArg, double timeArg, 
                    double *constantsArg, double *stateResult);
+
+void lobotomise_brains(double *constants);
