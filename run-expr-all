@@ -5,22 +5,29 @@ usage()
 {
    echo "usage: run-expr-all [-c count] <results-name>" >&2;
 }
-if [ $# -ne 1 ]; then
-    usage;
-    exit 2;
-fi
 
+num=1;
 count=1;
-while getopts hfc: opt; do
+while getopts hfc:n: opt; do
 	case $opt in
 	    f) force=1;;
         h) usage;;
 	    c) count=$OPTARG;;
+        n) num=$OPTARG;;
 	    *) echo "error: invalid option given." >&2; usage;;
 	esac
 done
 shift $[ OPTIND - 1 ]
 
-for exp in An Bn Ap Bp Ao Bo; do
-    run-expr -c $count $exp "$1"
+if [ $# -ne 1 ]; then
+    usage;
+    exit 2;
+fi
+
+for target in 1 2 3 4; do 
+    for lobotomise in 0 1; do
+        for exp in Bo An Bn Ap Bp Ao; do
+            run-expr -n $num -c $count -d "$1" $exp $target $lobotomise
+        done
+    done
 done

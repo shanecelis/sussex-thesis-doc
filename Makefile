@@ -2,32 +2,35 @@
 
 CPPFLAGS = -g -I/Applications/Mathematica.app/SystemFiles/IncludeFiles/C
 
-#LDFLAGS = -L/Applications/Mathematica.app/SystemFiles/Libraries/MacOSX-x86-64 -lWolframRTL_Static_Minimal
-LDFLAGS = -L/Applications/Mathematica.app/SystemFiles/Libraries/MacOSX-x86-64 -lWolframRTL -L. -lalps -lstdc++
-#-lrunSimulation
+LDFLAGS = -L/Applications/Mathematica.app/SystemFiles/Libraries/MacOSX-x86-64 -lWolframRTL_Static_Minimal -lalps -lstdc++
 
-# 
-#LDFLAGS = -L/Applications/Mathematica.app/SystemFiles/Libraries/MacOSX-x86 -lWolframRTL -L. -ltadpoleSolver
+#LDFLAGS = -L/Applications/Mathematica.app/SystemFiles/Libraries/MacOSX-x86-64 -lWolframRTL -L. -lalps -lstdc++
 
 
-OBJS = bga.mo ctrnn.mo experiments.mo export-c-code.mo frog-simulation.mo loadall.mo tadpole_eqns4.mo tadpole_eqns4_dotsolved.mo runge-kutta.mo runSimulation.o frog-ga.mo genes_real.o
+# Attempt to compile without WolframRTL library.
+#LDFLAGS = -L/Applications/Mathematica.app/SystemFiles/Libraries/MacOSX-x86-64 -L. -lalps -lstdc++
+#CPPFLAGS = -g -Iinclude
+#SIM_OBJS = runSimulation.o run-simulation.o experiments.o myWolframRTL.o
+
+SIM_OBJS = runSimulation.o run-simulation.o experiments.o 
+
+OBJS = bga.mo ctrnn.mo experiments.mo export-c-code.mo frog-simulation.mo loadall.mo tadpole_eqns4.mo tadpole_eqns4_dotsolved.mo runge-kutta.mo frog-ga.mo genes_real.o $(SIM_OBJS)
 
 all: $(OBJS) run-sim-main alps_main frog_eval
 
 %.mo : %.m
 	mathload $< > $@
 
-
 clean:
 	$(RM) $(OBJS)
 
 run-simulation.o: run-simulation.c run-simulation.h
 
-run-sim-main: run-sim-main.o run-simulation.o runSimulation.o experiments.o
+run-sim-main: run-sim-main.o $(SIM_OBJS)
 
-alps_main: alps_main.o alps_frog.o run-simulation.o runSimulation.o experiments.o genes_real.o
+alps_main: alps_main.o alps_frog.o genes_real.o $(SIM_OBJS)
 
-frog_eval: frog_eval.o alps_frog.o run-simulation.o runSimulation.o experiments.o genes_real.o
+frog_eval: frog_eval.o alps_frog.o genes_real.o $(SIM_OBJS)
 
 run: run-sim-main
 	DYLD_LIBRARY_PATH=/Applications/Mathematica.app/SystemFiles/Libraries/MacOSX-x86-64:. ./run-sim-main

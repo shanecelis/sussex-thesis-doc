@@ -3,39 +3,44 @@
 
 usage()
 {
-    echo "usage: run-expr [-f] [-c count] <experiment name> [results-dir]" >&2;
+    echo "usage: run-expr [-f] [-n num] [-c count] [-d results-dir] <experiment-name> <target-index> <lobotomise>" >&2;
 }
 
-if [ $# -ne 1 ] && [ $# -ne 2 ]; then
-    usage;
-    exit 2;
-fi
 
 force=0;
-count=3;
-while getopts hfc: opt; do
+count=1;
+num=1;
+resultsDir=".";
+
+while getopts hfc:n:d: opt; do
 	case $opt in
 	    f) force=1;;
         h) usage;;
+        d) resultsDir="$OPTARG";;
+        n) num=$OPTARG;;
 	    c) count=$OPTARG;;
 	    *) echo "error: invalid option given." >&2; usage;;
 	esac
 done
 shift $[ OPTIND - 1 ]
 
+if [ $# -ne 3 ]; then
+    usage;
+    exit 2;
+fi
 
 expName="$1";
-resultsDir=".";
-if [ $# -eq 2 ]; then
-    resultsDir="$2";
-fi
-mkdir -p "$resultsDir/$expName";
-for ((i = 1; i <= $count; i++)); do 
+targetIndex="$2";
+lobotomise="$3";
+for ((i = $num; i < ($num + $count); i++)); do 
+    dir="$resultsDir/$expName-t$targetIndex-l$lobotomise/r$i";
+    mkdir -p "$dir";
+
     # Add a check to not overwrite currently existing results?
-    outfile="$resultsDir/$expName/$i.out"
+    outfile="$dir/output.txt";
     if [ "$force" -eq 1 ] && [ -f "$outfile"  ]; then
         echo "warning: '$outfile' already exists; skipping." >&2;
     else
-        alps_main "$expName" "$resultsDir/$expName/$i" | tee "$outfile"
+        alps_main "$expName" "$targetIndex" "$lobotomise" "$dir/pop-phase" | tee "$outfile"
     fi
 done

@@ -88,7 +88,7 @@ drawFrog[{q1_,q2_,q3_,q4_, q5_, q6_, q7_, q8_}, r_, l_, fl_,
                distanceLine,
                targetLine,
                startDisk,
-               targetDisk,
+               targetDisk
                     }, PlotRange -> range]]
 
 

@@ -6,7 +6,7 @@ int main(int argc, char **argv)
   int i, err;
   double result[STATE_COUNT];
   sim_init();
-  err = run_simulation(0, 0., 0, result);
+  err = run_simulation(0, 10., 0, result);
 
   if (err) {
     fprintf(stderr, "error: %d\n", err);

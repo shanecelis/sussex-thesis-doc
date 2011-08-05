@@ -2,7 +2,7 @@
 
 #define METERS           1.0
 
-#define TARGET_DISTANCE  (0.2 * METERS)
+#define TARGET_DISTANCE  (0.4 * METERS)
 
 // state info
 #define STATE_COUNT      25

@@ -39,7 +39,7 @@ int main(int argc, char **argv) {
     phase = atoi(argv[3]);
   }
   if (argc >= 5) {
-    target_index = atoi(argv[4]);
+    target_index = atoi(argv[4]) - 1;
   }
   if (argc >= 6) {
     lobotomise = (atoi(argv[5]) == 1);

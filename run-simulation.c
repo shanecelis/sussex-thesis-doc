@@ -2,8 +2,8 @@
   run-simulation.c
 */
 #include <stdio.h>
+#include <WolframRTL.h>
 #include "runSimulation.h"
-#include "WolframRTL.h"
 #include "run-simulation.h"
 
 static MTensor state, constants, results, points;
@@ -79,11 +79,13 @@ clean_results:
 clean_state: 
   libData->MTensor_free(state);
 
+  WolframLibraryData_free(libData);
   return err;
 }
 
 int experiment_name(const char *name)
 {
+  /* Names must be in the same order as experimentNames in experiments.m. */
   char *names[] = { "An", "Bn", "Ap", "Bp", "Ao", "Bo" };
   int i, nameCount = 6;
   for (i = 0; i < nameCount; i++)
@@ -100,7 +102,7 @@ int experiment_name(const char *name)
 void experiment_init_state(double *points, double *t0, double *f0)
 {
   *t0 = points[1];
-  *f0 = points[2 * 3 + 1];
+  *f0 = points[2 * 3 + 1];  // or (POINTS_COUNT/2 + 1)
 }
 
 int experiment_phase_count(const char *expName, int *phase_count)

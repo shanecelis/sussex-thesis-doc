@@ -1,0 +1,14 @@
+# ignore object files:
+*.o
+*.mo
+
+# binaries
+alps_main
+frog_eval
+run-sim-main
+
+# includes
+include/*
+
+# results
+res*

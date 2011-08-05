@@ -32,10 +32,10 @@ const double targets[4][2] = {{0., 1.},                  /* north */
                               {0., -1.}};                /* south */
 const double target_distance = TARGET_DISTANCE;
 
-double run_frog(const vector<double>& genes, 
-                double targetx, double targety, 
-                const char *expName, 
-                int phase, bool lobotomise)
+int run_frog(const vector<double>& genes, 
+             double targetx, double targety, 
+             const char *expName, 
+             int phase, bool lobotomise, double* run_result)
 {
   int err;
   double constants[CONSTANTS_COUNT], state[STATE_COUNT], result[STATE_COUNT];
@@ -66,10 +66,13 @@ double run_frog(const vector<double>& genes,
 
   if (err) {
     evaluation_failed_count++;
-    return 666.6;
+    *run_result = 666.6;
+    return err;
   } else {
     evaluation_succ_count++;
-    return result[RECORD_BEGIN]/timeMax;
+    
+    *run_result = result[RECORD_BEGIN]/timeMax;
+    return 0;
   }
 }
 
@@ -78,31 +81,41 @@ bool evaluate_frog(vector<double>& fitness,
                    const char* expName, int phase, 
                    int target_index, bool lobotomise)
 {
+  if (target_index < 0) {
+    cerr << "error: target_index < 0" << endl;
+    return false;
+  }
   if (target_index >= target_count) {
     cerr << "error: target_index >= target_count" << endl;
     return false;
   }
-  double dist = run_frog(((Individ_Real*)individ)->get_genes(), 
-                         targets[target_index][0] * target_distance, 
-                         targets[target_index][1] * target_distance, 
-                         expName, phase, lobotomise);
+  double dist;
+  int err = run_frog(((Individ_Real*)individ)->get_genes(), 
+                     targets[target_index][0] * target_distance, 
+                     targets[target_index][1] * target_distance, 
+                     expName, phase, lobotomise, &dist);
 
   fitness[0] = dist/target_distance;
 
-  return true;
+  if (err) {
+    //cerr << "BAD fitness " << fitness[0] << " " << evaluation_failed_count << endl;
+    return false;
+  } else {
+    //cerr << "fitness " << fitness[0] << " " << evaluation_succ_count << endl;
+    return true;
+  }
 }
 
 void setup_pop_gen(Individual* individ_config, AlpsSState* pop)
 {
   (void) individ_config;
-  //pop->set_save_best(true);
   AlpsLayer layer_def;
-  int type = 3;
+  int type = 2;
   int age_gap = 5;
   int age_scheme = ALPS_AGING_FIBONACCI1;
   int Number_Layers = -1;
 
-  pop->set_max_evals(1000);
+  pop->set_max_evals(30000);
 
   if (type == 1) {
     // Configuration for a regular EA/GA:
@@ -116,39 +129,38 @@ void setup_pop_gen(Individual* individ_config, AlpsSState* pop)
     //pop->set_print_results_rate(100); // 400
 
   } else if (type == 2) {
-    Number_Layers = 5;
-    age_gap = 3; //4
+    Number_Layers = 16;
+    age_gap = 10; //4
     //age_scheme = ALPS_AGING_EXP3;
     layer_def.set_select_type(ALPS_SELECT_TOURN);
     //    layer_def.set_select_type(ALPS_SELECT_DC);
-    layer_def.set_size(10);
-    layer_def.set_elitism(0);
+    layer_def.set_size(5);
+    layer_def.set_elitism(1);
     layer_def.set_tourn_size(2);
     layer_def.set_prob_select_prev(0.2);
     pop->set_recomb_prob(0.5);
     pop->set_rec_rand2_prob(1.0);
-    pop->set_print_results_rate(1000);
+    pop->set_print_gen_stats(true);
+    pop->set_print_results_rate(100);
 
   } else if (type == 3) {
 
     // For debug purposes.
     Number_Layers = 3;
-    age_gap = 3; //4
-    //age_scheme = ALPS_AGING_EXP3;
+    age_gap = 1; 
     layer_def.set_select_type(ALPS_SELECT_TOURN);
-    //    layer_def.set_select_type(ALPS_SELECT_DC);
     layer_def.set_size(5);
     layer_def.set_elitism(0);
     layer_def.set_tourn_size(2);
     layer_def.set_prob_select_prev(0.2);
     pop->set_recomb_prob(0.5);
     pop->set_rec_rand2_prob(1.0);
-    pop->set_print_results_rate(100);
-
-    pop->set_max_evals(100);
+    pop->set_print_results_rate(9);
+    pop->set_max_evals(10);
     goal_fitness = 0.9;
+    pop->set_print_gen_stats(true);
   } else {
-    cerr << "evo_real_barebones :: setup_pop_gen() - error, invalid EA type:"
+    cerr << "alps_frog :: setup_pop_gen() - error, invalid EA type:"
          << type << "\n";
     return;
   }
@@ -156,6 +168,25 @@ void setup_pop_gen(Individual* individ_config, AlpsSState* pop)
   pop->config_layers_same(age_scheme, age_gap,
                           Number_Layers, layer_def);
   pop->set_num_runs(1);
+}
+
+void save_population(Alps* pop, const char *pop_save_prefix, int phase)
+{
+  char pop_save_name[255];
+  const char *good_prefix = "";
+  const char *bad_prefix = "BAD"; /* early terminated */
+  if (phase == 0) {
+    // final phase
+    sprintf(pop_save_name, "%s%s.txt", 
+            pop_save_prefix,
+            "FINAL");
+  } else {
+    sprintf(pop_save_name, "%s%s%d.txt", 
+            pop_save_prefix, 
+            phase < 0 ? bad_prefix : good_prefix, 
+            phase);
+  }
+  pop->write(pop_save_name);
 }
 
 int ea_engine(const char *exp_name, int target_index, bool lobotomise, 
@@ -229,9 +260,8 @@ int ea_engine(const char *exp_name, int target_index, bool lobotomise,
       Population->insert_evaluated(fitness, index, individ, 0);
       if (fitness[0] < goal_fitness) {
         // Finished with this stage possibly complete.
-        char pop_save_name[255];
-        sprintf(pop_save_name, "%s-%d.pop", pop_save, phase);
-        Population->write(pop_save_name);
+
+        save_population(Population, pop_save, phase);
 
         cout << phase << " " << evaluation_failed_count << " "<< evaluation_succ_count << endl;
         phase++;
@@ -241,13 +271,14 @@ int ea_engine(const char *exp_name, int target_index, bool lobotomise,
         }
       }
     }
+    // Add a timeout.
   }
   if (! expected_termination) {
-    cout << "-1 " << evaluation_failed_count << " "<< evaluation_succ_count << endl;
-    char pop_save_name[255];
-    sprintf(pop_save_name, "%s--1.pop", pop_save);
-    Population->write(pop_save_name);
+    cout << (-phase) << " " << evaluation_failed_count << " "<< evaluation_succ_count << endl;
+    save_population(Population, pop_save, -phase);
     return 1;    
+  } else {
+    save_population(Population, pop_save, 0);
   }
 
   return 0;
