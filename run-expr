@@ -41,6 +41,9 @@ for ((i = $num; i < ($num + $count); i++)); do
     if [ "$force" -eq 1 ] && [ -f "$outfile"  ]; then
         echo "warning: '$outfile' already exists; skipping." >&2;
     else
-        alps_main "$expName" "$targetIndex" "$lobotomise" "$dir/pop-phase" | tee "$outfile"
+        if ! alps_main "$expName" "$targetIndex" "$lobotomise" "$dir/pop-phase" | tee "$outfile"; then
+            echo "error: alps_main failed with exit code ${PIPESTATUS}" >&2;
+            exit 1;
+        fi
     fi
 done

@@ -135,8 +135,8 @@ int experiment_points(const char *expName, double timeMax,
   return err;
 }
 
-int run_simulation(double *stateArg, double timeArg, double *constantsArg, 
-                   double *stateResult)
+int run_simulation(double *stateArg, double stepSize, double *constantsArg, 
+                   double timeArg, double *stateResult)
 {
   int err = 0, i;
   double *data, *stateData, *result;
@@ -150,10 +150,10 @@ int run_simulation(double *stateArg, double timeArg, double *constantsArg,
   } else {
     for(i = 0; i < STATE_COUNT; i++)
       stateData[i] = 0.0;
-    stateData[22] = 1.0; // tail length
-    stateData[23] = 1.0; // feet length
-    stateData[24] = 0.0; // recording variable
-
+    stateData[TAILSTATE_BEGIN] = 1.0; // tail length
+    stateData[TAILSTATE_BEGIN + 1] = 1.0; // feet length
+    for (i = 0; i < RECORD_COUNT; i++)
+      stateData[RECORD_BEGIN + i] = 0.0; // recording variable
   }
     
 
@@ -174,7 +174,7 @@ int run_simulation(double *stateArg, double timeArg, double *constantsArg,
   //
   // http://rcabreral.blogspot.com/2011/04/mathematica-as-c-code-generator.html
 
-  err = runSimulation(libData, state, timeArg, constants, &results);
+  err = runSimulation(libData, state, stepSize, constants, timeArg, &results);
 
   data = libData->MTensor_getRealData( results );
   for(i = 0; i < STATE_COUNT; i++) {

@@ -33,10 +33,6 @@ static mreal R0_5;
 
 static mreal R0_6;
 
-static mreal R0_7;
-
-static mreal R0_9;
-
 static MTensor T0_0B = 0;
 
 static MTensor* T0_0 = &T0_0B;
@@ -71,7 +67,7 @@ int err = 0;
 if( initialize)
 {
 funStructCompile = libData->compileLibraryFunctions;
-R0_9 = (mreal) 0.3333333333333333;
+R0_5 = (mreal) 0.3333333333333333;
 I0_3 = (mint) 0;
 {
 mint S0[1];
@@ -97,12 +93,10 @@ goto error_label;
 P1 = MTensor_getIntegerDataMacro(*T0_0);
 P1[0] = 1;
 }
-R0_4 = (mreal) 0.1;
 I0_5 = (mint) 2;
-R0_7 = (mreal) 0.6666666666666666;
+R0_6 = (mreal) 0.6666666666666666;
 I0_2 = (mint) 1;
 R0_1 = (mreal) 1.;
-R0_5 = (mreal) 0.4;
 {
 mint S0[1];
 S0[0] = 1;
@@ -114,7 +108,6 @@ goto error_label;
 P2 = MTensor_getIntegerDataMacro(*T0_6);
 P2[0] = 4;
 }
-R0_6 = (mreal) 0.7;
 {
 mint S0[1];
 S0[0] = 1;
@@ -128,6 +121,7 @@ P3[0] = -1;
 }
 I0_6 = (mint) 4;
 I0_4 = (mint) 3;
+R0_4 = (mreal) 0.;
 FP0 = funStructCompile->getFunctionCallPointer("CoerceTensor");
 if( FP0 == 0)
 {
@@ -190,9 +184,9 @@ mint I0_1;
 mreal R0_0;
 mreal R0_2;
 mreal R0_3;
+mreal R0_7;
 mreal R0_8;
-mreal R0_10;
-mreal R0_11;
+mreal R0_9;
 MTensor* T0_1;
 MTensor* T0_3;
 MTensor* T0_4;
@@ -1001,9 +995,9 @@ if( !B0_7)
 {
 goto lab147;
 }
-R0_2 = R0_7 * R0_0;
-R0_3 = (mreal) I0_3;
-R0_8 = (mreal) I0_3;
+R0_3 = R0_6 * R0_0;
+R0_2 = (mreal) I0_3;
+R0_7 = (mreal) I0_3;
 {
 mint S0 = 12;
 err = funStructCompile->MTensor_allocate(T0_8, 3, 1, &S0);
@@ -1012,15 +1006,15 @@ if( err)
 goto error_label;
 }
 P9 = MTensor_getRealDataMacro(*T0_8);
-P9[0] = R0_3;
+P9[0] = R0_2;
 P9[1] = R0_1;
 P9[2] = R0_0;
 P9[3] = R0_1;
 P9[4] = R0_0;
 P9[5] = R0_1;
-P9[6] = R0_8;
+P9[6] = R0_7;
 P9[7] = R0_4;
-P9[8] = R0_2;
+P9[8] = R0_3;
 P9[9] = R0_1;
 P9[10] = R0_0;
 P9[11] = R0_1;
@@ -1040,9 +1034,9 @@ if( !B0_8)
 {
 goto lab155;
 }
-R0_3 = R0_9 * R0_0;
-R0_8 = (mreal) I0_3;
+R0_3 = R0_5 * R0_0;
 R0_2 = (mreal) I0_3;
+R0_7 = (mreal) I0_3;
 {
 mint S0 = 12;
 err = funStructCompile->MTensor_allocate(T0_9, 3, 1, &S0);
@@ -1051,13 +1045,13 @@ if( err)
 goto error_label;
 }
 P10 = MTensor_getRealDataMacro(*T0_9);
-P10[0] = R0_8;
+P10[0] = R0_2;
 P10[1] = R0_1;
 P10[2] = R0_0;
 P10[3] = R0_1;
 P10[4] = R0_0;
 P10[5] = R0_1;
-P10[6] = R0_2;
+P10[6] = R0_7;
 P10[7] = R0_4;
 P10[8] = R0_3;
 P10[9] = R0_1;
@@ -1079,8 +1073,8 @@ if( !B0_9)
 {
 goto lab162;
 }
-R0_8 = (mreal) I0_3;
 R0_2 = (mreal) I0_3;
+R0_7 = (mreal) I0_3;
 {
 mint S0 = 12;
 err = funStructCompile->MTensor_allocate(T0_10, 3, 1, &S0);
@@ -1089,13 +1083,13 @@ if( err)
 goto error_label;
 }
 P11 = MTensor_getRealDataMacro(*T0_10);
-P11[0] = R0_8;
+P11[0] = R0_2;
 P11[1] = R0_1;
 P11[2] = R0_0;
 P11[3] = R0_1;
 P11[4] = R0_0;
 P11[5] = R0_1;
-P11[6] = R0_2;
+P11[6] = R0_7;
 P11[7] = R0_1;
 P11[8] = R0_0;
 P11[9] = R0_1;
@@ -1209,8 +1203,8 @@ if( !B0_7)
 {
 goto lab184;
 }
-R0_8 = (mreal) I0_3;
 R0_2 = (mreal) I0_3;
+R0_7 = (mreal) I0_3;
 {
 mint S0 = 12;
 err = funStructCompile->MTensor_allocate(T0_8, 3, 1, &S0);
@@ -1219,13 +1213,13 @@ if( err)
 goto error_label;
 }
 P9 = MTensor_getRealDataMacro(*T0_8);
-P9[0] = R0_8;
+P9[0] = R0_2;
 P9[1] = R0_1;
 P9[2] = R0_0;
 P9[3] = R0_1;
 P9[4] = R0_0;
 P9[5] = R0_1;
-P9[6] = R0_2;
+P9[6] = R0_7;
 P9[7] = R0_4;
 P9[8] = R0_0;
 P9[9] = R0_1;
@@ -1247,9 +1241,9 @@ if( !B0_8)
 {
 goto lab192;
 }
-R0_8 = R0_7 * R0_0;
-R0_2 = (mreal) I0_3;
-R0_10 = (mreal) I0_3;
+R0_2 = R0_6 * R0_0;
+R0_7 = (mreal) I0_3;
+R0_8 = (mreal) I0_3;
 {
 mint S0 = 12;
 err = funStructCompile->MTensor_allocate(T0_9, 3, 1, &S0);
@@ -1258,15 +1252,15 @@ if( err)
 goto error_label;
 }
 P10 = MTensor_getRealDataMacro(*T0_9);
-P10[0] = R0_2;
+P10[0] = R0_7;
 P10[1] = R0_1;
-P10[2] = R0_8;
+P10[2] = R0_2;
 P10[3] = R0_1;
 P10[4] = R0_0;
 P10[5] = R0_4;
-P10[6] = R0_10;
+P10[6] = R0_8;
 P10[7] = R0_4;
-P10[8] = R0_8;
+P10[8] = R0_2;
 P10[9] = R0_1;
 P10[10] = R0_0;
 P10[11] = R0_1;
@@ -1286,9 +1280,9 @@ if( !B0_9)
 {
 goto lab200;
 }
-R0_2 = R0_9 * R0_0;
-R0_10 = (mreal) I0_3;
-R0_11 = (mreal) I0_3;
+R0_7 = R0_5 * R0_0;
+R0_8 = (mreal) I0_3;
+R0_9 = (mreal) I0_3;
 {
 mint S0 = 12;
 err = funStructCompile->MTensor_allocate(T0_10, 3, 1, &S0);
@@ -1297,15 +1291,15 @@ if( err)
 goto error_label;
 }
 P11 = MTensor_getRealDataMacro(*T0_10);
-P11[0] = R0_10;
+P11[0] = R0_8;
 P11[1] = R0_1;
-P11[2] = R0_2;
+P11[2] = R0_7;
 P11[3] = R0_1;
 P11[4] = R0_0;
 P11[5] = R0_4;
-P11[6] = R0_11;
+P11[6] = R0_9;
 P11[7] = R0_4;
-P11[8] = R0_2;
+P11[8] = R0_7;
 P11[9] = R0_1;
 P11[10] = R0_0;
 P11[11] = R0_1;
@@ -1325,8 +1319,8 @@ if( !B0_10)
 {
 goto lab207;
 }
-R0_10 = (mreal) I0_3;
-R0_11 = (mreal) I0_3;
+R0_8 = (mreal) I0_3;
+R0_9 = (mreal) I0_3;
 {
 mint S0 = 12;
 err = funStructCompile->MTensor_allocate(T0_11, 3, 1, &S0);
@@ -1335,13 +1329,13 @@ if( err)
 goto error_label;
 }
 P12 = MTensor_getRealDataMacro(*T0_11);
-P12[0] = R0_10;
+P12[0] = R0_8;
 P12[1] = R0_4;
 P12[2] = R0_0;
 P12[3] = R0_4;
 P12[4] = R0_0;
 P12[5] = R0_4;
-P12[6] = R0_11;
+P12[6] = R0_9;
 P12[7] = R0_1;
 P12[8] = R0_0;
 P12[9] = R0_1;

@@ -39,6 +39,7 @@ makeDiffFuncWithConstants[eqns_, vars_, var_, constants_] :=
                     Evaluate[
                         Module[{rules = substituteRules[constants, c]},
                                Sow[rules];
+                               (* the 1 is for the dt/dt *)
                                {1}~Join~body /. MapThread[#1 :>  b~Part~#2&, {{var}~Join~vars, Range[n + 1]}] /. rules]
                             ]
                    ]  
@@ -90,6 +91,19 @@ makeIntegrator[onestep_, h_] :=
                  {Nest::intnm, Part::partd}];
            solver]
 
+makeIntegrator2[onestep_] := 
+    Module[{solver},
+           solver = 
+           Quiet[Function[{s, h, c, time}, 
+                          Evaluate[Nest[Function[{s2}, onestep[s2, h, c]], s, Ceiling[time/h]]]], 
+                 {Nest::intnm, Part::partd}];
+           solver]
+
+makeIntegrator2C[onestep_] := 
+    Quiet[Compile[{{s, _Real, 1}, {h, _Real, 0}, {c, _Real, 1}, {t, _Real, 0}},
+                  Evaluate[makeIntegrator2[onestep][s,h,c,t]],
+                  Evaluate[myCompileOptions]
+                 ], {Part::partd, Nest::intnm}]
 
 makeIntegratorC[onestep_, h_] := 
     Quiet[Compile[{{s, _Real, 1}, {t, _Real, 0}, {c, _Real, 1}},
@@ -136,6 +150,8 @@ runSolver[solver_, init_, deltat_, c_, maxt_] :=NestList[solver[#, deltat, c]&, 
 
 
 runSolver2[solver_, init_, maxt_, c_, deltat_] :=NestList[solver[#, deltat, c]&, init, Ceiling[maxt/deltat]]
+
+runSolver3[solver_, init_, deltat_, c_, maxt_] :=NestList[solver[#, RK4StepSize, c, deltat]&, init, Ceiling[maxt/deltat]]
 
 
 
@@ -264,76 +280,8 @@ makeFrogCTRNNSolver[] :=
 
 RK4StepSize = 0.02;
 
-makeFrogMorphSolverOld[] := 
-    Module[{peqns, pvars, ceqns, cvars, ctrnn, eqns, target, sensors, 
-            motorCoefficients, sensorCoefficients, ctrnnLength, tailPoints, 
-            footPoints, tvars, fvars, tv, fv, tx, ty, subrules, diff, step, 
-            collision, newstep, reqns, rvars},
-           tailPoints = Partition[tvars = Array[tv,{3 * 2}],2];
-           footPoints = Partition[fvars = Array[fv,{3 * 2}],2];
 
-           {peqns,pvars} =eqnsForFrog[preParams -> {
-               l -> lg[t] lmax,
-               fl -> fg[t] lmax,
-               (*Tq4 ->  0 alwaysKick + legCollision + Tmax Clip[ys[nodeCount][t]]*)
-               Tq4 ->  0tailTorqueCTRNN [q4[t]]+ Tmax Clip[ys[1][t]],
-               Tq5 ->  0footTorqueCTRNN [q5[t]]+ Tmax Clip[ys[2][t]],
-               Tq6 ->  0footTorqueCTRNN [q6[t]]+ Tmax Clip[ys[3][t]],
-               Tq7 ->  0footTorqueCTRNN [q7[t]]+ Tmax Clip[ys[4][t]],
-               Tq8 ->  0footTorqueCTRNN [q8[t]]+ Tmax Clip[ys[5][t]]
-                                                   }];
-           target = {tx,ty};
-           sensors = { (* 14 sensors (should length of tail be included?) *)
-                       Norm[{u1[#], u2[#]}]&, 
-                       u3[#]&, 
-                       Norm[target - {q1[#], q2[#]} ]&, 
-                       VectorAngle[target - {q1[#], q2[#]}, 
-                                   {-Sin[q3[#]],Cos[q3[#]]}]&,
-                       q4[#]/(Pi/2)&,
-                       u4[#]&,
-                       q5[#]/(Pi/2)&,
-                       u5[#]&, 
-                       q6[#]/(Pi/2)&,
-                       u6[#]&, 
-                       q7[#]/(Pi/2)&,
-                       u7[#]&, 
-                       q8[#]/(Pi/2)&,
-                       u8[#]&
-                     };
-           ctrnn  = makeSymbolicCTRNNLinSensor[nodeCount,Length[sensors]];
-           ctrnn[[3]] = makeLinSensorInputs[ctrnn, sensors];
-           {ceqns, cvars} = eqnsForCTRNN[ctrnn];
-           ctrnn[[3]] = {};
-           geqns = {lg'[t] == makeDiffLinearPiecewise[tailPoints][t],
-                    fg'[t] == makeDiffLinearPiecewise[footPoints][t]};
-           gvars = {lg[t], fg[t]};
-
-           reqns = {r[1]'[t] == Norm[target - {q1[t], q2[t]} ]};
-           rvars = {r[1][t]};
-
-           (*eqns = solveEqnsForDotVars[peqns~Join~ceqns /. Clip -> myClip, pvars~Join~cvars, t];*)
-
-           (*
-           subrules = substituteRules[joinFlat[ctrnn,target,tvars,fvars], c];
-           eqns = peqns~Join~ceqns /.  subrules /. Clip -> myClip;
-
-              makeEulerSolverWithConstantsC[eqns, pvars~Join~cvars, t, 0.001
-                                         (*,postProcess -> postProcessFrog*)]*)
-
-           eqns = peqns~Join~ceqns~Join~geqns~Join~reqns /. Clip -> myClip;
-           diff = makeDiffFuncWithConstantsC[eqns, pvars~Join~cvars~Join~gvars~Join~rvars, t, 
-                                             joinFlat[ctrnn,target,tvars,fvars]];
-           (*step = makeEulerStepWithConstantsC[diff];*)
-           step = makeRungeKuttaStepWithConstantsC[diff];
-           collision = makeProcessCollisionC[Length[eqns] + 1];
-           newstep = Compile[{{s, _Real, 1}, {h, _Real, 0}, {c, _Real, 1}},
-                             collision[step[s, h, c]],
-                             Evaluate[myCompileOptions]];
-           (* was stable with 0.02 *)
-           makeIntegratorC[newstep, RK4StepSize]
-          ]
-
-makeFrogMorphSolver[] := 
+makeFrogMorphDiff[] := 
     Module[{peqns, pvars, ceqns, cvars, ctrnn, eqns, target, sensors, 
             motorCoefficients, sensorCoefficients, ctrnnLength, tailPoints, 
             footPoints, tvars, fvars, tv, fv, tx, ty, subrules, diff, step, 
@@ -344,7 +292,6 @@ makeFrogMorphSolver[] :=
            myPreParams = {
                l     -> lg[t] lmax,
                fl    -> fg[t] flmax,
-               (*Tq4 ->  0 alwaysKick + legCollision + Tmax Clip[ys[nodeCount][t]]*)
                Tq4   -> Tmax (0. + 1 Clip[ys[1][t]]),
                Tq5   -> Tfmax Clip[ys[2][t]],
                Tq6   -> Tfmax Clip[ys[3][t]],
@@ -371,7 +318,7 @@ makeFrogMorphSolver[] :=
                        q8[#]/(Pi/2)&,
                        u8[#]/(1/s)&
                      } //. myPreParams~Join~params;
-           (*{m -> 1, s -> 1}*);
+
            ctrnn  = makeSymbolicCTRNNLinSensor[nodeCount,Length[sensors]];
            ctrnn[[3]] = makeLinSensorInputs[ctrnn, sensors];
            {ceqns, cvars} = eqnsForCTRNN[ctrnn];
@@ -380,17 +327,9 @@ makeFrogMorphSolver[] :=
                     fg'[t] == makeDiffLinearPiecewise[footPoints][t]};
            gvars = {lg[t], fg[t]};
 
-           reqns = {r[1]'[t] == Norm[target - {q1[t], q2[t]} ]};
-           rvars = {r[1][t]};
-
-           (*eqns = solveEqnsForDotVars[peqns~Join~ceqns /. Clip -> myClip, pvars~Join~cvars, t];*)
-
-           (*
-           subrules = substituteRules[joinFlat[ctrnn,target,tvars,fvars], c];
-           eqns = peqns~Join~ceqns /.  subrules /. Clip -> myClip;
-
-              makeEulerSolverWithConstantsC[eqns, pvars~Join~cvars, t, 0.001
-                                         (*,postProcess -> postProcessFrog*)]*)
+           reqns = {r[1]'[t] == Norm[target - {q1[t], q2[t]} ],
+                    r[2]'[t] == u2[t]};
+           rvars = {r[1][t], r[2][t]};
 
            eqns = peqns~Join~ceqns~Join~geqns~Join~reqns /. Clip -> myClip;
            diff = makeDiffFuncWithConstantsC[eqns, 
@@ -398,14 +337,20 @@ makeFrogMorphSolver[] :=
                                              t, 
                                              joinFlat[ctrnn,target,tvars,fvars]
                                             ];
+           diff]
+
+
+makeFrogMorphSolver[] := 
+    Module[{step, collision, newstep},
+           diff = makeFrogMorphDiff[];
            (*step = makeEulerStepWithConstantsC[diff];*)
            step = makeRungeKuttaStepWithConstantsC[diff];
-           collision = makeProcessCollisionC[Length[eqns] + 1];
+           collision = makeProcessCollisionC[stateCount]; 
            newstep = Compile[{{s, _Real, 1}, {h, _Real, 0}, {c, _Real, 1}},
                              collision[step[s, h, c]],
                              Evaluate[myCompileOptions]];
-           makeIntegratorC[newstep, RK4StepSize]
-           (*diff*)
+           (*makeIntegratorC[newstep, RK4StepSize]*)
+           makeIntegrator2C[newstep]
           ]
 
 
@@ -605,9 +550,18 @@ targetCount      = 2;
 limbLengthsCount = 2;
 growthCount      = 2 * 3 * 2;
 pointsCount      = growthCount;
-recordCount      = 1;
+recordCount      = 2;
 stateCount       = 1 + pstateCount + nodeCount  + limbLengthsCount + recordCount;
 constantsCount   = len + targetCount + growthCount ;
+
+recordBegin      = 25;
+tailstateBegin   = 23;
+qstateBegin      = 2;
+ustateBegin      = 10;
+
+
+targetBegin      = geneCount + 1;
+pointsBegin      = geneCount + targetCount + 1
  
 makeGeneToCTRNNSolverC[frogSolver_] := 
     Block[{state, constants, time},
@@ -622,6 +576,23 @@ makeGeneToCTRNNSolverC[frogSolver_] :=
                          {time, _Real, 0},
                          {constants, _Real, 1}}, 
                         solver[state, time, carr2],
+                        Evaluate[myCompileOptions]]]]]
+
+
+makeGeneToCTRNNSolver2C[frogSolver_] := 
+    Block[{state, constants, time, stepSize},
+    Module[{carr = myArray[constants, constantsCount],
+            ctrnn},
+           ctrnn = geneToCTRNNLinSensor[carr[[1;;len]]];
+           With[{solver = frogSolver,
+                 carr2 = joinFlat[ctrnn,carr[[len + 1;;-1]]]
+                },
+
+                Compile[{{state, _Real, 1}, 
+                         {stepSize, _Real, 0},
+                         {constants, _Real, 1},
+                         {time, _Real, 0}}, 
+                        solver[state, stepSize, carr2, time],
                         Evaluate[myCompileOptions]]]]]
 
 

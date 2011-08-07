@@ -11,7 +11,7 @@ nodeCount = 5; (* number of CTRNN nodes *)
 
 
 (* regular geneCount *)
-geneCount = nodeCount^2 + 2 nodeCount + 1; (* number of gene elements *)
+(*geneCount = nodeCount^2 + 2 nodeCount + 1; (* number of gene elements *)*)
 
 
 (* LinSensor geneCount *)
@@ -93,37 +93,6 @@ mutate[L_] := (genes[[L]] = Map[Clip[#, {0, 1}]&,genes[[L]] + mutationVector[] ]
 initPop[] := (genes = RandomReal[{0, 1}, {pop, len}];evaluationCache = Table[None, {pop}];)
 
 
-(*evaluate[i_] := 
-  Module[{ctrnn, state,n, range, tmax},
-  ctrnn = geneToCTRNN[i];
-  tmax = 20;
-  (* need to give the initial state *)
-         state = makeRandomCTRNNState[nodeCount];
-         sol = runWithCTRNN[ctrnn, state,{0,0,0,0,  0,0,.01,.01}, tmax];
-         (*Quiet[solveCTRNN[ctrnn,state]];
-           calcFitness[]*)
-         Norm[{q1[tmax], q2[tmax]}] /. sol 
-        ]*)
-
-
-(*evaluate[iOrGene_,target_] := 
-  Module[{ctrnn, endState,n, range, tmax, q1,q2, q3, q4, sensorCoeff},
-  ctrnn = geneToCTRNNLinSensor[iOrGene];
-  Print[ctrnn];
-  (*sensorCoeff = geneToSensorCoefficients[i];*)
-         tmax = 20.;
-         (* need to give the initial state *)
-         ctrnn[[3]] = Table[0, {nodeCount}];
-         (*target = {0, -2};*)
-         endState = tadpoleSolver[Table[0.01,{10}](*~Join~makeZeroCTRNNState[nodeCount]*), tmax, Flatten[ctrnn]~Join~target];
-         Print[endState];
-         q1 = endState[[2]];
-         q2 = endState[[3]];
-         q3 = endState[[4]];
-         q4 = endState[[5]];
-         Norm[target - {q1,q2}]
-        ]*)
-
 argsForTarget[gene_, target_, tmax_, expName_, phaseArg_] :=     
     Module[{experiment, phase, args},
            experiment = expName;
@@ -134,16 +103,28 @@ argsForTarget[gene_, target_, tmax_, expName_, phaseArg_] :=
                         makeZeroCTRNNState[nodeCount] (* cvars *), 
                         experimentInit[experiment, phase] (* gvars: 
                                                              tail and feet sizes *),
-                        {0.} (* rvars: initial recording variables *)],
-               tmax, 
+                        Table[0., {recordCount}] (* rvars: initial recording variables *)],
+               RK4StepSize,
                joinFlat[gene, 
                         target, 
-                        experimentPoints[experiment, tmax, phase]]};
+                        experimentPoints[experiment, tmax, phase]],
+               tmax};
            args]
 
 
 keepGoodChance = 0.01;
 keepFailedChance = 1.;
+
+
+fitnessToTargetRecordGoodAndBad[i_, target_, experiment_, phase_] := 
+    Module[{fitness},
+           fitness = fitnessToTarget[i, target, experiment, phase];
+           If[fitness == 666.6,
+              If[RandomReal[{0,1}] < keepFailedChance,
+                 failedArgs = Join[{args}, failedArgs]],
+              If[RandomReal[{0,1}] < keepGoodChance,
+                 goodArgs = Join[{args}, goodArgs]]];
+           fitness]
 
 (*
    Calculate the mean distance using the diff 
@@ -153,25 +134,42 @@ fitnessToTarget[i_, target_, experiment_, phase_] :=
            tmax = 10.0;
            args = argsForTarget[getGene[i], target, tmax, experiment, phase];
            fitness = Catch[endState = runSimulation@@args;
-                           endState[[-1]]/(tmax * Norm[target])];
+                           endState[[recordBegin]]/(tmax * Norm[target])];
            If[fitness === $Failed,
-              If[RandomReal[{0,1}] < keepFailedChance,
-                 failedArgs = Join[{args}, failedArgs]];
               666.6,
-              If[RandomReal[{0,1}] < keepGoodChance,
-                 goodArgs = Join[{args}, goodArgs]];
               fitness]
           ] 
+
+fitnessForSpeed[i_, experiment_, phase_] := 
+    Module[{ (*endState,*) n, tmax, fitness, args, target},
+           tmax = 10.0;
+           target = {0,0.1};
+           args = argsForTarget[getGene[i], target, tmax, experiment, phase];
+           fitness = Catch[endState = runSimulation@@args;
+                           endState[[recordBegin + 1]]/tmax];
+           If[fitness === $Failed,
+              666.6,
+              fitness]
+          ]
+
+fitnessForSpeedData[i_, experiment_, phase_] := 
+    Module[{ (*endState,*) n, tmax, fitness, args, target},
+           tmax = 10.0;
+           target = {0,0.1};
+           args = argsForTarget[getGene[i], target, tmax, experiment, phase];
+           args[[2]] = 0.1;
+           runSolver3[runSimulation, Sequence@@args]
+          ]
+
 
 fitnessToTargetData[i_, target_, experiment_, phase_] := 
     Module[{ (*endState,*) n, tmax, fitness, args, data},
            tmax = 10.0;
            args = argsForTarget[getGene[i], target, tmax, experiment, phase];
-           data = Catch[runSolver2[runSimulation, Sequence@@args, 0.1]];
+           args[[2]] = 0.1;
+           data = runSolver3[runSimulation, Sequence@@args];
            data
           ] 
-
-
 
 
 fitnessToTopTarget[i_] := evaluateToTarget[i, {0, 1} (.1m) //. params, expName, phase]

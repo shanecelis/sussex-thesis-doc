@@ -7,12 +7,12 @@
 
 
 loadall[] := Module[{},
-<< "bga.m";
 << "ctrnn.m";
+<< "bga.m";
 << "frog-ga.m";
 << "frog-simulation.m";
-<< "export-c-code.m";
 << "runge-kutta.m";
+<< "export-c-code.m";
 << "experiments.m";
 "loaded."]
 

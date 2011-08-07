@@ -2,6 +2,12 @@
   alps_frog.cpp 
 */
 
+#include <cmath>
+#include <cstdio>
+#include <string>
+#include <signal.h>
+using namespace std;
+
 #include "alps/alps.h"
 #include "alps/sstate.h"
 #include "alps/gen.h"
@@ -11,36 +17,45 @@
 using namespace alps;
 using namespace alps_random;
 
-#include <cmath>
-#include <cstdio>
-#include <string>
-using namespace std;
+#include "alps_frog.h"
 
 extern "C" {
 #include "run-simulation.h"
 }
 #include "genes_real.h"
 
-static int evaluation_succ_count = 0;
-static int evaluation_failed_count = 0;
-static double goal_fitness = 0.5;
+static int    evaluation_succ_count = 0;
+static int    evaluation_failed_count = 0;
+static bool   asked_to_terminate = false;
 
-const int target_count = 4;
-const double targets[4][2] = {{0., 1.},                  /* north */
-                              {-1./M_SQRT2, 1./M_SQRT2}, /* north-west */
-                              {-1., 0.},                 /* west */
-                              {0., -1.}};                /* south */
-const double target_distance = TARGET_DISTANCE;
+const int     target_count = 4;
+const double  targets[4][2] = {{0., 1.},                  /* north */
+                               {-1./M_SQRT2, 1./M_SQRT2}, /* north-west */
+                               {-1., 0.},                 /* west */
+                               {0., -1.}};                /* south */
+const double  target_distance = TARGET_DISTANCE;
+
+struct fitness_evaluator
+{
+  bool minimise;
+  double (*evaluator)(double * result, double time_max);
+  double goal_fitness;
+};
+
+double mean_distance_norm(double * result, double time_max);
+double mean_speed(double * result, double time_max);
+
+fitness_evaluator fitness_evals[] = {{true,  mean_distance_norm, 0.5},
+                                     {false, mean_speed, 10000.0}};
 
 int run_frog(const vector<double>& genes, 
+             double time_max,
              double targetx, double targety, 
              const char *expName, 
-             int phase, bool lobotomise, double* run_result)
+             int phase, bool lobotomise, double* result)
 {
   int err;
-  double constants[CONSTANTS_COUNT], state[STATE_COUNT], result[STATE_COUNT];
-
-  double timeMax = 10.;
+  double constants[CONSTANTS_COUNT], state[STATE_COUNT];//, result[STATE_COUNT];
 
   for (int i = 0; i < GENE_COUNT; i++) {
     constants[i] = genes[i];
@@ -54,7 +69,7 @@ int run_frog(const vector<double>& genes,
   
   constants[TARGET_BEGIN] = targetx;
   constants[TARGET_BEGIN + 1] = targety;
-  experiment_points(expName, timeMax, phase, constants + POINTS_BEGIN);
+  experiment_points(expName, time_max, phase, constants + POINTS_BEGIN);
   experiment_init_state(constants + POINTS_BEGIN, 
                         state + TAILSTATE_BEGIN, 
                         state + TAILSTATE_BEGIN + 1);
@@ -62,24 +77,33 @@ int run_frog(const vector<double>& genes,
     lobotomise_brains(constants);
   }
 
-  err = run_simulation(state, timeMax, constants, result);
+  err = run_simulation(state, STEP_SIZE, constants, time_max, result);
 
   if (err) {
     evaluation_failed_count++;
-    *run_result = 666.6;
     return err;
   } else {
     evaluation_succ_count++;
-    
-    *run_result = result[RECORD_BEGIN]/timeMax;
     return 0;
   }
+}
+
+double mean_distance_norm(double *result, double time_max)
+{
+  /* normalised average distance to target */
+  double dist = result[RECORD_BEGIN]/time_max;
+  return dist/target_distance;
+}
+
+double mean_speed(double *result, double time_max)
+{
+  return result[RECORD_BEGIN + 1]/time_max; 
 }
 
 bool evaluate_frog(vector<double>& fitness, 
                    Individual* individ,
                    const char* expName, int phase, 
-                   int target_index, bool lobotomise)
+                   int target_index, bool lobotomise, int fitness_type)
 {
   if (target_index < 0) {
     cerr << "error: target_index < 0" << endl;
@@ -90,12 +114,16 @@ bool evaluate_frog(vector<double>& fitness,
     return false;
   }
   double dist;
+  double time_max = 10.0;
+  double result[STATE_COUNT];
   int err = run_frog(((Individ_Real*)individ)->get_genes(), 
+                     time_max,
                      targets[target_index][0] * target_distance, 
                      targets[target_index][1] * target_distance, 
-                     expName, phase, lobotomise, &dist);
+                     expName, phase, lobotomise, result);
 
-  fitness[0] = dist/target_distance;
+  double (*fitfunc)(double *, double) = fitness_evals[fitness_type].evaluator;
+  fitness[0] = (*fitfunc)(result, time_max);
 
   if (err) {
     //cerr << "BAD fitness " << fitness[0] << " " << evaluation_failed_count << endl;
@@ -105,6 +133,7 @@ bool evaluate_frog(vector<double>& fitness,
     return true;
   }
 }
+
 
 void setup_pop_gen(Individual* individ_config, AlpsSState* pop)
 {
@@ -157,7 +186,7 @@ void setup_pop_gen(Individual* individ_config, AlpsSState* pop)
     pop->set_rec_rand2_prob(1.0);
     pop->set_print_results_rate(9);
     pop->set_max_evals(10);
-    goal_fitness = 0.9;
+    fitness_evals[0].goal_fitness = 0.9;
     pop->set_print_gen_stats(true);
   } else {
     cerr << "alps_frog :: setup_pop_gen() - error, invalid EA type:"
@@ -170,50 +199,55 @@ void setup_pop_gen(Individual* individ_config, AlpsSState* pop)
   pop->set_num_runs(1);
 }
 
-void save_population(Alps* pop, const char *pop_save_prefix, int phase)
+
+char *save_population(Alps* pop, const char *pop_save_prefix, const char *suffix)
 {
-  char pop_save_name[255];
-  const char *good_prefix = "";
-  const char *bad_prefix = "BAD"; /* early terminated */
-  if (phase == 0) {
-    // final phase
-    sprintf(pop_save_name, "%s%s.txt", 
-            pop_save_prefix,
-            "FINAL");
-  } else {
-    sprintf(pop_save_name, "%s%s%d.txt", 
-            pop_save_prefix, 
-            phase < 0 ? bad_prefix : good_prefix, 
-            phase);
-  }
+  static char pop_save_name[255];
+  sprintf(pop_save_name, "%s%s.pop", 
+          pop_save_prefix,
+          suffix);
   pop->write(pop_save_name);
+  return pop_save_name;
 }
 
-int ea_engine(const char *exp_name, int target_index, bool lobotomise, 
-              const char *pop_save)
+char *save_population_for_phase(Alps* pop, const char *pop_save_prefix, int phase)
 {
-  
+  char suffix[255];
+  const char *good_prefix = "";
+  const char *bad_prefix = "BAD"; /* early terminated */
+  sprintf(suffix, "%s%d", 
+          phase < 0 ? bad_prefix : good_prefix, 
+          phase);
+  return save_population(pop, pop_save_prefix, suffix);
+}
+
+
+int ea_engine(const char *exp_name, int target_index, bool lobotomise, 
+              const char *pop_save, int fitness_type)
+{
+  time_t begin = time(NULL);
   seed_random((long) time(NULL));
   if (is_random_seed_set()) {
     cout << "random-seed-set " << get_random_seed() << endl;
   } else {
     cout << "random-seed-NOT-set " << get_random_seed() << endl;
   }
+  cout << "fitness-type " << fitness_type << endl;
 
   int Number_Genes = GENE_COUNT; // minus the size of the target
   //const char *exp_name = "Ap";
   int phase = 1;
   int phase_count;
-  int err;
+  int err = 0;
   err = experiment_phase_count(exp_name, &phase_count);
   if (err) {
     cerr << "error: phase count failed (" << err << ")" << endl;
-    err;
+    return err;
   }
 
-  Genes_Real *individ_config = new Genes_Real(Number_Genes);
-  individ_config->mutate_prob = 0.05;
-  //Individ_Real *individ_config = new Individ_Real(Number_Genes);
+  /*Genes_Real *individ_config = new Genes_Real(Number_Genes);
+    individ_config->mutate_prob = 0.05;*/
+  Individ_Real *individ_config = new Individ_Real(Number_Genes);
 
   individ_config->set_init_minmax(0.0, 1.0);
   individ_config->set_minmax(0.0, 1.0);
@@ -229,10 +263,15 @@ int ea_engine(const char *exp_name, int target_index, bool lobotomise,
   setup_pop_gen(individ_config, (AlpsSState*)Population);
 
   // Population->set_print_debug(true);
-  Population->set_minimize();
-  //Population->set_maximize();
   //Population->write_header(cout);
   bool expected_termination = false;
+  fitness_evaluator fit_eval = fitness_evals[fitness_type];
+  
+  if (fit_eval.minimise) {
+    Population->set_minimize();
+  } else {
+    Population->set_maximize();
+  }
   
   while (!Population->is_finished()) {
     int index;
@@ -247,21 +286,23 @@ int ea_engine(const char *exp_name, int target_index, bool lobotomise,
     }
 
     vector<double> fitness;
-    fitness.resize(5);
+    fitness.resize(1);
     int result = evaluate_frog(fitness, individ, 
                                exp_name, phase, 
                                target_index, 
-                               lobotomise);
+                               lobotomise,
+                               fitness_type);
     if (result == false) {
       // Error evaluating this individual.
       Population->evaluate_error(index, individ);
     } else {
       // Evaluated successfully.
       Population->insert_evaluated(fitness, index, individ, 0);
-      if (fitness[0] < goal_fitness) {
+      if ((fit_eval.minimise && fitness[0] < fit_eval.goal_fitness) ||
+          (!fit_eval.minimise && fitness[0] > fit_eval.goal_fitness)) {
         // Finished with this stage possibly complete.
 
-        save_population(Population, pop_save, phase);
+        save_population_for_phase(Population, pop_save, phase);
 
         cout << phase << " " << evaluation_failed_count << " "<< evaluation_succ_count << endl;
         phase++;
@@ -271,15 +312,36 @@ int ea_engine(const char *exp_name, int target_index, bool lobotomise,
         }
       }
     }
+    if (asked_to_terminate) {
+      char *filename = save_population(Population, pop_save, "KILLED");
+      cerr << "warning: killed; writing population to '" << filename << "'." << endl;
+      cout << "CTRL-C KILLED" << endl;
+      break;
+    }
     // Add a timeout.
   }
   if (! expected_termination) {
-    cout << (-phase) << " " << evaluation_failed_count << " "<< evaluation_succ_count << endl;
-    save_population(Population, pop_save, -phase);
-    return 1;    
+    if (! asked_to_terminate) {
+      cout << (-phase) << " " << evaluation_failed_count << " "<< evaluation_succ_count << endl;
+      save_population_for_phase(Population, pop_save, -phase);
+      err = 1;    
+    } else {
+      err = 3;
+    }
   } else {
-    save_population(Population, pop_save, 0);
+    save_population(Population, pop_save, "FINAL");
   }
+  time_t end = time(NULL);
+  cout << "seconds-elapsed " << (end - begin) << endl;
+  return err;
+}
 
-  return 0;
+void register_signal_handlers()
+{
+  (void) signal(SIGINT, signal_func);
+}
+
+void signal_func(int sig)
+{
+  asked_to_terminate = true;
 }

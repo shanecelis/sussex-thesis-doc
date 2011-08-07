@@ -13,7 +13,7 @@ makeDiffLinearPiecewise[points_] :=
             ]
 
 
-minimumLimbLength = .1;
+minimumLimbLength = 0.0;
 
 
 linearFit[{{a_,b_},{c_,d_}}, fun_, var_] := If[a == c,

@@ -27,7 +27,10 @@ fi
 for target in 1 2 3 4; do 
     for lobotomise in 0 1; do
         for exp in Bo An Bn Ap Bp Ao; do
-            run-expr -n $num -c $count -d "$1" $exp $target $lobotomise
+            if ! run-expr -n $num -c $count -d "$1" $exp $target $lobotomise; then
+                echo "error: run-expr exited with error code ${PIPESTATUS}" >&2;
+                exit 1;
+            fi
         done
     done
 done
