@@ -62,8 +62,8 @@ myCompileOptions = Sequence[
         "ExpressionOptimization" -> True }, 
     "RuntimeOptions" ->  { 
         "RuntimeErrorHandler" :> Throw[$Failed],
-        "CatchMachineOverflow" -> True,
-        "CatchMachineUnderflow" -> True
+        "CatchMachineOverflow" -> False,
+        "CatchMachineUnderflow" -> False
                          }
                            ];
 
@@ -354,6 +354,19 @@ makeFrogMorphSolver[] :=
           ]
 
 
+makeFrogAdaptiveSolver[] := 
+    Module[{step, collision, newstep},
+           diff = makeFrogMorphDiff[];
+           step = makeRungeKuttaAdaptiveStepWithConstants2C[diff, 1*^-2];
+           collision = makeProcessCollisionC[stateCount + 2 (* + 2 for {hnext, hdid} *)]; 
+           newstep = Compile[{{s, _Real, 1}, {h, _Real, 0}, {c, _Real, 1}},
+                             collision[step[s, h, c]],
+                             Evaluate[myCompileOptions]];
+           makeAdaptiveIntegratorWithConstantsDebugC[newstep]
+          ]
+
+
+
 makeFrogMKGSSolver[] := 
     Module[{peqns, pvars, ceqns, cvars, ctrnn, eqns, target, sensors, 
             motorCoefficients, sensorCoefficients, ctrnnLength, tailPoints, 
@@ -594,6 +607,22 @@ makeGeneToCTRNNSolver2C[frogSolver_] :=
                          {time, _Real, 0}}, 
                         solver[state, stepSize, carr2, time],
                         Evaluate[myCompileOptions]]]]]
+
+
+makeGeneToCTRNNC[] := 
+    Block[{state, constants, time, stepSize},
+    Module[{carr = myArray[constants, constantsCount],
+            ctrnn},
+           ctrnn = geneToCTRNNLinSensor[carr[[1;;len]]];
+           With[{solver = frogSolver,
+                 carr2 = joinFlat[ctrnn,carr[[len + 1;;-1]]]
+                },
+
+                Compile[{{constants, _Real, 1}},
+                        carr2,
+                        Evaluate[myCompileOptions]]]]]
+
+
 
 
 exportToC[compiledFun_, filenamePrefix_] := 

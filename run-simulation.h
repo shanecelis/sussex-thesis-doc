@@ -2,7 +2,7 @@
 
 #define METERS           1.0
 
-#define TARGET_DISTANCE  (0.2 * METERS)
+#define TARGET_DISTANCE  (0.1 * METERS)
 
 #define STEP_SIZE        0.02
 
@@ -23,6 +23,10 @@
 #define CONSTANTS_COUNT  (GENE_COUNT + TARGET_COUNT + POINTS_COUNT)
 #define TARGET_BEGIN     (GENE_COUNT)
 #define POINTS_BEGIN     (GENE_COUNT + TARGET_COUNT)
+
+//#define runSimulation runSimulationAdaptive
+//#define Initialize_runSimulation Initialize_runSimulationAdaptive
+//#define Uninitialize_runSimulation Uninitialize_runSimulationAdaptive
 
 int sim_init();
 

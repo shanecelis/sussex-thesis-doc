@@ -4,9 +4,13 @@
 int main(int argc, char **argv)
 {
   int i, err;
-  double result[STATE_COUNT];
+  double state[STATE_COUNT], result[STATE_COUNT];
   sim_init();
-  err = run_simulation(0, 0.01, 0, 10.0, result);
+
+  for (i = 0; i <STATE_COUNT; i++) {
+    state[i] = 0.01;
+  }
+  err = run_simulation(state, 0.01, 0, 10.0, result);
 
   if (err) {
     fprintf(stderr, "error: %d\n", err);

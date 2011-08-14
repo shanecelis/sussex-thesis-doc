@@ -9,6 +9,12 @@
 static MTensor state, constants, results, points;
 static WolframLibraryData libData = 0;
 
+#define runSimulation frogRHS 
+#define Initialize_runSimulation Initialize_frogRHS 
+#define Uninitialize_runSimulation Uninitialize_frogRHS 
+
+#define Initialize_experiments Initialize_frogRHS 
+#define Uninitialize_experiments Uninitialize_frogRHS 
 
 int sim_init()
 {
@@ -83,7 +89,7 @@ clean_state:
   return err;
 }
 
-int experiment_name(const char *name)
+int experiment_name(const char *name) 
 {
   /* Names must be in the same order as experimentNames in experiments.m. */
   char *names[] = { "An", "Bn", "Ap", "Bp", "Ao", "Bo" };
@@ -174,7 +180,8 @@ int run_simulation(double *stateArg, double stepSize, double *constantsArg,
   //
   // http://rcabreral.blogspot.com/2011/04/mathematica-as-c-code-generator.html
 
-  err = runSimulation(libData, state, stepSize, constants, timeArg, &results);
+  //err = runSimulation(libData, state, stepSize, constants, timeArg, &results);
+  err = runSimulation(libData, state, constants, &results);
 
   data = libData->MTensor_getRealData( results );
   for(i = 0; i < STATE_COUNT; i++) {

@@ -26,7 +26,7 @@ geneToCTRNN[i_] := geneToCTRNN[genes[[i]]]
            n = nodeCount;
            W = Partition[Map[Rescale[#, {0, 1}, 4{-1, 1}]&,gene[[1;;n^2]]],n];
            theta = Map[Rescale[#, {0, 1},2{-1,1}]&,gene[[n^2 + 1;;n^2 + n]]];
-           Ts =Map[10^Rescale[#,{0, 1},{-1, 2}]&,gene[[n^2 + n + 1;; n^2 + 2n ]]];
+           Ts =Map[10.^Rescale[#,{0, 1},{-1, 2}]&,gene[[n^2 + n + 1;; n^2 + 2n ]]];
            (* gain = Rescale[gene[[n^2 + 2n + 1]], {0, 1}, {1, 7}];*)
            (* not providing gain or inputs *)
            {W,theta,None, Ts}

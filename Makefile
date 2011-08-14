@@ -1,6 +1,7 @@
 # thesis code Makefile
 
-CPPFLAGS = -g -I/Applications/Mathematica.app/SystemFiles/IncludeFiles/C
+#CPPFLAGS = -g -I/Applications/Mathematica.app/SystemFiles/IncludeFiles/C
+CPPFLAGS = -g -Iinclude
 
 LDFLAGS = -L/Applications/Mathematica.app/SystemFiles/Libraries/MacOSX-x86-64 -lWolframRTL_Static_Minimal -lalps -lstdc++
 #LDFLAGS = -L/Applications/Mathematica.app/SystemFiles/Libraries/MacOSX-x86-64 -lWolframRTL -L. -lalps -lstdc++
@@ -9,9 +10,10 @@ LDFLAGS = -L/Applications/Mathematica.app/SystemFiles/Libraries/MacOSX-x86-64 -l
 # Attempt to compile without WolframRTL library.
 #LDFLAGS = -L/Applications/Mathematica.app/SystemFiles/Libraries/MacOSX-x86-64 -L. -lalps -lstdc++
 #CPPFLAGS = -g -Iinclude
-#SIM_OBJS = runSimulation.o run-simulation.o experiments.o myWolframRTL.o
+SIM_OBJS = frogRHS.o run-simulation.o experiments.o myWolframRTL.o
 
-SIM_OBJS = runSimulation.o run-simulation.o experiments.o 
+#SIM_OBJS = runSimulation.o run-simulation.o experiments.o 
+#SIM_OBJS = runSimulationAdaptive.o run-simulation.o experiments.o 
 
 OBJS = bga.mo ctrnn.mo frog-ga.mo frog-simulation.mo runge-kutta.mo export-c-code.mo experiments.mo genes_real.o $(SIM_OBJS)
 
