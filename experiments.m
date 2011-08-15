@@ -175,7 +175,7 @@ makeExperiments[] :=
            Function[{x, tmax, phase}, 
              Evaluate[
                  Piecewise[(MapIndexed[{makeExperimentPointsWhich[#, tmax, phase], 
-                                        x == First[#2]} &, experimentNames]), {-2}]]]]
+                                        x == First[#2]} &, experimentNames]), {-2.}]]]]
 
 
 makeExperimentsC[] := 
@@ -186,5 +186,5 @@ makeExperimentsC[] :=
 
 makeExperimentPointsWhich[a_, timeShift_, phase_] := 
     Piecewise[
-        Map[{Flatten[experimentPoints[a, timeShift, #]], phase == #} &, 
-            Range[0, Length[experimentPoints[a, timeShift]]]], {-1}]
+        Map[{N[Flatten[experimentPoints[a, timeShift, #]]], phase == #} &, 
+            Range[0, Length[experimentPoints[a, timeShift]]]], {-1.}]

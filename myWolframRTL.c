@@ -89,6 +89,14 @@ void myMTensor_copy(MTensor *Tdest, MTensor Tsrc)
     dest[i] = src[i];
 }
 
+/* return true if successful; zero otherwise. */
+mbool myCopyTensor(WolframLibraryData libData, mint rank, MTensor src, MTensor *dest)
+{
+  assert(rank == 1);
+  myMTensor_copy(dest, src);
+  return 1;
+}
+
 void myNOOP()
 {
   
@@ -118,6 +126,16 @@ BinaryMathFunctionPointer mygetBinaryMathFunction(int a, int b, int c)
 
 }
 
+LibraryFunctionPointer mygetFunctionCallPointer(const char *name)
+{
+  if (strcmp(name, "CopyTensor") == 0)
+    return myCopyTensor;
+  else {
+    fprintf(stderr, "error: no function '%s' available.\n", name);
+    return NULL;
+  }
+}
+
 WolframLibraryData WolframLibraryData_new(mint version)
 {
   WolframLibraryData libData;
@@ -129,6 +147,7 @@ WolframLibraryData WolframLibraryData_new(mint version)
   libData->compileLibraryFunctions->MTensor_copy = myMTensor_copy;
   libData->compileLibraryFunctions->ReleaseInitializedMTensors = myReleaseInitializedMTensors;
   libData->compileLibraryFunctions->WolframLibraryData_cleanUp = myWolframLibraryData_cleanUp;
+  libData->compileLibraryFunctions->getFunctionCallPointer = mygetFunctionCallPointer;
   //libData->compileLibraryFunctions->NOOP = myNOOP;
   libData->MTensor_new = myMTensor_new;
   libData->MTensor_free = myMTensor_free;

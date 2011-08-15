@@ -10,7 +10,7 @@ LDFLAGS = -L/Applications/Mathematica.app/SystemFiles/Libraries/MacOSX-x86-64 -l
 # Attempt to compile without WolframRTL library.
 #LDFLAGS = -L/Applications/Mathematica.app/SystemFiles/Libraries/MacOSX-x86-64 -L. -lalps -lstdc++
 #CPPFLAGS = -g -Iinclude
-SIM_OBJS = frogRHS.o run-simulation.o experiments.o myWolframRTL.o
+SIM_OBJS = rkqs.o frogRHS.o run-simulation-rkqs.o myWolframRTL.o
 
 #SIM_OBJS = runSimulation.o run-simulation.o experiments.o 
 #SIM_OBJS = runSimulationAdaptive.o run-simulation.o experiments.o 
