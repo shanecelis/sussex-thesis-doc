@@ -1,6 +1,7 @@
 #include <WolframRTL.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include <assert.h>
 
 
@@ -8,6 +9,16 @@ void WolframLibraryData_free(WolframLibraryData libData)
 {
   free(libData->compileLibraryFunctions);
   free(libData);
+}
+
+int myMTensor_allocate(MTensor *result, int type,  mint rank, mint * dims)
+{
+  assert(rank == 1);
+  assert(type == 3);
+  *result = (MTensor) malloc(sizeof(struct M_TENSOR_STRUCT));
+  (*result)->data_pointer = malloc(sizeof(double) * dims[0]); 
+  (*result)->dim = dims[0]; 
+  return 0;
 }
 
 /* 
@@ -18,7 +29,7 @@ int myMTensor_new(mint type, mint rank, mint const* dims, MTensor *result)
   //printf("myMTensor_new rank %d dims %d\n", rank, dims[0]);
   
   // All of these will be rank 1 real vectors.  Will not account for other types.
-  return myMTensor_allocate(result, type, rank, dims);
+  return myMTensor_allocate(result, type, rank, (mint *) dims);
 
   /* (*result)->data = (MTensorData) malloc(sizeof(struct M_TENSOR_DATA_STRUCT)); */
   /* (*result)->properties = (TensorProperty) malloc(sizeof(struct TENSOR_PROPERTY_DATA_STRUCT)); */
@@ -68,16 +79,6 @@ mbool myCompare_R(int op, mreal unknown, mint len, mreal * vector)
   }
 }
 
-int myMTensor_allocate(MTensor *result, int type,  mint rank, mint* dims)
-{
-  assert(rank == 1);
-  assert(type == 3);
-  *result = (MTensor) malloc(sizeof(struct M_TENSOR_STRUCT));
-  (*result)->data_pointer = malloc(sizeof(double) * dims[0]); 
-  (*result)->dim = dims[0]; 
-  return 0;
-}
-
 void myMTensor_copy(MTensor *Tdest, MTensor Tsrc)
 {
   mreal *dest     = MTensor_getRealDataMacro(*Tdest);
@@ -85,14 +86,20 @@ void myMTensor_copy(MTensor *Tdest, MTensor Tsrc)
   mreal *src      = MTensor_getRealDataMacro(Tsrc);
   mint *src_dims  = MTensor_getDimensionsMacro(Tsrc);
   mint i;
+  assert(dest_dims[0] == src_dims[0]);
   for (i = 0; i < dest_dims[0]; i++)
     dest[i] = src[i];
 }
 
 /* return true if successful; zero otherwise. */
-mbool myCopyTensor(WolframLibraryData libData, mint rank, MTensor src, MTensor *dest)
+int myCopyTensor(WolframLibraryData libData, mint rank, MArgument* destArg, MArgument srcArg)
 {
   assert(rank == 1);
+  MTensor src, *dest;
+  //src = (MTensor) srcArg;
+  //dest = (MTensor *) destArg;
+  dest = destArg->tensor;
+  src = *(srcArg.tensor);
   myMTensor_copy(dest, src);
   return 1;
 }
@@ -123,13 +130,13 @@ mreal* myMTensor_getRealData( MTensor Tdest)
 // FP0 = funStructCompile->getBinaryMathFunction(263, 2, 3);/*  Power  */
 BinaryMathFunctionPointer mygetBinaryMathFunction(int a, int b, int c)
 {
-
+  return NULL;
 }
 
 LibraryFunctionPointer mygetFunctionCallPointer(const char *name)
 {
   if (strcmp(name, "CopyTensor") == 0)
-    return myCopyTensor;
+    return &myCopyTensor;       /* incompatible function call warning?  */
   else {
     fprintf(stderr, "error: no function '%s' available.\n", name);
     return NULL;

@@ -1059,57 +1059,101 @@ R2_3 = (mreal) 0.3333333333333333;
 I2_3 = (mint) 0;
 {
 mint S0[1];
-S0[0] = 1;
-err = funStructCompile->MTensor_allocate(T2_0, 3, 1, S0);
-if( err)
-{
-goto error_label;
-}
-P0 = MTensor_getRealDataMacro(*T2_0);
-P0[0] = 1.;
-}
-I2_8 = (mint) 6;
-I2_7 = (mint) 5;
-{
-mint S0[1];
-S0[0] = 1;
+S0[0] = 12;
 err = funStructCompile->MTensor_allocate(T2_13, 3, 1, S0);
 if( err)
 {
 goto error_label;
 }
-P1 = MTensor_getRealDataMacro(*T2_13);
-P1[0] = -2.;
+P0 = MTensor_getRealDataMacro(*T2_13);
+P0[0] = -2.;
+P0[1] = -2.;
+P0[2] = -2.;
+P0[3] = -2.;
+P0[4] = -2.;
+P0[5] = -2.;
+P0[6] = -2.;
+P0[7] = -2.;
+P0[8] = -2.;
+P0[9] = -2.;
+P0[10] = -2.;
+P0[11] = -2.;
 }
+I2_8 = (mint) 6;
+I2_7 = (mint) 5;
 I2_4 = (mint) 2;
 R2_4 = (mreal) 0.6666666666666666;
 I2_2 = (mint) 1;
 R2_2 = (mreal) 1.;
 {
 mint S0[1];
-S0[0] = 1;
+S0[0] = 12;
 err = funStructCompile->MTensor_allocate(T2_2, 3, 1, S0);
 if( err)
 {
 goto error_label;
 }
-P2 = MTensor_getRealDataMacro(*T2_2);
-P2[0] = -1.;
+P1 = MTensor_getRealDataMacro(*T2_2);
+P1[0] = -1.;
+P1[1] = -1.;
+P1[2] = -1.;
+P1[3] = -1.;
+P1[4] = -1.;
+P1[5] = -1.;
+P1[6] = -1.;
+P1[7] = -1.;
+P1[8] = -1.;
+P1[9] = -1.;
+P1[10] = -1.;
+P1[11] = -1.;
 }
+I2_6 = (mint) 4;
 {
 mint S0[1];
-S0[0] = 1;
+S0[0] = 12;
 err = funStructCompile->MTensor_allocate(T2_5, 3, 1, S0);
 if( err)
 {
 goto error_label;
 }
-P3 = MTensor_getRealDataMacro(*T2_5);
-P3[0] = 4.;
+P2 = MTensor_getRealDataMacro(*T2_5);
+P2[0] = 4.;
+P2[1] = 4.;
+P2[2] = 4.;
+P2[3] = 4.;
+P2[4] = 4.;
+P2[5] = 4.;
+P2[6] = 4.;
+P2[7] = 4.;
+P2[8] = 4.;
+P2[9] = 4.;
+P2[10] = 4.;
+P2[11] = 4.;
 }
-I2_6 = (mint) 4;
 I2_5 = (mint) 3;
 R2_1 = (mreal) 0.;
+{
+mint S0[1];
+S0[0] = 12;
+err = funStructCompile->MTensor_allocate(T2_0, 3, 1, S0);
+if( err)
+{
+goto error_label;
+}
+P3 = MTensor_getRealDataMacro(*T2_0);
+P3[0] = 1.;
+P3[1] = 1.;
+P3[2] = 1.;
+P3[3] = 1.;
+P3[4] = 1.;
+P3[5] = 1.;
+P3[6] = 1.;
+P3[7] = 1.;
+P3[8] = 1.;
+P3[9] = 1.;
+P3[10] = 1.;
+P3[11] = 1.;
+}
 FP0 = funStructCompile->getFunctionCallPointer("CopyTensor");
 if( FP0 == 0)
 {
@@ -1125,11 +1169,6 @@ DLLEXPORT void Uninitialize_frogRHS(WolframLibraryData libData)
 {
 if( !initialize)
 {
-if( *T2_0)
-{
-libData->MTensor_free(*T2_0);
-*T2_0 = 0;
-}
 if( *T2_13)
 {
 libData->MTensor_free(*T2_13);
@@ -1144,6 +1183,11 @@ if( *T2_5)
 {
 libData->MTensor_free(*T2_5);
 *T2_5 = 0;
+}
+if( *T2_0)
+{
+libData->MTensor_free(*T2_0);
+*T2_0 = 0;
 }
 initialize = 1;
 }
@@ -10142,9 +10186,6 @@ MTensor* T2_10;
 MTensor* T2_11;
 MTensor* T2_12;
 MTensorInitializationData Tinit;
-mreal *P1;
-mreal *P2;
-mreal *P3;
 mreal *P4;
 mreal *P5;
 mreal *P6;

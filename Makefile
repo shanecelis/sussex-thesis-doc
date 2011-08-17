@@ -1,7 +1,7 @@
 # thesis code Makefile
 
 #CPPFLAGS = -g -I/Applications/Mathematica.app/SystemFiles/IncludeFiles/C
-CPPFLAGS = -g -Iinclude
+CPPFLAGS = -g -Iinclude -Wall
 
 LDFLAGS = -L/Applications/Mathematica.app/SystemFiles/Libraries/MacOSX-x86-64 -lWolframRTL_Static_Minimal -lalps -lstdc++
 #LDFLAGS = -L/Applications/Mathematica.app/SystemFiles/Libraries/MacOSX-x86-64 -lWolframRTL -L. -lalps -lstdc++
