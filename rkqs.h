@@ -1,5 +1,7 @@
 /* rkqs.h */
 
+#define TINY  1.e-6
+
 int rkqs(double y[], double dydx[], const int n, double *x, 
          double htry, double eps, double yscal[], 
          double *hdid, double *hnext, int (*derivs)(double, double [], double []));

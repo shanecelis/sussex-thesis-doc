@@ -6,7 +6,7 @@ static WolframCompileLibrary_Functions funStructCompile;
 
 static LibraryFunctionPointer FP0;
 
-static MArgument FPA[2];
+//static MArgument FPA[2];
 
 
 static mbool B0_2;
@@ -712,7 +712,6 @@ static MTensor T2_13B = 0;
 static MTensor* T2_13 = &T2_13B;
 
 static mreal *P0, *P1, *P2, *P3; // XXX Mathematica is not creating this line--BAD!
-
 static mbool initialize = 1;
 
 #include "frogRHS.h"

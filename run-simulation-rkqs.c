@@ -63,8 +63,7 @@ void experiment_init_state(double *points, double *t0, double *f0)
 
 int experiment_phase_count(const char *expName, int *phase_count)
 {
-  double results[POINTS_COUNT]; // XXX this is a bit off.  It will
-                                // only return 1 list value.
+  double results[POINTS_COUNT]; 
   int err;
   err = experiment_points(expName, 0.0, 0, results);
   if (err) {
@@ -79,12 +78,14 @@ int experiment_points(const char *expName, double timeMax,
                       int phase, double *pointsResult) 
 {
   int err;
-  struct M_TENSOR_STRUCT Tpoints;
+  struct M_TENSOR_STRUCT Tpoints; 
   Tpoints.dim = POINTS_COUNT;
   Tpoints.data_pointer = pointsResult;
-  
-  // XXX I took out experiments.
-  //err = experiments(libData, experiment_name(expName), timeMax, phase, &Tpoints);
+  MTensor TTpoints = &Tpoints;
+  int exp_no = experiment_name(expName);
+
+  assert(exp_no != 0);
+  err = experiments(libData, exp_no, timeMax, phase, &TTpoints);
   return err;
 }
 int frog_deriv_dummy(double t, double state[], double dqdt[])
@@ -119,39 +120,54 @@ int frog_deriv(double t, double state[], double dqdt[])
   return err;
 }
 
-int run_simulation(double *state, double stepSize, double *constantsArg, 
-                   double time, double *stateResult)
+int run_simulation(double *init_state, double stepSize, double *constantsArg, 
+                   double time, double *state)
 {
-  int    i, err = 0;
+  int    i, j, err = 0;
   double t, torig;
-  double h, hnext, hdid;
-  double dstatedt[STATE_COUNT];
+  double h, hnext, hdid, hmin, hmean, hmax;
+  double dstatedt[STATE_COUNT], state_scale[STATE_COUNT];
 
-  assert(state != NULL);
+  assert(init_state != NULL);
   assert(constantsArg != NULL);
   h = stepSize;
-  t = torig = state[0];
+  t = torig = init_state[0];
   
   for (i = 0; i < STATE_COUNT; i++)
-    stateResult[i] = state[i];
+    state[i] = init_state[i];
 
   for (i = 0; i < CONSTANTS_COUNT; i++)
     constants[i] = constantsArg[i];
-
+  
+  j = 0;
+  hmin = HUGE;
+  hmax = -HUGE;
+  hmean = 0.;
   while((t - torig) < time) {
-    err = frog_deriv(t, stateResult, dstatedt);
+    err = frog_deriv(t, state, dstatedt);
     if (err)
       return err; 
-    err = rkqs(stateResult, dstatedt, STATE_COUNT, &t, 
-               h, 1e-1, stateResult, &hdid, &hnext, frog_deriv);
-    printf("t = %f, h = %f, hnext = %f, hdid = %f, s[0] = %f\n", t, h, hnext, hdid, stateResult[0]);
+    for(i = 0; i < STATE_COUNT; i++)
+      state_scale[i] = fabs(state[i]) + fabs(dstatedt[i] * h) + TINY;
+    err = rkqs(state, dstatedt, STATE_COUNT, &t, 
+               h, 1., state_scale, &hdid, &hnext, frog_deriv);
+    hmean += hdid;
+    hmin = fmin(hmin, hdid);
+    hmax = fmax(hmax, hdid);
+    if (j % 1000) {
+      //printf("t = %f, h = %f, hnext = %f, hdid = %f, s[0] = %f\n", t, h, hnext, hdid, state[0]);
+    }
 /*    if (fabs(hdid) < 1e-7)
       return 1;*/
     h = hnext;
     if (err)
       return err;
-    t = stateResult[0];
+    t = state[0];
+    j++;
   }
+  hmean /= (double) j;
+
+  printf("hmin = %f, hmean = %f, hmax = %f\n", hmin, hmean, hmax);
   return 0;
 }
 

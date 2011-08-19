@@ -15,6 +15,7 @@ int myMTensor_allocate(MTensor *result, int type,  mint rank, mint * dims)
 {
   assert(rank == 1);
   assert(type == 3);
+  assert(result != NULL);
   *result = (MTensor) malloc(sizeof(struct M_TENSOR_STRUCT));
   (*result)->data_pointer = malloc(sizeof(double) * dims[0]); 
   (*result)->dim = dims[0]; 
@@ -81,6 +82,9 @@ mbool myCompare_R(int op, mreal unknown, mint len, mreal * vector)
 
 void myMTensor_copy(MTensor *Tdest, MTensor Tsrc)
 {
+  assert(Tdest != NULL);
+  assert(Tsrc != NULL);  
+
   mreal *dest     = MTensor_getRealDataMacro(*Tdest);
   mint *dest_dims = MTensor_getDimensionsMacro(*Tdest);
   mreal *src      = MTensor_getRealDataMacro(Tsrc);
@@ -92,16 +96,26 @@ void myMTensor_copy(MTensor *Tdest, MTensor Tsrc)
 }
 
 /* return true if successful; zero otherwise. */
-int myCopyTensor(WolframLibraryData libData, mint rank, MArgument* destArg, MArgument srcArg)
+int myCopyTensor(WolframLibraryData libData, mint rank, 
+                 // XXX These are totally mislabeled.  It should be
+                 //MArgument* srcArg, MArgument destArg
+                 MArgument* destArg, MArgument srcArg)
 {
-  assert(rank == 1);
+  int err;
   MTensor src, *dest;
-  //src = (MTensor) srcArg;
-  //dest = (MTensor *) destArg;
+  assert(rank == 1);
+
   dest = destArg->tensor;
   src = *(srcArg.tensor);
-  myMTensor_copy(dest, src);
-  return 1;
+  if (src == NULL) {
+    // allocate it.
+    err = myMTensor_allocate(srcArg.tensor, MType_Real, 1, &((*dest)->dim));
+    if (err)
+      return err;
+    src = *(srcArg.tensor);
+  }
+  myMTensor_copy(&src, *dest);
+  return 0;
 }
 
 void myNOOP()
@@ -112,8 +126,10 @@ void myNOOP()
 void myReleaseInitializedMTensors(MTensorInitializationData a)
 {
   mint i;
-  for (i = 0; i < a->n; i++)
-    myMTensor_free(a->tensors[i]);
+  for (i = 0; i < a->n; i++) {
+    if (a->tensors[i])
+      myMTensor_free(a->tensors[i]);
+  }
   free(a);
 }
 
@@ -124,6 +140,7 @@ void myWolframLibraryData_cleanUp(WolframLibraryData libData, int b)
 
 mreal* myMTensor_getRealData( MTensor Tdest)
 {
+  assert(Tdest != NULL);
   return MTensor_getRealDataMacro(Tdest);
 }
 

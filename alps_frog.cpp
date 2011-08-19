@@ -113,7 +113,6 @@ bool evaluate_frog(vector<double>& fitness,
     cerr << "error: target_index >= target_count" << endl;
     return false;
   }
-  double dist;
   double time_max = 10.0;
   double result[STATE_COUNT];
   int err = run_frog(((Individ_Real*)individ)->get_genes(), 
@@ -125,7 +124,7 @@ bool evaluate_frog(vector<double>& fitness,
   double (*fitfunc)(double *, double) = fitness_evals[fitness_type].evaluator;
   fitness[0] = (*fitfunc)(result, time_max);
 
-  if (err) {
+  if (err || isnan(fitness[0])) {
     //cerr << "BAD fitness " << fitness[0] << " " << evaluation_failed_count << endl;
     return false;
   } else {
@@ -240,6 +239,7 @@ int ea_engine(const char *exp_name, int target_index, bool lobotomise,
   int phase_count;
   int err = 0;
   err = experiment_phase_count(exp_name, &phase_count);
+  cout << "phase_count = " << phase_count << endl;
   if (err) {
     cerr << "error: phase count failed (" << err << ")" << endl;
     return err;
@@ -262,7 +262,7 @@ int ea_engine(const char *exp_name, int target_index, bool lobotomise,
   Alps *Population = new AlpsSState("frog", individ_config);
   setup_pop_gen(individ_config, (AlpsSState*)Population);
 
-  // Population->set_print_debug(true);
+  //Population->set_print_debug(true);
   //Population->write_header(cout);
   bool expected_termination = false;
   fitness_evaluator fit_eval = fitness_evals[fitness_type];
