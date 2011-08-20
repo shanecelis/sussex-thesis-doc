@@ -10,6 +10,7 @@
 #include "rkqs.h"
 #include "run-simulation.h"
 
+#define MAX_STEPS   10000
 //static MTensor state, constants, results, points;
 static WolframLibraryData libData = 0;
 static double constants[CONSTANTS_COUNT];
@@ -120,8 +121,8 @@ int frog_deriv(double t, double state[], double dqdt[])
   return err;
 }
 
-int run_simulation(double *init_state, double stepSize, double *constantsArg, 
-                   double time, double *state)
+int run_simulation(double *init_state, double step_size, 
+                   double *constants_arg, double time, double *state)
 {
   int    i, j, err = 0;
   double t, torig;
@@ -129,28 +130,41 @@ int run_simulation(double *init_state, double stepSize, double *constantsArg,
   double dstatedt[STATE_COUNT], state_scale[STATE_COUNT];
 
   assert(init_state != NULL);
-  assert(constantsArg != NULL);
-  h = stepSize;
+  assert(constants_arg != NULL);
+  h = step_size;
   t = torig = init_state[0];
   
   for (i = 0; i < STATE_COUNT; i++)
     state[i] = init_state[i];
 
   for (i = 0; i < CONSTANTS_COUNT; i++)
-    constants[i] = constantsArg[i];
+    constants[i] = constants_arg[i];
   
-  j = 0;
+  //j = 0;
   hmin = HUGE;
   hmax = -HUGE;
   hmean = 0.;
-  while((t - torig) < time) {
+  //while((t - torig) < time) {
+  for (j = 0; j < MAX_STEPS; j++) {
     err = frog_deriv(t, state, dstatedt);
     if (err)
       return err; 
     for(i = 0; i < STATE_COUNT; i++)
       state_scale[i] = fabs(state[i]) + fabs(dstatedt[i] * h) + TINY;
+    
     err = rkqs(state, dstatedt, STATE_COUNT, &t, 
-               h, 1., state_scale, &hdid, &hnext, frog_deriv);
+      h, 1.e-6, state_scale, &hdid, &hnext, &frog_deriv);
+
+/*  {
+    err = rkck(state, dstatedt, STATE_COUNT, t, 
+               h, state, state_scale, &frog_deriv);
+    hdid = hnext = h = 0.02;
+    }*/
+/*  {
+    err = rk4(state, dstatedt, STATE_COUNT, t,
+               h, state, &frog_deriv);
+    hdid = hnext = h = 0.02;
+    }*/
     hmean += hdid;
     hmin = fmin(hmin, hdid);
     hmax = fmax(hmax, hdid);
@@ -163,12 +177,18 @@ int run_simulation(double *init_state, double stepSize, double *constantsArg,
     if (err)
       return err;
     t = state[0];
-    j++;
-  }
-  hmean /= (double) j;
+    if ((t+h-time)*(t+h-torig) > 0.0) 
+      h = time - t; // If stepsize can overshoot, decrease.
 
-  printf("hmin = %f, hmean = %f, hmax = %f\n", hmin, hmean, hmax);
-  return 0;
+    //j++;
+    if ((t-time)*(time-torig) >= 0.0) {
+      hmean /= (double) j;
+      printf("hmin = %f, hmean = %f, hmax = %f\n", hmin, hmean, hmax);
+
+      return 0;
+    }
+  }
+  return 1;
 }
 
 
@@ -188,4 +208,19 @@ void lobotomise_brains(double *constants)
   for (i = 0; i < index_count; i++) {
     constants[indexes[i]] = 0.0;
   }
+}
+
+int gene_to_ctrnn(double *constants_arg, double *result)
+{
+  int err;
+  struct M_TENSOR_STRUCT Tconstants; 
+  Tconstants.dim = CONSTANTS_COUNT;
+  Tconstants.data_pointer = constants_arg;
+  struct M_TENSOR_STRUCT Tresult; 
+  Tresult.dim = CONSTANTS_COUNT;
+  Tresult.data_pointer = result;
+  MTensor TTresult = &Tresult;
+
+  err = geneToCTRNN(libData, &Tconstants, &TTresult);
+  return err;
 }

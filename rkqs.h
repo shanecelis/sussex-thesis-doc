@@ -8,3 +8,6 @@ int rkqs(double y[], double dydx[], const int n, double *x,
 
 int rkck(double y[], double dydx[], const int n, double x, double h, 
          double yout[], double yerr[], int (*derivs)(double, double [], double []));
+
+int rk4(double y[], double dydx[], const int n, double x,
+        double h, double yout[], int (*derivs)(double, double [], double []));

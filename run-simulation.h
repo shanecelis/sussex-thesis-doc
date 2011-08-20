@@ -43,3 +43,5 @@ int run_simulation(double *stateArg, double stepSize, double *constantsArg,
                    double timeArg, double *stateResult);
 
 void lobotomise_brains(double *constants);
+
+int gene_to_ctrnn(double *constants, double *result);

@@ -92,6 +92,7 @@ mutate[L_] := (genes[[L]] = Map[Clip[#, {0, 1}]&,genes[[L]] + mutationVector[] ]
 
 initPop[] := (genes = RandomReal[{0, 1}, {pop, len}];evaluationCache = Table[None, {pop}];)
 
+initGene[] := RandomReal[{0,1}, {len}];
 
 argsForTarget[gene_, target_, tmax_, expName_, phaseArg_] :=     
     Module[{experiment, phase, args},
@@ -132,9 +133,9 @@ fitnessToTargetRecordGoodAndBad[i_, target_, experiment_, phase_] :=
 fitnessToTarget[i_, target_, experiment_, phase_] := 
     Module[{ (*endState,*) n, tmax, fitness, args},
            tmax = 10.0;
-           args = argsForTarget[getGene[i], target, tmax, experiment, phase];
+           args = argsForTarget[getGene[i], target, tmax, experiment, phase] // N;
            fitness = Catch[endState = runSimulation@@args;
-                           endState[[recordBegin]]/(tmax * Norm[target])];
+                           endState[[recordBegin]]/(endState[[1]] * Norm[target])];
            If[fitness === $Failed,
               666.6,
               fitness]
