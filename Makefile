@@ -22,7 +22,7 @@ EXTRA_LIBS = -lstdc++ -framework Foundation
 # Attempt to compile without WolframRTL library.
 #LDFLAGS = -L/Applications/Mathematica.app/SystemFiles/Libraries/MacOSX-x86-64 -L. -lalps -lstdc++
 #CPPFLAGS = -g -Iinclude
-SIM_OBJS = rkqs.o frogRHS.o run-simulation-rkqs.o myWolframRTL.o
+SIM_OBJS = rkqs.o frogRHS-fixed.o run-simulation-rkqs.o myWolframRTL.o
 
 #SIM_OBJS = runSimulation.o run-simulation.o experiments.o 
 #SIM_OBJS = runSimulationAdaptive.o run-simulation.o experiments.o 
@@ -31,7 +31,7 @@ OBJS = bga.mo ctrnn.mo frog-ga.mo frog-simulation.mo runge-kutta.mo export-c-cod
 
 BINARIES = run-sim-main alps_main frog_eval run-simulation-mlink
 
-all: $(OBJS) $(BINARIES) frog_eqns.m
+all: $(OBJS) $(BINARIES) frog_eqns.m frog_eqns_dotsolved.m
 
 %.mo : %.m
 	mathload $< > $@
@@ -76,5 +76,14 @@ frog_eqns.txt: frog.al
 frog_eqns.m: frog_eqns.txt parenparser mr.pl
 	cat frog_eqns.txt | ./parenparser /dev/stdin | ./mr.pl > frog_eqns.m
 
+frog_eqns_dotsolved.m: frog_eqns.m make-frog_eqns_dotsolved.m
+	mathload make-frog_eqns_dotsolved.m
+
 parenparser: parenparser.hs
 	ghc -o parenparser parenparser.hs
+
+frogRHS.c frogRHS.h: frog_eqns_dotsolved.m make-frogRHSC.m
+	mathload make-frogRHSC.m 
+
+frogRHS-fixed.c: frogRHS.c frogRHS.patch
+	patch -i frogRHS.patch frogRHS.c -o frogRHS-fixed.c

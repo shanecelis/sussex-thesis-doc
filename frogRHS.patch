@@ -1,0 +1,30 @@
+*** frogRHS.c	Tue Aug 23 15:55:02 2011
+--- frogRHS-myfixed.c	Tue Aug 23 15:54:37 2011
+***************
+*** 6,12 ****
+  
+  static LibraryFunctionPointer FP0;
+  
+! static MArgument FPA[2];
+  
+  
+  static mbool B0_2;
+--- 6,12 ----
+  
+  static LibraryFunctionPointer FP0;
+  
+! //static MArgument FPA[2];
+  
+  
+  static mbool B0_2;
+***************
+*** 711,716 ****
+--- 711,718 ----
+  
+  static MTensor* T2_13 = &T2_13B;
+  
++ static mreal *P0, *P1, *P2, *P3; // XXX Mathematica is not creating this line--BAD!
++ 
+  static mbool initialize = 1;
+  
+  #include "frogRHS.h"
