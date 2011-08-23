@@ -121,20 +121,49 @@ int frog_deriv(double t, double state[], double dqdt[])
   return err;
 }
 
+void process_collision(double *s)
+{
+  int i;
+  for (i = 4; i <= 8; i++) {
+    if ((s[i] >  M_PI_2 && s[i + QSTATE_COUNT] > 0.) || 
+        (s[i] < -M_PI_2 && s[i + QSTATE_COUNT] < 0.))
+      s[i + QSTATE_COUNT] *= -0.8;
+  }
+}
+
+/*
+  The function detect_collision(s) = 0. when a collision has happened.
+  Use it to check for a sign change.
+ */
+double detect_collision(double *s)
+{
+  double result;
+  int i;
+  result = 1.0;
+  for (i = 4; i <= 8; i++)
+    result *= ((s[Q_BEGIN(i)] - M_PI_2) * (s[Q_BEGIN(i)] + M_PI_2));
+  return result;
+}
+
 int run_simulation(double *init_state, double step_size, 
-                   double *constants_arg, double time, double *state)
+                   double *constants_arg, double time, 
+                   double *state_result)
 {
   int    i, j, err = 0;
   double t, torig;
   double h, hnext, hdid, hmin, hmean, hmax;
-  double dstatedt[STATE_COUNT], state_scale[STATE_COUNT];
+  double dstatedt[STATE_COUNT], state_scale[STATE_COUNT], 
+    temp_state_array[STATE_COUNT], *next_state, *state, *temp_state;
 
   assert(init_state != NULL);
   assert(constants_arg != NULL);
+  assert(state_result != NULL);
   h = step_size;
   t = torig = init_state[0];
+  state = state_result;
+  next_state = temp_state_array;
   
-  for (i = 0; i < STATE_COUNT; i++)
+  for (i = 0; i < STATE_COUNT; i++) 
     state[i] = init_state[i];
 
   for (i = 0; i < CONSTANTS_COUNT; i++)
@@ -153,8 +182,22 @@ int run_simulation(double *init_state, double step_size,
       state_scale[i] = fabs(state[i]) + fabs(dstatedt[i] * h) + TINY;
     
     err = rkqs(state, dstatedt, STATE_COUNT, &t, 
-      h, 1.e-6, state_scale, &hdid, &hnext, &frog_deriv);
+               h, 1.e-5, state_scale, &hdid, &hnext, next_state, &frog_deriv);
 
+    if (detect_collision(next_state) * detect_collision(state) < 0.0) {
+      //printf("collision detected for hdid %f\n", hdid);
+      if (hdid > step_size ) {
+        // A collision has happened and the step size is too large.
+        h = step_size;
+        continue;
+      }
+    }
+    // Swap next_state and state
+    temp_state = state;
+    state = next_state;
+    next_state = temp_state;
+    process_collision(state);
+    
 /*  {
     err = rkck(state, dstatedt, STATE_COUNT, t, 
                h, state, state_scale, &frog_deriv);
@@ -183,13 +226,16 @@ int run_simulation(double *init_state, double step_size,
     //j++;
     if ((t-time)*(time-torig) >= 0.0) {
       hmean /= (double) j;
-      printf("hmin = %f, hmean = %f, hmax = %f\n", hmin, hmean, hmax);
+      //printf("hmin = %f, hmean = %f, hmax = %f\n", hmin, hmean, hmax);
+      for (i = 0; i < STATE_COUNT; i++) 
+        state_result[i] = state[i];
 
       return 0;
     }
   }
   return 1;
 }
+
 
 
 

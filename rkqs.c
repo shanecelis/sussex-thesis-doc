@@ -16,7 +16,7 @@
 
 int rkqs(double y[], double dydx[], const int n, double *x, 
          double htry, double eps, double yscal[], 
-         double *hdid, double *hnext, int (*derivs)(double, double [], double []))
+         double *hdid, double *hnext, double yout[], int (*derivs)(double, double [], double []))
 /* Fifth-order Runge-Kutta step with monitoring of local truncation
  * error to ensure accuracy and adjuststepsize. Input are the
  * dependent variable vector y[1..n] and its derivative dydx[1..n] at
@@ -60,7 +60,7 @@ int rkqs(double y[], double dydx[], const int n, double *x,
     *hnext=5.0*h; 
   *x += (*hdid=h); 
   for (i=0;i<n;i++) 
-    y[i]=ytemp[i]; 
+    yout[i]=ytemp[i]; 
 
   return 0;
 }

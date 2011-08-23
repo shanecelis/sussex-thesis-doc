@@ -2,12 +2,13 @@
 
 #define METERS           1.0
 
-#define TARGET_DISTANCE  (0.1 * METERS)
+#define TARGET_DISTANCE  (0.05 * METERS)
 
-#define STEP_SIZE        0.02
+#define STEP_SIZE        0.01
 
 // state info
 #define STATE_COUNT      26
+#define QSTATE_COUNT     8
 #define QSTATE_BEGIN     1
 #define USTATE_BEGIN     9
 #define TAILSTATE_BEGIN  22

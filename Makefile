@@ -1,7 +1,7 @@
 # thesis code Makefile
 
 #CPPFLAGS = -g -I/Applications/Mathematica.app/SystemFiles/IncludeFiles/C
-CPPFLAGS = -g -Iinclude -Wall -I $(INCDIR)
+CPPFLAGS = -g -Iinclude -Wall -Werror -I $(INCDIR)
 
 LDFLAGS = -L/Applications/Mathematica.app/SystemFiles/Libraries/MacOSX-x86-64 -lWolframRTL_Static_Minimal -lalps -lstdc++
 #LDFLAGS = -L/Applications/Mathematica.app/SystemFiles/Libraries/MacOSX-x86-64 -lWolframRTL -L. -lalps -lstdc++
@@ -31,7 +31,7 @@ OBJS = bga.mo ctrnn.mo frog-ga.mo frog-simulation.mo runge-kutta.mo export-c-cod
 
 BINARIES = run-sim-main alps_main frog_eval run-simulation-mlink
 
-all: $(OBJS) $(BINARIES)
+all: $(OBJS) $(BINARIES) frog_eqns.m
 
 %.mo : %.m
 	mathload $< > $@
@@ -40,6 +40,8 @@ clean:
 	$(RM) $(OBJS) $(BINARIES)
 
 run-simulation.o: run-simulation.c run-simulation.h
+
+$(SIM_OBJS): run-simulation.h
 
 run-sim-main: run-sim-main.o $(SIM_OBJS)
 
@@ -66,3 +68,13 @@ run-simulation-mlinktm.c : run-simulation-mlink.tm
 
 run-simulation-mlink : run-simulation-mlinktm.o $(SIM_OBJS)
 	${CC} -I${INCDIR} $(SIM_OBJS) run-simulation-mlinktm.o -L${LIBDIR} -lMLi3 ${EXTRA_LIBS} -o $@
+
+frog_eqns.txt: frog.al
+	(cat frog.al; echo "quit") > frogq.al
+	(echo "! rhseqns = "; yes | al frogq.al | grep Result) > frog_eqns.txt
+
+frog_eqns.m: frog_eqns.txt parenparser mr.pl
+	cat frog_eqns.txt | ./parenparser /dev/stdin | ./mr.pl > frog_eqns.m
+
+parenparser: parenparser.hs
+	ghc -o parenparser parenparser.hs

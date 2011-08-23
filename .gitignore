@@ -6,6 +6,11 @@
 alps_main
 frog_eval
 run-sim-main
+parenparser
+
+# temp files
+frogq.al
+parenparser.hi
 
 # includes
 include/*

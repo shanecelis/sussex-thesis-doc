@@ -55,7 +55,7 @@ int run_frog(const vector<double>& genes,
              int phase, bool lobotomise, double* result)
 {
   int err;
-  double constants[CONSTANTS_COUNT], state[STATE_COUNT];//, result[STATE_COUNT];
+  double constants[CONSTANTS_COUNT], constants2[CONSTANTS_COUNT], state[STATE_COUNT];//, result[STATE_COUNT];
 
   for (int i = 0; i < GENE_COUNT; i++) {
     constants[i] = genes[i];
@@ -64,8 +64,6 @@ int run_frog(const vector<double>& genes,
   for (int i = 0; i < STATE_COUNT; i++) {
     state[i] = 0.0;
   }
-  state[0] = 0.0;
-  state[RECORD_BEGIN] = 0.0;
   
   constants[TARGET_BEGIN] = targetx;
   constants[TARGET_BEGIN + 1] = targety;
@@ -76,8 +74,11 @@ int run_frog(const vector<double>& genes,
   if (lobotomise) {
     lobotomise_brains(constants);
   }
+  
+  err = gene_to_ctrnn(constants, constants2);
 
-  err = run_simulation(state, STEP_SIZE, constants, time_max, result);
+  if (! err)
+    err = run_simulation(state, STEP_SIZE, constants2, time_max, result);
 
   if (err) {
     evaluation_failed_count++;
@@ -239,7 +240,6 @@ int ea_engine(const char *exp_name, int target_index, bool lobotomise,
   int phase_count;
   int err = 0;
   err = experiment_phase_count(exp_name, &phase_count);
-  cout << "phase_count = " << phase_count << endl;
   if (err) {
     cerr << "error: phase count failed (" << err << ")" << endl;
     return err;

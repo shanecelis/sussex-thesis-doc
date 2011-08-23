@@ -80,11 +80,12 @@ drawFrog[{q1_,q2_,q3_,q4_, q5_, q6_, q7_, q8_}, r_, l_, fl_,
 
            Graphics[{
                {FaceForm[bodyColour], 
-                {FaceForm[bodyColour],body}, 
                 EdgeForm[None],
                 Rotate[{{FaceForm[tailColour],tail},
                         {FaceForm[footColour],foot5, foot6, foot7, foot8}}, 
-                       q3, {q1, q2}] }, 
+                       q3, {q1, q2}],
+                {FaceForm[bodyColour],body}
+               }, 
                distanceLine,
                targetLine,
                startDisk,
@@ -125,12 +126,15 @@ params = {r       -> 0.025 m,
           Tq7     -> footTorque[q7[t]], 
           Tq8     -> footTorque[q8[t]],
 
-          m -> 1, kg -> 1, s -> 1
+          m -> 1, kg -> 1, s -> 1,
           (*m     -> 10, kg -> 1, s -> 1*)
           (*m     -> 32, kg -> 20, s -> 1*)
           (*m       -> 100, kg -> 100, s -> 1*)
+          depth -> 0.2 r,
+          ld -> depth,
+          fld -> depth,
 
-
+          Acirc -> 2 r depth
          };
 
 
@@ -330,8 +334,15 @@ solveEqnsForDotVars[eqns_,vars_,var_] :=
 (*
    Import["tadpole_eqns4.m"]; eqns = Map[# == 0&, rhseqns]; 
    eqns = solveEqnsForDotVars[eqns, {u1[t], u2[t], u3[t], u4[t], u5[t], u6[t], u7[t], u8[t]}, t];
+   Export["tadpole_eqns4_dotsolved.m", eqns]
 
  *)
 
 eqns = Import["tadpole_eqns4_dotsolved.m"];
 
+
+cross2d[v_List, w_List] := 
+    Module[{va, wa},
+           va = v~Join~{0};
+           wa = w~Join~{0};
+           (va~Cross~wa)[[3]]]
