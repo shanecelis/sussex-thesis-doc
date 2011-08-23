@@ -7,10 +7,13 @@ alps_main
 frog_eval
 run-sim-main
 parenparser
+run-simulation-mlink
 
 # temp files
+run-simulation-mlinktm.c
 frogq.al
 parenparser.hi
+tmp/*
 
 # includes
 include/*
