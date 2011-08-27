@@ -1,4 +1,4 @@
-SetDirectory["/Users/shane/School/sussex/thesis/code"];
+SetDirectory["/Users/shane/School/sussex/thesis/code/src"];
 
 diff = makeFrogMorphDiff[];
 

@@ -5,7 +5,7 @@ OS=$(shell uname -s)
 MATHEMATICA=1
 
 #CPPFLAGS = -g -I/Applications/Mathematica.app/SystemFiles/IncludeFiles/C
-CPPFLAGS = -g -Iinclude -Wall -Werror
+CPPFLAGS = -g -I../include -Wall -Werror
 
 MOBJS = 
 
