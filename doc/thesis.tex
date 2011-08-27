@@ -59,6 +59,23 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ANY OTHER DECLARATIONS HERE:
 
+\usepackage{amsmath} %Needed for typing equations and theorems
+\usepackage{amssymb} %Loads additional fonts and symbols
+\usepackage{graphicx} %Needed for adding graphics to the document
+\usepackage{verbatim} %Needed for \verbatiminput
+\usepackage{color}
+%\usepackage{longtable} 
+\usepackage{listings} 
+\usepackage{float}
+
+\newcommand{\bv}[1]{\mathbf{#1}}
+\newcommand{\bhv}[1]{\mathbf{\hat{#1}}}
+\newcommand{\M}[1]{\mathbf{#1}}
+\newcommand{\defeq}{\stackrel{\text{\tiny def}}{=}}
+\newcommand{\R}{\mathbb{R}}
+
+\newcommand{\red}[1]{\color{red}#1\color{black}}
+\newcommand{\blue}[1]{\color{blue}#1\color{black}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -93,7 +110,7 @@
 %%	(v) the month and year of submission.
 \thispagestyle{empty}
 \begin{flushright}
-\includegraphics[width=6cm]{uslogo}
+\includegraphics[width=6cm]{fig/uslogo.pdf}
 \end{flushright}	
 \vskip40mm
 \begin{center}
@@ -207,6 +224,8 @@ Joe Bloggs
 \chapter{Introduction}
 \label{chap:intro}
 
+\input{body}
+
 This is the introduction to the thesis.\footnote{And this is a footnote.}  The conclusion is in Chapter \ref{chap:conc} on page \pageref{chap:conc}.
 
 \section{About the logo}
@@ -215,7 +234,7 @@ Figure \ref{us_figure} shows the logo for the University of Sussex.\footnote{Thi
 
 \begin{figure}
 \centering
-\includegraphics[width=5cm]{uslogo}
+\includegraphics[width=5cm]{fig/uslogo.pdf}
 \caption[US Logo (optional short caption)]{\label{us_figure} The logo for the University of Sussex.}
 \end{figure}
 
