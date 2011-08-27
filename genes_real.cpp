@@ -49,7 +49,6 @@ bool Genes_Real :: mutate(double scale)
 
 bool Genes_Real :: mutate()
 {
-  int mutated = false;
 
   Individual::mutate();
   //const std::vector<double> gene_vec = get_genes();
@@ -62,4 +61,5 @@ bool Genes_Real :: mutate()
       cerr << "got mutated to " << gene_vec_[i] << endl;
     }
   }
+  return true;
 }
