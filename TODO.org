@@ -1,0 +1,129 @@
+
+* TODO
+ - [X] try growing tail
+ - [X] add legs
+ - [X] implement CTRNN
+ - [X] implement GA
+ - [X] use leg collision
+ - [X] make sure the tadpole can rotate its body
+ - [X] use linear combination of sensors for motor neuron input
+ - [X] compile to C for use with ALPS
+ - [X] try -k v for collisions where 0 < k < 1
+ - [X] fix the framerate for list animate
+ - [X] double check units for the viscosity
+ - [ ] alps error
+       "=> Error, parents not sorted."  What's this about?
+ - [X] look up Michael Schmidt's work on ALPS-lite
+ - [X] get the frog sim working with CTRNN
+ - [X] flesh out the experiments 
+
+       There are six different morphological experiments with two
+       cases for the brain a) normal or b) lobotomised.  So twelve
+       experiments need to be run in total.  
+ - [X] get the frog metamorphosis working in C 
+ - [X] use a GA to find the best numerical values for m, kg, and s
+       find a sample of arguments that perform badly.  
+       create a new compiled solution that runs with extra constants for m, kg, and s
+       find the values that will do the best against that set
+ - [X] do the changed m and kg values affect the actual simulation?  Find out. 
+       They did change the simulation because I had a unit problem.  Fixed now.
+ - [X] run with alps
+ - [X] dump the alps population, figure out how to read it into mathematica.
+       Partly done.  How best to log all the results.
+ - [X] run with alps doing simplified logging.
+
+       Try to do just one complete test run evolve to do one task with
+       one target.  If fitness > 0.5, it completes that phase.  Count
+       the number of evaluations.  
+
+ - [ ] Might want to increase the distance from the target.
+
+       Yes. Tried with distance of 0.04, but it didn't attract a lot of success.
+
+ - [-] Invalidate the fitness cache after the fitness function has
+       changed to a new stage.
+
+       I don't think any fitness is cached.  
+
+ - [X] Save population after each stage is complete.
+
+ - [X] handle CTRL-C in alps_frog so that runs can be halted.  
+
+       Should I consider giving a population to it so they can be resumed?
+       
+
+ - [X] Implement independent brains
+       
+       should sensors be different for the brains?  Maybe yes?
+       
+ - [ ] consider using the pareto age GA (implement in C)
+ - [ ] bug with best_individual code
+ - [ ] just write your own get_best_individual maybe
+
+ - [ ] add this line to frogRHS.c automatically.
+  on line 688, 714
+  static mreal *P0, *P1, *P2, *P3; // XXX Mathematica is not creating this line--BAD!
+ - [ ] add time based termination to simulation
+       some time limit per simulation
+       some time limit per evolution
+ - [X] be able to detect collision events
+ - [ ] fix the physical interpretation to some actual 3D physical form
+ - [ ] add section for numerical simulation
+ - [ ] get working for cloud computation
+       
+* Problem
+deriv 
+  t 1.000000 
+  q 0.010000 0.010000 0.010000 0.010000 
+    0.010000 0.010000 0.010000 0.010000 
+  u 0.002147 -0.002210 -0.040243 0.083362 
+    0.083212 0.083225 0.083193 0.083233 
+  y nan nan nan nan nan 
+  g 0.000000 0.000000 
+  r 0.000000 0.010000 
+* Experiment Ideas
+  The controller could be not only independent but fixed after it had
+  initially evolved.  
+
+  What about going in the other direction complex -> simple.  That
+  obviously shouldn't work, right?
+
+  Would it evolve faster with a fixed, independent simple controller?
+
+* How to record average distance from target
+  
+  Add a new diff equation to the set:
+  dr/dt = distance from target
+
+  r[t] = t * distance
+
+  fitness = average distance over time = r[t]/t
+
+* Fix the morphing numerical error
+  1. use a GA to find the right constants for mass and length, etc.
+
+  2. use a smaller step size h
+
+  3. use something like runge kutta
+
+* bug
+  can I run the frog morph solver for a longer time than the experiments allow? Yes.
+* Results from rkqs simulation
+  30000 evaluations in 1532 seconds, which is ~0.05 seconds/evaluation or
+  ~19.6 evaluations/second
+
+  1532 seconds = 25m32s
+  
+  max evaluations required for experiment
+
+  6 morphologies
+    total phases 2 * 4 * 4
+  targets 4
+  lobotomises 2
+
+  2 * 4 * 4 * 4 * 2 = 256
+
+  if max_evaluation_time_per_phase = 25 minutes
+    256 * 25 = 6400 minutes
+
+    6400 min = 106 hour = 4.5 day
