@@ -36,7 +36,7 @@ SIM_OBJS = rkqs.o frogRHS-fixed.o run-simulation-rkqs.o myWolframRTL.o
 
 #SIM_OBJS = runSimulation.o run-simulation.o experiments.o 
 #SIM_OBJS = runSimulationAdaptive.o run-simulation.o experiments.o 
-OBJS = $(MOBJS) genes_real.o $(SIM_OBJS)
+OBJS = $(MOBJS) genes_real.o $(SIM_OBJS) alps_frog.o alps_main.o frog_eval.o run-sim-main.o
 
 BINARIES = run-sim-main alps_main frog_eval 
 
