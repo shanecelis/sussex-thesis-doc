@@ -128,10 +128,11 @@ typedef struct st_WolframLibraryData* WolframLibraryData;
 
 struct st_WolframLibraryData
 {
-	void (*UTF8String_disown)(char *);
+  //void (*UTF8String_disown)(char *);
 
 	int (*MTensor_new)(mint, mint, mint const*, MTensor *);
 	void (*MTensor_free)( MTensor);
+/*
 	int (*MTensor_clone)( MTensor, MTensor *);
 	mint (*MTensor_shareCount)(MTensor);
 	void (*MTensor_disown)( MTensor);
@@ -152,7 +153,9 @@ struct st_WolframLibraryData
 	mint (*MTensor_getType)( MTensor);
 	mint (*MTensor_getFlattenedLength)( MTensor);
 	mint* (*MTensor_getIntegerData)( MTensor);
+*/
 	mreal* (*MTensor_getRealData)( MTensor);
+/*
 	mcomplex* (*MTensor_getComplexData)( MTensor);
 	void (*Message)(const char *);
 	mint (*AbortQ)(void);
@@ -160,8 +163,10 @@ struct st_WolframLibraryData
 	int (*processMathLink)(MLINK);
 	int (*evaluateExpression)(WolframLibraryData, char *, int, mint, void *);
 	struct st_WolframRuntimeData *runtimeData;
+  */
+  
 	struct st_WolframCompileLibrary_Functions *compileLibraryFunctions;
-	mint VersionNumber;
+  /*mint VersionNumber;*/
 };
 
 

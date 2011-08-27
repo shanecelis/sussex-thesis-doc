@@ -46,20 +46,27 @@ typedef struct M_TENSOR_DATA_STRUCT
 } *MTensorData;
 
 /* Incomplete type in WolframLibrary.h */
+/* struct M_TENSOR_STRUCT */
+/* { */
+/* 	MTensorData data; */
+/* 	TensorProperty properties; */
+/* 	mint flattened_length;  */
+/* }; */
+
 struct M_TENSOR_STRUCT
 {
-	MTensorData data;
-	TensorProperty properties;
-	mint flattened_length; 
+    void *data_pointer;
+    mint dim;
 };
 
-#define MTensor_getDimensionsMacro(mt)		((mt)->properties->dims)
+//#define MTensor_getDimensionsMacro(mt)		((mt)->properties->dims)
+#define MTensor_getDimensionsMacro(mt)		(&((mt)->dim))
 
-#define MTensor_getIntegerDataMacro(mt)		((mint *) ((mt)->data->data_pointer))
-#define MTensor_getRealDataMacro(mt)		((mreal *) ((mt)->data->data_pointer))
-#define MTensor_getComplexDataMacro(mt)		((mcomplex *) ((mt)->data->data_pointer))
+//#define MTensor_getIntegerDataMacro(mt)		((mint *) ((mt)->data->data_pointer))
+#define MTensor_getRealDataMacro(mt)		((mreal *) ((mt)->data_pointer))
+//#define MTensor_getComplexDataMacro(mt)		((mcomplex *) ((mt)->data->data_pointer))
 
-#define MTensor_getFlattenedLengthMacro(mt) ((mt)->flattened_length)
+//#define MTensor_getFlattenedLengthMacro(mt) ((mt)->flattened_length)
 
 #endif
 
@@ -84,36 +91,39 @@ typedef mint (*BinaryMathFunctionPointer)(void *, const void *, const void *, co
 
 typedef struct st_WolframCompileLibrary_Functions
 	{
-	mint VersionNumber;
+/*	mint VersionNumber; */
 	MTensorInitializationData (*GetInitializedMTensors)(struct st_WolframLibraryData*, mint);
 	void (*ReleaseInitializedMTensors)(MTensorInitializationData);
 	void (*WolframLibraryData_cleanUp)(struct st_WolframLibraryData*, int);
+/*
 	MTensor (*MTensor_init)( void);
+*/
 	int (*MTensor_allocate)(MTensor *, int, mint, mint*);
 	void (*MTensor_copy)(MTensor *, MTensor);
+/*
 	int (*MTensor_copyUnique)(MTensor *, MTensor);
 	int (*MTensor_insertMTensor)( MTensor, MTensor, mint *);
 	int (*MTensor_getMTensorInitialized)(MTensor *, MTensor, mint *, mint);
 	int (*MTensor_getPart)(MTensor *, MTensor, mint, int *, void **);
 	int (*MTensor_setPart)(MTensor *, MTensor, mint, int *, void **);
 	UnaryMathFunctionPointer (*getUnaryMathFunction)(int, int);
-	int (*Math_T_T)(int, const unsigned int, MTensor, int, MTensor *);
+	int (*Math_T_T)(int, const unsigned int, MTensor, int, MTensor *); // is it a T .* T?
 	int (*Math_V_V)(int, const unsigned int, int, void *, int, void *);
 	BinaryMathFunctionPointer (*getBinaryMathFunction)(int, int, int);
 	int (*Math_TT_T)(int, const unsigned int, MTensor, MTensor, int, MTensor *);
-	int (*Math_VV_V)(int, const unsigned int, int, void *, int, void *, int, void *);
+	int (*Math_VV_V)(int, const unsigned int, int, void *, int, void *, int, void *);*/
 	mbool (*Compare_R)(int, mreal, mint, mreal *);
-	mbool (*Compare_C)(int, mreal, mint, mcomplex *);
+/*	mbool (*Compare_C)(int, mreal, mint, mcomplex *);
 	void *(*getExpressionFunctionPointer)(struct st_WolframLibraryData*, const char *);
 	int (*evaluateFunctionExpression)(struct st_WolframLibraryData*, void *, mint, mint, mint, int *, void **, int, mint, void *);
 	void **(*getArgumentSpace)(struct st_WolframLibraryData*, mint);
-	/*
-	TODO these two definitions look strange.
-	*/
+
 	LibraryFunctionPointer (*getLibraryFunctionPointer)(char *, char *);
+*/
 	LibraryFunctionPointer (*getFunctionCallPointer)(const char *);
+/*
 	mbool (*checkFloatingPointException)(void *, int, const unsigned int);
-	MTensor (*getRankZeroMTensor)(void *, int, mint);
+	MTensor (*getRankZeroMTensor)(void *, int, mint);*/
 	}* WolframCompileLibrary_Functions;
 
 #endif
