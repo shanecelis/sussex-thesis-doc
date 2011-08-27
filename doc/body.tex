@@ -6,18 +6,19 @@ morphological forms---inspired by frog metamorphosis---have been
 selected such that the conservation of the infant form to the adult
 form may be varied. In one test case, the robot begins as a
 ``tadpole'' bearing only a tail. It transforms into a ``frog'' with
-four limbs. Its task is to swim to a given target.  
+four limbs. Its task is to swim to a given target.   Figure~\ref{morphology}
 
-\begin{figure}
+%\begin{wrapfigure}{r}{0.5\textwidth}
+\begin{figure}[h]\label{morphology}
   \begin{center} 
     \includegraphics[scale=0.5]{fig/forms.pdf} 
   \end{center} 
-  \caption{Body plans parameterised by tail length $l_t$ and foot
+  \caption[Body plans]{Body plans parameterised by tail length $l_t$ and foot
     length $l_f$. a) represents the infant ``tadpole'' form, and b)
     represents the adult ``frog'' form. }
-  \label{morphology}
+  
 \end{figure}
-
+%\end{wrapfigure}
 
 \subsection{Physics Model}
 
@@ -33,28 +34,29 @@ The body is composed of six rigid bodies: one central body, one tail
 segment, four feet segments.  The tail and feet are connected to the
 central body by pinwheel joints.  Eight configuration variables
 $\{q_1, q_2, \ldots, q_8\}$ describe the body as shown in
-Figure~\ref{confvars}.  The position of the body is denoted by $(q_1,
-q_2)$.  The angle of the body is relative to the $\bf \hat j$ axis
-denoted by $q_3$.  The angle of the tail and four feet are denoted by
-$q_4, \ldots, q_8$, respectively.  Eight corresponding motion
-variables $\{u_1, u_2, \ldots, u_8\}$ describe the generalised speeds
-of the body where $u_i = \frac{d q_i}{d t}$.
+Figure~\ref{confvars}.  The position of the body is denoted by the
+vector $(q_1, q_2)$.  The angle of the central body measured counter-clockwise
+to the $\bf \hat j$ axis denoted by $q_3$.  The angle of the tail and
+four feet are denoted by $q_4, \ldots, q_8$, respectively.  Eight
+corresponding motion variables $\{u_1, u_2, \ldots, u_8\}$ describe
+the generalised speeds of the body where $u_i = \frac{d q_i}{d t}$.
 
-\begin{figure}
+\begin{figure}  \label{confvars}
   \begin{center} 
     \includegraphics[scale=0.6]{fig/confvars.pdf} 
   \end{center} 
-  \caption{Diagram of configuration variables}
-  \label{confvars}
+  \caption[Diagram of the configuration variables]{Diagram of the configuration variables $\{q_1, q_2, \ldots,
+    q_8\}$ that fully describe the physical state of the individual at
+    a given time}
 \end{figure}
 
 \subsection{Forces}
 
 For each limb a drag force $\bv F_D$ opposes its direction of motion
-which are given by Equation~\ref{drag-force-eq} and
-Figure~\ref{drag-force} where $\rho$ is the density of the fluid,
-$c_d$ is the drag coefficient.  The width of the limb $w$ is set to
-zero since the drag contributed by the limb when the velocity is
+which are given by Equation~\ref{drag-force-eq} where $\rho$ is the
+density of the fluid, $c_d$ is the drag coefficient shown in
+Figure~\ref{drag-force}.  The width of the limb $w$ is set to zero
+since the drag contributed by the limb when the velocity is
 perpendicular to the normal is not considered to be significant.
 
 \begin{eqnarray}
@@ -65,14 +67,14 @@ perpendicular to the normal is not considered to be significant.
 \end{eqnarray}
 
 
-\begin{figure}[h]
+\begin{figure}[h]  \label{drag-force}
+
   \begin{center} 
     \includegraphics[scale=0.7]{fig/drag-force.pdf} 
   \end{center} 
-  \caption{For each limb its length $l$, width $w$, depth $d$ (not
+  \caption[Diagram of drag force]{For each limb its length $l$, width $w$, depth $d$ (not
     shown), velocity $\bv v $, normal vector $\bhv n$ determine its
     drag force $\bv F_D$.}
-  \label{drag-force}
 \end{figure}
 
 In addition, a drag force and drag torque is exerted on the central
@@ -152,9 +154,9 @@ Appendix~\ref{morph-regiment-values}.
   \begin{center} 
     \includegraphics[scale=0.7]{fig/morph-regiment.pdf} 
   \end{center} 
-  \caption{Variations of Morphological Change: An, Bn have no
+  \caption[Variations of morphological change]{An, Bn have no
     morphological change; Ap, Bp have phylogenetic change; Ao, Bo have
-    ontological change.} 
+    ontological change.}
   \label{morph-regiment}
 \end{figure}
 
@@ -167,7 +169,20 @@ may also accelerate evolution.  To determine whether this may happen,
 two types of CTRNN controllers are considered: 1) the ``lobotomised''
 controller, which has two independent CTRNNs, one for the tail; one
 for the feet. 2) the ``non-lobotomised'' controller, which has one
-CTRNN that controls both the tail and feet.  
+CTRNN that controls both the tail and feet.  These are shown in
+Figure~\ref{ctrnn-figures}.
+
+\begin{figure}[h]
+  \label{ctrnn-figures}
+  \begin{center} 
+    \includegraphics[width=5inch]{fig/ctrnn-figures.pdf}
+  \end{center} 
+  \caption[Variation of CTRNN controllers]{a) Fully connected CTRNN controller. b) Independent CTRNN
+    controllers for the tail and legs.}
+\end{figure}
+
+%\input{../eqns0.tex}
+
 
 \subsection{Tasks}
 
