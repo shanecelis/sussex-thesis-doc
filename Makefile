@@ -2,7 +2,7 @@
 # thesis code
 
 OS=$(shell uname -s)
-MATHETICA=0
+MATHEMATICA=1
 
 #CPPFLAGS = -g -I/Applications/Mathematica.app/SystemFiles/IncludeFiles/C
 CPPFLAGS = -g -Iinclude -Wall -Werror
