@@ -7,6 +7,9 @@ MATHEMATICA=1
 #CPPFLAGS = -g -I/Applications/Mathematica.app/SystemFiles/IncludeFiles/C
 CPPFLAGS = -g -Iinclude -Wall -Werror
 
+MOBJS = 
+
+# Mathematica variables
 ifeq ($(MATHEMATICA),1)
 
 # Mathematica binaries
@@ -46,11 +49,6 @@ endif
 
 all: $(OBJS) $(BINARIES) frog_eqns.m frog_eqns_dotsolved.m
 
-ifeq ($(MATHEMATICA),1)
-%.mo : %.m
-	mathload $< > $@
-endif
-
 clean:
 	$(RM) $(OBJS) $(BINARIES) frogq.al parenparser.hi parenparser
 
@@ -70,7 +68,16 @@ frog_eval: frog_eval.o alps_frog.o genes_real.o $(SIM_OBJS)
 run: run-sim-main
 	DYLD_LIBRARY_PATH=/Applications/Mathematica.app/SystemFiles/Libraries/MacOSX-x86-64:. ./run-sim-main
 
+
+frog_eqns.txt: frog.al
+	(cat frog.al; echo "quit") > frogq.al
+	(echo "! rhseqns = "; yes | al frogq.al | grep Result) > frog_eqns.txt
+
+# Rules for Mathematica
 ifeq ($(MATHEMATICA),1)
+
+%.mo : %.m
+	mathload $< > $@
 
 run-simulation-mlinktm.c : run-simulation-mlink.tm
 	${MPREP} $? -o $@
@@ -78,13 +85,6 @@ run-simulation-mlinktm.c : run-simulation-mlink.tm
 run-simulation-mlink : run-simulation-mlinktm.o $(SIM_OBJS)
 	${CC} -I${INCDIR} $(SIM_OBJS) run-simulation-mlinktm.o -L${LIBDIR} -lMLi3 ${EXTRA_LIBS} -o $@
 
-endif
-
-frog_eqns.txt: frog.al
-	(cat frog.al; echo "quit") > frogq.al
-	(echo "! rhseqns = "; yes | al frogq.al | grep Result) > frog_eqns.txt
-
-ifeq ($(MATHEMATICA),1)
 frog_eqns.m: frog_eqns.txt parenparser mr.pl
 	cat frog_eqns.txt | ./parenparser /dev/stdin | ./mr.pl > frog_eqns.m
 
