@@ -105,7 +105,7 @@ params = {r       -> 0.025 m,
           d       -> 2 r,
           Cdcirc  -> 0.3,
           Cdplate -> 1.98,
-          rho     -> 999.1026 kg/m^3 (d),
+          rho     -> 999.1026 kg/m^3,
           g       -> 9.8 m/s^2,
           Tmax    -> .00001 kg (m/s)^2, (* this (l/lmax)^2 is dubious *)
           Tfmax   -> .00001 kg (m/s)^2,

@@ -127,6 +127,8 @@ fitnessToTargetRecordGoodAndBad[i_, target_, experiment_, phase_] :=
                  goodArgs = Join[{args}, goodArgs]]];
            fitness]
 
+
+
 (*
    Calculate the mean distance using the diff 
 *)
@@ -134,8 +136,10 @@ fitnessToTarget[i_, target_, experiment_, phase_] :=
     Module[{ (*endState,*) n, tmax, fitness, args},
            tmax = 10.0;
            args = argsForTarget[getGene[i], target, tmax, experiment, phase] // N;
-           fitness = Catch[endState = runSimulation@@args;
-                           endState[[recordBegin]]/(endState[[1]] * Norm[target])];
+           fitness = Catch[endState = runSimulationGA@@args;
+                           If[endState === $Failed,
+                              Throw[$Failed],
+                              endState[[recordBegin]]/(endState[[1]] * Norm[target])]];
            If[fitness === $Failed,
               666.6,
               fitness]
@@ -146,7 +150,7 @@ fitnessForSpeed[i_, experiment_, phase_] :=
            tmax = 10.0;
            target = {0,0.1};
            args = argsForTarget[getGene[i], target, tmax, experiment, phase];
-           fitness = Catch[endState = runSimulation@@args;
+           fitness = Catch[endState = runSimulationGA@@args;
                            endState[[recordBegin + 1]]/tmax];
            If[fitness === $Failed,
               666.6,
@@ -159,21 +163,22 @@ fitnessForSpeedData[i_, experiment_, phase_] :=
            target = {0,0.1};
            args = argsForTarget[getGene[i], target, tmax, experiment, phase];
            args[[2]] = 0.1;
-           runSolver3[runSimulation, Sequence@@args]
+           runSolver3[runSimulationGA, Sequence@@args]
           ]
 
 
 fitnessToTargetData[i_, target_, experiment_, phase_] := 
     Module[{ (*endState,*) n, tmax, fitness, args, data},
            tmax = 10.0;
-           args = argsForTarget[getGene[i], target, tmax, experiment, phase];
+           args = argsForTarget[getGene[i], target, tmax, experiment, phase]; 
            args[[2]] = 0.1;
-           data = runSolver3[runSimulation, Sequence@@args];
+           data = runSolver3[runSimulationGA, Sequence@@args];
            data
           ] 
 
 
 fitnessToTopTarget[i_] := evaluateToTarget[i, {0, 1} (.1m) //. params, expName, phase]
+fitnessToTopTargetData[i_] := fitnessToTargetData[i, {0, 1} (.1m) //. params, expName, phase]
 
 
 fitnessToMultipleTargets[iOrGene_] := 
@@ -183,11 +188,11 @@ fitnessToMultipleTargets[iOrGene_] :=
            Max[Map[evaluateToTarget[iOrGene, #]&, targets]]]
 
 
-Clear[evaluate,evaluateToTarget];
+Clear[evaluate,evaluateToTarget,runSimulationGA];
 (*evaluate = fitnessToMultipleTargets;*)
 evaluate = fitnessToTopTarget;
-evaluateToTarget = fitnessToTarget2;
-
+evaluateToTarget = fitnessToTarget;
+runSimulationGA = runSimulation;
 
 showEvaluations[iOrGene_] := 
     Module[{initTarget, targets},

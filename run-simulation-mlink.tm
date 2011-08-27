@@ -27,7 +27,6 @@
 :End:
 
 :Evaluate:      runSimulationMlink[ state:{___}, stepSize_, constants:{___}, time_] := runSimulationMlink[N[state], N[stepSize], N[constants], N[time]]
-//:Evaluate:      SumAList[ sequence___Integer]:= SumAList[ {sequence} ]
 
 void failed_with_message0(char *msg) {
     char buf[255];
@@ -63,12 +62,14 @@ void run_simulation_mlink( double *state, long stateLength,
     failed_with_message0("runSimulationMlink::errg2c");
     return;
   }
-  err = run_simulation(state, step_size, constants2, state[0] + time, result);
+  err = run_simulation(state, step_size, constants2, state[0] + time, 
+                       result);
   if (err) {
     failed_with_message0("runSimulationMlink::errsim");
     return;
   }
-  MLPutDoubleArray(stdlink, result, dims, NULL, d);
+
+  MLPutDoubleArray(stdlink, result, dims, NULL /* header*/, d /* rank */);
 }
 
 int main(argc, argv)

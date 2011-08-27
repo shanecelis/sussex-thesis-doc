@@ -226,10 +226,15 @@ int run_simulation(double *init_state, double step_size,
     //j++;
     if ((t-time)*(time-torig) >= 0.0) {
       hmean /= (double) j;
-      //printf("hmin = %f, hmean = %f, hmax = %f\n", hmin, hmean, hmax);
-      for (i = 0; i < STATE_COUNT; i++) 
+      printf("hmin = %f, hmean = %f, hmax = %f\n", hmin, hmean, hmax);
+      printf("result ");
+      for (i = 0; i < STATE_COUNT; i++) {
+        if (isnan(state[i]))
+          return 2;
         state_result[i] = state[i];
-
+        printf("%f ", state[i]);
+      }
+      printf("\n");
       return 0;
     }
   }

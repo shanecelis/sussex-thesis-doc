@@ -44,7 +44,8 @@ showExperiment[phases_, timeShift_:1, opts:OptionsPattern[]] :=
                                    feetGrowths];
 
            maxtime =  Transpose[tlpw][[1]] //Max;
-           phaseLines = Map[{Text["p" <> ToString[#], 
+           phaseLines = Map[{Text[Subscript["p", #],
+               (*"p" <> ToString[#], *)
                                   {(# -.5)timeShift, 0}], 
                              Line[{{# timeShift, -0.1}, 
                                    {# timeShift, 1.1}}]}&, 
@@ -170,6 +171,18 @@ showAllExperiments[] :=
                                       ImageSize -> 300]&, 
                        experimentNames];
            Grid [Partition[plots,2,2, {1,1}, ""]]]
+
+
+showAllExperiments2[] := 
+    Module[{plots},
+           plots = Map[showExperiment[experiment[#], 
+                                      1, 
+                                      PlotLabel -> ToString[#], 
+                                      ImageSize -> 300]&, 
+                       experimentNames];
+           GraphicsGrid [Partition[plots,2,2, {1,1}, ""],
+                         PlotLabel -> Style["Variation of Morphological Change", 15]
+                        ]]
 
 
 makeExperiments[] := 
