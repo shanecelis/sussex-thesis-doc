@@ -50,7 +50,7 @@ endif
 all: $(OBJS) $(BINARIES) frog_eqns.m frog_eqns_dotsolved.m
 
 clean:
-	$(RM) $(OBJS) $(BINARIES) frogq.al parenparser.hi parenparser
+	$(RM) $(OBJS) $(BINARIES) frogq.al parenparser.hi parenparser parenparser.o run-simulation-mlinktm.o 
 
 run-simulation.o: run-simulation.c run-simulation.h
 
