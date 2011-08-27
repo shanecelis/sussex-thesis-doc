@@ -18,3 +18,24 @@ tmp/*
 
 # results
 res*
+/doc/thesis.0-1.log
+/doc/thesis.1-2.log
+/doc/thesis.1-3.log
+/doc/thesis.aux
+/doc/thesis.aux.make
+/doc/thesis.auxbbl.make
+/doc/thesis.auxtarget.make
+/doc/thesis.bbl
+/doc/thesis.blg
+/doc/thesis.brf
+/doc/thesis.d
+/doc/thesis.fls
+/doc/thesis.lof
+/doc/thesis.lof.make
+/doc/thesis.log
+/doc/thesis.lot
+/doc/thesis.lot.make
+/doc/thesis.out
+/doc/thesis.out.make
+/doc/thesis.toc
+/doc/thesis.toc.make
