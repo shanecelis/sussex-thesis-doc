@@ -1,6 +1,8 @@
 /* run-simulation.h */
 
 #define METERS           1.0
+#define TIME_MAX         30.0
+#define BODY_RADIUS      (0.025 * METERS)
 
 #define TARGET_DISTANCE  (0.05 * METERS)
 

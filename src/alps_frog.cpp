@@ -114,7 +114,7 @@ bool evaluate_frog(vector<double>& fitness,
     cerr << "error: target_index >= target_count" << endl;
     return false;
   }
-  double time_max = 10.0;
+  double time_max = TIME_MAX;
   double result[STATE_COUNT];
   int err = run_frog(((Individ_Real*)individ)->get_genes(), 
                      time_max,

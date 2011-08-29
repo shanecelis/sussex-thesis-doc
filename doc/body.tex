@@ -6,17 +6,18 @@ morphological forms---inspired by frog metamorphosis---have been
 selected such that the conservation of the infant form to the adult
 form may be varied. In one test case, the robot begins as a
 ``tadpole'' bearing only a tail. It transforms into a ``frog'' with
-four limbs. Its task is to swim to a given target.   Figure~\ref{morphology}
+four limbs. Its task is to swim to a given
+target. Figure~\ref{morphology}
 
 %\begin{wrapfigure}{r}{0.5\textwidth}
-\begin{figure}[h]\label{morphology}
-  \begin{center} 
-    \includegraphics[scale=0.5]{fig/forms.pdf} 
-  \end{center} 
-  \caption[Body plans]{Body plans parameterised by tail length $l_t$ and foot
-    length $l_f$. a) represents the infant ``tadpole'' form, and b)
-    represents the adult ``frog'' form. }
-  
+\begin{figure}[h]
+  \centering
+  \figtitle{Body Plans} 
+  \includegraphics[scale=0.5]{fig/forms.pdf} 
+  \vspace{-30pt}
+  \caption[Body plans]{\label{morphology}Body plans parameterised by
+    tail length $l_t$ and foot length $l_f$. a) represents the infant
+    ``tadpole'' form, and b) represents the adult ``frog'' form. }
 \end{figure}
 %\end{wrapfigure}
 
@@ -41,13 +42,14 @@ four feet are denoted by $q_4, \ldots, q_8$, respectively.  Eight
 corresponding motion variables $\{u_1, u_2, \ldots, u_8\}$ describe
 the generalised speeds of the body where $u_i = \frac{d q_i}{d t}$.
 
-\begin{figure}  \label{confvars}
-  \begin{center} 
-    \includegraphics[scale=0.6]{fig/confvars.pdf} 
-  \end{center} 
-  \caption[Diagram of the configuration variables]{Diagram of the configuration variables $\{q_1, q_2, \ldots,
-    q_8\}$ that fully describe the physical state of the individual at
-    a given time}
+\begin{figure}  
+  \centering
+  \figtitle{Diagram of Configuration Variables} 
+  \includegraphics[scale=0.6]{fig/confvars.pdf} 
+  \caption[Diagram of configuration variables]{\label{confvars}Diagram
+    of the configuration variables $\{q_1, q_2, \ldots, q_8\}$ that
+    fully describe the physical state of the individual at a given
+    time}
 \end{figure}
 
 \subsection{Forces}
@@ -67,14 +69,14 @@ perpendicular to the normal is not considered to be significant.
 \end{eqnarray}
 
 
-\begin{figure}[h]  \label{drag-force}
-
-  \begin{center} 
-    \includegraphics[scale=0.7]{fig/drag-force.pdf} 
-  \end{center} 
-  \caption[Diagram of drag force]{For each limb its length $l$, width $w$, depth $d$ (not
-    shown), velocity $\bv v $, normal vector $\bhv n$ determine its
-    drag force $\bv F_D$.}
+\begin{figure}[h]  
+  \centering
+  \figtitle{Diagram of Drag Force} 
+  \includegraphics[scale=0.7]{fig/drag-force.pdf} 
+  \vspace{-45pt}
+  \caption[Diagram of drag force]{\label{drag-force}For each limb its
+    length $l$, width $w$, depth $d$ (not shown), velocity $\bv v $,
+    normal vector $\bhv n$ determine its drag force $\bv F_D$.}
 \end{figure}
 
 In addition, a drag force and drag torque is exerted on the central
@@ -151,13 +153,14 @@ The exact values used are recorded in the
 Appendix~\ref{morph-regiment-values}.
 
 \begin{figure}
-  \begin{center} 
-    \includegraphics[scale=0.7]{fig/morph-regiment.pdf} 
-  \end{center} 
-  \caption[Variations of morphological change]{An, Bn have no
-    morphological change; Ap, Bp have phylogenetic change; Ao, Bo have
-    ontological change.}
-  \label{morph-regiment}
+  \centering
+  \figtitle{Variations of Morphological Change} 
+  \includegraphics[scale=1.0]{fig/morph-regiment.pdf} 
+  \vspace{-15pt}
+  \caption[Variations of morphological
+    change]{\label{morph-regiment}An, Bn have no morphological change;
+    Ap, Bp have phylogenetic change; Ao, Bo have ontological change.}
+
 \end{figure}
 
 \subsection{Controller Variation}
@@ -173,29 +176,17 @@ CTRNN that controls both the tail and feet.  These are shown in
 Figure~\ref{ctrnn-figures}.
 
 \begin{figure}[h]
-  \label{ctrnn-figures}
-  \begin{center} 
-    \includegraphics[width=5inch]{fig/ctrnn-figures.pdf}
-  \end{center} 
-  \caption[Variation of CTRNN controllers]{a) Fully connected CTRNN controller. b) Independent CTRNN
-    controllers for the tail and legs.}
+  \centering
+  \figtitle{Variation of CTRNN Controllers} 
+  \includegraphics[width=5in]{fig/ctrnn-figures.pdf}
+  \vspace{-15pt}
+  \caption[Variation of CTRNN controllers]{\label{ctrnn-figures}a)
+    Fully connected CTRNN controller. b) Independent CTRNN controllers
+    for the tail and legs.}
 \end{figure}
-
-%\input{../eqns0.tex}
-
 
 \subsection{Tasks}
 
+Tasks are over HERE!
 
 
-
-\section{Appendix}
-
-\subsection{Equations of Motion} \label{physeqs-sec}
-
-\begin{eqnarray}
-  \text{XXX} \label{physeqs}
-\end{eqnarray}
-%\include{physeqs}
-
-\subsection{Morphological Change Values} \label{morph-regiment-values}

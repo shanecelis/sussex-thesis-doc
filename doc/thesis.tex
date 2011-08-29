@@ -77,6 +77,7 @@
 
 \newcommand{\red}[1]{\color{red}#1\color{black}}
 \newcommand{\blue}[1]{\color{blue}#1\color{black}}
+\newcommand{\figtitle}[1]{\Large{#1} \vfill \vspace{15pt}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -225,7 +226,7 @@ Shane Celis
 \chapter{Introduction}
 \label{chap:intro}
 
-\input{body}
+\input{body.tex}
 
 This is the introduction to the thesis.\footnote{And this is a footnote.}  The conclusion is in Chapter \ref{chap:conc} on page \pageref{chap:conc}.
 
@@ -275,6 +276,11 @@ Of course.
 \appendix
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+%\include{physeqs}
+
+
+
+
 
 %-----------------------------------------------------
 % Appendix: Code
@@ -282,10 +288,25 @@ Of course.
 \chapter{Code}
 \label{app:code}
 
-%\verbatiminclude{
-\begin{verbatim}
-10 PRINT "HELLO WORLD"
-\end{verbatim}
+\section{Physical Model} \label{app:code:physmod}
+
+The equations of motion were derived using the Autolev
+tool\cite{autolev}.  The source code is provided below.
+
+%\verbatiminput[8pt]{../src/frog.al} 
+\lstset{basicstyle=\scriptsize, stepnumber=9, caption=frog.al, numbers=left}
+\lstinputlisting{../src/frog.al}
+
+\subsection{Equations of Motion} \label{physeqs-sec}
+
+\lstset{language=Mathematica, basicstyle=\scriptsize, stepnumber=9, caption=frog.al, numbers=left}
+\lstinputlisting{frog_eqns_wrapped.txt} 
+
+\subsection{Morphological Change Values} \label{morph-regiment-values}
+
+%\begin{verbatim}
+%10 PRINT "HELLO WORLD"
+%\end{verbatim}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%

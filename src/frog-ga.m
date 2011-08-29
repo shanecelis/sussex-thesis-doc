@@ -81,7 +81,7 @@ mut = 1/geneCount;
 rec = 0.5; (* recombination *)
 
 
-minimize = True;
+minimize = False;
 
 
 end = 10^4;
@@ -145,21 +145,24 @@ fitnessToTarget[i_, target_, experiment_, phase_] :=
               fitness]
           ] 
 
+fitnessForSpeed[i_] := 
+    fitnessForSpeed[i, expName, phase]
+
 fitnessForSpeed[i_, experiment_, phase_] := 
     Module[{ (*endState,*) n, tmax, fitness, args, target},
-           tmax = 10.0;
+           tmax = 20.0;
            target = {0,0.1};
            args = argsForTarget[getGene[i], target, tmax, experiment, phase];
            fitness = Catch[endState = runSimulationGA@@args;
                            endState[[recordBegin + 1]]/tmax];
            If[fitness === $Failed,
-              666.6,
+              -1.0,
               fitness]
           ]
 
 fitnessForSpeedData[i_, experiment_, phase_] := 
-    Module[{ (*endState,*) n, tmax, fitness, args, target},
-           tmax = 10.0;
+    Module[{ (*endState,*) n, tmax, fitness, target},
+           tmax = 40.0;
            target = {0,0.1};
            args = argsForTarget[getGene[i], target, tmax, experiment, phase];
            args[[2]] = 0.1;
@@ -169,7 +172,7 @@ fitnessForSpeedData[i_, experiment_, phase_] :=
 
 fitnessToTargetData[i_, target_, experiment_, phase_] := 
     Module[{ (*endState,*) n, tmax, fitness, args, data},
-           tmax = 10.0;
+           tmax = 40.0;
            args = argsForTarget[getGene[i], target, tmax, experiment, phase]; 
            args[[2]] = 0.1;
            data = runSolver3[runSimulationGA, Sequence@@args];
@@ -191,6 +194,7 @@ fitnessToMultipleTargets[iOrGene_] :=
 Clear[evaluate,evaluateToTarget,runSimulationGA];
 (*evaluate = fitnessToMultipleTargets;*)
 evaluate = fitnessToTopTarget;
+evaluate = fitnessForSpeed;
 evaluateToTarget = fitnessToTarget;
 runSimulationGA = runSimulation;
 

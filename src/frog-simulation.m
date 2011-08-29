@@ -100,15 +100,16 @@ params = {r       -> 0.025 m,
           negl    -> 0.00001m, (* negligible length *)
           Ia      -> ma (r^2)/2, (* where did I get these formulas? *)
           Ib      -> mb ((lmax)^2)/3,
-          ma      -> 0.0195 kg,
-          mb      -> 0.1 ma,
+          ma      -> 0.025 kg, (*0.0195 kg,*)
+          mb      -> 0.00195 kg,
           d       -> 2 r,
           Cdcirc  -> 0.3,
+          TCdcirc -> 2.9,
           Cdplate -> 1.98,
           rho     -> 999.1026 kg/m^3,
           g       -> 9.8 m/s^2,
-          Tmax    -> .00001 kg (m/s)^2, (* this (l/lmax)^2 is dubious *)
-          Tfmax   -> .00001 kg (m/s)^2,
+          Tmax    -> 0.00001 kg (m/s)^2, (* this (l/lmax)^2 is dubious *)
+          Tfmax   -> 0.00001 kg (m/s)^2,
           
 (*          Fr    -> 0.01,
           P       -> 1/freq,
@@ -134,7 +135,14 @@ params = {r       -> 0.025 m,
           ld -> depth,
           fld -> depth,
 
-          Acirc -> 2 r depth
+          Acirc -> 2 r depth,
+          TAcirc -> Pi 2 r^2 depth (r^2),
+          oq4 -> 0,
+          oq5 -> 1 Pi/4,
+          oq6 -> 3 Pi/4,
+          oq7 -> 5 Pi/4,
+          oq8 -> 7 Pi/4
+          
          };
 
 

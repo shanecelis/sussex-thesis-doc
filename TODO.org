@@ -127,3 +127,10 @@ deriv
     256 * 25 = 6400 minutes
 
     6400 min = 106 hour = 4.5 day
+* find max speed
+  ./run-expr -F 1 Ap 1 0
+  | time_max | mean_speed | evaluations |
+  |     10.0 |    2.13e-3 |       16000 |
+  |     20.0 |    1.18e-2 |        6400 |
+  |     30.0 |    1.32e-2 |        2000 |
+  |          |            |             |

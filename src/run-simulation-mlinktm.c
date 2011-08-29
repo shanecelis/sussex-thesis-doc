@@ -291,7 +291,7 @@ MLYDEFN( devyield_result, MLDefaultYielder, ( MLINK mlp, MLYieldParameters yp))
 
 # line 1 "run-simulation-mlink.tm"
 /* To launch this program from within Mathematica use:
- *   In[1]:= link = Install["sumalist"]
+ *   In[1]:= link = Install["run-simulation-mlink"]
  *
  * Or, launch this program from a shell and establish a
  * peer-to-peer connection.  When given the prompt Create Link:
@@ -306,14 +306,10 @@ MLYDEFN( devyield_result, MLDefaultYielder, ( MLINK mlp, MLYieldParameters yp))
 #include "mathlink.h"
 #include "run-simulation.h"
 
-/* void run_simulation_mlink P(( double *, long ,  */
-/*      double , double *, long ,  */
-/*      double )) */
-
-# line 314 "run-simulation-mlinktm.c"
+# line 310 "run-simulation-mlinktm.c"
 
 
-# line 31 "run-simulation-mlink.tm"
+# line 38 "run-simulation-mlink.tm"
 void failed_with_message0(char *msg) {
     char buf[255];
     MLClearError(stdlink); 
@@ -325,13 +321,13 @@ void failed_with_message0(char *msg) {
     MLPutSymbol(stdlink, (char *) "$Failed");
 }
 
-void run_simulation_mlink( double *state, long stateLength, 
+
+void run_simulation_mlink2( double *state, long stateLength, 
      double step_size, double *constants, long constantsLength, 
      double time) {
   long dims[1];
   long d = 1;
   double result[STATE_COUNT];
-  double constants2[CONSTANTS_COUNT];
   int err;
   if (stateLength != STATE_COUNT) {
     failed_with_message0("runSimulationMlink::invstcnt");
@@ -342,13 +338,13 @@ void run_simulation_mlink( double *state, long stateLength,
     return;
   }
 
+  /* err = gene_to_ctrnn(constants, constants2); */
+  /* if (err) { */
+  /*   failed_with_message0("runSimulationMlink::errg2c"); */
+  /*   return; */
+  /* } */
   dims[0] = STATE_COUNT;
-  err = gene_to_ctrnn(constants, constants2);
-  if (err) {
-    failed_with_message0("runSimulationMlink::errg2c");
-    return;
-  }
-  err = run_simulation(state, step_size, constants2, state[0] + time, 
+  err = run_simulation(state, step_size, constants, state[0] + time, 
                        result);
   if (err) {
     failed_with_message0("runSimulationMlink::errsim");
@@ -357,6 +353,22 @@ void run_simulation_mlink( double *state, long stateLength,
 
   MLPutDoubleArray(stdlink, result, dims, NULL /* header*/, d /* rank */);
 }
+
+
+void run_simulation_mlink( double *state, long stateLength, 
+     double step_size, double *constants, long constantsLength, 
+     double time) {
+  int err;
+  double constants2[CONSTANTS_COUNT];
+  err = gene_to_ctrnn(constants, constants2);
+  if (err) {
+    failed_with_message0("runSimulationMlink::errg2c");
+    return;
+  }
+  run_simulation_mlink2(state, stateLength, step_size, constants2, 
+                        constantsLength, time);
+}
+
 
 int main(argc, argv)
 	int argc; char* argv[];
@@ -371,7 +383,7 @@ int main(argc, argv)
   err = sim_uninit();
   return err;
 }
-# line 375 "run-simulation-mlinktm.c"
+# line 387 "run-simulation-mlinktm.c"
 
 
 void run_simulation_mlink P(( double * _tp1, long _tpl1, double _tp2, double * _tp3, long _tpl3, double _tp4));
@@ -405,13 +417,45 @@ L0:	return res;
 } /* _tr0 */
 
 
+void run_simulation_mlink2 P(( double * _tp1, long _tpl1, double _tp2, double * _tp3, long _tpl3, double _tp4));
+
+#if MLPROTOTYPES
+static int _tr1( MLINK mlp)
+#else
+static int _tr1(mlp) MLINK mlp;
+#endif
+{
+	int	res = 0;
+	double * _tp1;
+	long _tpl1;
+	double _tp2;
+	double * _tp3;
+	long _tpl3;
+	double _tp4;
+	if ( ! MLGetRealList( mlp, &_tp1, &_tpl1) ) goto L0;
+	if ( ! MLGetReal( mlp, &_tp2) ) goto L1;
+	if ( ! MLGetRealList( mlp, &_tp3, &_tpl3) ) goto L2;
+	if ( ! MLGetReal( mlp, &_tp4) ) goto L3;
+	if ( ! MLNewPacket(mlp) ) goto L4;
+
+	run_simulation_mlink2(_tp1, _tpl1, _tp2, _tp3, _tpl3, _tp4);
+
+	res = 1;
+L4: L3:	MLDisownRealList( mlp, _tp3, _tpl3);
+L2: L1:	MLDisownRealList( mlp, _tp1, _tpl1);
+
+L0:	return res;
+} /* _tr1 */
+
+
 static struct func {
 	int   f_nargs;
 	int   manual;
 	int   (*f_func)P((MLINK));
 	const char  *f_name;
-	} _tramps[1] = {
-		{ 4, 0, _tr0, "run_simulation_mlink" }
+	} _tramps[2] = {
+		{ 4, 0, _tr0, "run_simulation_mlink" },
+		{ 4, 0, _tr1, "run_simulation_mlink2" }
 		};
 
 static const char* evalstrs[] = {
@@ -419,9 +463,13 @@ static const char* evalstrs[] = {
 	"e_] := runSimulationMlink[N[state], N[stepSize], N[constants], N",
 	"[time]]",
 	(const char*)0,
+	"runSimulationMlink2[ state:{___}, stepSize_, constants:{___}, ti",
+	"me_] := runSimulationMlink2[N[state], N[stepSize], N[constants],",
+	" N[time]]",
+	(const char*)0,
 	(const char*)0
 };
-#define CARDOF_EVALSTRS 1
+#define CARDOF_EVALSTRS 2
 
 static int _definepattern P(( MLINK, char*, char*, int));
 
@@ -440,6 +488,8 @@ int MLInstall(mlp) MLINK mlp;
 	_res = MLConnect(mlp);
 	if (_res) _res = _definepattern(mlp, (char *)"runSimulationMlink[ state:{___Real}, stepSize_Real, constants:{___Real}, time_Real]", (char *)"{ state, stepSize, constants, time }", 0);
 	if (_res) _res = _doevalstr( mlp, 0);
+	if (_res) _res = _definepattern(mlp, (char *)"runSimulationMlink2[ state:{___Real}, stepSize_Real, constants:{___Real}, time_Real]", (char *)"{ state, stepSize, constants, time }", 1);
+	if (_res) _res = _doevalstr( mlp, 1);
 	if (_res) _res = MLPutSymbol( mlp, "End");
 	if (_res) _res = MLFlush( mlp);
 	return _res;
@@ -452,7 +502,7 @@ int MLDoCallPacket( MLINK mlp)
 int MLDoCallPacket( mlp) MLINK mlp;
 #endif
 {
-	return _MLDoCallPacket( mlp, _tramps, 1);
+	return _MLDoCallPacket( mlp, _tramps, 2);
 } /* MLDoCallPacket */
 
 /******************************* begin trailer ********************************/

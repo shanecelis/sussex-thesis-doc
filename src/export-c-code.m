@@ -292,7 +292,7 @@ makeFrogMorphDiff[] :=
            myPreParams = {
                l     -> lg[t] lmax,
                fl    -> fg[t] flmax,
-               Tq4   -> Tmax (0. + 1 Clip[ys[1][t]]),
+               Tq4   -> Tmax  Clip[ys[1][t]],
                Tq5   -> Tfmax Clip[ys[2][t]],
                Tq6   -> Tfmax Clip[ys[3][t]],
                Tq7   -> Tfmax Clip[ys[4][t]],
@@ -564,17 +564,18 @@ limbLengthsCount = 2;
 growthCount      = 2 * 3 * 2;
 pointsCount      = growthCount;
 recordCount      = 2;
-stateCount       = 1 + pstateCount + nodeCount  + limbLengthsCount + recordCount;
-constantsCount   = len + targetCount + growthCount ;
+stateCount       = 1 + pstateCount + nodeCount + limbLengthsCount + recordCount;
+constantsCount   = len + targetCount + growthCount;
 
 recordBegin      = 25;
 tailstateBegin   = 23;
 qstateBegin      = 2;
 ustateBegin      = 10;
+nodeBegin        = ustateBegin + 8;
 
 
 targetBegin      = geneCount + 1;
-pointsBegin      = geneCount + targetCount + 1
+pointsBegin      = geneCount + targetCount + 1;
  
 makeGeneToCTRNNSolverC[frogSolver_] := 
     Block[{state, constants, time},

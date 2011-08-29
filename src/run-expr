@@ -3,7 +3,7 @@
 
 usage()
 {
-    echo "usage: run-expr [-f] [-n num] [-c count] [-d results-dir] <experiment-name> <target-index> <lobotomise>" >&2;
+    echo "usage: run-expr [-f] [-n num] [-c count] [-d results-dir] [-F fitness-type] <experiment-name> <target-index> <lobotomise>" >&2;
 }
 
 
@@ -11,14 +11,15 @@ force=0;
 count=1;
 num=1;
 resultsDir=".";
-
-while getopts hfc:n:d: opt; do
+fitnessType=0;
+while getopts hfc:n:d:F: opt; do
 	case $opt in
 	    f) force=1;;
         h) usage;;
         d) resultsDir="$OPTARG";;
         n) num=$OPTARG;;
 	    c) count=$OPTARG;;
+        F) fitnessType=$OPTARG;;
 	    *) echo "error: invalid option given." >&2; usage;;
 	esac
 done
@@ -41,7 +42,7 @@ for ((i = $num; i < ($num + $count); i++)); do
     if [ "$force" -eq 1 ] && [ -f "$outfile"  ]; then
         echo "warning: '$outfile' already exists; skipping." >&2;
     else
-        if ! alps_main "$expName" "$targetIndex" "$lobotomise" "$dir/pop-phase" | tee "$outfile"; then
+        if ! alps_main "$expName" "$targetIndex" "$lobotomise" "$dir/pop-phase" "$fitnessType" | tee "$outfile"; then
             echo "error: alps_main failed with exit code ${PIPESTATUS}" >&2;
             exit 1;
         fi

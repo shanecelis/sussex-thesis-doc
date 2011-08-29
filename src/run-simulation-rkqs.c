@@ -178,9 +178,10 @@ int run_simulation(double *init_state, double step_size,
     err = frog_deriv(t, state, dstatedt);
     if (err)
       return err; 
+    {
     for(i = 0; i < STATE_COUNT; i++)
       state_scale[i] = fabs(state[i]) + fabs(dstatedt[i] * h) + TINY;
-    
+
     err = rkqs(state, dstatedt, STATE_COUNT, &t, 
                h, 1.e-5, state_scale, &hdid, &hnext, next_state, &frog_deriv);
 
@@ -197,7 +198,10 @@ int run_simulation(double *init_state, double step_size,
     state = next_state;
     next_state = temp_state;
     process_collision(state);
-    
+    hmean += hdid;
+    hmin = fmin(hmin, hdid);
+    hmax = fmax(hmax, hdid);
+    }
 /*  {
     err = rkck(state, dstatedt, STATE_COUNT, t, 
                h, state, state_scale, &frog_deriv);
@@ -208,9 +212,6 @@ int run_simulation(double *init_state, double step_size,
                h, state, &frog_deriv);
     hdid = hnext = h = 0.02;
     }*/
-    hmean += hdid;
-    hmin = fmin(hmin, hdid);
-    hmax = fmax(hmax, hdid);
     if (j % 1000) {
       //printf("t = %f, h = %f, hnext = %f, hdid = %f, s[0] = %f\n", t, h, hnext, hdid, state[0]);
     }
@@ -226,15 +227,15 @@ int run_simulation(double *init_state, double step_size,
     //j++;
     if ((t-time)*(time-torig) >= 0.0) {
       hmean /= (double) j;
-      printf("hmin = %f, hmean = %f, hmax = %f\n", hmin, hmean, hmax);
-      printf("result ");
+      //printf("hmin = %f, hmean = %f, hmax = %f\n", hmin, hmean, hmax);
+      //printf("result ");
       for (i = 0; i < STATE_COUNT; i++) {
+        state_result[i] = state[i];
         if (isnan(state[i]))
           return 2;
-        state_result[i] = state[i];
-        printf("%f ", state[i]);
+        //printf("%f ", state[i]);
       }
-      printf("\n");
+      //printf("\n");
       return 0;
     }
   }

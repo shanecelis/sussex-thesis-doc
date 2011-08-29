@@ -180,8 +180,8 @@ showAllExperiments2[] :=
                                       PlotLabel -> ToString[#], 
                                       ImageSize -> 300]&, 
                        experimentNames];
-           GraphicsGrid [Partition[plots,2,2, {1,1}, ""],
-                         PlotLabel -> Style["Variation of Morphological Change", 15]
+           GraphicsGrid [Partition[plots,2,2, {1,1}, ""]
+                         (*,PlotLabel -> Style["Variation of Morphological Change", 15]*)
                         ]]
 
 
