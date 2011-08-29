@@ -54,23 +54,24 @@
 
  - [X] Implement independent brains
        
-       should sensors be different for the brains?  Maybe yes?
+       should sensors be different for the brains?  Yes.
        
  - [ ] consider using the pareto age GA (implement in C)
  - [ ] bug with best_individual code
  - [ ] just write your own get_best_individual maybe
 
- - [ ] add this line to frogRHS.c automatically.
+ - [X] add this line to frogRHS.c automatically.
   on line 688, 714
   static mreal *P0, *P1, *P2, *P3; // XXX Mathematica is not creating this line--BAD!
  - [ ] add time based termination to simulation
        some time limit per simulation
        some time limit per evolution
  - [X] be able to detect collision events
- - [ ] fix the physical interpretation to some actual 3D physical form
+ - [X] fix the physical interpretation to some actual 3D physical form
  - [ ] add section for numerical simulation
  - [ ] get working for cloud computation
-       
+ - [ ] make all physical constants alterable at runtime
+
 * Problem
 deriv 
   t 1.000000 

@@ -91,7 +91,7 @@ frog_eqns.m: frog_eqns.txt parenparser mr.pl
 frog_eqns_dotsolved.m: frog_eqns.m make-frog_eqns_dotsolved.m
 	mathload make-frog_eqns_dotsolved.m
 
-frogRHS.c frogRHS.h: frog_eqns_dotsolved.m make-frogRHSC.m frog-simulation.m
+frogRHS.c frogRHS.h: frog_eqns_dotsolved.m make-frogRHSC.m
 	mathload make-frogRHSC.m 
 
 endif

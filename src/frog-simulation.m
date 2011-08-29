@@ -4,7 +4,7 @@
 (*Code*)
 
 
-SetDirectory["/Users/shane/School/sussex/thesis/code"];
+SetDirectory["/Users/shane/School/sussex/thesis/code/src"];
 
 
 pstateCount = 16;
@@ -99,17 +99,17 @@ params = {r       -> 0.025 m,
           lmax    -> 0.06 m,
           negl    -> 0.00001m, (* negligible length *)
           Ia      -> ma (r^2)/2, (* where did I get these formulas? *)
-          Ib      -> mb ((lmax)^2)/3,
+          Ib      -> mb (lmax^2)/3,
           ma      -> 0.025 kg, (*0.0195 kg,*)
           mb      -> 0.00195 kg,
           d       -> 2 r,
           Cdcirc  -> 0.3,
           TCdcirc -> 2.9,
-          Cdplate -> 1.98,
+          Cdplate -> 0.98,
           rho     -> 999.1026 kg/m^3,
           g       -> 9.8 m/s^2,
-          Tmax    -> 0.00001 kg (m/s)^2, (* this (l/lmax)^2 is dubious *)
-          Tfmax   -> 0.00001 kg (m/s)^2,
+          Tmax    -> 0.000001 kg (m/s)^2, (* this (l/lmax)^2 is dubious *)
+          Tfmax   -> 0 0.00001 kg (m/s)^2,
           
 (*          Fr    -> 0.01,
           P       -> 1/freq,
@@ -205,11 +205,14 @@ Needs["DifferentialEquations`NDSolveUtilities`"];
 Needs["DifferentialEquations`NDSolveProblems`"];
 
 
-Options[eqnsForFrog] = {preParams -> {}, otherEqns -> {}};
+Options[eqnsForFrog] = {preParams -> {}, otherEqns -> {}, "params" -> None};
 
 
 eqnsForFrog[OptionsPattern[]] := 
-    {(eqns //. OptionValue[preParams]~Join~params)~Join~
+    Module[{useParams},
+           useParams = OptionValue["params"];
+           If[useParams === None, useParams = params];
+    {(eqns //. OptionValue[preParams]~Join~useParams)~Join~
      {
          q1'[t] == u1[t],
          q2'[t] == u2[t],
@@ -220,7 +223,7 @@ eqnsForFrog[OptionsPattern[]] :=
          q7'[t] == u7[t],
          q8'[t] == u8[t]}~Join~OptionValue[otherEqns], 
      {q1[t],q2[t],q3[t],q4[t], q5[t],q6[t],q7[t],q8[t],
-      u1[t],u2[t],u3[t],u4[t], u5[t], u6[t], u7[t], u8[t]}}
+      u1[t],u2[t],u3[t],u4[t], u5[t], u6[t], u7[t], u8[t]}}]
 
 
 eqnsForFrog[ICs_List, OptionsPattern[]] := 
@@ -339,14 +342,7 @@ solveEqnsForDotVars[eqns_,vars_,var_] :=
           ]
 
 
-(*
-   Import["tadpole_eqns4.m"]; eqns = Map[# == 0&, rhseqns]; 
-   eqns = solveEqnsForDotVars[eqns, {u1[t], u2[t], u3[t], u4[t], u5[t], u6[t], u7[t], u8[t]}, t];
-   Export["tadpole_eqns4_dotsolved.m", eqns]
-
- *)
-
-eqns = Import["tadpole_eqns4_dotsolved.m"];
+eqns = Import["frog_eqns_dotsolved.m"];
 
 
 cross2d[v_List, w_List] := 

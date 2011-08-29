@@ -280,25 +280,42 @@ makeFrogCTRNNSolver[] :=
 
 RK4StepSize = 0.02;
 
+physcons = {lmax, flmax, Tmax, Tfmax, r,
+            (* Tq4, Tq5, Tq6, Tq7, Tq8 -- these are substituted for *)
+            ld, fld, rho, Cdcirc, Cdplate, TCdcirc, Acirc, TAcirc,
+            ma, mb, mc, Ia, Ib, Ic
+            (* , m, s, kg -- these wouldn't be used within
+               the numerical simulation.  They'd be used to
+               setup the values. *)
+           };
+
 
 makeFrogMorphDiff[] := 
     Module[{peqns, pvars, ceqns, cvars, ctrnn, eqns, target, sensors, 
             motorCoefficients, sensorCoefficients, ctrnnLength, tailPoints, 
-            footPoints, tvars, fvars, tv, fv, tx, ty, subrules, diff, step, 
+            footPoints, tcons, fcons, tv, fv, tx, ty, subrules, diff, step, 
             collision, newstep, reqns, rvars, myPreParams},
-           tailPoints = Partition[tvars = Array[tv,{3 * 2}],2];
-           footPoints = Partition[fvars = Array[fv,{3 * 2}],2];
+           tailPoints = Partition[tcons = Array[tv,{3 * 2}],2];
+           footPoints = Partition[fcons = Array[fv,{3 * 2}],2];
 
            myPreParams = {
+               oq4 -> 0,
+               oq5 -> 1 Pi/4,
+               oq6 -> 3 Pi/4,
+               oq7 -> 5 Pi/4,
+               oq8 -> 7 Pi/4,
                l     -> lg[t] lmax,
                fl    -> fg[t] flmax,
                Tq4   -> Tmax  Clip[ys[1][t]],
                Tq5   -> Tfmax Clip[ys[2][t]],
                Tq6   -> Tfmax Clip[ys[3][t]],
                Tq7   -> Tfmax Clip[ys[4][t]],
-               Tq8   -> Tfmax Clip[ys[5][t]]
+               Tq8   -> Tfmax Clip[ys[5][t]],
+               m     -> 1, 
+               s     -> 1, 
+               kg    -> 1
                          };
-           {peqns,pvars} = eqnsForFrog[preParams -> myPreParams];
+           {peqns,pvars} = eqnsForFrog["params" -> myPreParams];
            target = {tx,ty};
            sensors = { (* 14 sensors (should length of tail be included?) *)
                        Norm[{u1[#], u2[#]}]/(m/s)&, (* current tranlational speed *)
@@ -317,7 +334,7 @@ makeFrogMorphDiff[] :=
                        u7[#]/(1/s)&, 
                        q8[#]/(Pi/2)&,
                        u8[#]/(1/s)&
-                     } //. myPreParams~Join~params;
+                     } //. myPreParams;
 
            ctrnn  = makeSymbolicCTRNNLinSensor[nodeCount,Length[sensors]];
            ctrnn[[3]] = makeLinSensorInputs[ctrnn, sensors];
@@ -335,7 +352,7 @@ makeFrogMorphDiff[] :=
            diff = makeDiffFuncWithConstantsC[eqns, 
                                              joinFlat[pvars,cvars,gvars,rvars],
                                              t, 
-                                             joinFlat[ctrnn,target,tvars,fvars]
+                                             joinFlat[ctrnn,target,tcons,fcons,physcons]
                                             ];
            diff]
 
@@ -537,7 +554,10 @@ animateMorph[data_, opts: OptionsPattern[]] :=
                                     r //. myParams, 
                                     #[[1 + pstateCount + nodeCount + 1]] lmax //. myParams, 
                                     #[[1 + pstateCount + nodeCount + 2]] flmax //. myParams, FilterRules[{opts}, Options[drawFrog]]] /. t -> #[[1]] &, 
-                           data], 1/timePerFrame, AnimationRepetitions -> 1]]
+                           data], 1/timePerFrame, 
+                       AnimationRepetitions -> 1,
+                      DisplayAllSteps -> False,
+                      ImageSize -> 100]]
 
 
 showDataStats[data_] := 
@@ -559,23 +579,24 @@ computeDistance[data_, target_] :=
 myArray[var_, len_] := 
     Table[var~qpart~i, {i, len}]
 
-targetCount      = 2;
+(* state info *)
 limbLengthsCount = 2;
-growthCount      = 2 * 3 * 2;
-pointsCount      = growthCount;
-recordCount      = 2;
 stateCount       = 1 + pstateCount + nodeCount + limbLengthsCount + recordCount;
-constantsCount   = len + targetCount + growthCount;
-
+recordCount      = 2;
 recordBegin      = 25;
 tailstateBegin   = 23;
 qstateBegin      = 2;
 ustateBegin      = 10;
 nodeBegin        = ustateBegin + 8;
 
-
+(* constants info *)
+targetCount      = 2;
+pointsCount      = 2 * 3 * 2;
+physCount        = 19;
+constantsCount   = geneCount + targetCount + pointsCount + physCount;
 targetBegin      = geneCount + 1;
 pointsBegin      = geneCount + targetCount + 1;
+physBegin        = geneCount + targetCount + pointsCount + 1;
  
 makeGeneToCTRNNSolverC[frogSolver_] := 
     Block[{state, constants, time},

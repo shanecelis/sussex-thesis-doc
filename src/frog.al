@@ -4,22 +4,24 @@
 %
 % Implemented with Autolev
 
-autorhs   on
-autoz     off
-body      a,b,c,d,e,f 
-          % central body (a), tail (b), feet clockwise (c---f)
-point     o,jb,jc,jd,je,jf 
-          % origin and pin joint points for each body
-newtonian n
-variables        q1', q2', q3', q4', q5', q6', q7', q8'
-motionvariables' u1', u2', u3', u4', u5', u6', u7', u8'
+autorhs           on
+autoz             off
+body              a,b,c,d,e,f 
+                  % central body (a), tail (b), feet clockwise (c---f)
+point             o,jb,jc,jd,je,jf 
+                  % origin and pin joint points for each body
+newtonian         n
+variables         q1', q2', q3', q4', q5', q6', q7', q8'
+motionvariables'  u1', u2', u3', u4', u5', u6', u7', u8'
 
-constants l, fl, ld, fld, r, rho, Cdcirc, Cdplate, TCdcirc
-constants Tq4, Tq5, Tq6, Tq7, Tq8, Acirc, TAcirc, oq4, oq5, oq6, oq7, oq8
+constants r, l, fl, oq4, oq5, oq6, oq7, oq8, Tq4, Tq5, Tq6, Tq7, Tq8
+%         radius, tail length, foot length, offset for q_i, Torque for q_i
+constants ld, fld, rho, Cdcirc, Cdplate, TCdcirc, Acirc, TAcirc
+%         tail depth, foot depth, ? coefficients, Area
 
 % Set mass and moments of inertia.
 mass a = ma, b = mb, c = mc, d = mc, e = mc, f = mc
-inertia a,       0, 0, Ia
+inertia a_ao(n), 0, 0, Ia
 inertia b_jb(a), 0, 0, Ib
 inertia c_jc(a), 0, 0, Ic
 inertia d_jd(a), 0, 0, Ic
@@ -40,7 +42,7 @@ q2' = u2
 q3' = u3
 q4' = u4
 q5' = u5
-q6' = u6
+q6' = u6 
 q7' = u7
 q8' = u8
 

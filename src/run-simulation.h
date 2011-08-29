@@ -23,9 +23,11 @@
 #define GENE_COUNT       105
 #define TARGET_COUNT     2
 #define POINTS_COUNT     12
-#define CONSTANTS_COUNT  (GENE_COUNT + TARGET_COUNT + POINTS_COUNT)
+#define PHYS_COUNT       19
+#define CONSTANTS_COUNT  (GENE_COUNT + TARGET_COUNT + POINTS_COUNT + PHYS_COUNT)
 #define TARGET_BEGIN     (GENE_COUNT)
 #define POINTS_BEGIN     (GENE_COUNT + TARGET_COUNT)
+#define PHYS_BEGIN       (GENE_COUNT + TARGET_COUNT + POINTS_COUNT)
 
 //#define runSimulation runSimulationAdaptive
 //#define Initialize_runSimulation Initialize_runSimulationAdaptive

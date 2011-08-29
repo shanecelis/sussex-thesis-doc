@@ -108,7 +108,9 @@ argsForTarget[gene_, target_, tmax_, expName_, phaseArg_] :=
                RK4StepSize,
                joinFlat[gene, 
                         target, 
-                        experimentPoints[experiment, tmax, phase]],
+                        experimentPoints[experiment, tmax, phase],
+                        physcons //. params
+                       ],
                tmax};
            args]
 
@@ -149,7 +151,7 @@ fitnessForSpeed[i_] :=
     fitnessForSpeed[i, expName, phase]
 
 fitnessForSpeed[i_, experiment_, phase_] := 
-    Module[{ (*endState,*) n, tmax, fitness, args, target},
+    Module[{ (*endState,*) n, tmax, fitness, target},
            tmax = 20.0;
            target = {0,0.1};
            args = argsForTarget[getGene[i], target, tmax, experiment, phase];
@@ -160,12 +162,14 @@ fitnessForSpeed[i_, experiment_, phase_] :=
               fitness]
           ]
 
+fitnessForSpeedData[i_] := fitnessForSpeedData[i, expName, phase]
+
 fitnessForSpeedData[i_, experiment_, phase_] := 
     Module[{ (*endState,*) n, tmax, fitness, target},
            tmax = 40.0;
            target = {0,0.1};
            args = argsForTarget[getGene[i], target, tmax, experiment, phase];
-           args[[2]] = 0.1;
+           args[[2]] = 0.5;
            runSolver3[runSimulationGA, Sequence@@args]
           ]
 
