@@ -1,19 +1,23 @@
-\section{Method}
+\chapter{Method}
 
 This experiment uses a two-dimensional, aquatic environment to test
 what kinds of morphological changes may accelerate evolution. The
 morphological forms---inspired by frog metamorphosis---have been
 selected such that the conservation of the infant form to the adult
-form may be varied. In one test case, the robot begins as a
-``tadpole'' bearing only a tail. It transforms into a ``frog'' with
-four limbs. Its task is to swim to a given
-target. Figure~\ref{morphology}
+form may be varied. Figure~\ref{morphology} shows the two principle
+forms which may be parametrically varied by two variables $l_t, l_f
+\in [0, 1]$ tail length and foot length respectively.  The full range
+of morphological change will be described in detail in
+section~\ref{morph-change}.  In the inspiring case, the individual
+begins as a ``tadpole'' bearing only a tail. It transforms into a
+``frog'' with four limbs. Its task is to swim to a target with or
+against varying currents.
 
 %\begin{wrapfigure}{r}{0.5\textwidth}
 \begin{figure}[h]
   \centering
   \figtitle{Body Plans} 
-  \includegraphics[scale=0.5]{fig/forms.pdf} 
+  \includegraphics[scale=0.4]{fig/forms.pdf} 
   \vspace{-30pt}
   \caption[Body plans]{\label{morphology}Body plans parameterised by
     tail length $l_t$ and foot length $l_f$. a) represents the infant
@@ -21,10 +25,10 @@ target. Figure~\ref{morphology}
 \end{figure}
 %\end{wrapfigure}
 
-\subsection{Physics Model}
+\section{Physics Model}
 
-This experiment uses the following physical model to simulate a
-``frog'' in an two-dimensional aqautic environment.  The aim of the
+This experiment uses the following physical model to simulate an
+individual in an two-dimensional aquatic environment.  The aim of the
 simulation is to provide a water-like environment, but it is not
 intended to provide a realistic environment such that a controller
 evolved in simulation could be transferred to a real
@@ -40,7 +44,7 @@ vector $(q_1, q_2)$.  The angle of the central body measured counter-clockwise
 to the $\bf \hat j$ axis denoted by $q_3$.  The angle of the tail and
 four feet are denoted by $q_4, \ldots, q_8$, respectively.  Eight
 corresponding motion variables $\{u_1, u_2, \ldots, u_8\}$ describe
-the generalised speeds of the body where $u_i = \frac{d q_i}{d t}$.
+the generalised speeds of the body $u_i = \frac{d q_i}{d t}$.
 
 \begin{figure}  
   \centering
@@ -48,11 +52,10 @@ the generalised speeds of the body where $u_i = \frac{d q_i}{d t}$.
   \includegraphics[scale=0.6]{fig/confvars.pdf} 
   \caption[Diagram of configuration variables]{\label{confvars}Diagram
     of the configuration variables $\{q_1, q_2, \ldots, q_8\}$ that
-    fully describe the physical state of the individual at a given
-    time}
+    fully describe the physical state of the body at a given time $t$}
 \end{figure}
 
-\subsection{Forces}
+\section{Forces}
 
 For each limb a drag force $\bv F_D$ opposes its direction of motion
 which are given by Equation~\ref{drag-force-eq} where $\rho$ is the
@@ -83,7 +86,9 @@ In addition, a drag force and drag torque is exerted on the central
 body.  The full equations of motion are given in the
 Appendix~\ref{physeqs-sec}.
 
-\subsubsection{Collisions}
+\begin{comment}
+
+\subsection{Collisions}
 
 Interbody collisions are permitted, so limbs may freely move through
 one another.\footnote{This is not thought objectionable because one
@@ -92,9 +97,10 @@ one another.\footnote{This is not thought objectionable because one
 are constrained to not penetrate the central body.  When the angle of
 a limb reaches $|q| = \frac{\pi}{2}$, an impulse force causes the
 velocity to change directions and slow down.
+\end{comment}
 
 
-\subsection{Controller}
+\section{Controller}
 
 The controller used for the robot is a Continuous Time Recurrent
 Neural Network (CTRNN).  The dynamics of a neuron $y_i$ is given by
@@ -107,6 +113,27 @@ $s_j \in \R $, and sensor weights $n_{ji} \in [-4, 4]$.
   \sigma(x) &=& \frac{1}{1 + e^{-x}}
 \end{eqnarray}
 
+\begin{table}
+  \begin{center}
+    \begin{tabular}{ | l | l | l | }
+      \hline
+      Variable & Value & Description \\
+      \hline
+      $s_1$ & $||(u_1, u_2) - (w_1, w_2)||$ & relative translational speed \\
+      $s_2$ & $u_3$ & angular speed \\
+      $s_3$ & $||target - (q_1, q_2)||$ & distance to target \\ 
+      $s_4$ & $target_\theta$ & angle to target \\              
+      $s_5$ & $q_4$ & position of tail \\                       
+      $s_6$ & $u_4$ & speed of tail \\                          
+      $s_{7 + 2 i}$ & $q_{5 + i}$ & position of foot $i \in [0, 3]$ \\        
+      $s_{8 + 2 i}$ & $u_{5 + i}$ & speed of foot $i \in [0, 3]$ \\           
+      \hline
+    \end{tabular}
+  \end{center}
+  \caption{Description of sensors}
+  \label{table:sensor}
+\end{table}
+
 The following sensors are used: $\{s_1, s_2, \ldots, s_{14}\} =
 \{||(u_1, u_2)||, u_3, ||target - (q_1, q_2)||, \text{angle to
   target}, q_4, u_4, q_5, u_5, q_6, u_6, q_7, u_7, q_8, u_8\}$.  The
@@ -115,8 +142,8 @@ of the body.  A range finder for a target is given by the $s_3$ and
 $s_4$ sensors.  Proprioceptive sesnsors are given by the $s_5, s_6,
 \ldots, s_{14}$ sensors.
 
-Five motor neurons are used ($m = 5$).  Each neuron exerts a torque on
-its associated limb.  The torque for each limb $T(q_i)$ is given in
+Five motor neurons are used.  Each neuron exerts a torque on its
+associated limb.  The torque for each limb $T(q_i)$ is given in
 Equation~\ref{limb-torque}.
 
 \begin{eqnarray}
@@ -128,25 +155,25 @@ Equation~\ref{limb-torque}.
               \end{cases}
 \end{eqnarray}
 
-\subsection{Genetic Encoding}
+\section{Genetic Encoding}
 
 The CTRNN controller is specified by a real vector gene $\bv g \in [0,
   1]^{105}$.  Each gene component $g_k$ is associated with one and
-only one of the CTRNN parameters $\tau_i, w_{ij}, \theta_j, \text{ and }
-n_{ij}$.  The $w_{ij}, \theta_j, n_{ij}$ parameters are linearly
-mapped from the domain of the gene $[0,1]$ to the domain of each
-parameter.  The $\tau$ parameter uses a non-linear mapping $\tau_i =
-10^{-1 + 3 g_k}$.  
+only one of the CTRNN parameters $\tau_i, w_{ij}, \theta_j, \text{ and
+} n_{ij}$.  The $w_{ij}, \theta_j,$ and $ n_{ij}$ parameters are
+linearly mapped from the domain of the gene $[0,1]$ to the domain of
+each parameter.  The $\tau$ parameter uses a non-linear mapping
+$\tau_i = 10^{-2 + 3 g_k}$.
 
-\subsection{Morphological Change}
+\section{Morphological Change}\label{morph-change}
 
-Morphological change is considered over phylogenetic and ontological
+Morphological change is considered over phylogenetic and ontogenetic
 time.  Two adult forms are evolved: A) frog with a tail $(\red{l_t},
 \blue{l_f}) = (1,1).$ B) frog without a tail $(\red{l_t}, \blue{l_f}) =
 (0,1).$ The control case is no morphological change denoted $An$ and
 $Bn$.  The first experimental cases concern phylogenetic change
 denoted $Ap$ and $Bp$, which are divided into phases $p_i$.  The
-second experimental case concerns ontological change denoted $Ao$ and
+second experimental case concerns ontogenetic change denoted $Ao$ and
 $Bo$.  Figure~\ref{morph-regiment} shows the tail length $\red{l_t}$ in
 red and feet length $\blue{l_f}$ in blue for each experimental case.
 The exact values used are recorded in the
@@ -159,11 +186,12 @@ Appendix~\ref{morph-regiment-values}.
   \vspace{-15pt}
   \caption[Variations of morphological
     change]{\label{morph-regiment}An, Bn have no morphological change;
-    Ap, Bp have phylogenetic change; Ao, Bo have ontological change.}
+    Ap, Bp change morphology over phylogenetic time; Ao, Bo change
+    morphology over ontogenetic and phylogenetic time.}
 
 \end{figure}
 
-\subsection{Controller Variation}
+\section{Controller Variation}
 
 In the test cases $Bp$ and $Bo$ the infant form is not conserved in
 the adult form.  However, the controller may conserve some behaviour
@@ -185,8 +213,11 @@ Figure~\ref{ctrnn-figures}.
     for the tail and legs.}
 \end{figure}
 
-\subsection{Tasks}
+\section{Tasks}
 
-Tasks are over HERE!
+To confirm the results are not spurious or a special case for one
+particular task, multiple tasks are considered.  
+
+
 
 

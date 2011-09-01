@@ -303,13 +303,14 @@ MLYDEFN( devyield_result, MLDefaultYielder, ( MLINK mlp, MLYieldParameters yp))
  */
 
 #include <stdio.h>
-#include "mathlink.h"
+#include <stdlib.h>
+#include <mathlink.h>
 #include "run-simulation.h"
 
-# line 310 "run-simulation-mlinktm.c"
+# line 311 "run-simulation-mlinktm.c"
 
 
-# line 38 "run-simulation-mlink.tm"
+# line 39 "run-simulation-mlink.tm"
 void failed_with_message0(char *msg) {
     char buf[255];
     MLClearError(stdlink); 
@@ -320,6 +321,28 @@ void failed_with_message0(char *msg) {
     MLNewPacket(stdlink); 
     MLPutSymbol(stdlink, (char *) "$Failed");
 }
+
+int was_aborted() {
+  int code, param;
+  //MLGetYieldFunction(stdlink)(stdlink, (MLYieldParameters)0 );
+  if (MLMessageReady(stdlink) && MLGetMessage(stdlink, &code, &param)) {
+    switch (code){
+    case MLAbortMessage:
+      MLPutFunction(stdlink, (char *) "Abort", 0);
+      //MLEndPacket(stdlink);
+      //MLFlush(stdlink);
+      return 1;
+/*    case MLInterruptMessage:
+      MLPutSymbol(stdlink, (char *) "$Interrupted");
+      break;*/
+    case MLTerminateMessage:
+      exit(1);
+      return 2;
+    }
+  }
+  return 0;
+}
+
 
 
 void run_simulation_mlink2( double *state, long stateLength, 
@@ -345,7 +368,11 @@ void run_simulation_mlink2( double *state, long stateLength,
   /* } */
   dims[0] = STATE_COUNT;
   err = run_simulation(state, step_size, constants, state[0] + time, 
-                       result);
+                       result, &was_aborted);
+  if (err == 3) {
+    // Aborted.
+    return;
+  }
   if (err) {
     failed_with_message0("runSimulationMlink::errsim");
     return;
@@ -383,7 +410,7 @@ int main(argc, argv)
   err = sim_uninit();
   return err;
 }
-# line 387 "run-simulation-mlinktm.c"
+# line 414 "run-simulation-mlinktm.c"
 
 
 void run_simulation_mlink P(( double * _tp1, long _tpl1, double _tp2, double * _tp3, long _tpl3, double _tp4));

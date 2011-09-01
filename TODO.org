@@ -70,8 +70,16 @@
  - [X] fix the physical interpretation to some actual 3D physical form
  - [ ] add section for numerical simulation
  - [ ] get working for cloud computation
- - [ ] make all physical constants alterable at runtime
+ - [X] make all physical constants alterable at runtime
+ - [ ] need some kind of physical test suite or means of measuring
+       whether the simulation is working the way it ought to
+ - [ ] I need things that can move!  These things don't move!
 
+       Use a periodic controller, see how fast things can move forward.
+       Use that periodic controller as the test bed for choosing the 
+       environment settings.
+
+ - [ ] Write Luc an email
 * Problem
 deriv 
   t 1.000000 
@@ -134,4 +142,34 @@ deriv
   |     10.0 |    2.13e-3 |       16000 |
   |     20.0 |    1.18e-2 |        6400 |
   |     30.0 |    1.32e-2 |        2000 |
-  |          |            |             |
+
+  Using just regular bga.m
+
+  | time_max | mean_speed | evaluations | experiment | phase |
+  |     20.0 |      0.005 |      150000 | Ap         |     1 |
+  |       20 |            |        4882 | Ap         |     4 |
+  |          |            |             |            |       |
+* autolev will do the C file creation!
+output eqns[1],eqns[2],eqns[3],eqns[4],eqns[5],eqns[6],eqns[7],eqns[8]
+code algebraic() eqns.c
+
+
+output u1',u2',u3',u4',u5',u6',u7',u8'
+code algebraic() doteqns.c
+
+* If using krb and krc are worth it, then here's the plan
+  Make krc into krcr (right) and krcl (left).
+  
+  Write code to strip out important parts from eqns.c.
+
+  Write code in Mathematica to take the eqns matrix and do the following:
+
+vars = Map[#'[t] &, {u1, u2, u3, u4, u5, u6, u7, u8}]
+CoefficientArrays[eqns1, vars]
+{m0, m1} = Normal[%]
+
+  Then solve for u in  m0 . u = -m1 and it's done.
+* Write Luc
+  Paper or data?
+
+* Perhaps the tasks should be that there is a current

@@ -13,6 +13,7 @@ run-simulation-mlink
 frogq.al
 parenparser.hi
 tmp/*
+src/alTmp.*
 
 # includes
 
@@ -42,3 +43,4 @@ res*
 /doc/thesis.auxbbl.make.temp
 /doc/thesis.0-2.log
 /doc/thesis.pdf
+/src/frogu.al

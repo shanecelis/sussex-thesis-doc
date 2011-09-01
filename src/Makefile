@@ -5,7 +5,10 @@ OS=$(shell uname -s)
 MATHEMATICA=1
 
 #CPPFLAGS = -g -I/Applications/Mathematica.app/SystemFiles/IncludeFiles/C
-CPPFLAGS = -g -I../include -Wall -Werror
+CPPFLAGS = -g -I../include -Wall -Werror -I/opt/local/include -DJUST_EQNS -DRKQS
+
+#-DRK4
+# -DCOLLISIONS
 
 MOBJS = 
 
@@ -22,13 +25,14 @@ LIBDIR = ${CADDSDIR}
 MPREP = ${CADDSDIR}/mprep
 EXTRA_LIBS = -lstdc++ -framework Foundation
 
-LDFLAGS = -L/Applications/Mathematica.app/SystemFiles/Libraries/MacOSX-x86-64 -lWolframRTL_Static_Minimal 
+LDFLAGS = -L/Applications/Mathematica.app/SystemFiles/Libraries/MacOSX-x86-64 -lWolframRTL_Static_Minimal
 CPPFLAGS += -I $(INCDIR)
 
-MOBJS = bga.mo ctrnn.mo frog-ga.mo frog-simulation.mo runge-kutta.mo export-c-code.mo experiments.mo
+MOBJS = util.mo bga.mo ctrnn.mo params.mo frog-ga.mo frog-simulation.mo runge-kutta.mo export-c-code.mo experiments.mo
 endif
 
-LDFLAGS += -lalps -lstdc++
+LDFLAGS += -lalps -lstdc++ /opt/local/lib/libgsl.a -framework vecLib
+#/opt/local/lib/libgslcblas.a
 #LDFLAGS = -L/Applications/Mathematica.app/SystemFiles/Libraries/MacOSX-x86-64 -lWolframRTL -L. -lalps -lstdc++
 
 
@@ -68,10 +72,16 @@ frog_eval: frog_eval.o alps_frog.o genes_real.o $(SIM_OBJS)
 run: run-sim-main
 	DYLD_LIBRARY_PATH=/Applications/Mathematica.app/SystemFiles/Libraries/MacOSX-x86-64:. ./run-sim-main
 
-
 frog_eqns.txt: frog.al
 	(cat frog.al; echo "quit") > frogq.al
 	(echo "! rhseqns = "; yes | al frogq.al | grep Result) > frog_eqns.txt
+
+eqns.c: frog.al
+	(cat frog.al; echo "output eqns[1],eqns[2],eqns[3],eqns[4],eqns[5],eqns[6],eqns[7],eqns[8]"; echo "code algebraic() eqns.c"; echo "quit") > frogu.al
+	(echo "! rhseqns = "; yes | al frogu.al | grep Result) > eqns.txt
+
+eqns-fixed.c: eqns.c eqns.patch
+	patch -i eqns.patch eqns.c -o eqns-fixed.c
 
 # Rules for Mathematica
 ifeq ($(MATHEMATICA),1)
@@ -101,3 +111,5 @@ parenparser: parenparser.hs
 
 frogRHS-fixed.c: frogRHS.c frogRHS.patch
 	patch -i frogRHS.patch frogRHS.c -o frogRHS-fixed.c
+
+frog-ga.mo: bga.mo

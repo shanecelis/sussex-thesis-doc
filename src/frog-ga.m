@@ -7,7 +7,7 @@
 (*Direct Gene Encoding*)
 
 
-nodeCount = 5; (* number of CTRNN nodes *)
+usePeriodicController = True;
 
 
 (* regular geneCount *)
@@ -15,18 +15,21 @@ nodeCount = 5; (* number of CTRNN nodes *)
 
 
 (* LinSensor geneCount *)
-geneCount = nodeCount^2 + 2 nodeCount + sensorCount * motorCount;
+geneCount = If[usePeriodicController,
+               1,
+               ctrnnParamCount];
+               
 
 getGene[i_Integer] := genes[[i]]
 getGene[i_List] := i
-
+ 
 geneToCTRNN[i_] := geneToCTRNN[genes[[i]]]
     geneToCTRNN[gene_List] := 
     Module[{W, theta,Ts,gain, n},
            n = nodeCount;
            W = Partition[Map[Rescale[#, {0, 1}, 4{-1, 1}]&,gene[[1;;n^2]]],n];
            theta = Map[Rescale[#, {0, 1},2{-1,1}]&,gene[[n^2 + 1;;n^2 + n]]];
-           Ts =Map[10.^Rescale[#,{0, 1},{-1, 2}]&,gene[[n^2 + n + 1;; n^2 + 2n ]]];
+           Ts =Map[10.^Rescale[#,{0, 1},{-2, 2}]&,gene[[n^2 + n + 1;; n^2 + 2n ]]]; (* change this from [-1, 2] -> [-2, 2] *)
            (* gain = Rescale[gene[[n^2 + 2n + 1]], {0, 1}, {1, 7}];*)
            (* not providing gain or inputs *)
            {W,theta,None, Ts}
@@ -75,27 +78,34 @@ mutationVector[] :=Map[Evaluate,RandomChoice[{mutationRate, 1 - mutationRate} ->
 (*BGA Functions*)
 
 
-pop = 10;
+pop = 30;
 len = geneCount;
 mut = 1/geneCount;
 rec = 0.5; (* recombination *)
 
 
-minimize = False;
+minimize = minimise /. gaParams;
 
 
-end = 10^4;
+end = 10^6;
 
 
-mutate[L_] := (genes[[L]] = Map[Clip[#, {0, 1}]&,genes[[L]] + mutationVector[] ])
+mutate[L_] := 
+    (genes[[L]] = Map[Clip[#, {0, 1}]&,genes[[L]] + mutationVector[] ])
 
 
-initPop[] := (genes = RandomReal[{0, 1}, {pop, len}];evaluationCache = Table[None, {pop}];)
+initGA[] := 
+    (genes = RandomReal[{0, 1}, {pop, len}];
+     evaluationCache = Table[None, {pop}];
+     evaluations = 0;)
 
 initGene[] := RandomReal[{0,1}, {len}];
 
-argsForTarget[gene_, target_, tmax_, expName_, phaseArg_] :=     
-    Module[{experiment, phase, args},
+argsForRun[gene_] := 
+    argsForTarget@@({gene, target, tmax, expName, phase, deltat} /. gaParams)
+
+argsForTarget[i_, target_, tmax_, expName_, phaseArg_, stepSize_] :=     
+    Module[{experiment, phase, args, myctrnn},
            experiment = expName;
            phase = phaseArg; 
            args = {
@@ -105,11 +115,19 @@ argsForTarget[gene_, target_, tmax_, expName_, phaseArg_] :=
                         experimentInit[experiment, phase] (* gvars: 
                                                              tail and feet sizes *),
                         Table[0., {recordCount}] (* rvars: initial recording variables *)],
-               RK4StepSize,
-               joinFlat[gene, 
-                        target, 
-                        experimentPoints[experiment, tmax, phase],
-                        physcons //. params
+               stepSize,
+               If[usePeriodicController,
+                  myctrnn = makeZeroCTRNNLinSensor[nodeCount, sensorCount];
+                  myctrnn[[3]] = {};
+                  joinFlat[myctrnn,
+                           target, 
+                           experimentPoints[experiment, tmax, phase],
+                           Drop[physcons //. params,-1],
+                           20.0 getGene[i]],
+                  joinFlat[getGene[i], 
+                           target, 
+                           experimentPoints[experiment, tmax, phase],
+                           physcons //. params]
                        ],
                tmax};
            args]
@@ -118,6 +136,8 @@ argsForTarget[gene_, target_, tmax_, expName_, phaseArg_] :=
 keepGoodChance = 0.01;
 keepFailedChance = 1.;
 
+goodArgs = {};
+failedArgs = {};
 
 fitnessToTargetRecordGoodAndBad[i_, target_, experiment_, phase_] := 
     Module[{fitness},
@@ -134,58 +154,52 @@ fitnessToTargetRecordGoodAndBad[i_, target_, experiment_, phase_] :=
 (*
    Calculate the mean distance using the diff 
 *)
-fitnessToTarget[i_, target_, experiment_, phase_] := 
+fitnessToTarget[i_] :=
     Module[{ (*endState,*) n, tmax, fitness, args},
-           tmax = 10.0;
-           args = argsForTarget[getGene[i], target, tmax, experiment, phase] // N;
+           args = argsForRun[i];
            fitness = Catch[endState = runSimulationGA@@args;
                            If[endState === $Failed,
                               Throw[$Failed],
-                              endState[[recordBegin]]/(endState[[1]] * Norm[target])]];
+                              endState[[recordBegin]]/(endState[[1]] * Norm[target /. gaParams])]];
            If[fitness === $Failed,
               666.6,
               fitness]
           ] 
 
-fitnessForSpeed[i_] := 
-    fitnessForSpeed[i, expName, phase]
 
-fitnessForSpeed[i_, experiment_, phase_] := 
-    Module[{ (*endState,*) n, tmax, fitness, target},
-           tmax = 20.0;
-           target = {0,0.1};
-           args = argsForTarget[getGene[i], target, tmax, experiment, phase];
-           fitness = Catch[endState = runSimulationGA@@args;
-                           endState[[recordBegin + 1]]/tmax];
-           If[fitness === $Failed,
-              -1.0,
-              fitness]
-          ]
-
-fitnessForSpeedData[i_] := fitnessForSpeedData[i, expName, phase]
-
-fitnessForSpeedData[i_, experiment_, phase_] := 
-    Module[{ (*endState,*) n, tmax, fitness, target},
-           tmax = 40.0;
-           target = {0,0.1};
-           args = argsForTarget[getGene[i], target, tmax, experiment, phase];
-           args[[2]] = 0.5;
-           runSolver3[runSimulationGA, Sequence@@args]
-          ]
-
-
-fitnessToTargetData[i_, target_, experiment_, phase_] := 
+fitnessToTargetData[i_] :=
     Module[{ (*endState,*) n, tmax, fitness, args, data},
-           tmax = 40.0;
-           args = argsForTarget[getGene[i], target, tmax, experiment, phase]; 
-           args[[2]] = 0.1;
+           args = argsForRun[i];
+           args[[2]] = dataDeltat /. gaParams;
            data = runSolver3[runSimulationGA, Sequence@@args];
            data
           ] 
 
 
-fitnessToTopTarget[i_] := evaluateToTarget[i, {0, 1} (.1m) //. params, expName, phase]
-fitnessToTopTargetData[i_] := fitnessToTargetData[i, {0, 1} (.1m) //. params, expName, phase]
+fitnessForSpeed[i_] := 
+    Module[{ (*endState,*) n, fitness},
+           args = argsForRun[i];
+           fitness = Catch[endState = runSimulationGA@@args;
+                           If[endState === $Failed,
+                              Throw[$Failed],
+                              endState[[recordBegin + 1]]/(tmax /. gaParams)]];
+           If[fitness === $Failed,
+              -1.0,
+              fitness]
+          ]
+
+default[this_, that_] := If[this === None, that, this]
+
+fitnessForSpeedData[i_] := fitnessForSpeedData[i, expName, phase] /. gaParams
+
+fitnessForSpeedData[i_] := 
+    Module[{ (*endState,*) n, tmax, fitness, target},
+           args = argsForRun[i];
+           args[[2]] = dataDeltat /. gaParams;
+           runSolver3[runSimulationGA, Sequence@@args]
+          ]
+
+
 
 
 fitnessToMultipleTargets[iOrGene_] := 
@@ -195,12 +209,16 @@ fitnessToMultipleTargets[iOrGene_] :=
            Max[Map[evaluateToTarget[iOrGene, #]&, targets]]]
 
 
-Clear[evaluate,evaluateToTarget,runSimulationGA];
+(*Clear[evaluate,evaluateToTarget,runSimulationGA];*)
 (*evaluate = fitnessToMultipleTargets;*)
-evaluate = fitnessToTopTarget;
+(*evaluate = fitnessToTopTarget;
 evaluate = fitnessForSpeed;
 evaluateToTarget = fitnessToTarget;
-runSimulationGA = runSimulation;
+runSimulationGA = runSimulation;*)
+
+evaluate[i_] := (fitnessFunc /. gaParams)[i]
+evaluateData[i_] := (fitnessDataFunc /. gaParams)[i]
+runSimulationGA[args___] := (runSimulationGAFunc /. gaParams // ReleaseHold)@@List[args]
 
 showEvaluations[iOrGene_] := 
     Module[{initTarget, targets},
@@ -209,7 +227,6 @@ showEvaluations[iOrGene_] :=
            Map[(Print[#];evaluateToTarget[iOrGene, #])&, targets]
           ]
 
-
 saveIndividual[gene_List] := 
     Module[{ctrnn},
            ctrnn = geneToCTRNNLinSensor[gene];
@@ -217,3 +234,7 @@ saveIndividual[gene_List] :=
 
 
 saveIndividual[gene_List, file_] := (Put[saveIndividual[gene], file])
+
+
+showPopDynamic[] := Dynamic[Column[{evaluations, NumberForm[Min[Select[evaluationCache, NumberQ]], 3], NumberForm[Max[Select[evaluationCache, NumberQ]], 3], Partition[Map[NumberForm[#, 2] &, evaluationCache], 9, 9, {1, 1}, 
+  " "] // TableForm}]]

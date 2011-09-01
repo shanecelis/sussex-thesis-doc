@@ -45,8 +45,8 @@ makeRandomCTRNNLinSensor[n_, sensorCount_] :=
 makeSymbolicCTRNNLinSensor[n_, sensorCount_] := 
     Module[{ctrnn, sensorMat,s},
            ctrnn = makeSymbolicCTRNN[n];
-           sensorMat = Array[s,{nodeCountCTRNN[ctrnn], sensorCount}];
-           sensorMat = sensorMat /. substituteRules[Flatten[sensorMat], sc];
+           sensorMat = Array[nij,{nodeCountCTRNN[ctrnn], sensorCount}];
+           (*sensorMat = sensorMat /. substituteRules[Flatten[sensorMat], sc];*)
            ctrnn = ctrnn~Join~{sensorMat};
            ctrnn[[3]] = makeLinSensorInputs[nodeCountCTRNN[ctrnn], 
                                             Array[sensor, sensorCount]];
@@ -128,10 +128,11 @@ substituteRules[vars_, v_] :=
    time to sensor value *)
 makeLinSensorInputs[nodeCount_, sensors_] := 
     Module[{mat, s, inputs, sensors2},
-           mat = Array[s,{nodeCount, Length[sensors]}];
+           mat = Array[nij,{nodeCount, Length[sensors]}];
            sensors2 = Map[Function[{a}, a[#]], sensors];
            inputs = Map[Function[{a},Function[Evaluate[a]]],mat . sensors2];
-           inputs  /. substituteRules[Flatten[mat], sc]
+           (*inputs  /. substituteRules[Flatten[mat], sc]*)
+           inputs
           ]
 
 

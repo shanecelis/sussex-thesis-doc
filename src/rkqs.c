@@ -16,7 +16,7 @@
 
 int rkqs(double y[], double dydx[], const int n, double *x, 
          double htry, double eps, double yscal[], 
-         double *hdid, double *hnext, double yout[], int (*derivs)(double, double [], double []))
+         double *hdid, double *hnext, double yout[], int (*derivs)(double, double [], double [], void *), void *context)
 /* Fifth-order Runge-Kutta step with monitoring of local truncation
  * error to ensure accuracy and adjuststepsize. Input are the
  * dependent variable vector y[1..n] and its derivative dydx[1..n] at
@@ -36,7 +36,7 @@ int rkqs(double y[], double dydx[], const int n, double *x,
   h=htry;	
   //Set stepsize to the initial trial value. 
   for (;;) {
-    err = rkck(y,dydx,n,*x,h,ytemp,yerr,derivs); //Take a step. 
+    err = rkck(y,dydx,n,*x,h,ytemp,yerr,derivs, context); //Take a step. 
     if (err) return err;
     errmax=0.0;                                  //Evaluate accuracy. 
     for (i=0;i<n;i++) 
@@ -66,7 +66,7 @@ int rkqs(double y[], double dydx[], const int n, double *x,
 }
 
 int rkck(double y[], double dydx[], const int n, double x, double h, 
-         double yout[], double yerr[], int (*derivs)(double, double [], double [])) 
+         double yout[], double yerr[], int (*derivs)(double, double [], double [], void *), void *context) 
 /*Given values for n variables y[1..n] and their derivatives
  * dydx[1..n] known at x, use the fifth-order Cash-Karp Runge-Kutta
  * method to advance the solution over an interval h and return the
@@ -84,23 +84,23 @@ int rkck(double y[], double dydx[], const int n, double x, double h,
 
   for (i=0; i<n; i++)           //First step.
     ytemp[i]=y[i]+b21*h*dydx[i];
-  err = (*derivs)(x+a2*h,ytemp,ak2);
+  err = (*derivs)(x+a2*h,ytemp,ak2,context);
   if (err) return err;
   for (i=0;i<n;i++)             //Second step.
     ytemp[i]=y[i]+h*(b31*dydx[i]+b32*ak2[i]);
-  err = (*derivs)(x+a3*h,ytemp,ak3);
+  err = (*derivs)(x+a3*h,ytemp,ak3,context);
   if (err) return err;
   for (i=0; i<n; i++)           //Third step.
     ytemp[i]=y[i]+h*(b41*dydx[i]+b42*ak2[i]+b43*ak3[i]);
-  err = (*derivs)(x+a4*h,ytemp,ak4);
+  err = (*derivs)(x+a4*h,ytemp,ak4,context);
   if (err) return err;
   for (i=0; i<n; i++)           // Fourth step. 
     ytemp[i]=y[i]+h*(b51*dydx[i]+b52*ak2[i]+b53*ak3[i]+b54*ak4[i]);
-  err = (*derivs)(x+a5*h,ytemp,ak5);
+  err = (*derivs)(x+a5*h,ytemp,ak5,context);
   if (err) return err;
   for (i=0; i<n; i++)           //Fifth step. 
     ytemp[i]=y[i]+h*(b61*dydx[i]+b62*ak2[i]+b63*ak3[i]+b64*ak4[i]+b65*ak5[i]);
-  err = (*derivs)(x+a6*h,ytemp,ak6);   //Sixth step. 
+  err = (*derivs)(x+a6*h,ytemp,ak6,context);   //Sixth step. 
   if (err) return err;
   for (i=0; i<n; i++)     //Accumulate increments with proper weights.
     yout[i]=y[i]+h*(c1*dydx[i]+c3*ak3[i]+c4*ak4[i]+c6*ak6[i]);
@@ -111,7 +111,7 @@ int rkck(double y[], double dydx[], const int n, double x, double h,
   return 0;
 }
 
-int rk4(double y[], double dydx[], const int n, double x, double h, double yout[], int (*derivs)(double, double [], double [])) 
+int rk4(double y[], double dydx[], const int n, double x, double h, double yout[], int (*derivs)(double, double [], double [], void *), void *context) 
 /*Given values for n variables y[1..n] and their derivatives
  * dydx[1..n] known at x, use the RK4 method to advance the solution
  * over an interval h and return the incremented variables as
@@ -122,15 +122,15 @@ int rk4(double y[], double dydx[], const int n, double x, double h, double yout[
 
   for (i=0; i<n; i++)           //First step.
     ytemp[i]=y[i]+ h*dydx[i]; // ak1[i] = h dydx[i]
-  err = (*derivs)(x+0.5*h,ytemp,ak2);
+  err = (*derivs)(x+0.5*h,ytemp,ak2,context);
   if (err) return err;
   for (i=0;i<n;i++)             //Second step.
     ytemp[i]=y[i]+h*(0.5 *ak2[i]);
-  err = (*derivs)(x+0.5*h,ytemp,ak3);
+  err = (*derivs)(x+0.5*h,ytemp,ak3,context);
   if (err) return err;
   for (i=0; i<n; i++)           //Third step.
     ytemp[i]=y[i]+h*(ak3[i]);
-  err = (*derivs)(x+h,ytemp,ak4);
+  err = (*derivs)(x+h,ytemp,ak4,context);
   if (err) return err;
   for (i=0; i<n; i++)     //Accumulate increments with proper weights.
     yout[i]=y[i]+(h/6.)*(dydx[i] + 2.* ak2[i] + 2.*ak3[i]+ak4[i]);

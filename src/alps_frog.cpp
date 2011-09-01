@@ -68,6 +68,15 @@ int run_frog(const vector<double>& genes,
   constants[TARGET_BEGIN] = targetx;
   constants[TARGET_BEGIN + 1] = targety;
   experiment_points(expName, time_max, phase, constants + POINTS_BEGIN);
+  /*
+  double physcons_values[] = {0.06,0.06,0.00001,0.00001,0.025,-0.018,0.,0.,
+                              -0.04,-2.5,-2.5,0.2,0,0.025,0.00195,0.00195,
+      7.812500000000002e-6,2.3399999999999996e-6,2.3399999999999996e-6,0.,0.};
+  for (int i = 0; i < PHYS_COUNT; i++) {
+    constants[PHYS_BEGIN + i] = physcons_values[i];
+    }*/
+  err = physics_constants(constants + PHYS_BEGIN);
+
   experiment_init_state(constants + POINTS_BEGIN, 
                         state + TAILSTATE_BEGIN, 
                         state + TAILSTATE_BEGIN + 1);
@@ -78,7 +87,7 @@ int run_frog(const vector<double>& genes,
   err = gene_to_ctrnn(constants, constants2);
 
   if (! err)
-    err = run_simulation(state, STEP_SIZE, constants2, time_max, result);
+    err = run_simulation(state, STEP_SIZE, constants2, time_max, result, NULL);
 
   if (err) {
     evaluation_failed_count++;

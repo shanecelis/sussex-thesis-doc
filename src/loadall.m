@@ -7,8 +7,10 @@
 
 
 loadall[] := Module[{},
+<< "util.m";
 << "ctrnn.m";
 << "bga.m";
+<< "params.m";
 << "frog-ga.m";
 << "frog-simulation.m";
 << "runge-kutta.m";
@@ -17,4 +19,3 @@ loadall[] := Module[{},
 "loaded."]
 
 
-(*loadall[];*)

@@ -8,17 +8,19 @@ pop = 30;
 len = 10;
 rec = 0.5;
 mut = 0.1;
-
+evaluations = 0;
 
 end = 10^5;
-
+ 
 
 minimize = False;
 
 
-initPop[] := (genes = RandomInteger[{0, 1}, {pop, len}];
-              evaluationCache = Table[None, {pop}];
+initGA[] := (genes = RandomInteger[{0, 1}, {pop, len}];
+             clearCacheGA[];
+             evaluations = 0;
              )
+clearCacheGA[] := evaluationCache = Table[None, {pop}];
 
 
 (* Minimizes fitness of an example card problem that attempts to arrange cards from [1,10] into sum and product piles of 36 and 360 respectively. *)
@@ -61,10 +63,9 @@ lessThan[a_, b_] := If[minimize,
 
 
 runGA[] := 
-    Module[{t, a, b, W, L, i, temp},
-           (*initPop[];*)
-           temp = PrintTemporary[0];
-           For[t = 0, t < end, t++,
+    Module[{a, b, W, L, temp},
+           (*temp = PrintTemporary[0];*)
+           For[Null, evaluations < end, evaluations++,
                a = RandomInteger[{1, pop}];
                b = RandomInteger[{1, pop}];
                If[ evaluateCached[a] ~lessThan~ evaluateCached[b],
@@ -74,30 +75,26 @@ runGA[] :=
                mutate[L];
                evaluationCache[[L]] = None;
 
-               (*If[Abs[evaluate[L]] < 0.01,
+               (*If[evaluate[L] ~lessThan~ 0.01,
                  Print[L];
                  Break[]];*)
-               If[Mod[t, 100] === 0,
-                  NotebookDelete[temp];
-                  bestIndividual[];
-                  temp = PrintTemporary[{t, bestFitness[], plotExpectedVsOutput[]}]];
               ];
            bestIndividual[];
-           Print[{t, bestFitness[], plotExpectedVsOutput[]}];
-           t
+           evaluations
           ]
 
 
 bestIndividual[] := 
     Module[{best},
-           sortedIndividuals = Sort[Range[1, pop], evaluateCached[#1] ~lessThan~ evaluateCached[#2]&];
+           sortedIndividuals = Sort[Range[1, pop], 
+                                    evaluateCached[#1] ~lessThan~ evaluateCached[#2]&];
 
            best = sortedIndividuals[[1]];
            evaluate[best];
            best];
 
 
-bestFitness[] := Sort[evaluationCache][[1]]
+bestFitness[] := Sort[evaluationCache, #1 ~lessThan~ #2&][[1]]
 
 
 plotExpectedVsOutput[] := Null

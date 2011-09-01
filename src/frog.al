@@ -4,6 +4,7 @@
 %
 % Implemented with Autolev
 
+%SetCompatible (AUTOLEV)
 autorhs           on
 autoz             off
 body              a,b,c,d,e,f 
@@ -16,8 +17,9 @@ motionvariables'  u1', u2', u3', u4', u5', u6', u7', u8'
 
 constants r, l, fl, oq4, oq5, oq6, oq7, oq8, Tq4, Tq5, Tq6, Tq7, Tq8
 %         radius, tail length, foot length, offset for q_i, Torque for q_i
-constants ld, fld, rho, Cdcirc, Cdplate, TCdcirc, Acirc, TAcirc
+%constants ld, fld, rho, Cdcirc, Cdplate, TCdcirc, Acirc, TAcirc
 %         tail depth, foot depth, ? coefficients, Area
+constants kTa, kTb, kTc, kFa, kFb, kFc, krb, krc, wvx, wvy
 
 % Set mass and moments of inertia.
 mass a = ma, b = mb, c = mc, d = mc, e = mc, f = mc
@@ -107,20 +109,43 @@ a_eo_n> = dt(v_eo_n>, n)
 a_fo_n> = dt(v_fo_n>, n)
 
 % The units for torque_a> should be newton-meters (m/s)^2 kg.
-torque_a> = -rho/2 * TCdcirc * w_a_n> * TAcirc * mag(w_a_n>)
+% kTa = -rho/2 * TCdcirc * TAcirc 
+torque_a> = kTa * w_a_n> * mag(w_a_n>)
+torque_b> = kTb * w_b_a> * mag(w_b_a>)
+torque_c> = kTc * w_c_a> * mag(w_c_a>)
+torque_d> = kTc * w_d_a> * mag(w_d_a>)
+torque_e> = kTc * w_e_a> * mag(w_e_a>)
+torque_f> = kTc * w_f_a> * mag(w_f_a>)
 torque(a/b, Tq4 * n3>)
 torque(a/c, Tq5 * n3>)
 torque(a/d, Tq6 * n3>)
 torque(a/e, Tq7 * n3>)
 torque(a/f, Tq8 * n3>)
 
+wv> = wvx * n1> + wvy * n2>
+
 % Set the drag force for each body.
 % wikipedia drag force
 % F_D = \frac{1}{2} \rho v^2 C_d A
-force_ao> = -rho/2 * Cdcirc  * v_ao_n> * Acirc * mag(v_ao_n>)
-force_bo> = -rho/2 * Cdplate * v_bo_n> * abs(dot(l * ld*b1>, v_bo_n>))
-force_co> = -rho/2 * Cdplate * v_co_n> * abs(dot(fl*fld*c1>, v_co_n>))
-force_do> = -rho/2 * Cdplate * v_do_n> * abs(dot(fl*fld*d1>, v_do_n>))
-force_eo> = -rho/2 * Cdplate * v_eo_n> * abs(dot(fl*fld*e1>, v_eo_n>))
-force_fo> = -rho/2 * Cdplate * v_fo_n> * abs(dot(fl*fld*f1>, v_fo_n>))
+% kFa = -rho/2 * Cdcirc  * Acirc 
+force_ao> = kFa * (v_ao_n> - wv>) * mag(v_ao_n> - wv>)
+% kFb = -rho/2 * Cdplate * ld 
+krb = 0
+krc = 0
+wv> = 0>
+%force_bo> = kFb * l * (v_bo_n> - wv>) * abs(dot(b1>, (v_bo_n> - wv>)) + krb * SIGN(u4) * mag(v_bo_n>)) 
+force_bo> = kFb * l * (v_bo_n> - wv>) * abs(dot(b1>, (v_bo_n> - wv>)) + krb * mag(v_bo_n>))  
+%force_bo> = b1> * sign(u4)
+% kFc = -rho/2 * Cdplate * fld
+force_co> = kFc * fl * (v_co_n> - wv>) * abs(dot(c1>, (v_co_n> - wv>)) + krc * mag(v_co_n>))
+force_do> = kFc * fl * (v_do_n> - wv>) * abs(dot(d1>, (v_do_n> - wv>)) + krc * mag(v_do_n>))
+force_eo> = kFc * fl * (v_eo_n> - wv>) * abs(dot(e1>, (v_eo_n> - wv>)) + krc * mag(v_eo_n>))
+force_fo> = kFc * fl * (v_fo_n> - wv>) * abs(dot(f1>, (v_fo_n> - wv>)) + krc * mag(v_fo_n>))
+i_b_bo>> = inertia(bo, b)
+i_c_co>> = inertia(co, c)
+i_d_do>> = inertia(do, d)
+i_e_eo>> = inertia(eo, e)
+i_f_fo>> = inertia(fo, f)
+%eqns = fr() + frstar()
+%eqns 
 fr() + frstar()

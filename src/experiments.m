@@ -127,7 +127,7 @@ experimentPoints[a_, timeShift_] :=
     Module[{tpts, fpts, points},
            tpts = Map[PadRight[#,3,{#[[-1]]}]&,tailGrowth /. experiment[a]];
            fpts = Map[PadRight[#,3,{#[[-1]]}]&,feetGrowth /. experiment[a]];
-           tpts = Map[{timeShift,1} #&, tpts, {2}];
+           tpts = Map[{timeShift,1}#&, tpts, {2}];
            fpts = Map[{timeShift,1}#&, fpts, {2}];
            points = Map[Identity,MapThread[{#1,#2}&, {tpts, fpts}]]]
 

@@ -93,59 +93,6 @@ drawFrog[{q1_,q2_,q3_,q4_, q5_, q6_, q7_, q8_}, r_, l_, fl_,
                     }, PlotRange -> range]]
 
 
-
-params = {r       -> 0.025 m, 
-          l       -> lmax,
-          lmax    -> 0.06 m,
-          negl    -> 0.00001m, (* negligible length *)
-          Ia      -> ma (r^2)/2, (* where did I get these formulas? *)
-          Ib      -> mb (lmax^2)/3,
-          ma      -> 0.025 kg, (*0.0195 kg,*)
-          mb      -> 0.00195 kg,
-          d       -> 2 r,
-          Cdcirc  -> 0.3,
-          TCdcirc -> 2.9,
-          Cdplate -> 0.98,
-          rho     -> 999.1026 kg/m^3,
-          g       -> 9.8 m/s^2,
-          Tmax    -> 0.000001 kg (m/s)^2, (* this (l/lmax)^2 is dubious *)
-          Tfmax   -> 0 0.00001 kg (m/s)^2,
-          
-(*          Fr    -> 0.01,
-          P       -> 1/freq,
-          freq    -> .5/(2 Pi (lmax/(.1g))^.5),
-	
- *)
-          Tq4     -> tailTorque[q4[t]],
-
-          Ic      -> mc ((flmax)^2)/3,
-          mc      -> mb,
-          fl      -> flmax,
-          flmax   -> lmax,
-          Tq5     -> footTorque[q5[t]], 
-          Tq6     -> footTorque[q6[t]], 
-          Tq7     -> footTorque[q7[t]], 
-          Tq8     -> footTorque[q8[t]],
-
-          m -> 1, kg -> 1, s -> 1,
-          (*m     -> 10, kg -> 1, s -> 1*)
-          (*m     -> 32, kg -> 20, s -> 1*)
-          (*m       -> 100, kg -> 100, s -> 1*)
-          depth -> 0.2 r,
-          ld -> depth,
-          fld -> depth,
-
-          Acirc -> 2 r depth,
-          TAcirc -> Pi 2 r^2 depth (r^2),
-          oq4 -> 0,
-          oq5 -> 1 Pi/4,
-          oq6 -> 3 Pi/4,
-          oq7 -> 5 Pi/4,
-          oq8 -> 7 Pi/4
-          
-         };
-
-
 footTorque[angle_] := radialSpring2[angle] + periodicSwing
 
 
@@ -173,7 +120,7 @@ radialSpring2[theta_] := -Tmax (theta/(Pi/2))^3;
 legCollision[theta_]  := -Tmax(sigma[20(theta - Pi/2)] - sigma[20(-theta - Pi/2)]);
 
 
-boundaries[x_,{a_,b_}, k_:20]  :=(sigma[k(x - a)] - sigma[k(-x + b)])
+boundaries[x_,{a_,b_},k_:20]  :=(sigma[k(x - a)] - sigma[k(-x + b)])
 
 
 periodicSwing =   Tmax Cos[2 Pi/ P t];

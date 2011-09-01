@@ -8,3 +8,4 @@ EXTERN_C DLLEXPORT int frogRHS(WolframLibraryData libData, MTensor A1, MTensor A
 
 EXTERN_C DLLEXPORT int geneToCTRNN(WolframLibraryData libData, MTensor A1, MTensor *Res);
 EXTERN_C DLLEXPORT int experiments(WolframLibraryData libData, mint A1, mreal A2, mint A3, MTensor *Res);
+EXTERN_C DLLEXPORT int physicsConstants(WolframLibraryData libData, MTensor *Res);

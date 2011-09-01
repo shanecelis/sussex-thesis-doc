@@ -6,7 +6,9 @@ geneToCTRNNC = makeGeneToCTRNNC[];
 
 experimentsC = makeExperimentsC[];
 
-exportToC[{diff, geneToCTRNNC, experimentsC}, {"frogRHS", 
-  "geneToCTRNN", "experiments"}]; 
+physconsC = makePhysicsConstantsC[];
+
+exportToC[{diff, geneToCTRNNC, experimentsC, physconsC}, {"frogRHS", 
+  "geneToCTRNN", "experiments", "physicsConstants"}];  
 
 ResetDirectory[];
