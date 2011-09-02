@@ -10,7 +10,7 @@ rec = 0.5;
 mut = 0.1;
 evaluations = 0;
 
-end = 10^5;
+end = 10^6;
  
 
 minimize = False;
@@ -59,9 +59,6 @@ lessThan[a_, b_] := If[minimize,
                        a > b];
 
 
-
-
-
 runGA[] := 
     Module[{a, b, W, L, temp},
            (*temp = PrintTemporary[0];*)
@@ -78,6 +75,9 @@ runGA[] :=
                (*If[evaluate[L] ~lessThan~ 0.01,
                  Print[L];
                  Break[]];*)
+               If[Mod[evaluations,1000] == 0,
+                  Print[genes[[bestIndividual[]]]]
+                 ];
               ];
            bestIndividual[];
            evaluations

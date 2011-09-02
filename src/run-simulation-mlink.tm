@@ -26,14 +26,14 @@
 :Evaluate:      runSimulationMlink[ state:{___}, stepSize_, constants:{___}, time_] := runSimulationMlink[N[state], N[stepSize], N[constants], N[time]]
 
 :Begin:
-:Function:      run_simulation_mlink2
-:Pattern:       runSimulationMlink2[ state:{___Real}, stepSize_Real, constants:{___Real}, time_Real]
+:Function:      run_simulation_mlink_g2c
+:Pattern:       runSimulationMlinkG2C[ state:{___Real}, stepSize_Real, constants:{___Real}, time_Real]
 :Arguments:     { state, stepSize, constants, time }
 :ArgumentTypes: { RealList, Real, RealList, Real }
 :ReturnType:    Manual
 :End:
 
-:Evaluate:      runSimulationMlink2[ state:{___}, stepSize_, constants:{___}, time_] := runSimulationMlink2[N[state], N[stepSize], N[constants], N[time]]
+:Evaluate:      runSimulationMlinkG2C[ state:{___}, stepSize_, constants:{___}, time_] := runSimulationMlinkG2C[N[state], N[stepSize], N[constants], N[time]]
 
 
 void failed_with_message0(char *msg) {
@@ -70,7 +70,7 @@ int was_aborted() {
 
 
 
-void run_simulation_mlink2( double *state, long stateLength, 
+void run_simulation_mlink( double *state, long stateLength, 
      double step_size, double *constants, long constantsLength, 
      double time) {
   long dims[1];
@@ -107,7 +107,7 @@ void run_simulation_mlink2( double *state, long stateLength,
 }
 
 
-void run_simulation_mlink( double *state, long stateLength, 
+void run_simulation_mlink_g2c( double *state, long stateLength, 
      double step_size, double *constants, long constantsLength, 
      double time) {
   int err;
@@ -117,7 +117,7 @@ void run_simulation_mlink( double *state, long stateLength,
     failed_with_message0("runSimulationMlink::errg2c");
     return;
   }
-  run_simulation_mlink2(state, stateLength, step_size, constants2, 
+  run_simulation_mlink(state, stateLength, step_size, constants2, 
                         constantsLength, time);
 }
 

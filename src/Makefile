@@ -72,13 +72,20 @@ frog_eval: frog_eval.o alps_frog.o genes_real.o $(SIM_OBJS)
 run: run-sim-main
 	DYLD_LIBRARY_PATH=/Applications/Mathematica.app/SystemFiles/Libraries/MacOSX-x86-64:. ./run-sim-main
 
-frog_eqns.txt: frog.al
+frog.out: frog.al
 	(cat frog.al; echo "quit") > frogq.al
-	(echo "! rhseqns = "; yes | al frogq.al | grep Result) > frog_eqns.txt
+	(yes | al frogq.al) > frog.out
+	unix2dos frog.out
+
+frog_eqns.txt: frog.out
+	(echo "! rhseqns = "; cat frog.out | grep Result) > frog_eqns.txt
+
+eqns.txt: frog.out
+	grep -P '(Z\d+|eqns.*) =' frog.out | perl -pe 's/-> \(\d+\) //; s/eqns\[\d\]/0/;' > eqns.txt
 
 eqns.c: frog.al
 	(cat frog.al; echo "output eqns[1],eqns[2],eqns[3],eqns[4],eqns[5],eqns[6],eqns[7],eqns[8]"; echo "code algebraic() eqns.c"; echo "quit") > frogu.al
-	(echo "! rhseqns = "; yes | al frogu.al | grep Result) > eqns.txt
+	(echo "! rhseqns = "; yes | al frogu.al | grep Result) > eqns.c.txt
 
 eqns-fixed.c: eqns.c eqns.patch
 	patch -i eqns.patch eqns.c -o eqns-fixed.c
@@ -112,4 +119,4 @@ parenparser: parenparser.hs
 frogRHS-fixed.c: frogRHS.c frogRHS.patch
 	patch -i frogRHS.patch frogRHS.c -o frogRHS-fixed.c
 
-frog-ga.mo: bga.mo
+frog-ga.mo: bga.mo params.mo

@@ -121,45 +121,58 @@
                     Sin[oq4 + q4[t]]*u3[t]^2 + kTb*Abs[u4[t]]*u4[t] + 
                    0.25*kFb*l^2*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
                       Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
-                       u3[t] + 0.5*l*(u3[t] + u4[t])]*(2.*Cos[oq4 + q3[t] + 
-                        q4[t]]*u1[t] + 2.*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
-                     2.*r*Cos[oq4 + q4[t]]*u3[t] + l*(u3[t] + u4[t]))) - 
-                 1.*Ib*(-1.*kFa*(wvx - 1.*u1[t])*((wvx - 1.*u1[t])^2 + 
-                      (wvy - 1.*u2[t])^2)^0.5 + 0.5*kFb*l*Abs[
-                     Cos[oq4 + q3[t] + q4[t]]*u1[t] + Sin[oq4 + q3[t] + 
-                         q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*u3[t] + 0.5*l*
-                       (u3[t] + u4[t])]*(2.*u1[t] + 2.*r*Cos[q3[t]]*u3[t] + 
-                     l*Cos[oq4 + q3[t] + q4[t]]*(u3[t] + u4[t])) + 
-                   0.5*mb*(2.*r*Sin[q3[t]]*u3[t]^2 + l*Sin[oq4 + q3[t] + 
-                        q4[t]]*(u3[t] + u4[t])^2) + 0.5*fl*mc*Sin[oq5 + 
-                      q3[t] + q5[t]]*(u3[t] + u5[t])^2 - 0.5*fl*kFc*
-                    Abs[Cos[oq5 + q3[t] + q5[t]]*u1[t] + Sin[oq5 + q3[t] + 
-                         q5[t]]*u2[t] + 0.7071068*r*Cos[oq5 + q5[t]]*u3[t] + 
-                      0.7071068*r*Sin[oq5 + q5[t]]*u3[t] + 0.5*fl*(u3[t] + 
-                        u5[t])]*(-2.*u1[t] - 1.414214*r*Cos[q3[t]]*u3[t] + 
-                     1.414214*r*Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq5 + q3[t] + 
-                        q5[t]]*(u3[t] + u5[t])) + 0.5*fl*mc*Sin[oq6 + q3[t] + 
-                      q6[t]]*(u3[t] + u6[t])^2 - 0.5*fl*kFc*Abs[
-                     Cos[oq6 + q3[t] + q6[t]]*u1[t] + Sin[oq6 + q3[t] + 
-                         q6[t]]*u2[t] - 0.7071068*r*Cos[oq6 + q6[t]]*u3[t] + 
-                      0.7071068*r*Sin[oq6 + q6[t]]*u3[t] + 0.5*fl*(u3[t] + 
-                        u6[t])]*(-2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 
-                     1.414214*r*Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq6 + q3[t] + 
-                        q6[t]]*(u3[t] + u6[t])) + 0.5*fl*mc*Sin[oq7 + q3[t] + 
-                      q7[t]]*(u3[t] + u7[t])^2 - 0.5*fl*kFc*Abs[
-                     Cos[oq7 + q3[t] + q7[t]]*u1[t] + Sin[oq7 + q3[t] + 
-                         q7[t]]*u2[t] - 0.7071068*r*Cos[oq7 + q7[t]]*u3[t] - 
-                      0.7071068*r*Sin[oq7 + q7[t]]*u3[t] + 0.5*fl*(u3[t] + 
-                        u7[t])]*(-2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] - 
-                     1.414214*r*Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq7 + q3[t] + 
-                        q7[t]]*(u3[t] + u7[t])) + 0.5*fl*mc*Sin[oq8 + q3[t] + 
-                      q8[t]]*(u3[t] + u8[t])^2 + 0.5*fl*kFc*Abs[
-                     Cos[oq8 + q3[t] + q8[t]]*u1[t] + Sin[oq8 + q3[t] + 
-                         q8[t]]*u2[t] + 0.7071068*r*Cos[oq8 + q8[t]]*u3[t] - 
-                      0.7071068*r*Sin[oq8 + q8[t]]*u3[t] + 0.5*fl*(u3[t] + 
-                        u8[t])]*(2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 
-                     1.414214*r*Sin[q3[t]]*u3[t] + fl*Cos[oq8 + q3[t] + 
-                        q8[t]]*(u3[t] + u8[t])))))))) + 
+                       u3[t] + 0.5*l*(u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*
+                       (4.*u1[t]^2 + 4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*
+                          u3[t] + 8.*r*Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*
+                          u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t]*
+                          (u3[t] + u4[t]) + 4.*l*Sin[oq4 + q3[t] + q4[t]]*
+                          u2[t]*(u3[t] + u4[t]) + 4.*l*r*Cos[oq4 + q4[t]]*
+                          u3[t]*(u3[t] + u4[t]) + l^2*(u3[t] + u4[t])^2)^0.5]*
+                    (2.*Cos[oq4 + q3[t] + q4[t]]*u1[t] + 2.*Sin[oq4 + q3[t] + 
+                        q4[t]]*u2[t] + 2.*r*Cos[oq4 + q4[t]]*u3[t] + 
+                     l*(u3[t] + u4[t]))) - 1.*Ib*(-1.*kFa*(wvx - 1.*u1[t])*
+                    ((wvx - 1.*u1[t])^2 + (wvy - 1.*u2[t])^2)^0.5 + 
+                   0.5*kFb*l*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
+                      Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
+                       u3[t] + 0.5*l*(u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*
+                       (4.*u1[t]^2 + 4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*
+                          u3[t] + 8.*r*Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*
+                          u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t]*
+                          (u3[t] + u4[t]) + 4.*l*Sin[oq4 + q3[t] + q4[t]]*
+                          u2[t]*(u3[t] + u4[t]) + 4.*l*r*Cos[oq4 + q4[t]]*
+                          u3[t]*(u3[t] + u4[t]) + l^2*(u3[t] + u4[t])^2)^0.5]*
+                    (2.*u1[t] + 2.*r*Cos[q3[t]]*u3[t] + l*Cos[oq4 + q3[t] + 
+                        q4[t]]*(u3[t] + u4[t])) + 0.5*mb*(2.*r*Sin[q3[t]]*
+                      u3[t]^2 + l*Sin[oq4 + q3[t] + q4[t]]*(u3[t] + u4[t])^
+                       2) + 0.5*fl*mc*Sin[oq5 + q3[t] + q5[t]]*
+                    (u3[t] + u5[t])^2 - 0.5*fl*kFc*Abs[Cos[oq5 + q3[t] + 
+                         q5[t]]*u1[t] + Sin[oq5 + q3[t] + q5[t]]*u2[t] + 
+                      0.7071068*r*Cos[oq5 + q5[t]]*u3[t] + 0.7071068*r*
+                       Sin[oq5 + q5[t]]*u3[t] + 0.5*fl*(u3[t] + u5[t])]*
+                    (-2.*u1[t] - 1.414214*r*Cos[q3[t]]*u3[t] + 1.414214*r*
+                      Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq5 + q3[t] + q5[t]]*
+                      (u3[t] + u5[t])) + 0.5*fl*mc*Sin[oq6 + q3[t] + q6[t]]*
+                    (u3[t] + u6[t])^2 - 0.5*fl*kFc*Abs[Cos[oq6 + q3[t] + 
+                         q6[t]]*u1[t] + Sin[oq6 + q3[t] + q6[t]]*u2[t] - 
+                      0.7071068*r*Cos[oq6 + q6[t]]*u3[t] + 0.7071068*r*
+                       Sin[oq6 + q6[t]]*u3[t] + 0.5*fl*(u3[t] + u6[t])]*
+                    (-2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 1.414214*r*
+                      Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq6 + q3[t] + q6[t]]*
+                      (u3[t] + u6[t])) + 0.5*fl*mc*Sin[oq7 + q3[t] + q7[t]]*
+                    (u3[t] + u7[t])^2 - 0.5*fl*kFc*Abs[Cos[oq7 + q3[t] + 
+                         q7[t]]*u1[t] + Sin[oq7 + q3[t] + q7[t]]*u2[t] - 
+                      0.7071068*r*Cos[oq7 + q7[t]]*u3[t] - 0.7071068*r*
+                       Sin[oq7 + q7[t]]*u3[t] + 0.5*fl*(u3[t] + u7[t])]*
+                    (-2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] - 1.414214*r*
+                      Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq7 + q3[t] + q7[t]]*
+                      (u3[t] + u7[t])) + 0.5*fl*mc*Sin[oq8 + q3[t] + q8[t]]*
+                    (u3[t] + u8[t])^2 + 0.5*fl*kFc*Abs[Cos[oq8 + q3[t] + 
+                         q8[t]]*u1[t] + Sin[oq8 + q3[t] + q8[t]]*u2[t] + 
+                      0.7071068*r*Cos[oq8 + q8[t]]*u3[t] - 0.7071068*r*
+                       Sin[oq8 + q8[t]]*u3[t] + 0.5*fl*(u3[t] + u8[t])]*
+                    (2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 1.414214*r*
+                      Sin[q3[t]]*u3[t] + fl*Cos[oq8 + q3[t] + q8[t]]*
+                      (u3[t] + u8[t])))))))) + 
        (-0.3535534*Ic*(0. + 1.*Ic^2*(0. + 0.5*fl*Ib*mc*Cos[oq5 + q3[t] + 
                 q5[t]]))*(2.828427*Ic + fl*mc*r*(Cos[oq5 + q5[t]] + 
              Sin[oq5 + q5[t]])) - 1.*Ic*
@@ -218,13 +231,26 @@
                     Sin[oq4 + q4[t]]*u3[t]^2 + kTb*Abs[u4[t]]*u4[t] + 
                    0.25*kFb*l^2*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
                       Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
-                       u3[t] + 0.5*l*(u3[t] + u4[t])]*(2.*Cos[oq4 + q3[t] + 
-                        q4[t]]*u1[t] + 2.*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
-                     2.*r*Cos[oq4 + q4[t]]*u3[t] + l*(u3[t] + u4[t]))) - 
-                 1.*Ib*(-1.*kFa*((wvx - 1.*u1[t])^2 + (wvy - 1.*u2[t])^2)^0.5*
-                    (wvy - 1.*u2[t]) + 0.5*kFb*l*Abs[Cos[oq4 + q3[t] + q4[t]]*
-                       u1[t] + Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
-                      r*Cos[oq4 + q4[t]]*u3[t] + 0.5*l*(u3[t] + u4[t])]*
+                       u3[t] + 0.5*l*(u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*
+                       (4.*u1[t]^2 + 4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*
+                          u3[t] + 8.*r*Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*
+                          u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t]*
+                          (u3[t] + u4[t]) + 4.*l*Sin[oq4 + q3[t] + q4[t]]*
+                          u2[t]*(u3[t] + u4[t]) + 4.*l*r*Cos[oq4 + q4[t]]*
+                          u3[t]*(u3[t] + u4[t]) + l^2*(u3[t] + u4[t])^2)^0.5]*
+                    (2.*Cos[oq4 + q3[t] + q4[t]]*u1[t] + 2.*Sin[oq4 + q3[t] + 
+                        q4[t]]*u2[t] + 2.*r*Cos[oq4 + q4[t]]*u3[t] + 
+                     l*(u3[t] + u4[t]))) - 1.*Ib*(-1.*kFa*((wvx - 1.*u1[t])^
+                       2 + (wvy - 1.*u2[t])^2)^0.5*(wvy - 1.*u2[t]) + 
+                   0.5*kFb*l*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
+                      Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
+                       u3[t] + 0.5*l*(u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*
+                       (4.*u1[t]^2 + 4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*
+                          u3[t] + 8.*r*Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*
+                          u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t]*
+                          (u3[t] + u4[t]) + 4.*l*Sin[oq4 + q3[t] + q4[t]]*
+                          u2[t]*(u3[t] + u4[t]) + 4.*l*r*Cos[oq4 + q4[t]]*
+                          u3[t]*(u3[t] + u4[t]) + l^2*(u3[t] + u4[t])^2)^0.5]*
                     (2.*u2[t] + 2.*r*Sin[q3[t]]*u3[t] + l*Sin[oq4 + q3[t] + 
                         q4[t]]*(u3[t] + u4[t])) - 0.5*mb*(2.*r*Cos[q3[t]]*
                       u3[t]^2 + l*Cos[oq4 + q3[t] + q4[t]]*(u3[t] + u4[t])^
@@ -371,45 +397,58 @@
                     Sin[oq4 + q4[t]]*u3[t]^2 + kTb*Abs[u4[t]]*u4[t] + 
                    0.25*kFb*l^2*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
                       Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
-                       u3[t] + 0.5*l*(u3[t] + u4[t])]*(2.*Cos[oq4 + q3[t] + 
-                        q4[t]]*u1[t] + 2.*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
-                     2.*r*Cos[oq4 + q4[t]]*u3[t] + l*(u3[t] + u4[t]))) - 
-                 1.*Ib*(-1.*kFa*(wvx - 1.*u1[t])*((wvx - 1.*u1[t])^2 + 
-                      (wvy - 1.*u2[t])^2)^0.5 + 0.5*kFb*l*Abs[
-                     Cos[oq4 + q3[t] + q4[t]]*u1[t] + Sin[oq4 + q3[t] + 
-                         q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*u3[t] + 0.5*l*
-                       (u3[t] + u4[t])]*(2.*u1[t] + 2.*r*Cos[q3[t]]*u3[t] + 
-                     l*Cos[oq4 + q3[t] + q4[t]]*(u3[t] + u4[t])) + 
-                   0.5*mb*(2.*r*Sin[q3[t]]*u3[t]^2 + l*Sin[oq4 + q3[t] + 
-                        q4[t]]*(u3[t] + u4[t])^2) + 0.5*fl*mc*Sin[oq5 + 
-                      q3[t] + q5[t]]*(u3[t] + u5[t])^2 - 0.5*fl*kFc*
-                    Abs[Cos[oq5 + q3[t] + q5[t]]*u1[t] + Sin[oq5 + q3[t] + 
-                         q5[t]]*u2[t] + 0.7071068*r*Cos[oq5 + q5[t]]*u3[t] + 
-                      0.7071068*r*Sin[oq5 + q5[t]]*u3[t] + 0.5*fl*(u3[t] + 
-                        u5[t])]*(-2.*u1[t] - 1.414214*r*Cos[q3[t]]*u3[t] + 
-                     1.414214*r*Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq5 + q3[t] + 
-                        q5[t]]*(u3[t] + u5[t])) + 0.5*fl*mc*Sin[oq6 + q3[t] + 
-                      q6[t]]*(u3[t] + u6[t])^2 - 0.5*fl*kFc*Abs[
-                     Cos[oq6 + q3[t] + q6[t]]*u1[t] + Sin[oq6 + q3[t] + 
-                         q6[t]]*u2[t] - 0.7071068*r*Cos[oq6 + q6[t]]*u3[t] + 
-                      0.7071068*r*Sin[oq6 + q6[t]]*u3[t] + 0.5*fl*(u3[t] + 
-                        u6[t])]*(-2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 
-                     1.414214*r*Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq6 + q3[t] + 
-                        q6[t]]*(u3[t] + u6[t])) + 0.5*fl*mc*Sin[oq7 + q3[t] + 
-                      q7[t]]*(u3[t] + u7[t])^2 - 0.5*fl*kFc*Abs[
-                     Cos[oq7 + q3[t] + q7[t]]*u1[t] + Sin[oq7 + q3[t] + 
-                         q7[t]]*u2[t] - 0.7071068*r*Cos[oq7 + q7[t]]*u3[t] - 
-                      0.7071068*r*Sin[oq7 + q7[t]]*u3[t] + 0.5*fl*(u3[t] + 
-                        u7[t])]*(-2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] - 
-                     1.414214*r*Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq7 + q3[t] + 
-                        q7[t]]*(u3[t] + u7[t])) + 0.5*fl*mc*Sin[oq8 + q3[t] + 
-                      q8[t]]*(u3[t] + u8[t])^2 + 0.5*fl*kFc*Abs[
-                     Cos[oq8 + q3[t] + q8[t]]*u1[t] + Sin[oq8 + q3[t] + 
-                         q8[t]]*u2[t] + 0.7071068*r*Cos[oq8 + q8[t]]*u3[t] - 
-                      0.7071068*r*Sin[oq8 + q8[t]]*u3[t] + 0.5*fl*(u3[t] + 
-                        u8[t])]*(2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 
-                     1.414214*r*Sin[q3[t]]*u3[t] + fl*Cos[oq8 + q3[t] + 
-                        q8[t]]*(u3[t] + u8[t])))))))) + 
+                       u3[t] + 0.5*l*(u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*
+                       (4.*u1[t]^2 + 4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*
+                          u3[t] + 8.*r*Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*
+                          u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t]*
+                          (u3[t] + u4[t]) + 4.*l*Sin[oq4 + q3[t] + q4[t]]*
+                          u2[t]*(u3[t] + u4[t]) + 4.*l*r*Cos[oq4 + q4[t]]*
+                          u3[t]*(u3[t] + u4[t]) + l^2*(u3[t] + u4[t])^2)^0.5]*
+                    (2.*Cos[oq4 + q3[t] + q4[t]]*u1[t] + 2.*Sin[oq4 + q3[t] + 
+                        q4[t]]*u2[t] + 2.*r*Cos[oq4 + q4[t]]*u3[t] + 
+                     l*(u3[t] + u4[t]))) - 1.*Ib*(-1.*kFa*(wvx - 1.*u1[t])*
+                    ((wvx - 1.*u1[t])^2 + (wvy - 1.*u2[t])^2)^0.5 + 
+                   0.5*kFb*l*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
+                      Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
+                       u3[t] + 0.5*l*(u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*
+                       (4.*u1[t]^2 + 4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*
+                          u3[t] + 8.*r*Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*
+                          u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t]*
+                          (u3[t] + u4[t]) + 4.*l*Sin[oq4 + q3[t] + q4[t]]*
+                          u2[t]*(u3[t] + u4[t]) + 4.*l*r*Cos[oq4 + q4[t]]*
+                          u3[t]*(u3[t] + u4[t]) + l^2*(u3[t] + u4[t])^2)^0.5]*
+                    (2.*u1[t] + 2.*r*Cos[q3[t]]*u3[t] + l*Cos[oq4 + q3[t] + 
+                        q4[t]]*(u3[t] + u4[t])) + 0.5*mb*(2.*r*Sin[q3[t]]*
+                      u3[t]^2 + l*Sin[oq4 + q3[t] + q4[t]]*(u3[t] + u4[t])^
+                       2) + 0.5*fl*mc*Sin[oq5 + q3[t] + q5[t]]*
+                    (u3[t] + u5[t])^2 - 0.5*fl*kFc*Abs[Cos[oq5 + q3[t] + 
+                         q5[t]]*u1[t] + Sin[oq5 + q3[t] + q5[t]]*u2[t] + 
+                      0.7071068*r*Cos[oq5 + q5[t]]*u3[t] + 0.7071068*r*
+                       Sin[oq5 + q5[t]]*u3[t] + 0.5*fl*(u3[t] + u5[t])]*
+                    (-2.*u1[t] - 1.414214*r*Cos[q3[t]]*u3[t] + 1.414214*r*
+                      Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq5 + q3[t] + q5[t]]*
+                      (u3[t] + u5[t])) + 0.5*fl*mc*Sin[oq6 + q3[t] + q6[t]]*
+                    (u3[t] + u6[t])^2 - 0.5*fl*kFc*Abs[Cos[oq6 + q3[t] + 
+                         q6[t]]*u1[t] + Sin[oq6 + q3[t] + q6[t]]*u2[t] - 
+                      0.7071068*r*Cos[oq6 + q6[t]]*u3[t] + 0.7071068*r*
+                       Sin[oq6 + q6[t]]*u3[t] + 0.5*fl*(u3[t] + u6[t])]*
+                    (-2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 1.414214*r*
+                      Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq6 + q3[t] + q6[t]]*
+                      (u3[t] + u6[t])) + 0.5*fl*mc*Sin[oq7 + q3[t] + q7[t]]*
+                    (u3[t] + u7[t])^2 - 0.5*fl*kFc*Abs[Cos[oq7 + q3[t] + 
+                         q7[t]]*u1[t] + Sin[oq7 + q3[t] + q7[t]]*u2[t] - 
+                      0.7071068*r*Cos[oq7 + q7[t]]*u3[t] - 0.7071068*r*
+                       Sin[oq7 + q7[t]]*u3[t] + 0.5*fl*(u3[t] + u7[t])]*
+                    (-2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] - 1.414214*r*
+                      Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq7 + q3[t] + q7[t]]*
+                      (u3[t] + u7[t])) + 0.5*fl*mc*Sin[oq8 + q3[t] + q8[t]]*
+                    (u3[t] + u8[t])^2 + 0.5*fl*kFc*Abs[Cos[oq8 + q3[t] + 
+                         q8[t]]*u1[t] + Sin[oq8 + q3[t] + q8[t]]*u2[t] + 
+                      0.7071068*r*Cos[oq8 + q8[t]]*u3[t] - 0.7071068*r*
+                       Sin[oq8 + q8[t]]*u3[t] + 0.5*fl*(u3[t] + u8[t])]*
+                    (2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 1.414214*r*
+                      Sin[q3[t]]*u3[t] + fl*Cos[oq8 + q3[t] + q8[t]]*
+                      (u3[t] + u8[t])))))))) + 
        (-0.3535534*Ic*(0. + 1.*Ic^2*(0. + 0.5*fl*Ib*mc*Cos[oq5 + q3[t] + 
                 q5[t]]))*(2.828427*Ic + fl*mc*r*(Cos[oq5 + q5[t]] + 
              Sin[oq5 + q5[t]])) - 1.*Ic*
@@ -471,16 +510,29 @@
                     Sin[oq4 + q4[t]]*u3[t]^2 + kTb*Abs[u4[t]]*u4[t] + 
                    0.25*kFb*l^2*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
                       Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
-                       u3[t] + 0.5*l*(u3[t] + u4[t])]*(2.*Cos[oq4 + q3[t] + 
-                        q4[t]]*u1[t] + 2.*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
-                     2.*r*Cos[oq4 + q4[t]]*u3[t] + l*(u3[t] + u4[t]))) - 
-                 1.*Ib*(kTa*Abs[u3[t]]*u3[t] + kTb*Abs[u4[t]]*u4[t] + 
-                   0.25*kFb*l*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
-                      Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
-                       u3[t] + 0.5*l*(u3[t] + u4[t])]*(4.*r*Cos[q3[t]]*
-                      u1[t] + 2.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
-                     4.*r*Sin[q3[t]]*u2[t] + 2.*l*Sin[oq4 + q3[t] + q4[t]]*
-                      u2[t] + 4.*r^2*u3[t] + 4.*l*r*Cos[oq4 + q4[t]]*u3[t] + 
+                       u3[t] + 0.5*l*(u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*
+                       (4.*u1[t]^2 + 4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*
+                          u3[t] + 8.*r*Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*
+                          u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t]*
+                          (u3[t] + u4[t]) + 4.*l*Sin[oq4 + q3[t] + q4[t]]*
+                          u2[t]*(u3[t] + u4[t]) + 4.*l*r*Cos[oq4 + q4[t]]*
+                          u3[t]*(u3[t] + u4[t]) + l^2*(u3[t] + u4[t])^2)^0.5]*
+                    (2.*Cos[oq4 + q3[t] + q4[t]]*u1[t] + 2.*Sin[oq4 + q3[t] + 
+                        q4[t]]*u2[t] + 2.*r*Cos[oq4 + q4[t]]*u3[t] + 
+                     l*(u3[t] + u4[t]))) - 1.*Ib*(kTa*Abs[u3[t]]*u3[t] + 
+                   kTb*Abs[u4[t]]*u4[t] + 0.25*kFb*l*Abs[Cos[oq4 + q3[t] + 
+                         q4[t]]*u1[t] + Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
+                      r*Cos[oq4 + q4[t]]*u3[t] + 0.5*l*(u3[t] + u4[t]) + 
+                      0.5*krb*Sign[u4[t]]*(4.*u1[t]^2 + 4.*u2[t]^2 + 
+                         8.*r*Cos[q3[t]]*u1[t]*u3[t] + 8.*r*Sin[q3[t]]*u2[t]*
+                          u3[t] + 4.*r^2*u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + 
+                          q4[t]]*u1[t]*(u3[t] + u4[t]) + 4.*l*Sin[oq4 + 
+                          q3[t] + q4[t]]*u2[t]*(u3[t] + u4[t]) + 4.*l*r*
+                          Cos[oq4 + q4[t]]*u3[t]*(u3[t] + u4[t]) + 
+                         l^2*(u3[t] + u4[t])^2)^0.5]*(4.*r*Cos[q3[t]]*u1[t] + 
+                     2.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t] + 4.*r*Sin[q3[t]]*
+                      u2[t] + 2.*l*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
+                     4.*r^2*u3[t] + 4.*l*r*Cos[oq4 + q4[t]]*u3[t] + 
                      2.*l*r*Cos[oq4 + q4[t]]*u4[t] + l^2*(u3[t] + u4[t])) + 
                    kTc*Abs[u5[t]]*u5[t] - 0.25*fl*kFc*Abs[Cos[oq5 + q3[t] + 
                          q5[t]]*u1[t] + Sin[oq5 + q3[t] + q5[t]]*u2[t] + 
@@ -828,15 +880,28 @@
                    u3[t]^2 + kTb*Abs[u4[t]]*u4[t] + 0.25*kFb*l^2*
                    Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + Sin[oq4 + q3[t] + 
                         q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*u3[t] + 0.5*l*
-                      (u3[t] + u4[t])]*(2.*Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
-                    2.*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 2.*r*Cos[oq4 + q4[t]]*
-                     u3[t] + l*(u3[t] + u4[t]))) - 1.*Ib*(-1.*kFa*
-                   (wvx - 1.*u1[t])*((wvx - 1.*u1[t])^2 + (wvy - 1.*u2[t])^2)^
-                    0.5 + 0.5*kFb*l*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
-                     Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
-                      u3[t] + 0.5*l*(u3[t] + u4[t])]*(2.*u1[t] + 
-                    2.*r*Cos[q3[t]]*u3[t] + l*Cos[oq4 + q3[t] + q4[t]]*
-                     (u3[t] + u4[t])) + 0.5*mb*(2.*r*Sin[q3[t]]*u3[t]^2 + 
+                      (u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*(4.*u1[t]^2 + 
+                        4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*u3[t] + 8.*r*
+                         Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*u3[t]^2 + 4.*l*
+                         Cos[oq4 + q3[t] + q4[t]]*u1[t]*(u3[t] + u4[t]) + 
+                        4.*l*Sin[oq4 + q3[t] + q4[t]]*u2[t]*(u3[t] + u4[t]) + 
+                        4.*l*r*Cos[oq4 + q4[t]]*u3[t]*(u3[t] + u4[t]) + 
+                        l^2*(u3[t] + u4[t])^2)^0.5]*(2.*Cos[oq4 + q3[t] + 
+                       q4[t]]*u1[t] + 2.*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
+                    2.*r*Cos[oq4 + q4[t]]*u3[t] + l*(u3[t] + u4[t]))) - 
+                1.*Ib*(-1.*kFa*(wvx - 1.*u1[t])*((wvx - 1.*u1[t])^2 + 
+                     (wvy - 1.*u2[t])^2)^0.5 + 0.5*kFb*l*Abs[
+                    Cos[oq4 + q3[t] + q4[t]]*u1[t] + Sin[oq4 + q3[t] + q4[t]]*
+                      u2[t] + r*Cos[oq4 + q4[t]]*u3[t] + 0.5*l*(u3[t] + 
+                       u4[t]) + 0.5*krb*Sign[u4[t]]*(4.*u1[t]^2 + 
+                        4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*u3[t] + 8.*r*
+                         Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*u3[t]^2 + 4.*l*
+                         Cos[oq4 + q3[t] + q4[t]]*u1[t]*(u3[t] + u4[t]) + 
+                        4.*l*Sin[oq4 + q3[t] + q4[t]]*u2[t]*(u3[t] + u4[t]) + 
+                        4.*l*r*Cos[oq4 + q4[t]]*u3[t]*(u3[t] + u4[t]) + 
+                        l^2*(u3[t] + u4[t])^2)^0.5]*(2.*u1[t] + 2.*r*
+                     Cos[q3[t]]*u3[t] + l*Cos[oq4 + q3[t] + q4[t]]*(u3[t] + 
+                      u4[t])) + 0.5*mb*(2.*r*Sin[q3[t]]*u3[t]^2 + 
                     l*Sin[oq4 + q3[t] + q4[t]]*(u3[t] + u4[t])^2) + 
                   0.5*fl*mc*Sin[oq5 + q3[t] + q5[t]]*(u3[t] + u5[t])^2 - 
                   0.5*fl*kFc*Abs[Cos[oq5 + q3[t] + q5[t]]*u1[t] + 
@@ -924,44 +989,57 @@
                    u3[t]^2 + kTb*Abs[u4[t]]*u4[t] + 0.25*kFb*l^2*
                    Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + Sin[oq4 + q3[t] + 
                         q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*u3[t] + 0.5*l*
-                      (u3[t] + u4[t])]*(2.*Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
-                    2.*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 2.*r*Cos[oq4 + q4[t]]*
-                     u3[t] + l*(u3[t] + u4[t]))) - 1.*Ib*(-1.*kFa*
-                   ((wvx - 1.*u1[t])^2 + (wvy - 1.*u2[t])^2)^0.5*(wvy - 
-                    1.*u2[t]) + 0.5*kFb*l*Abs[Cos[oq4 + q3[t] + q4[t]]*
+                      (u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*(4.*u1[t]^2 + 
+                        4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*u3[t] + 8.*r*
+                         Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*u3[t]^2 + 4.*l*
+                         Cos[oq4 + q3[t] + q4[t]]*u1[t]*(u3[t] + u4[t]) + 
+                        4.*l*Sin[oq4 + q3[t] + q4[t]]*u2[t]*(u3[t] + u4[t]) + 
+                        4.*l*r*Cos[oq4 + q4[t]]*u3[t]*(u3[t] + u4[t]) + 
+                        l^2*(u3[t] + u4[t])^2)^0.5]*(2.*Cos[oq4 + q3[t] + 
+                       q4[t]]*u1[t] + 2.*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
+                    2.*r*Cos[oq4 + q4[t]]*u3[t] + l*(u3[t] + u4[t]))) - 
+                1.*Ib*(-1.*kFa*((wvx - 1.*u1[t])^2 + (wvy - 1.*u2[t])^2)^0.5*
+                   (wvy - 1.*u2[t]) + 0.5*kFb*l*Abs[Cos[oq4 + q3[t] + q4[t]]*
                       u1[t] + Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
-                     r*Cos[oq4 + q4[t]]*u3[t] + 0.5*l*(u3[t] + u4[t])]*
-                   (2.*u2[t] + 2.*r*Sin[q3[t]]*u3[t] + l*Sin[oq4 + q3[t] + 
-                       q4[t]]*(u3[t] + u4[t])) - 0.5*mb*(2.*r*Cos[q3[t]]*
-                     u3[t]^2 + l*Cos[oq4 + q3[t] + q4[t]]*(u3[t] + u4[t])^
-                      2) - 0.5*fl*mc*Cos[oq5 + q3[t] + q5[t]]*(u3[t] + u5[t])^
-                    2 + 0.5*fl*kFc*Abs[Cos[oq5 + q3[t] + q5[t]]*u1[t] + 
-                     Sin[oq5 + q3[t] + q5[t]]*u2[t] + 0.7071068*r*
-                      Cos[oq5 + q5[t]]*u3[t] + 0.7071068*r*Sin[oq5 + q5[t]]*
-                      u3[t] + 0.5*fl*(u3[t] + u5[t])]*(2.*u2[t] + 1.414214*r*
-                     Cos[q3[t]]*u3[t] + 1.414214*r*Sin[q3[t]]*u3[t] + 
-                    fl*Sin[oq5 + q3[t] + q5[t]]*(u3[t] + u5[t])) - 
-                  0.5*fl*mc*Cos[oq6 + q3[t] + q6[t]]*(u3[t] + u6[t])^2 - 
-                  0.5*fl*kFc*Abs[Cos[oq6 + q3[t] + q6[t]]*u1[t] + 
-                     Sin[oq6 + q3[t] + q6[t]]*u2[t] - 0.7071068*r*
-                      Cos[oq6 + q6[t]]*u3[t] + 0.7071068*r*Sin[oq6 + q6[t]]*
-                      u3[t] + 0.5*fl*(u3[t] + u6[t])]*(-2.*u2[t] - 1.414214*r*
-                     Cos[q3[t]]*u3[t] + 1.414214*r*Sin[q3[t]]*u3[t] - 
-                    1.*fl*Sin[oq6 + q3[t] + q6[t]]*(u3[t] + u6[t])) - 
-                  0.5*fl*mc*Cos[oq7 + q3[t] + q7[t]]*(u3[t] + u7[t])^2 - 
-                  0.5*fl*kFc*Abs[Cos[oq7 + q3[t] + q7[t]]*u1[t] + 
-                     Sin[oq7 + q3[t] + q7[t]]*u2[t] - 0.7071068*r*
-                      Cos[oq7 + q7[t]]*u3[t] - 0.7071068*r*Sin[oq7 + q7[t]]*
-                      u3[t] + 0.5*fl*(u3[t] + u7[t])]*(-2.*u2[t] + 1.414214*r*
-                     Cos[q3[t]]*u3[t] + 1.414214*r*Sin[q3[t]]*u3[t] - 
-                    1.*fl*Sin[oq7 + q3[t] + q7[t]]*(u3[t] + u7[t])) - 
-                  0.5*fl*mc*Cos[oq8 + q3[t] + q8[t]]*(u3[t] + u8[t])^2 - 
-                  0.5*fl*kFc*Abs[Cos[oq8 + q3[t] + q8[t]]*u1[t] + 
-                     Sin[oq8 + q3[t] + q8[t]]*u2[t] + 0.7071068*r*
-                      Cos[oq8 + q8[t]]*u3[t] - 0.7071068*r*Sin[oq8 + q8[t]]*
-                      u3[t] + 0.5*fl*(u3[t] + u8[t])]*(-2.*u2[t] + 1.414214*r*
-                     Cos[q3[t]]*u3[t] - 1.414214*r*Sin[q3[t]]*u3[t] - 
-                    1.*fl*Sin[oq8 + q3[t] + q8[t]]*(u3[t] + u8[t]))))))))))/
+                     r*Cos[oq4 + q4[t]]*u3[t] + 0.5*l*(u3[t] + u4[t]) + 
+                     0.5*krb*Sign[u4[t]]*(4.*u1[t]^2 + 4.*u2[t]^2 + 
+                        8.*r*Cos[q3[t]]*u1[t]*u3[t] + 8.*r*Sin[q3[t]]*u2[t]*
+                         u3[t] + 4.*r^2*u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + 
+                          q4[t]]*u1[t]*(u3[t] + u4[t]) + 4.*l*Sin[oq4 + 
+                          q3[t] + q4[t]]*u2[t]*(u3[t] + u4[t]) + 4.*l*r*
+                         Cos[oq4 + q4[t]]*u3[t]*(u3[t] + u4[t]) + l^2*
+                         (u3[t] + u4[t])^2)^0.5]*(2.*u2[t] + 2.*r*Sin[q3[t]]*
+                     u3[t] + l*Sin[oq4 + q3[t] + q4[t]]*(u3[t] + u4[t])) - 
+                  0.5*mb*(2.*r*Cos[q3[t]]*u3[t]^2 + l*Cos[oq4 + q3[t] + 
+                       q4[t]]*(u3[t] + u4[t])^2) - 0.5*fl*mc*Cos[oq5 + 
+                     q3[t] + q5[t]]*(u3[t] + u5[t])^2 + 0.5*fl*kFc*
+                   Abs[Cos[oq5 + q3[t] + q5[t]]*u1[t] + Sin[oq5 + q3[t] + 
+                        q5[t]]*u2[t] + 0.7071068*r*Cos[oq5 + q5[t]]*u3[t] + 
+                     0.7071068*r*Sin[oq5 + q5[t]]*u3[t] + 0.5*fl*(u3[t] + 
+                       u5[t])]*(2.*u2[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 
+                    1.414214*r*Sin[q3[t]]*u3[t] + fl*Sin[oq5 + q3[t] + q5[t]]*
+                     (u3[t] + u5[t])) - 0.5*fl*mc*Cos[oq6 + q3[t] + q6[t]]*
+                   (u3[t] + u6[t])^2 - 0.5*fl*kFc*Abs[Cos[oq6 + q3[t] + 
+                        q6[t]]*u1[t] + Sin[oq6 + q3[t] + q6[t]]*u2[t] - 
+                     0.7071068*r*Cos[oq6 + q6[t]]*u3[t] + 0.7071068*r*
+                      Sin[oq6 + q6[t]]*u3[t] + 0.5*fl*(u3[t] + u6[t])]*
+                   (-2.*u2[t] - 1.414214*r*Cos[q3[t]]*u3[t] + 1.414214*r*
+                     Sin[q3[t]]*u3[t] - 1.*fl*Sin[oq6 + q3[t] + q6[t]]*
+                     (u3[t] + u6[t])) - 0.5*fl*mc*Cos[oq7 + q3[t] + q7[t]]*
+                   (u3[t] + u7[t])^2 - 0.5*fl*kFc*Abs[Cos[oq7 + q3[t] + 
+                        q7[t]]*u1[t] + Sin[oq7 + q3[t] + q7[t]]*u2[t] - 
+                     0.7071068*r*Cos[oq7 + q7[t]]*u3[t] - 0.7071068*r*
+                      Sin[oq7 + q7[t]]*u3[t] + 0.5*fl*(u3[t] + u7[t])]*
+                   (-2.*u2[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 1.414214*r*
+                     Sin[q3[t]]*u3[t] - 1.*fl*Sin[oq7 + q3[t] + q7[t]]*
+                     (u3[t] + u7[t])) - 0.5*fl*mc*Cos[oq8 + q3[t] + q8[t]]*
+                   (u3[t] + u8[t])^2 - 0.5*fl*kFc*Abs[Cos[oq8 + q3[t] + 
+                        q8[t]]*u1[t] + Sin[oq8 + q3[t] + q8[t]]*u2[t] + 
+                     0.7071068*r*Cos[oq8 + q8[t]]*u3[t] - 0.7071068*r*
+                      Sin[oq8 + q8[t]]*u3[t] + 0.5*fl*(u3[t] + u8[t])]*
+                   (-2.*u2[t] + 1.414214*r*Cos[q3[t]]*u3[t] - 1.414214*r*
+                     Sin[q3[t]]*u3[t] - 1.*fl*Sin[oq8 + q3[t] + q8[t]]*
+                     (u3[t] + u8[t]))))))))))/
     ((-0.3535534*Ic*(0. + 1.*Ic^2*(0. + 0.5*fl*Ib*mc*
             Cos[oq5 + q3[t] + q5[t]]))*(2.828427*Ic + 
          fl*mc*r*(Cos[oq5 + q5[t]] + Sin[oq5 + q5[t]])) - 
@@ -1185,45 +1263,58 @@
                      Sin[oq4 + q4[t]]*u3[t]^2 + kTb*Abs[u4[t]]*u4[t] + 
                     0.25*kFb*l^2*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
                        Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
-                        u3[t] + 0.5*l*(u3[t] + u4[t])]*(2.*Cos[oq4 + q3[t] + 
-                         q4[t]]*u1[t] + 2.*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
-                      2.*r*Cos[oq4 + q4[t]]*u3[t] + l*(u3[t] + u4[t]))) - 
-                  1.*Ib*(-1.*kFa*(wvx - 1.*u1[t])*((wvx - 1.*u1[t])^2 + 
-                       (wvy - 1.*u2[t])^2)^0.5 + 0.5*kFb*l*Abs[
-                      Cos[oq4 + q3[t] + q4[t]]*u1[t] + Sin[oq4 + q3[t] + 
-                          q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*u3[t] + 
-                       0.5*l*(u3[t] + u4[t])]*(2.*u1[t] + 2.*r*Cos[q3[t]]*
-                       u3[t] + l*Cos[oq4 + q3[t] + q4[t]]*(u3[t] + u4[t])) + 
-                    0.5*mb*(2.*r*Sin[q3[t]]*u3[t]^2 + l*Sin[oq4 + q3[t] + 
-                         q4[t]]*(u3[t] + u4[t])^2) + 0.5*fl*mc*Sin[oq5 + 
-                       q3[t] + q5[t]]*(u3[t] + u5[t])^2 - 0.5*fl*kFc*
-                     Abs[Cos[oq5 + q3[t] + q5[t]]*u1[t] + Sin[oq5 + q3[t] + 
-                          q5[t]]*u2[t] + 0.7071068*r*Cos[oq5 + q5[t]]*u3[t] + 
-                       0.7071068*r*Sin[oq5 + q5[t]]*u3[t] + 0.5*fl*(u3[t] + 
-                         u5[t])]*(-2.*u1[t] - 1.414214*r*Cos[q3[t]]*u3[t] + 
-                      1.414214*r*Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq5 + q3[t] + 
-                         q5[t]]*(u3[t] + u5[t])) + 0.5*fl*mc*Sin[oq6 + 
-                       q3[t] + q6[t]]*(u3[t] + u6[t])^2 - 0.5*fl*kFc*
-                     Abs[Cos[oq6 + q3[t] + q6[t]]*u1[t] + Sin[oq6 + q3[t] + 
-                          q6[t]]*u2[t] - 0.7071068*r*Cos[oq6 + q6[t]]*u3[t] + 
-                       0.7071068*r*Sin[oq6 + q6[t]]*u3[t] + 0.5*fl*(u3[t] + 
-                         u6[t])]*(-2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 
-                      1.414214*r*Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq6 + q3[t] + 
-                         q6[t]]*(u3[t] + u6[t])) + 0.5*fl*mc*Sin[oq7 + 
-                       q3[t] + q7[t]]*(u3[t] + u7[t])^2 - 0.5*fl*kFc*
-                     Abs[Cos[oq7 + q3[t] + q7[t]]*u1[t] + Sin[oq7 + q3[t] + 
-                          q7[t]]*u2[t] - 0.7071068*r*Cos[oq7 + q7[t]]*u3[t] - 
-                       0.7071068*r*Sin[oq7 + q7[t]]*u3[t] + 0.5*fl*(u3[t] + 
-                         u7[t])]*(-2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] - 
-                      1.414214*r*Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq7 + q3[t] + 
-                         q7[t]]*(u3[t] + u7[t])) + 0.5*fl*mc*Sin[oq8 + 
-                       q3[t] + q8[t]]*(u3[t] + u8[t])^2 + 0.5*fl*kFc*
-                     Abs[Cos[oq8 + q3[t] + q8[t]]*u1[t] + Sin[oq8 + q3[t] + 
-                          q8[t]]*u2[t] + 0.7071068*r*Cos[oq8 + q8[t]]*u3[t] - 
-                       0.7071068*r*Sin[oq8 + q8[t]]*u3[t] + 0.5*fl*(u3[t] + 
-                         u8[t])]*(2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 
-                      1.414214*r*Sin[q3[t]]*u3[t] + fl*Cos[oq8 + q3[t] + 
-                         q8[t]]*(u3[t] + u8[t])))))))) + 
+                        u3[t] + 0.5*l*(u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*
+                        (4.*u1[t]^2 + 4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*
+                          u3[t] + 8.*r*Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*
+                          u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t]*
+                          (u3[t] + u4[t]) + 4.*l*Sin[oq4 + q3[t] + q4[t]]*
+                          u2[t]*(u3[t] + u4[t]) + 4.*l*r*Cos[oq4 + q4[t]]*
+                          u3[t]*(u3[t] + u4[t]) + l^2*(u3[t] + u4[t])^2)^0.5]*
+                     (2.*Cos[oq4 + q3[t] + q4[t]]*u1[t] + 2.*Sin[oq4 + 
+                         q3[t] + q4[t]]*u2[t] + 2.*r*Cos[oq4 + q4[t]]*u3[t] + 
+                      l*(u3[t] + u4[t]))) - 1.*Ib*(-1.*kFa*(wvx - 1.*u1[t])*
+                     ((wvx - 1.*u1[t])^2 + (wvy - 1.*u2[t])^2)^0.5 + 
+                    0.5*kFb*l*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
+                       Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
+                        u3[t] + 0.5*l*(u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*
+                        (4.*u1[t]^2 + 4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*
+                          u3[t] + 8.*r*Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*
+                          u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t]*
+                          (u3[t] + u4[t]) + 4.*l*Sin[oq4 + q3[t] + q4[t]]*
+                          u2[t]*(u3[t] + u4[t]) + 4.*l*r*Cos[oq4 + q4[t]]*
+                          u3[t]*(u3[t] + u4[t]) + l^2*(u3[t] + u4[t])^2)^0.5]*
+                     (2.*u1[t] + 2.*r*Cos[q3[t]]*u3[t] + l*Cos[oq4 + q3[t] + 
+                         q4[t]]*(u3[t] + u4[t])) + 0.5*mb*(2.*r*Sin[q3[t]]*
+                       u3[t]^2 + l*Sin[oq4 + q3[t] + q4[t]]*(u3[t] + u4[t])^
+                        2) + 0.5*fl*mc*Sin[oq5 + q3[t] + q5[t]]*
+                     (u3[t] + u5[t])^2 - 0.5*fl*kFc*Abs[Cos[oq5 + q3[t] + 
+                          q5[t]]*u1[t] + Sin[oq5 + q3[t] + q5[t]]*u2[t] + 
+                       0.7071068*r*Cos[oq5 + q5[t]]*u3[t] + 0.7071068*r*
+                        Sin[oq5 + q5[t]]*u3[t] + 0.5*fl*(u3[t] + u5[t])]*
+                     (-2.*u1[t] - 1.414214*r*Cos[q3[t]]*u3[t] + 1.414214*r*
+                       Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq5 + q3[t] + q5[t]]*
+                       (u3[t] + u5[t])) + 0.5*fl*mc*Sin[oq6 + q3[t] + q6[t]]*
+                     (u3[t] + u6[t])^2 - 0.5*fl*kFc*Abs[Cos[oq6 + q3[t] + 
+                          q6[t]]*u1[t] + Sin[oq6 + q3[t] + q6[t]]*u2[t] - 
+                       0.7071068*r*Cos[oq6 + q6[t]]*u3[t] + 0.7071068*r*
+                        Sin[oq6 + q6[t]]*u3[t] + 0.5*fl*(u3[t] + u6[t])]*
+                     (-2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 1.414214*r*
+                       Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq6 + q3[t] + q6[t]]*
+                       (u3[t] + u6[t])) + 0.5*fl*mc*Sin[oq7 + q3[t] + q7[t]]*
+                     (u3[t] + u7[t])^2 - 0.5*fl*kFc*Abs[Cos[oq7 + q3[t] + 
+                          q7[t]]*u1[t] + Sin[oq7 + q3[t] + q7[t]]*u2[t] - 
+                       0.7071068*r*Cos[oq7 + q7[t]]*u3[t] - 0.7071068*r*
+                        Sin[oq7 + q7[t]]*u3[t] + 0.5*fl*(u3[t] + u7[t])]*
+                     (-2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] - 1.414214*r*
+                       Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq7 + q3[t] + q7[t]]*
+                       (u3[t] + u7[t])) + 0.5*fl*mc*Sin[oq8 + q3[t] + q8[t]]*
+                     (u3[t] + u8[t])^2 + 0.5*fl*kFc*Abs[Cos[oq8 + q3[t] + 
+                          q8[t]]*u1[t] + Sin[oq8 + q3[t] + q8[t]]*u2[t] + 
+                       0.7071068*r*Cos[oq8 + q8[t]]*u3[t] - 0.7071068*r*
+                        Sin[oq8 + q8[t]]*u3[t] + 0.5*fl*(u3[t] + u8[t])]*
+                     (2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 1.414214*r*
+                       Sin[q3[t]]*u3[t] + fl*Cos[oq8 + q3[t] + q8[t]]*
+                       (u3[t] + u8[t])))))))) + 
         (-0.3535534*Ic*(0. + 1.*Ic^2*(0. + 0.5*fl*Ib*mc*Cos[oq5 + q3[t] + 
                  q5[t]]))*(2.828427*Ic + fl*mc*r*(Cos[oq5 + q5[t]] + 
               Sin[oq5 + q5[t]])) - 1.*Ic*(0.3535534*(0. + 1.*Ic^2*(0. + 
@@ -1282,13 +1373,26 @@
                      Sin[oq4 + q4[t]]*u3[t]^2 + kTb*Abs[u4[t]]*u4[t] + 
                     0.25*kFb*l^2*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
                        Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
-                        u3[t] + 0.5*l*(u3[t] + u4[t])]*(2.*Cos[oq4 + q3[t] + 
-                         q4[t]]*u1[t] + 2.*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
-                      2.*r*Cos[oq4 + q4[t]]*u3[t] + l*(u3[t] + u4[t]))) - 
-                  1.*Ib*(-1.*kFa*((wvx - 1.*u1[t])^2 + (wvy - 1.*u2[t])^2)^
-                      0.5*(wvy - 1.*u2[t]) + 0.5*kFb*l*Abs[Cos[oq4 + q3[t] + 
-                          q4[t]]*u1[t] + Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
-                       r*Cos[oq4 + q4[t]]*u3[t] + 0.5*l*(u3[t] + u4[t])]*
+                        u3[t] + 0.5*l*(u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*
+                        (4.*u1[t]^2 + 4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*
+                          u3[t] + 8.*r*Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*
+                          u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t]*
+                          (u3[t] + u4[t]) + 4.*l*Sin[oq4 + q3[t] + q4[t]]*
+                          u2[t]*(u3[t] + u4[t]) + 4.*l*r*Cos[oq4 + q4[t]]*
+                          u3[t]*(u3[t] + u4[t]) + l^2*(u3[t] + u4[t])^2)^0.5]*
+                     (2.*Cos[oq4 + q3[t] + q4[t]]*u1[t] + 2.*Sin[oq4 + 
+                         q3[t] + q4[t]]*u2[t] + 2.*r*Cos[oq4 + q4[t]]*u3[t] + 
+                      l*(u3[t] + u4[t]))) - 1.*Ib*(-1.*kFa*((wvx - 1.*u1[t])^
+                        2 + (wvy - 1.*u2[t])^2)^0.5*(wvy - 1.*u2[t]) + 
+                    0.5*kFb*l*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
+                       Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
+                        u3[t] + 0.5*l*(u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*
+                        (4.*u1[t]^2 + 4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*
+                          u3[t] + 8.*r*Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*
+                          u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t]*
+                          (u3[t] + u4[t]) + 4.*l*Sin[oq4 + q3[t] + q4[t]]*
+                          u2[t]*(u3[t] + u4[t]) + 4.*l*r*Cos[oq4 + q4[t]]*
+                          u3[t]*(u3[t] + u4[t]) + l^2*(u3[t] + u4[t])^2)^0.5]*
                      (2.*u2[t] + 2.*r*Sin[q3[t]]*u3[t] + l*Sin[oq4 + q3[t] + 
                          q4[t]]*(u3[t] + u4[t])) - 0.5*mb*(2.*r*Cos[q3[t]]*
                        u3[t]^2 + l*Cos[oq4 + q3[t] + q4[t]]*(u3[t] + u4[t])^
@@ -1436,45 +1540,58 @@
                      Sin[oq4 + q4[t]]*u3[t]^2 + kTb*Abs[u4[t]]*u4[t] + 
                     0.25*kFb*l^2*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
                        Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
-                        u3[t] + 0.5*l*(u3[t] + u4[t])]*(2.*Cos[oq4 + q3[t] + 
-                         q4[t]]*u1[t] + 2.*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
-                      2.*r*Cos[oq4 + q4[t]]*u3[t] + l*(u3[t] + u4[t]))) - 
-                  1.*Ib*(-1.*kFa*(wvx - 1.*u1[t])*((wvx - 1.*u1[t])^2 + 
-                       (wvy - 1.*u2[t])^2)^0.5 + 0.5*kFb*l*Abs[
-                      Cos[oq4 + q3[t] + q4[t]]*u1[t] + Sin[oq4 + q3[t] + 
-                          q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*u3[t] + 
-                       0.5*l*(u3[t] + u4[t])]*(2.*u1[t] + 2.*r*Cos[q3[t]]*
-                       u3[t] + l*Cos[oq4 + q3[t] + q4[t]]*(u3[t] + u4[t])) + 
-                    0.5*mb*(2.*r*Sin[q3[t]]*u3[t]^2 + l*Sin[oq4 + q3[t] + 
-                         q4[t]]*(u3[t] + u4[t])^2) + 0.5*fl*mc*Sin[oq5 + 
-                       q3[t] + q5[t]]*(u3[t] + u5[t])^2 - 0.5*fl*kFc*
-                     Abs[Cos[oq5 + q3[t] + q5[t]]*u1[t] + Sin[oq5 + q3[t] + 
-                          q5[t]]*u2[t] + 0.7071068*r*Cos[oq5 + q5[t]]*u3[t] + 
-                       0.7071068*r*Sin[oq5 + q5[t]]*u3[t] + 0.5*fl*(u3[t] + 
-                         u5[t])]*(-2.*u1[t] - 1.414214*r*Cos[q3[t]]*u3[t] + 
-                      1.414214*r*Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq5 + q3[t] + 
-                         q5[t]]*(u3[t] + u5[t])) + 0.5*fl*mc*Sin[oq6 + 
-                       q3[t] + q6[t]]*(u3[t] + u6[t])^2 - 0.5*fl*kFc*
-                     Abs[Cos[oq6 + q3[t] + q6[t]]*u1[t] + Sin[oq6 + q3[t] + 
-                          q6[t]]*u2[t] - 0.7071068*r*Cos[oq6 + q6[t]]*u3[t] + 
-                       0.7071068*r*Sin[oq6 + q6[t]]*u3[t] + 0.5*fl*(u3[t] + 
-                         u6[t])]*(-2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 
-                      1.414214*r*Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq6 + q3[t] + 
-                         q6[t]]*(u3[t] + u6[t])) + 0.5*fl*mc*Sin[oq7 + 
-                       q3[t] + q7[t]]*(u3[t] + u7[t])^2 - 0.5*fl*kFc*
-                     Abs[Cos[oq7 + q3[t] + q7[t]]*u1[t] + Sin[oq7 + q3[t] + 
-                          q7[t]]*u2[t] - 0.7071068*r*Cos[oq7 + q7[t]]*u3[t] - 
-                       0.7071068*r*Sin[oq7 + q7[t]]*u3[t] + 0.5*fl*(u3[t] + 
-                         u7[t])]*(-2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] - 
-                      1.414214*r*Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq7 + q3[t] + 
-                         q7[t]]*(u3[t] + u7[t])) + 0.5*fl*mc*Sin[oq8 + 
-                       q3[t] + q8[t]]*(u3[t] + u8[t])^2 + 0.5*fl*kFc*
-                     Abs[Cos[oq8 + q3[t] + q8[t]]*u1[t] + Sin[oq8 + q3[t] + 
-                          q8[t]]*u2[t] + 0.7071068*r*Cos[oq8 + q8[t]]*u3[t] - 
-                       0.7071068*r*Sin[oq8 + q8[t]]*u3[t] + 0.5*fl*(u3[t] + 
-                         u8[t])]*(2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 
-                      1.414214*r*Sin[q3[t]]*u3[t] + fl*Cos[oq8 + q3[t] + 
-                         q8[t]]*(u3[t] + u8[t])))))))) + 
+                        u3[t] + 0.5*l*(u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*
+                        (4.*u1[t]^2 + 4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*
+                          u3[t] + 8.*r*Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*
+                          u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t]*
+                          (u3[t] + u4[t]) + 4.*l*Sin[oq4 + q3[t] + q4[t]]*
+                          u2[t]*(u3[t] + u4[t]) + 4.*l*r*Cos[oq4 + q4[t]]*
+                          u3[t]*(u3[t] + u4[t]) + l^2*(u3[t] + u4[t])^2)^0.5]*
+                     (2.*Cos[oq4 + q3[t] + q4[t]]*u1[t] + 2.*Sin[oq4 + 
+                         q3[t] + q4[t]]*u2[t] + 2.*r*Cos[oq4 + q4[t]]*u3[t] + 
+                      l*(u3[t] + u4[t]))) - 1.*Ib*(-1.*kFa*(wvx - 1.*u1[t])*
+                     ((wvx - 1.*u1[t])^2 + (wvy - 1.*u2[t])^2)^0.5 + 
+                    0.5*kFb*l*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
+                       Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
+                        u3[t] + 0.5*l*(u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*
+                        (4.*u1[t]^2 + 4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*
+                          u3[t] + 8.*r*Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*
+                          u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t]*
+                          (u3[t] + u4[t]) + 4.*l*Sin[oq4 + q3[t] + q4[t]]*
+                          u2[t]*(u3[t] + u4[t]) + 4.*l*r*Cos[oq4 + q4[t]]*
+                          u3[t]*(u3[t] + u4[t]) + l^2*(u3[t] + u4[t])^2)^0.5]*
+                     (2.*u1[t] + 2.*r*Cos[q3[t]]*u3[t] + l*Cos[oq4 + q3[t] + 
+                         q4[t]]*(u3[t] + u4[t])) + 0.5*mb*(2.*r*Sin[q3[t]]*
+                       u3[t]^2 + l*Sin[oq4 + q3[t] + q4[t]]*(u3[t] + u4[t])^
+                        2) + 0.5*fl*mc*Sin[oq5 + q3[t] + q5[t]]*
+                     (u3[t] + u5[t])^2 - 0.5*fl*kFc*Abs[Cos[oq5 + q3[t] + 
+                          q5[t]]*u1[t] + Sin[oq5 + q3[t] + q5[t]]*u2[t] + 
+                       0.7071068*r*Cos[oq5 + q5[t]]*u3[t] + 0.7071068*r*
+                        Sin[oq5 + q5[t]]*u3[t] + 0.5*fl*(u3[t] + u5[t])]*
+                     (-2.*u1[t] - 1.414214*r*Cos[q3[t]]*u3[t] + 1.414214*r*
+                       Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq5 + q3[t] + q5[t]]*
+                       (u3[t] + u5[t])) + 0.5*fl*mc*Sin[oq6 + q3[t] + q6[t]]*
+                     (u3[t] + u6[t])^2 - 0.5*fl*kFc*Abs[Cos[oq6 + q3[t] + 
+                          q6[t]]*u1[t] + Sin[oq6 + q3[t] + q6[t]]*u2[t] - 
+                       0.7071068*r*Cos[oq6 + q6[t]]*u3[t] + 0.7071068*r*
+                        Sin[oq6 + q6[t]]*u3[t] + 0.5*fl*(u3[t] + u6[t])]*
+                     (-2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 1.414214*r*
+                       Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq6 + q3[t] + q6[t]]*
+                       (u3[t] + u6[t])) + 0.5*fl*mc*Sin[oq7 + q3[t] + q7[t]]*
+                     (u3[t] + u7[t])^2 - 0.5*fl*kFc*Abs[Cos[oq7 + q3[t] + 
+                          q7[t]]*u1[t] + Sin[oq7 + q3[t] + q7[t]]*u2[t] - 
+                       0.7071068*r*Cos[oq7 + q7[t]]*u3[t] - 0.7071068*r*
+                        Sin[oq7 + q7[t]]*u3[t] + 0.5*fl*(u3[t] + u7[t])]*
+                     (-2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] - 1.414214*r*
+                       Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq7 + q3[t] + q7[t]]*
+                       (u3[t] + u7[t])) + 0.5*fl*mc*Sin[oq8 + q3[t] + q8[t]]*
+                     (u3[t] + u8[t])^2 + 0.5*fl*kFc*Abs[Cos[oq8 + q3[t] + 
+                          q8[t]]*u1[t] + Sin[oq8 + q3[t] + q8[t]]*u2[t] + 
+                       0.7071068*r*Cos[oq8 + q8[t]]*u3[t] - 0.7071068*r*
+                        Sin[oq8 + q8[t]]*u3[t] + 0.5*fl*(u3[t] + u8[t])]*
+                     (2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 1.414214*r*
+                       Sin[q3[t]]*u3[t] + fl*Cos[oq8 + q3[t] + q8[t]]*
+                       (u3[t] + u8[t])))))))) + 
         (-0.3535534*Ic*(0. + 1.*Ic^2*(0. + 0.5*fl*Ib*mc*Cos[oq5 + q3[t] + 
                  q5[t]]))*(2.828427*Ic + fl*mc*r*(Cos[oq5 + q5[t]] + 
               Sin[oq5 + q5[t]])) - 1.*Ic*(0.3535534*(0. + 1.*Ic^2*(0. + 
@@ -1536,16 +1653,29 @@
                      Sin[oq4 + q4[t]]*u3[t]^2 + kTb*Abs[u4[t]]*u4[t] + 
                     0.25*kFb*l^2*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
                        Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
-                        u3[t] + 0.5*l*(u3[t] + u4[t])]*(2.*Cos[oq4 + q3[t] + 
-                         q4[t]]*u1[t] + 2.*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
-                      2.*r*Cos[oq4 + q4[t]]*u3[t] + l*(u3[t] + u4[t]))) - 
-                  1.*Ib*(kTa*Abs[u3[t]]*u3[t] + kTb*Abs[u4[t]]*u4[t] + 
-                    0.25*kFb*l*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
-                       Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
-                        u3[t] + 0.5*l*(u3[t] + u4[t])]*(4.*r*Cos[q3[t]]*
-                       u1[t] + 2.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
-                      4.*r*Sin[q3[t]]*u2[t] + 2.*l*Sin[oq4 + q3[t] + q4[t]]*
-                       u2[t] + 4.*r^2*u3[t] + 4.*l*r*Cos[oq4 + q4[t]]*u3[t] + 
+                        u3[t] + 0.5*l*(u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*
+                        (4.*u1[t]^2 + 4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*
+                          u3[t] + 8.*r*Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*
+                          u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t]*
+                          (u3[t] + u4[t]) + 4.*l*Sin[oq4 + q3[t] + q4[t]]*
+                          u2[t]*(u3[t] + u4[t]) + 4.*l*r*Cos[oq4 + q4[t]]*
+                          u3[t]*(u3[t] + u4[t]) + l^2*(u3[t] + u4[t])^2)^0.5]*
+                     (2.*Cos[oq4 + q3[t] + q4[t]]*u1[t] + 2.*Sin[oq4 + 
+                         q3[t] + q4[t]]*u2[t] + 2.*r*Cos[oq4 + q4[t]]*u3[t] + 
+                      l*(u3[t] + u4[t]))) - 1.*Ib*(kTa*Abs[u3[t]]*u3[t] + 
+                    kTb*Abs[u4[t]]*u4[t] + 0.25*kFb*l*Abs[Cos[oq4 + q3[t] + 
+                          q4[t]]*u1[t] + Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
+                       r*Cos[oq4 + q4[t]]*u3[t] + 0.5*l*(u3[t] + u4[t]) + 
+                       0.5*krb*Sign[u4[t]]*(4.*u1[t]^2 + 4.*u2[t]^2 + 
+                          8.*r*Cos[q3[t]]*u1[t]*u3[t] + 8.*r*Sin[q3[t]]*u2[t]*
+                          u3[t] + 4.*r^2*u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + 
+                          q4[t]]*u1[t]*(u3[t] + u4[t]) + 4.*l*Sin[oq4 + 
+                          q3[t] + q4[t]]*u2[t]*(u3[t] + u4[t]) + 4.*l*r*
+                          Cos[oq4 + q4[t]]*u3[t]*(u3[t] + u4[t]) + l^2*
+                          (u3[t] + u4[t])^2)^0.5]*(4.*r*Cos[q3[t]]*u1[t] + 
+                      2.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t] + 4.*r*Sin[q3[t]]*
+                       u2[t] + 2.*l*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
+                      4.*r^2*u3[t] + 4.*l*r*Cos[oq4 + q4[t]]*u3[t] + 
                       2.*l*r*Cos[oq4 + q4[t]]*u4[t] + l^2*(u3[t] + u4[t])) + 
                     kTc*Abs[u5[t]]*u5[t] - 0.25*fl*kFc*Abs[Cos[oq5 + q3[t] + 
                           q5[t]]*u1[t] + Sin[oq5 + q3[t] + q5[t]]*u2[t] + 
@@ -1924,13 +2054,25 @@
                  Sin[oq4 + q4[t]]*u3[t]^2 + kTb*Abs[u4[t]]*u4[t] + 
                 0.25*kFb*l^2*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
                    Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
-                    u3[t] + 0.5*l*(u3[t] + u4[t])]*(2.*Cos[oq4 + q3[t] + 
+                    u3[t] + 0.5*l*(u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*
+                    (4.*u1[t]^2 + 4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*u3[t] + 
+                      8.*r*Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*u3[t]^2 + 
+                      4.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t]*(u3[t] + u4[t]) + 
+                      4.*l*Sin[oq4 + q3[t] + q4[t]]*u2[t]*(u3[t] + u4[t]) + 
+                      4.*l*r*Cos[oq4 + q4[t]]*u3[t]*(u3[t] + u4[t]) + 
+                      l^2*(u3[t] + u4[t])^2)^0.5]*(2.*Cos[oq4 + q3[t] + 
                      q4[t]]*u1[t] + 2.*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
                   2.*r*Cos[oq4 + q4[t]]*u3[t] + l*(u3[t] + u4[t]))) - 
               1.*Ib*(-1.*kFa*(wvx - 1.*u1[t])*((wvx - 1.*u1[t])^2 + 
                    (wvy - 1.*u2[t])^2)^0.5 + 0.5*kFb*l*Abs[
                   Cos[oq4 + q3[t] + q4[t]]*u1[t] + Sin[oq4 + q3[t] + q4[t]]*
-                    u2[t] + r*Cos[oq4 + q4[t]]*u3[t] + 0.5*l*(u3[t] + u4[t])]*
+                    u2[t] + r*Cos[oq4 + q4[t]]*u3[t] + 0.5*l*(u3[t] + 
+                     u4[t]) + 0.5*krb*Sign[u4[t]]*(4.*u1[t]^2 + 4.*u2[t]^2 + 
+                      8.*r*Cos[q3[t]]*u1[t]*u3[t] + 8.*r*Sin[q3[t]]*u2[t]*
+                       u3[t] + 4.*r^2*u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + q4[t]]*
+                       u1[t]*(u3[t] + u4[t]) + 4.*l*Sin[oq4 + q3[t] + q4[t]]*
+                       u2[t]*(u3[t] + u4[t]) + 4.*l*r*Cos[oq4 + q4[t]]*u3[t]*
+                       (u3[t] + u4[t]) + l^2*(u3[t] + u4[t])^2)^0.5]*
                  (2.*u1[t] + 2.*r*Cos[q3[t]]*u3[t] + l*Cos[oq4 + q3[t] + 
                      q4[t]]*(u3[t] + u4[t])) + 0.5*mb*(2.*r*Sin[q3[t]]*
                    u3[t]^2 + l*Sin[oq4 + q3[t] + q4[t]]*(u3[t] + u4[t])^2) + 
@@ -2046,15 +2188,28 @@
                    u3[t]^2 + kTb*Abs[u4[t]]*u4[t] + 0.25*kFb*l^2*
                    Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + Sin[oq4 + q3[t] + 
                         q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*u3[t] + 0.5*l*
-                      (u3[t] + u4[t])]*(2.*Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
-                    2.*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 2.*r*Cos[oq4 + q4[t]]*
-                     u3[t] + l*(u3[t] + u4[t]))) - 1.*Ib*(-1.*kFa*
-                   (wvx - 1.*u1[t])*((wvx - 1.*u1[t])^2 + (wvy - 1.*u2[t])^2)^
-                    0.5 + 0.5*kFb*l*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
-                     Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
-                      u3[t] + 0.5*l*(u3[t] + u4[t])]*(2.*u1[t] + 
-                    2.*r*Cos[q3[t]]*u3[t] + l*Cos[oq4 + q3[t] + q4[t]]*
-                     (u3[t] + u4[t])) + 0.5*mb*(2.*r*Sin[q3[t]]*u3[t]^2 + 
+                      (u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*(4.*u1[t]^2 + 
+                        4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*u3[t] + 8.*r*
+                         Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*u3[t]^2 + 4.*l*
+                         Cos[oq4 + q3[t] + q4[t]]*u1[t]*(u3[t] + u4[t]) + 
+                        4.*l*Sin[oq4 + q3[t] + q4[t]]*u2[t]*(u3[t] + u4[t]) + 
+                        4.*l*r*Cos[oq4 + q4[t]]*u3[t]*(u3[t] + u4[t]) + 
+                        l^2*(u3[t] + u4[t])^2)^0.5]*(2.*Cos[oq4 + q3[t] + 
+                       q4[t]]*u1[t] + 2.*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
+                    2.*r*Cos[oq4 + q4[t]]*u3[t] + l*(u3[t] + u4[t]))) - 
+                1.*Ib*(-1.*kFa*(wvx - 1.*u1[t])*((wvx - 1.*u1[t])^2 + 
+                     (wvy - 1.*u2[t])^2)^0.5 + 0.5*kFb*l*Abs[
+                    Cos[oq4 + q3[t] + q4[t]]*u1[t] + Sin[oq4 + q3[t] + q4[t]]*
+                      u2[t] + r*Cos[oq4 + q4[t]]*u3[t] + 0.5*l*(u3[t] + 
+                       u4[t]) + 0.5*krb*Sign[u4[t]]*(4.*u1[t]^2 + 
+                        4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*u3[t] + 8.*r*
+                         Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*u3[t]^2 + 4.*l*
+                         Cos[oq4 + q3[t] + q4[t]]*u1[t]*(u3[t] + u4[t]) + 
+                        4.*l*Sin[oq4 + q3[t] + q4[t]]*u2[t]*(u3[t] + u4[t]) + 
+                        4.*l*r*Cos[oq4 + q4[t]]*u3[t]*(u3[t] + u4[t]) + 
+                        l^2*(u3[t] + u4[t])^2)^0.5]*(2.*u1[t] + 2.*r*
+                     Cos[q3[t]]*u3[t] + l*Cos[oq4 + q3[t] + q4[t]]*(u3[t] + 
+                      u4[t])) + 0.5*mb*(2.*r*Sin[q3[t]]*u3[t]^2 + 
                     l*Sin[oq4 + q3[t] + q4[t]]*(u3[t] + u4[t])^2) + 
                   0.5*fl*mc*Sin[oq5 + q3[t] + q5[t]]*(u3[t] + u5[t])^2 - 
                   0.5*fl*kFc*Abs[Cos[oq5 + q3[t] + q5[t]]*u1[t] + 
@@ -2142,44 +2297,57 @@
                    u3[t]^2 + kTb*Abs[u4[t]]*u4[t] + 0.25*kFb*l^2*
                    Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + Sin[oq4 + q3[t] + 
                         q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*u3[t] + 0.5*l*
-                      (u3[t] + u4[t])]*(2.*Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
-                    2.*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 2.*r*Cos[oq4 + q4[t]]*
-                     u3[t] + l*(u3[t] + u4[t]))) - 1.*Ib*(-1.*kFa*
-                   ((wvx - 1.*u1[t])^2 + (wvy - 1.*u2[t])^2)^0.5*(wvy - 
-                    1.*u2[t]) + 0.5*kFb*l*Abs[Cos[oq4 + q3[t] + q4[t]]*
+                      (u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*(4.*u1[t]^2 + 
+                        4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*u3[t] + 8.*r*
+                         Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*u3[t]^2 + 4.*l*
+                         Cos[oq4 + q3[t] + q4[t]]*u1[t]*(u3[t] + u4[t]) + 
+                        4.*l*Sin[oq4 + q3[t] + q4[t]]*u2[t]*(u3[t] + u4[t]) + 
+                        4.*l*r*Cos[oq4 + q4[t]]*u3[t]*(u3[t] + u4[t]) + 
+                        l^2*(u3[t] + u4[t])^2)^0.5]*(2.*Cos[oq4 + q3[t] + 
+                       q4[t]]*u1[t] + 2.*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
+                    2.*r*Cos[oq4 + q4[t]]*u3[t] + l*(u3[t] + u4[t]))) - 
+                1.*Ib*(-1.*kFa*((wvx - 1.*u1[t])^2 + (wvy - 1.*u2[t])^2)^0.5*
+                   (wvy - 1.*u2[t]) + 0.5*kFb*l*Abs[Cos[oq4 + q3[t] + q4[t]]*
                       u1[t] + Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
-                     r*Cos[oq4 + q4[t]]*u3[t] + 0.5*l*(u3[t] + u4[t])]*
-                   (2.*u2[t] + 2.*r*Sin[q3[t]]*u3[t] + l*Sin[oq4 + q3[t] + 
-                       q4[t]]*(u3[t] + u4[t])) - 0.5*mb*(2.*r*Cos[q3[t]]*
-                     u3[t]^2 + l*Cos[oq4 + q3[t] + q4[t]]*(u3[t] + u4[t])^
-                      2) - 0.5*fl*mc*Cos[oq5 + q3[t] + q5[t]]*(u3[t] + u5[t])^
-                    2 + 0.5*fl*kFc*Abs[Cos[oq5 + q3[t] + q5[t]]*u1[t] + 
-                     Sin[oq5 + q3[t] + q5[t]]*u2[t] + 0.7071068*r*
-                      Cos[oq5 + q5[t]]*u3[t] + 0.7071068*r*Sin[oq5 + q5[t]]*
-                      u3[t] + 0.5*fl*(u3[t] + u5[t])]*(2.*u2[t] + 1.414214*r*
-                     Cos[q3[t]]*u3[t] + 1.414214*r*Sin[q3[t]]*u3[t] + 
-                    fl*Sin[oq5 + q3[t] + q5[t]]*(u3[t] + u5[t])) - 
-                  0.5*fl*mc*Cos[oq6 + q3[t] + q6[t]]*(u3[t] + u6[t])^2 - 
-                  0.5*fl*kFc*Abs[Cos[oq6 + q3[t] + q6[t]]*u1[t] + 
-                     Sin[oq6 + q3[t] + q6[t]]*u2[t] - 0.7071068*r*
-                      Cos[oq6 + q6[t]]*u3[t] + 0.7071068*r*Sin[oq6 + q6[t]]*
-                      u3[t] + 0.5*fl*(u3[t] + u6[t])]*(-2.*u2[t] - 1.414214*r*
-                     Cos[q3[t]]*u3[t] + 1.414214*r*Sin[q3[t]]*u3[t] - 
-                    1.*fl*Sin[oq6 + q3[t] + q6[t]]*(u3[t] + u6[t])) - 
-                  0.5*fl*mc*Cos[oq7 + q3[t] + q7[t]]*(u3[t] + u7[t])^2 - 
-                  0.5*fl*kFc*Abs[Cos[oq7 + q3[t] + q7[t]]*u1[t] + 
-                     Sin[oq7 + q3[t] + q7[t]]*u2[t] - 0.7071068*r*
-                      Cos[oq7 + q7[t]]*u3[t] - 0.7071068*r*Sin[oq7 + q7[t]]*
-                      u3[t] + 0.5*fl*(u3[t] + u7[t])]*(-2.*u2[t] + 1.414214*r*
-                     Cos[q3[t]]*u3[t] + 1.414214*r*Sin[q3[t]]*u3[t] - 
-                    1.*fl*Sin[oq7 + q3[t] + q7[t]]*(u3[t] + u7[t])) - 
-                  0.5*fl*mc*Cos[oq8 + q3[t] + q8[t]]*(u3[t] + u8[t])^2 - 
-                  0.5*fl*kFc*Abs[Cos[oq8 + q3[t] + q8[t]]*u1[t] + 
-                     Sin[oq8 + q3[t] + q8[t]]*u2[t] + 0.7071068*r*
-                      Cos[oq8 + q8[t]]*u3[t] - 0.7071068*r*Sin[oq8 + q8[t]]*
-                      u3[t] + 0.5*fl*(u3[t] + u8[t])]*(-2.*u2[t] + 1.414214*r*
-                     Cos[q3[t]]*u3[t] - 1.414214*r*Sin[q3[t]]*u3[t] - 
-                    1.*fl*Sin[oq8 + q3[t] + q8[t]]*(u3[t] + u8[t]))))))))))/
+                     r*Cos[oq4 + q4[t]]*u3[t] + 0.5*l*(u3[t] + u4[t]) + 
+                     0.5*krb*Sign[u4[t]]*(4.*u1[t]^2 + 4.*u2[t]^2 + 
+                        8.*r*Cos[q3[t]]*u1[t]*u3[t] + 8.*r*Sin[q3[t]]*u2[t]*
+                         u3[t] + 4.*r^2*u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + 
+                          q4[t]]*u1[t]*(u3[t] + u4[t]) + 4.*l*Sin[oq4 + 
+                          q3[t] + q4[t]]*u2[t]*(u3[t] + u4[t]) + 4.*l*r*
+                         Cos[oq4 + q4[t]]*u3[t]*(u3[t] + u4[t]) + l^2*
+                         (u3[t] + u4[t])^2)^0.5]*(2.*u2[t] + 2.*r*Sin[q3[t]]*
+                     u3[t] + l*Sin[oq4 + q3[t] + q4[t]]*(u3[t] + u4[t])) - 
+                  0.5*mb*(2.*r*Cos[q3[t]]*u3[t]^2 + l*Cos[oq4 + q3[t] + 
+                       q4[t]]*(u3[t] + u4[t])^2) - 0.5*fl*mc*Cos[oq5 + 
+                     q3[t] + q5[t]]*(u3[t] + u5[t])^2 + 0.5*fl*kFc*
+                   Abs[Cos[oq5 + q3[t] + q5[t]]*u1[t] + Sin[oq5 + q3[t] + 
+                        q5[t]]*u2[t] + 0.7071068*r*Cos[oq5 + q5[t]]*u3[t] + 
+                     0.7071068*r*Sin[oq5 + q5[t]]*u3[t] + 0.5*fl*(u3[t] + 
+                       u5[t])]*(2.*u2[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 
+                    1.414214*r*Sin[q3[t]]*u3[t] + fl*Sin[oq5 + q3[t] + q5[t]]*
+                     (u3[t] + u5[t])) - 0.5*fl*mc*Cos[oq6 + q3[t] + q6[t]]*
+                   (u3[t] + u6[t])^2 - 0.5*fl*kFc*Abs[Cos[oq6 + q3[t] + 
+                        q6[t]]*u1[t] + Sin[oq6 + q3[t] + q6[t]]*u2[t] - 
+                     0.7071068*r*Cos[oq6 + q6[t]]*u3[t] + 0.7071068*r*
+                      Sin[oq6 + q6[t]]*u3[t] + 0.5*fl*(u3[t] + u6[t])]*
+                   (-2.*u2[t] - 1.414214*r*Cos[q3[t]]*u3[t] + 1.414214*r*
+                     Sin[q3[t]]*u3[t] - 1.*fl*Sin[oq6 + q3[t] + q6[t]]*
+                     (u3[t] + u6[t])) - 0.5*fl*mc*Cos[oq7 + q3[t] + q7[t]]*
+                   (u3[t] + u7[t])^2 - 0.5*fl*kFc*Abs[Cos[oq7 + q3[t] + 
+                        q7[t]]*u1[t] + Sin[oq7 + q3[t] + q7[t]]*u2[t] - 
+                     0.7071068*r*Cos[oq7 + q7[t]]*u3[t] - 0.7071068*r*
+                      Sin[oq7 + q7[t]]*u3[t] + 0.5*fl*(u3[t] + u7[t])]*
+                   (-2.*u2[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 1.414214*r*
+                     Sin[q3[t]]*u3[t] - 1.*fl*Sin[oq7 + q3[t] + q7[t]]*
+                     (u3[t] + u7[t])) - 0.5*fl*mc*Cos[oq8 + q3[t] + q8[t]]*
+                   (u3[t] + u8[t])^2 - 0.5*fl*kFc*Abs[Cos[oq8 + q3[t] + 
+                        q8[t]]*u1[t] + Sin[oq8 + q3[t] + q8[t]]*u2[t] + 
+                     0.7071068*r*Cos[oq8 + q8[t]]*u3[t] - 0.7071068*r*
+                      Sin[oq8 + q8[t]]*u3[t] + 0.5*fl*(u3[t] + u8[t])]*
+                   (-2.*u2[t] + 1.414214*r*Cos[q3[t]]*u3[t] - 1.414214*r*
+                     Sin[q3[t]]*u3[t] - 1.*fl*Sin[oq8 + q3[t] + q8[t]]*
+                     (u3[t] + u8[t]))))))))))/
     ((-0.3535534*Ic*(0. + 1.*Ic^2*(0. + 0.5*fl*Ib*mc*
            Cos[oq5 + q3[t] + q5[t]]))*(2.828427*Ic + 
         fl*mc*r*(Cos[oq5 + q5[t]] + Sin[oq5 + q5[t]])) - 
@@ -2521,45 +2689,58 @@
                      Sin[oq4 + q4[t]]*u3[t]^2 + kTb*Abs[u4[t]]*u4[t] + 
                     0.25*kFb*l^2*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
                        Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
-                        u3[t] + 0.5*l*(u3[t] + u4[t])]*(2.*Cos[oq4 + q3[t] + 
-                         q4[t]]*u1[t] + 2.*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
-                      2.*r*Cos[oq4 + q4[t]]*u3[t] + l*(u3[t] + u4[t]))) - 
-                  1.*Ib*(-1.*kFa*(wvx - 1.*u1[t])*((wvx - 1.*u1[t])^2 + 
-                       (wvy - 1.*u2[t])^2)^0.5 + 0.5*kFb*l*Abs[
-                      Cos[oq4 + q3[t] + q4[t]]*u1[t] + Sin[oq4 + q3[t] + 
-                          q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*u3[t] + 
-                       0.5*l*(u3[t] + u4[t])]*(2.*u1[t] + 2.*r*Cos[q3[t]]*
-                       u3[t] + l*Cos[oq4 + q3[t] + q4[t]]*(u3[t] + u4[t])) + 
-                    0.5*mb*(2.*r*Sin[q3[t]]*u3[t]^2 + l*Sin[oq4 + q3[t] + 
-                         q4[t]]*(u3[t] + u4[t])^2) + 0.5*fl*mc*Sin[oq5 + 
-                       q3[t] + q5[t]]*(u3[t] + u5[t])^2 - 0.5*fl*kFc*
-                     Abs[Cos[oq5 + q3[t] + q5[t]]*u1[t] + Sin[oq5 + q3[t] + 
-                          q5[t]]*u2[t] + 0.7071068*r*Cos[oq5 + q5[t]]*u3[t] + 
-                       0.7071068*r*Sin[oq5 + q5[t]]*u3[t] + 0.5*fl*(u3[t] + 
-                         u5[t])]*(-2.*u1[t] - 1.414214*r*Cos[q3[t]]*u3[t] + 
-                      1.414214*r*Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq5 + q3[t] + 
-                         q5[t]]*(u3[t] + u5[t])) + 0.5*fl*mc*Sin[oq6 + 
-                       q3[t] + q6[t]]*(u3[t] + u6[t])^2 - 0.5*fl*kFc*
-                     Abs[Cos[oq6 + q3[t] + q6[t]]*u1[t] + Sin[oq6 + q3[t] + 
-                          q6[t]]*u2[t] - 0.7071068*r*Cos[oq6 + q6[t]]*u3[t] + 
-                       0.7071068*r*Sin[oq6 + q6[t]]*u3[t] + 0.5*fl*(u3[t] + 
-                         u6[t])]*(-2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 
-                      1.414214*r*Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq6 + q3[t] + 
-                         q6[t]]*(u3[t] + u6[t])) + 0.5*fl*mc*Sin[oq7 + 
-                       q3[t] + q7[t]]*(u3[t] + u7[t])^2 - 0.5*fl*kFc*
-                     Abs[Cos[oq7 + q3[t] + q7[t]]*u1[t] + Sin[oq7 + q3[t] + 
-                          q7[t]]*u2[t] - 0.7071068*r*Cos[oq7 + q7[t]]*u3[t] - 
-                       0.7071068*r*Sin[oq7 + q7[t]]*u3[t] + 0.5*fl*(u3[t] + 
-                         u7[t])]*(-2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] - 
-                      1.414214*r*Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq7 + q3[t] + 
-                         q7[t]]*(u3[t] + u7[t])) + 0.5*fl*mc*Sin[oq8 + 
-                       q3[t] + q8[t]]*(u3[t] + u8[t])^2 + 0.5*fl*kFc*
-                     Abs[Cos[oq8 + q3[t] + q8[t]]*u1[t] + Sin[oq8 + q3[t] + 
-                          q8[t]]*u2[t] + 0.7071068*r*Cos[oq8 + q8[t]]*u3[t] - 
-                       0.7071068*r*Sin[oq8 + q8[t]]*u3[t] + 0.5*fl*(u3[t] + 
-                         u8[t])]*(2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 
-                      1.414214*r*Sin[q3[t]]*u3[t] + fl*Cos[oq8 + q3[t] + 
-                         q8[t]]*(u3[t] + u8[t])))))))) + 
+                        u3[t] + 0.5*l*(u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*
+                        (4.*u1[t]^2 + 4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*
+                          u3[t] + 8.*r*Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*
+                          u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t]*
+                          (u3[t] + u4[t]) + 4.*l*Sin[oq4 + q3[t] + q4[t]]*
+                          u2[t]*(u3[t] + u4[t]) + 4.*l*r*Cos[oq4 + q4[t]]*
+                          u3[t]*(u3[t] + u4[t]) + l^2*(u3[t] + u4[t])^2)^0.5]*
+                     (2.*Cos[oq4 + q3[t] + q4[t]]*u1[t] + 2.*Sin[oq4 + 
+                         q3[t] + q4[t]]*u2[t] + 2.*r*Cos[oq4 + q4[t]]*u3[t] + 
+                      l*(u3[t] + u4[t]))) - 1.*Ib*(-1.*kFa*(wvx - 1.*u1[t])*
+                     ((wvx - 1.*u1[t])^2 + (wvy - 1.*u2[t])^2)^0.5 + 
+                    0.5*kFb*l*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
+                       Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
+                        u3[t] + 0.5*l*(u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*
+                        (4.*u1[t]^2 + 4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*
+                          u3[t] + 8.*r*Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*
+                          u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t]*
+                          (u3[t] + u4[t]) + 4.*l*Sin[oq4 + q3[t] + q4[t]]*
+                          u2[t]*(u3[t] + u4[t]) + 4.*l*r*Cos[oq4 + q4[t]]*
+                          u3[t]*(u3[t] + u4[t]) + l^2*(u3[t] + u4[t])^2)^0.5]*
+                     (2.*u1[t] + 2.*r*Cos[q3[t]]*u3[t] + l*Cos[oq4 + q3[t] + 
+                         q4[t]]*(u3[t] + u4[t])) + 0.5*mb*(2.*r*Sin[q3[t]]*
+                       u3[t]^2 + l*Sin[oq4 + q3[t] + q4[t]]*(u3[t] + u4[t])^
+                        2) + 0.5*fl*mc*Sin[oq5 + q3[t] + q5[t]]*
+                     (u3[t] + u5[t])^2 - 0.5*fl*kFc*Abs[Cos[oq5 + q3[t] + 
+                          q5[t]]*u1[t] + Sin[oq5 + q3[t] + q5[t]]*u2[t] + 
+                       0.7071068*r*Cos[oq5 + q5[t]]*u3[t] + 0.7071068*r*
+                        Sin[oq5 + q5[t]]*u3[t] + 0.5*fl*(u3[t] + u5[t])]*
+                     (-2.*u1[t] - 1.414214*r*Cos[q3[t]]*u3[t] + 1.414214*r*
+                       Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq5 + q3[t] + q5[t]]*
+                       (u3[t] + u5[t])) + 0.5*fl*mc*Sin[oq6 + q3[t] + q6[t]]*
+                     (u3[t] + u6[t])^2 - 0.5*fl*kFc*Abs[Cos[oq6 + q3[t] + 
+                          q6[t]]*u1[t] + Sin[oq6 + q3[t] + q6[t]]*u2[t] - 
+                       0.7071068*r*Cos[oq6 + q6[t]]*u3[t] + 0.7071068*r*
+                        Sin[oq6 + q6[t]]*u3[t] + 0.5*fl*(u3[t] + u6[t])]*
+                     (-2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 1.414214*r*
+                       Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq6 + q3[t] + q6[t]]*
+                       (u3[t] + u6[t])) + 0.5*fl*mc*Sin[oq7 + q3[t] + q7[t]]*
+                     (u3[t] + u7[t])^2 - 0.5*fl*kFc*Abs[Cos[oq7 + q3[t] + 
+                          q7[t]]*u1[t] + Sin[oq7 + q3[t] + q7[t]]*u2[t] - 
+                       0.7071068*r*Cos[oq7 + q7[t]]*u3[t] - 0.7071068*r*
+                        Sin[oq7 + q7[t]]*u3[t] + 0.5*fl*(u3[t] + u7[t])]*
+                     (-2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] - 1.414214*r*
+                       Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq7 + q3[t] + q7[t]]*
+                       (u3[t] + u7[t])) + 0.5*fl*mc*Sin[oq8 + q3[t] + q8[t]]*
+                     (u3[t] + u8[t])^2 + 0.5*fl*kFc*Abs[Cos[oq8 + q3[t] + 
+                          q8[t]]*u1[t] + Sin[oq8 + q3[t] + q8[t]]*u2[t] + 
+                       0.7071068*r*Cos[oq8 + q8[t]]*u3[t] - 0.7071068*r*
+                        Sin[oq8 + q8[t]]*u3[t] + 0.5*fl*(u3[t] + u8[t])]*
+                     (2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 1.414214*r*
+                       Sin[q3[t]]*u3[t] + fl*Cos[oq8 + q3[t] + q8[t]]*
+                       (u3[t] + u8[t])))))))) + 
         (-0.3535534*Ic*(0. + 1.*Ic^2*(0. + 0.5*fl*Ib*mc*Cos[oq5 + q3[t] + 
                  q5[t]]))*(2.828427*Ic + fl*mc*r*(Cos[oq5 + q5[t]] + 
               Sin[oq5 + q5[t]])) - 1.*Ic*(0.3535534*(0. + 1.*Ic^2*(0. + 
@@ -2618,13 +2799,26 @@
                      Sin[oq4 + q4[t]]*u3[t]^2 + kTb*Abs[u4[t]]*u4[t] + 
                     0.25*kFb*l^2*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
                        Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
-                        u3[t] + 0.5*l*(u3[t] + u4[t])]*(2.*Cos[oq4 + q3[t] + 
-                         q4[t]]*u1[t] + 2.*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
-                      2.*r*Cos[oq4 + q4[t]]*u3[t] + l*(u3[t] + u4[t]))) - 
-                  1.*Ib*(-1.*kFa*((wvx - 1.*u1[t])^2 + (wvy - 1.*u2[t])^2)^
-                      0.5*(wvy - 1.*u2[t]) + 0.5*kFb*l*Abs[Cos[oq4 + q3[t] + 
-                          q4[t]]*u1[t] + Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
-                       r*Cos[oq4 + q4[t]]*u3[t] + 0.5*l*(u3[t] + u4[t])]*
+                        u3[t] + 0.5*l*(u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*
+                        (4.*u1[t]^2 + 4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*
+                          u3[t] + 8.*r*Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*
+                          u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t]*
+                          (u3[t] + u4[t]) + 4.*l*Sin[oq4 + q3[t] + q4[t]]*
+                          u2[t]*(u3[t] + u4[t]) + 4.*l*r*Cos[oq4 + q4[t]]*
+                          u3[t]*(u3[t] + u4[t]) + l^2*(u3[t] + u4[t])^2)^0.5]*
+                     (2.*Cos[oq4 + q3[t] + q4[t]]*u1[t] + 2.*Sin[oq4 + 
+                         q3[t] + q4[t]]*u2[t] + 2.*r*Cos[oq4 + q4[t]]*u3[t] + 
+                      l*(u3[t] + u4[t]))) - 1.*Ib*(-1.*kFa*((wvx - 1.*u1[t])^
+                        2 + (wvy - 1.*u2[t])^2)^0.5*(wvy - 1.*u2[t]) + 
+                    0.5*kFb*l*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
+                       Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
+                        u3[t] + 0.5*l*(u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*
+                        (4.*u1[t]^2 + 4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*
+                          u3[t] + 8.*r*Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*
+                          u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t]*
+                          (u3[t] + u4[t]) + 4.*l*Sin[oq4 + q3[t] + q4[t]]*
+                          u2[t]*(u3[t] + u4[t]) + 4.*l*r*Cos[oq4 + q4[t]]*
+                          u3[t]*(u3[t] + u4[t]) + l^2*(u3[t] + u4[t])^2)^0.5]*
                      (2.*u2[t] + 2.*r*Sin[q3[t]]*u3[t] + l*Sin[oq4 + q3[t] + 
                          q4[t]]*(u3[t] + u4[t])) - 0.5*mb*(2.*r*Cos[q3[t]]*
                        u3[t]^2 + l*Cos[oq4 + q3[t] + q4[t]]*(u3[t] + u4[t])^
@@ -2772,45 +2966,58 @@
                      Sin[oq4 + q4[t]]*u3[t]^2 + kTb*Abs[u4[t]]*u4[t] + 
                     0.25*kFb*l^2*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
                        Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
-                        u3[t] + 0.5*l*(u3[t] + u4[t])]*(2.*Cos[oq4 + q3[t] + 
-                         q4[t]]*u1[t] + 2.*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
-                      2.*r*Cos[oq4 + q4[t]]*u3[t] + l*(u3[t] + u4[t]))) - 
-                  1.*Ib*(-1.*kFa*(wvx - 1.*u1[t])*((wvx - 1.*u1[t])^2 + 
-                       (wvy - 1.*u2[t])^2)^0.5 + 0.5*kFb*l*Abs[
-                      Cos[oq4 + q3[t] + q4[t]]*u1[t] + Sin[oq4 + q3[t] + 
-                          q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*u3[t] + 
-                       0.5*l*(u3[t] + u4[t])]*(2.*u1[t] + 2.*r*Cos[q3[t]]*
-                       u3[t] + l*Cos[oq4 + q3[t] + q4[t]]*(u3[t] + u4[t])) + 
-                    0.5*mb*(2.*r*Sin[q3[t]]*u3[t]^2 + l*Sin[oq4 + q3[t] + 
-                         q4[t]]*(u3[t] + u4[t])^2) + 0.5*fl*mc*Sin[oq5 + 
-                       q3[t] + q5[t]]*(u3[t] + u5[t])^2 - 0.5*fl*kFc*
-                     Abs[Cos[oq5 + q3[t] + q5[t]]*u1[t] + Sin[oq5 + q3[t] + 
-                          q5[t]]*u2[t] + 0.7071068*r*Cos[oq5 + q5[t]]*u3[t] + 
-                       0.7071068*r*Sin[oq5 + q5[t]]*u3[t] + 0.5*fl*(u3[t] + 
-                         u5[t])]*(-2.*u1[t] - 1.414214*r*Cos[q3[t]]*u3[t] + 
-                      1.414214*r*Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq5 + q3[t] + 
-                         q5[t]]*(u3[t] + u5[t])) + 0.5*fl*mc*Sin[oq6 + 
-                       q3[t] + q6[t]]*(u3[t] + u6[t])^2 - 0.5*fl*kFc*
-                     Abs[Cos[oq6 + q3[t] + q6[t]]*u1[t] + Sin[oq6 + q3[t] + 
-                          q6[t]]*u2[t] - 0.7071068*r*Cos[oq6 + q6[t]]*u3[t] + 
-                       0.7071068*r*Sin[oq6 + q6[t]]*u3[t] + 0.5*fl*(u3[t] + 
-                         u6[t])]*(-2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 
-                      1.414214*r*Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq6 + q3[t] + 
-                         q6[t]]*(u3[t] + u6[t])) + 0.5*fl*mc*Sin[oq7 + 
-                       q3[t] + q7[t]]*(u3[t] + u7[t])^2 - 0.5*fl*kFc*
-                     Abs[Cos[oq7 + q3[t] + q7[t]]*u1[t] + Sin[oq7 + q3[t] + 
-                          q7[t]]*u2[t] - 0.7071068*r*Cos[oq7 + q7[t]]*u3[t] - 
-                       0.7071068*r*Sin[oq7 + q7[t]]*u3[t] + 0.5*fl*(u3[t] + 
-                         u7[t])]*(-2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] - 
-                      1.414214*r*Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq7 + q3[t] + 
-                         q7[t]]*(u3[t] + u7[t])) + 0.5*fl*mc*Sin[oq8 + 
-                       q3[t] + q8[t]]*(u3[t] + u8[t])^2 + 0.5*fl*kFc*
-                     Abs[Cos[oq8 + q3[t] + q8[t]]*u1[t] + Sin[oq8 + q3[t] + 
-                          q8[t]]*u2[t] + 0.7071068*r*Cos[oq8 + q8[t]]*u3[t] - 
-                       0.7071068*r*Sin[oq8 + q8[t]]*u3[t] + 0.5*fl*(u3[t] + 
-                         u8[t])]*(2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 
-                      1.414214*r*Sin[q3[t]]*u3[t] + fl*Cos[oq8 + q3[t] + 
-                         q8[t]]*(u3[t] + u8[t])))))))) + 
+                        u3[t] + 0.5*l*(u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*
+                        (4.*u1[t]^2 + 4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*
+                          u3[t] + 8.*r*Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*
+                          u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t]*
+                          (u3[t] + u4[t]) + 4.*l*Sin[oq4 + q3[t] + q4[t]]*
+                          u2[t]*(u3[t] + u4[t]) + 4.*l*r*Cos[oq4 + q4[t]]*
+                          u3[t]*(u3[t] + u4[t]) + l^2*(u3[t] + u4[t])^2)^0.5]*
+                     (2.*Cos[oq4 + q3[t] + q4[t]]*u1[t] + 2.*Sin[oq4 + 
+                         q3[t] + q4[t]]*u2[t] + 2.*r*Cos[oq4 + q4[t]]*u3[t] + 
+                      l*(u3[t] + u4[t]))) - 1.*Ib*(-1.*kFa*(wvx - 1.*u1[t])*
+                     ((wvx - 1.*u1[t])^2 + (wvy - 1.*u2[t])^2)^0.5 + 
+                    0.5*kFb*l*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
+                       Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
+                        u3[t] + 0.5*l*(u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*
+                        (4.*u1[t]^2 + 4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*
+                          u3[t] + 8.*r*Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*
+                          u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t]*
+                          (u3[t] + u4[t]) + 4.*l*Sin[oq4 + q3[t] + q4[t]]*
+                          u2[t]*(u3[t] + u4[t]) + 4.*l*r*Cos[oq4 + q4[t]]*
+                          u3[t]*(u3[t] + u4[t]) + l^2*(u3[t] + u4[t])^2)^0.5]*
+                     (2.*u1[t] + 2.*r*Cos[q3[t]]*u3[t] + l*Cos[oq4 + q3[t] + 
+                         q4[t]]*(u3[t] + u4[t])) + 0.5*mb*(2.*r*Sin[q3[t]]*
+                       u3[t]^2 + l*Sin[oq4 + q3[t] + q4[t]]*(u3[t] + u4[t])^
+                        2) + 0.5*fl*mc*Sin[oq5 + q3[t] + q5[t]]*
+                     (u3[t] + u5[t])^2 - 0.5*fl*kFc*Abs[Cos[oq5 + q3[t] + 
+                          q5[t]]*u1[t] + Sin[oq5 + q3[t] + q5[t]]*u2[t] + 
+                       0.7071068*r*Cos[oq5 + q5[t]]*u3[t] + 0.7071068*r*
+                        Sin[oq5 + q5[t]]*u3[t] + 0.5*fl*(u3[t] + u5[t])]*
+                     (-2.*u1[t] - 1.414214*r*Cos[q3[t]]*u3[t] + 1.414214*r*
+                       Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq5 + q3[t] + q5[t]]*
+                       (u3[t] + u5[t])) + 0.5*fl*mc*Sin[oq6 + q3[t] + q6[t]]*
+                     (u3[t] + u6[t])^2 - 0.5*fl*kFc*Abs[Cos[oq6 + q3[t] + 
+                          q6[t]]*u1[t] + Sin[oq6 + q3[t] + q6[t]]*u2[t] - 
+                       0.7071068*r*Cos[oq6 + q6[t]]*u3[t] + 0.7071068*r*
+                        Sin[oq6 + q6[t]]*u3[t] + 0.5*fl*(u3[t] + u6[t])]*
+                     (-2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 1.414214*r*
+                       Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq6 + q3[t] + q6[t]]*
+                       (u3[t] + u6[t])) + 0.5*fl*mc*Sin[oq7 + q3[t] + q7[t]]*
+                     (u3[t] + u7[t])^2 - 0.5*fl*kFc*Abs[Cos[oq7 + q3[t] + 
+                          q7[t]]*u1[t] + Sin[oq7 + q3[t] + q7[t]]*u2[t] - 
+                       0.7071068*r*Cos[oq7 + q7[t]]*u3[t] - 0.7071068*r*
+                        Sin[oq7 + q7[t]]*u3[t] + 0.5*fl*(u3[t] + u7[t])]*
+                     (-2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] - 1.414214*r*
+                       Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq7 + q3[t] + q7[t]]*
+                       (u3[t] + u7[t])) + 0.5*fl*mc*Sin[oq8 + q3[t] + q8[t]]*
+                     (u3[t] + u8[t])^2 + 0.5*fl*kFc*Abs[Cos[oq8 + q3[t] + 
+                          q8[t]]*u1[t] + Sin[oq8 + q3[t] + q8[t]]*u2[t] + 
+                       0.7071068*r*Cos[oq8 + q8[t]]*u3[t] - 0.7071068*r*
+                        Sin[oq8 + q8[t]]*u3[t] + 0.5*fl*(u3[t] + u8[t])]*
+                     (2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 1.414214*r*
+                       Sin[q3[t]]*u3[t] + fl*Cos[oq8 + q3[t] + q8[t]]*
+                       (u3[t] + u8[t])))))))) + 
         (-0.3535534*Ic*(0. + 1.*Ic^2*(0. + 0.5*fl*Ib*mc*Cos[oq5 + q3[t] + 
                  q5[t]]))*(2.828427*Ic + fl*mc*r*(Cos[oq5 + q5[t]] + 
               Sin[oq5 + q5[t]])) - 1.*Ic*(0.3535534*(0. + 1.*Ic^2*(0. + 
@@ -2872,16 +3079,29 @@
                      Sin[oq4 + q4[t]]*u3[t]^2 + kTb*Abs[u4[t]]*u4[t] + 
                     0.25*kFb*l^2*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
                        Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
-                        u3[t] + 0.5*l*(u3[t] + u4[t])]*(2.*Cos[oq4 + q3[t] + 
-                         q4[t]]*u1[t] + 2.*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
-                      2.*r*Cos[oq4 + q4[t]]*u3[t] + l*(u3[t] + u4[t]))) - 
-                  1.*Ib*(kTa*Abs[u3[t]]*u3[t] + kTb*Abs[u4[t]]*u4[t] + 
-                    0.25*kFb*l*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
-                       Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
-                        u3[t] + 0.5*l*(u3[t] + u4[t])]*(4.*r*Cos[q3[t]]*
-                       u1[t] + 2.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
-                      4.*r*Sin[q3[t]]*u2[t] + 2.*l*Sin[oq4 + q3[t] + q4[t]]*
-                       u2[t] + 4.*r^2*u3[t] + 4.*l*r*Cos[oq4 + q4[t]]*u3[t] + 
+                        u3[t] + 0.5*l*(u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*
+                        (4.*u1[t]^2 + 4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*
+                          u3[t] + 8.*r*Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*
+                          u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t]*
+                          (u3[t] + u4[t]) + 4.*l*Sin[oq4 + q3[t] + q4[t]]*
+                          u2[t]*(u3[t] + u4[t]) + 4.*l*r*Cos[oq4 + q4[t]]*
+                          u3[t]*(u3[t] + u4[t]) + l^2*(u3[t] + u4[t])^2)^0.5]*
+                     (2.*Cos[oq4 + q3[t] + q4[t]]*u1[t] + 2.*Sin[oq4 + 
+                         q3[t] + q4[t]]*u2[t] + 2.*r*Cos[oq4 + q4[t]]*u3[t] + 
+                      l*(u3[t] + u4[t]))) - 1.*Ib*(kTa*Abs[u3[t]]*u3[t] + 
+                    kTb*Abs[u4[t]]*u4[t] + 0.25*kFb*l*Abs[Cos[oq4 + q3[t] + 
+                          q4[t]]*u1[t] + Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
+                       r*Cos[oq4 + q4[t]]*u3[t] + 0.5*l*(u3[t] + u4[t]) + 
+                       0.5*krb*Sign[u4[t]]*(4.*u1[t]^2 + 4.*u2[t]^2 + 
+                          8.*r*Cos[q3[t]]*u1[t]*u3[t] + 8.*r*Sin[q3[t]]*u2[t]*
+                          u3[t] + 4.*r^2*u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + 
+                          q4[t]]*u1[t]*(u3[t] + u4[t]) + 4.*l*Sin[oq4 + 
+                          q3[t] + q4[t]]*u2[t]*(u3[t] + u4[t]) + 4.*l*r*
+                          Cos[oq4 + q4[t]]*u3[t]*(u3[t] + u4[t]) + l^2*
+                          (u3[t] + u4[t])^2)^0.5]*(4.*r*Cos[q3[t]]*u1[t] + 
+                      2.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t] + 4.*r*Sin[q3[t]]*
+                       u2[t] + 2.*l*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
+                      4.*r^2*u3[t] + 4.*l*r*Cos[oq4 + q4[t]]*u3[t] + 
                       2.*l*r*Cos[oq4 + q4[t]]*u4[t] + l^2*(u3[t] + u4[t])) + 
                     kTc*Abs[u5[t]]*u5[t] - 0.25*fl*kFc*Abs[Cos[oq5 + q3[t] + 
                           q5[t]]*u1[t] + Sin[oq5 + q3[t] + q5[t]]*u2[t] + 
@@ -3175,7 +3395,13 @@
   (1.*(Tq4 - 0.5*l*mb*r*Sin[oq4 + q4[t]]*u3[t]^2 + kTb*Abs[u4[t]]*u4[t] + 
       0.25*kFb*l^2*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
          Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*u3[t] + 
-         0.5*l*(u3[t] + u4[t])]*(2.*Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
+         0.5*l*(u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*
+          (4.*u1[t]^2 + 4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*u3[t] + 
+            8.*r*Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*u3[t]^2 + 
+            4.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t]*(u3[t] + u4[t]) + 
+            4.*l*Sin[oq4 + q3[t] + q4[t]]*u2[t]*(u3[t] + u4[t]) + 
+            4.*l*r*Cos[oq4 + q4[t]]*u3[t]*(u3[t] + u4[t]) + 
+            l^2*(u3[t] + u4[t])^2)^0.5]*(2.*Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
         2.*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 2.*r*Cos[oq4 + q4[t]]*u3[t] + 
         l*(u3[t] + u4[t]))))/Ib + (0.5*(2.*Ib + l*mb*r*Cos[oq4 + q4[t]])*
      (1.*Ic*(0. + 1.*Ic^2*(0. + 0.5*fl*Ib*mc*Cos[oq5 + q3[t] + q5[t]]))*
@@ -3218,13 +3444,25 @@
                  Sin[oq4 + q4[t]]*u3[t]^2 + kTb*Abs[u4[t]]*u4[t] + 
                 0.25*kFb*l^2*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
                    Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
-                    u3[t] + 0.5*l*(u3[t] + u4[t])]*(2.*Cos[oq4 + q3[t] + 
+                    u3[t] + 0.5*l*(u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*
+                    (4.*u1[t]^2 + 4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*u3[t] + 
+                      8.*r*Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*u3[t]^2 + 
+                      4.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t]*(u3[t] + u4[t]) + 
+                      4.*l*Sin[oq4 + q3[t] + q4[t]]*u2[t]*(u3[t] + u4[t]) + 
+                      4.*l*r*Cos[oq4 + q4[t]]*u3[t]*(u3[t] + u4[t]) + 
+                      l^2*(u3[t] + u4[t])^2)^0.5]*(2.*Cos[oq4 + q3[t] + 
                      q4[t]]*u1[t] + 2.*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
                   2.*r*Cos[oq4 + q4[t]]*u3[t] + l*(u3[t] + u4[t]))) - 
               1.*Ib*(-1.*kFa*(wvx - 1.*u1[t])*((wvx - 1.*u1[t])^2 + 
                    (wvy - 1.*u2[t])^2)^0.5 + 0.5*kFb*l*Abs[
                   Cos[oq4 + q3[t] + q4[t]]*u1[t] + Sin[oq4 + q3[t] + q4[t]]*
-                    u2[t] + r*Cos[oq4 + q4[t]]*u3[t] + 0.5*l*(u3[t] + u4[t])]*
+                    u2[t] + r*Cos[oq4 + q4[t]]*u3[t] + 0.5*l*(u3[t] + 
+                     u4[t]) + 0.5*krb*Sign[u4[t]]*(4.*u1[t]^2 + 4.*u2[t]^2 + 
+                      8.*r*Cos[q3[t]]*u1[t]*u3[t] + 8.*r*Sin[q3[t]]*u2[t]*
+                       u3[t] + 4.*r^2*u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + q4[t]]*
+                       u1[t]*(u3[t] + u4[t]) + 4.*l*Sin[oq4 + q3[t] + q4[t]]*
+                       u2[t]*(u3[t] + u4[t]) + 4.*l*r*Cos[oq4 + q4[t]]*u3[t]*
+                       (u3[t] + u4[t]) + l^2*(u3[t] + u4[t])^2)^0.5]*
                  (2.*u1[t] + 2.*r*Cos[q3[t]]*u3[t] + l*Cos[oq4 + q3[t] + 
                      q4[t]]*(u3[t] + u4[t])) + 0.5*mb*(2.*r*Sin[q3[t]]*
                    u3[t]^2 + l*Sin[oq4 + q3[t] + q4[t]]*(u3[t] + u4[t])^2) + 
@@ -3358,15 +3596,28 @@
                    u3[t]^2 + kTb*Abs[u4[t]]*u4[t] + 0.25*kFb*l^2*
                    Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + Sin[oq4 + q3[t] + 
                         q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*u3[t] + 0.5*l*
-                      (u3[t] + u4[t])]*(2.*Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
-                    2.*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 2.*r*Cos[oq4 + q4[t]]*
-                     u3[t] + l*(u3[t] + u4[t]))) - 1.*Ib*(-1.*kFa*
-                   (wvx - 1.*u1[t])*((wvx - 1.*u1[t])^2 + (wvy - 1.*u2[t])^2)^
-                    0.5 + 0.5*kFb*l*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
-                     Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
-                      u3[t] + 0.5*l*(u3[t] + u4[t])]*(2.*u1[t] + 
-                    2.*r*Cos[q3[t]]*u3[t] + l*Cos[oq4 + q3[t] + q4[t]]*
-                     (u3[t] + u4[t])) + 0.5*mb*(2.*r*Sin[q3[t]]*u3[t]^2 + 
+                      (u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*(4.*u1[t]^2 + 
+                        4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*u3[t] + 8.*r*
+                         Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*u3[t]^2 + 4.*l*
+                         Cos[oq4 + q3[t] + q4[t]]*u1[t]*(u3[t] + u4[t]) + 
+                        4.*l*Sin[oq4 + q3[t] + q4[t]]*u2[t]*(u3[t] + u4[t]) + 
+                        4.*l*r*Cos[oq4 + q4[t]]*u3[t]*(u3[t] + u4[t]) + 
+                        l^2*(u3[t] + u4[t])^2)^0.5]*(2.*Cos[oq4 + q3[t] + 
+                       q4[t]]*u1[t] + 2.*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
+                    2.*r*Cos[oq4 + q4[t]]*u3[t] + l*(u3[t] + u4[t]))) - 
+                1.*Ib*(-1.*kFa*(wvx - 1.*u1[t])*((wvx - 1.*u1[t])^2 + 
+                     (wvy - 1.*u2[t])^2)^0.5 + 0.5*kFb*l*Abs[
+                    Cos[oq4 + q3[t] + q4[t]]*u1[t] + Sin[oq4 + q3[t] + q4[t]]*
+                      u2[t] + r*Cos[oq4 + q4[t]]*u3[t] + 0.5*l*(u3[t] + 
+                       u4[t]) + 0.5*krb*Sign[u4[t]]*(4.*u1[t]^2 + 
+                        4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*u3[t] + 8.*r*
+                         Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*u3[t]^2 + 4.*l*
+                         Cos[oq4 + q3[t] + q4[t]]*u1[t]*(u3[t] + u4[t]) + 
+                        4.*l*Sin[oq4 + q3[t] + q4[t]]*u2[t]*(u3[t] + u4[t]) + 
+                        4.*l*r*Cos[oq4 + q4[t]]*u3[t]*(u3[t] + u4[t]) + 
+                        l^2*(u3[t] + u4[t])^2)^0.5]*(2.*u1[t] + 2.*r*
+                     Cos[q3[t]]*u3[t] + l*Cos[oq4 + q3[t] + q4[t]]*(u3[t] + 
+                      u4[t])) + 0.5*mb*(2.*r*Sin[q3[t]]*u3[t]^2 + 
                     l*Sin[oq4 + q3[t] + q4[t]]*(u3[t] + u4[t])^2) + 
                   0.5*fl*mc*Sin[oq5 + q3[t] + q5[t]]*(u3[t] + u5[t])^2 - 
                   0.5*fl*kFc*Abs[Cos[oq5 + q3[t] + q5[t]]*u1[t] + 
@@ -3454,44 +3705,57 @@
                    u3[t]^2 + kTb*Abs[u4[t]]*u4[t] + 0.25*kFb*l^2*
                    Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + Sin[oq4 + q3[t] + 
                         q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*u3[t] + 0.5*l*
-                      (u3[t] + u4[t])]*(2.*Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
-                    2.*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 2.*r*Cos[oq4 + q4[t]]*
-                     u3[t] + l*(u3[t] + u4[t]))) - 1.*Ib*(-1.*kFa*
-                   ((wvx - 1.*u1[t])^2 + (wvy - 1.*u2[t])^2)^0.5*(wvy - 
-                    1.*u2[t]) + 0.5*kFb*l*Abs[Cos[oq4 + q3[t] + q4[t]]*
+                      (u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*(4.*u1[t]^2 + 
+                        4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*u3[t] + 8.*r*
+                         Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*u3[t]^2 + 4.*l*
+                         Cos[oq4 + q3[t] + q4[t]]*u1[t]*(u3[t] + u4[t]) + 
+                        4.*l*Sin[oq4 + q3[t] + q4[t]]*u2[t]*(u3[t] + u4[t]) + 
+                        4.*l*r*Cos[oq4 + q4[t]]*u3[t]*(u3[t] + u4[t]) + 
+                        l^2*(u3[t] + u4[t])^2)^0.5]*(2.*Cos[oq4 + q3[t] + 
+                       q4[t]]*u1[t] + 2.*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
+                    2.*r*Cos[oq4 + q4[t]]*u3[t] + l*(u3[t] + u4[t]))) - 
+                1.*Ib*(-1.*kFa*((wvx - 1.*u1[t])^2 + (wvy - 1.*u2[t])^2)^0.5*
+                   (wvy - 1.*u2[t]) + 0.5*kFb*l*Abs[Cos[oq4 + q3[t] + q4[t]]*
                       u1[t] + Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
-                     r*Cos[oq4 + q4[t]]*u3[t] + 0.5*l*(u3[t] + u4[t])]*
-                   (2.*u2[t] + 2.*r*Sin[q3[t]]*u3[t] + l*Sin[oq4 + q3[t] + 
-                       q4[t]]*(u3[t] + u4[t])) - 0.5*mb*(2.*r*Cos[q3[t]]*
-                     u3[t]^2 + l*Cos[oq4 + q3[t] + q4[t]]*(u3[t] + u4[t])^
-                      2) - 0.5*fl*mc*Cos[oq5 + q3[t] + q5[t]]*(u3[t] + u5[t])^
-                    2 + 0.5*fl*kFc*Abs[Cos[oq5 + q3[t] + q5[t]]*u1[t] + 
-                     Sin[oq5 + q3[t] + q5[t]]*u2[t] + 0.7071068*r*
-                      Cos[oq5 + q5[t]]*u3[t] + 0.7071068*r*Sin[oq5 + q5[t]]*
-                      u3[t] + 0.5*fl*(u3[t] + u5[t])]*(2.*u2[t] + 1.414214*r*
-                     Cos[q3[t]]*u3[t] + 1.414214*r*Sin[q3[t]]*u3[t] + 
-                    fl*Sin[oq5 + q3[t] + q5[t]]*(u3[t] + u5[t])) - 
-                  0.5*fl*mc*Cos[oq6 + q3[t] + q6[t]]*(u3[t] + u6[t])^2 - 
-                  0.5*fl*kFc*Abs[Cos[oq6 + q3[t] + q6[t]]*u1[t] + 
-                     Sin[oq6 + q3[t] + q6[t]]*u2[t] - 0.7071068*r*
-                      Cos[oq6 + q6[t]]*u3[t] + 0.7071068*r*Sin[oq6 + q6[t]]*
-                      u3[t] + 0.5*fl*(u3[t] + u6[t])]*(-2.*u2[t] - 1.414214*r*
-                     Cos[q3[t]]*u3[t] + 1.414214*r*Sin[q3[t]]*u3[t] - 
-                    1.*fl*Sin[oq6 + q3[t] + q6[t]]*(u3[t] + u6[t])) - 
-                  0.5*fl*mc*Cos[oq7 + q3[t] + q7[t]]*(u3[t] + u7[t])^2 - 
-                  0.5*fl*kFc*Abs[Cos[oq7 + q3[t] + q7[t]]*u1[t] + 
-                     Sin[oq7 + q3[t] + q7[t]]*u2[t] - 0.7071068*r*
-                      Cos[oq7 + q7[t]]*u3[t] - 0.7071068*r*Sin[oq7 + q7[t]]*
-                      u3[t] + 0.5*fl*(u3[t] + u7[t])]*(-2.*u2[t] + 1.414214*r*
-                     Cos[q3[t]]*u3[t] + 1.414214*r*Sin[q3[t]]*u3[t] - 
-                    1.*fl*Sin[oq7 + q3[t] + q7[t]]*(u3[t] + u7[t])) - 
-                  0.5*fl*mc*Cos[oq8 + q3[t] + q8[t]]*(u3[t] + u8[t])^2 - 
-                  0.5*fl*kFc*Abs[Cos[oq8 + q3[t] + q8[t]]*u1[t] + 
-                     Sin[oq8 + q3[t] + q8[t]]*u2[t] + 0.7071068*r*
-                      Cos[oq8 + q8[t]]*u3[t] - 0.7071068*r*Sin[oq8 + q8[t]]*
-                      u3[t] + 0.5*fl*(u3[t] + u8[t])]*(-2.*u2[t] + 1.414214*r*
-                     Cos[q3[t]]*u3[t] - 1.414214*r*Sin[q3[t]]*u3[t] - 
-                    1.*fl*Sin[oq8 + q3[t] + q8[t]]*(u3[t] + u8[t]))))))))))/
+                     r*Cos[oq4 + q4[t]]*u3[t] + 0.5*l*(u3[t] + u4[t]) + 
+                     0.5*krb*Sign[u4[t]]*(4.*u1[t]^2 + 4.*u2[t]^2 + 
+                        8.*r*Cos[q3[t]]*u1[t]*u3[t] + 8.*r*Sin[q3[t]]*u2[t]*
+                         u3[t] + 4.*r^2*u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + 
+                          q4[t]]*u1[t]*(u3[t] + u4[t]) + 4.*l*Sin[oq4 + 
+                          q3[t] + q4[t]]*u2[t]*(u3[t] + u4[t]) + 4.*l*r*
+                         Cos[oq4 + q4[t]]*u3[t]*(u3[t] + u4[t]) + l^2*
+                         (u3[t] + u4[t])^2)^0.5]*(2.*u2[t] + 2.*r*Sin[q3[t]]*
+                     u3[t] + l*Sin[oq4 + q3[t] + q4[t]]*(u3[t] + u4[t])) - 
+                  0.5*mb*(2.*r*Cos[q3[t]]*u3[t]^2 + l*Cos[oq4 + q3[t] + 
+                       q4[t]]*(u3[t] + u4[t])^2) - 0.5*fl*mc*Cos[oq5 + 
+                     q3[t] + q5[t]]*(u3[t] + u5[t])^2 + 0.5*fl*kFc*
+                   Abs[Cos[oq5 + q3[t] + q5[t]]*u1[t] + Sin[oq5 + q3[t] + 
+                        q5[t]]*u2[t] + 0.7071068*r*Cos[oq5 + q5[t]]*u3[t] + 
+                     0.7071068*r*Sin[oq5 + q5[t]]*u3[t] + 0.5*fl*(u3[t] + 
+                       u5[t])]*(2.*u2[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 
+                    1.414214*r*Sin[q3[t]]*u3[t] + fl*Sin[oq5 + q3[t] + q5[t]]*
+                     (u3[t] + u5[t])) - 0.5*fl*mc*Cos[oq6 + q3[t] + q6[t]]*
+                   (u3[t] + u6[t])^2 - 0.5*fl*kFc*Abs[Cos[oq6 + q3[t] + 
+                        q6[t]]*u1[t] + Sin[oq6 + q3[t] + q6[t]]*u2[t] - 
+                     0.7071068*r*Cos[oq6 + q6[t]]*u3[t] + 0.7071068*r*
+                      Sin[oq6 + q6[t]]*u3[t] + 0.5*fl*(u3[t] + u6[t])]*
+                   (-2.*u2[t] - 1.414214*r*Cos[q3[t]]*u3[t] + 1.414214*r*
+                     Sin[q3[t]]*u3[t] - 1.*fl*Sin[oq6 + q3[t] + q6[t]]*
+                     (u3[t] + u6[t])) - 0.5*fl*mc*Cos[oq7 + q3[t] + q7[t]]*
+                   (u3[t] + u7[t])^2 - 0.5*fl*kFc*Abs[Cos[oq7 + q3[t] + 
+                        q7[t]]*u1[t] + Sin[oq7 + q3[t] + q7[t]]*u2[t] - 
+                     0.7071068*r*Cos[oq7 + q7[t]]*u3[t] - 0.7071068*r*
+                      Sin[oq7 + q7[t]]*u3[t] + 0.5*fl*(u3[t] + u7[t])]*
+                   (-2.*u2[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 1.414214*r*
+                     Sin[q3[t]]*u3[t] - 1.*fl*Sin[oq7 + q3[t] + q7[t]]*
+                     (u3[t] + u7[t])) - 0.5*fl*mc*Cos[oq8 + q3[t] + q8[t]]*
+                   (u3[t] + u8[t])^2 - 0.5*fl*kFc*Abs[Cos[oq8 + q3[t] + 
+                        q8[t]]*u1[t] + Sin[oq8 + q3[t] + q8[t]]*u2[t] + 
+                     0.7071068*r*Cos[oq8 + q8[t]]*u3[t] - 0.7071068*r*
+                      Sin[oq8 + q8[t]]*u3[t] + 0.5*fl*(u3[t] + u8[t])]*
+                   (-2.*u2[t] + 1.414214*r*Cos[q3[t]]*u3[t] - 1.414214*r*
+                     Sin[q3[t]]*u3[t] - 1.*fl*Sin[oq8 + q3[t] + q8[t]]*
+                     (u3[t] + u8[t]))))))))))/
     ((-0.3535534*Ic*(0. + 1.*Ic^2*(0. + 0.5*fl*Ib*mc*
             Cos[oq5 + q3[t] + q5[t]]))*(2.828427*Ic + 
          fl*mc*r*(Cos[oq5 + q5[t]] + Sin[oq5 + q5[t]])) - 
@@ -3820,45 +4084,58 @@
                      Sin[oq4 + q4[t]]*u3[t]^2 + kTb*Abs[u4[t]]*u4[t] + 
                     0.25*kFb*l^2*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
                        Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
-                        u3[t] + 0.5*l*(u3[t] + u4[t])]*(2.*Cos[oq4 + q3[t] + 
-                         q4[t]]*u1[t] + 2.*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
-                      2.*r*Cos[oq4 + q4[t]]*u3[t] + l*(u3[t] + u4[t]))) - 
-                  1.*Ib*(-1.*kFa*(wvx - 1.*u1[t])*((wvx - 1.*u1[t])^2 + 
-                       (wvy - 1.*u2[t])^2)^0.5 + 0.5*kFb*l*Abs[
-                      Cos[oq4 + q3[t] + q4[t]]*u1[t] + Sin[oq4 + q3[t] + 
-                          q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*u3[t] + 
-                       0.5*l*(u3[t] + u4[t])]*(2.*u1[t] + 2.*r*Cos[q3[t]]*
-                       u3[t] + l*Cos[oq4 + q3[t] + q4[t]]*(u3[t] + u4[t])) + 
-                    0.5*mb*(2.*r*Sin[q3[t]]*u3[t]^2 + l*Sin[oq4 + q3[t] + 
-                         q4[t]]*(u3[t] + u4[t])^2) + 0.5*fl*mc*Sin[oq5 + 
-                       q3[t] + q5[t]]*(u3[t] + u5[t])^2 - 0.5*fl*kFc*
-                     Abs[Cos[oq5 + q3[t] + q5[t]]*u1[t] + Sin[oq5 + q3[t] + 
-                          q5[t]]*u2[t] + 0.7071068*r*Cos[oq5 + q5[t]]*u3[t] + 
-                       0.7071068*r*Sin[oq5 + q5[t]]*u3[t] + 0.5*fl*(u3[t] + 
-                         u5[t])]*(-2.*u1[t] - 1.414214*r*Cos[q3[t]]*u3[t] + 
-                      1.414214*r*Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq5 + q3[t] + 
-                         q5[t]]*(u3[t] + u5[t])) + 0.5*fl*mc*Sin[oq6 + 
-                       q3[t] + q6[t]]*(u3[t] + u6[t])^2 - 0.5*fl*kFc*
-                     Abs[Cos[oq6 + q3[t] + q6[t]]*u1[t] + Sin[oq6 + q3[t] + 
-                          q6[t]]*u2[t] - 0.7071068*r*Cos[oq6 + q6[t]]*u3[t] + 
-                       0.7071068*r*Sin[oq6 + q6[t]]*u3[t] + 0.5*fl*(u3[t] + 
-                         u6[t])]*(-2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 
-                      1.414214*r*Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq6 + q3[t] + 
-                         q6[t]]*(u3[t] + u6[t])) + 0.5*fl*mc*Sin[oq7 + 
-                       q3[t] + q7[t]]*(u3[t] + u7[t])^2 - 0.5*fl*kFc*
-                     Abs[Cos[oq7 + q3[t] + q7[t]]*u1[t] + Sin[oq7 + q3[t] + 
-                          q7[t]]*u2[t] - 0.7071068*r*Cos[oq7 + q7[t]]*u3[t] - 
-                       0.7071068*r*Sin[oq7 + q7[t]]*u3[t] + 0.5*fl*(u3[t] + 
-                         u7[t])]*(-2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] - 
-                      1.414214*r*Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq7 + q3[t] + 
-                         q7[t]]*(u3[t] + u7[t])) + 0.5*fl*mc*Sin[oq8 + 
-                       q3[t] + q8[t]]*(u3[t] + u8[t])^2 + 0.5*fl*kFc*
-                     Abs[Cos[oq8 + q3[t] + q8[t]]*u1[t] + Sin[oq8 + q3[t] + 
-                          q8[t]]*u2[t] + 0.7071068*r*Cos[oq8 + q8[t]]*u3[t] - 
-                       0.7071068*r*Sin[oq8 + q8[t]]*u3[t] + 0.5*fl*(u3[t] + 
-                         u8[t])]*(2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 
-                      1.414214*r*Sin[q3[t]]*u3[t] + fl*Cos[oq8 + q3[t] + 
-                         q8[t]]*(u3[t] + u8[t])))))))) + 
+                        u3[t] + 0.5*l*(u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*
+                        (4.*u1[t]^2 + 4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*
+                          u3[t] + 8.*r*Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*
+                          u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t]*
+                          (u3[t] + u4[t]) + 4.*l*Sin[oq4 + q3[t] + q4[t]]*
+                          u2[t]*(u3[t] + u4[t]) + 4.*l*r*Cos[oq4 + q4[t]]*
+                          u3[t]*(u3[t] + u4[t]) + l^2*(u3[t] + u4[t])^2)^0.5]*
+                     (2.*Cos[oq4 + q3[t] + q4[t]]*u1[t] + 2.*Sin[oq4 + 
+                         q3[t] + q4[t]]*u2[t] + 2.*r*Cos[oq4 + q4[t]]*u3[t] + 
+                      l*(u3[t] + u4[t]))) - 1.*Ib*(-1.*kFa*(wvx - 1.*u1[t])*
+                     ((wvx - 1.*u1[t])^2 + (wvy - 1.*u2[t])^2)^0.5 + 
+                    0.5*kFb*l*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
+                       Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
+                        u3[t] + 0.5*l*(u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*
+                        (4.*u1[t]^2 + 4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*
+                          u3[t] + 8.*r*Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*
+                          u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t]*
+                          (u3[t] + u4[t]) + 4.*l*Sin[oq4 + q3[t] + q4[t]]*
+                          u2[t]*(u3[t] + u4[t]) + 4.*l*r*Cos[oq4 + q4[t]]*
+                          u3[t]*(u3[t] + u4[t]) + l^2*(u3[t] + u4[t])^2)^0.5]*
+                     (2.*u1[t] + 2.*r*Cos[q3[t]]*u3[t] + l*Cos[oq4 + q3[t] + 
+                         q4[t]]*(u3[t] + u4[t])) + 0.5*mb*(2.*r*Sin[q3[t]]*
+                       u3[t]^2 + l*Sin[oq4 + q3[t] + q4[t]]*(u3[t] + u4[t])^
+                        2) + 0.5*fl*mc*Sin[oq5 + q3[t] + q5[t]]*
+                     (u3[t] + u5[t])^2 - 0.5*fl*kFc*Abs[Cos[oq5 + q3[t] + 
+                          q5[t]]*u1[t] + Sin[oq5 + q3[t] + q5[t]]*u2[t] + 
+                       0.7071068*r*Cos[oq5 + q5[t]]*u3[t] + 0.7071068*r*
+                        Sin[oq5 + q5[t]]*u3[t] + 0.5*fl*(u3[t] + u5[t])]*
+                     (-2.*u1[t] - 1.414214*r*Cos[q3[t]]*u3[t] + 1.414214*r*
+                       Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq5 + q3[t] + q5[t]]*
+                       (u3[t] + u5[t])) + 0.5*fl*mc*Sin[oq6 + q3[t] + q6[t]]*
+                     (u3[t] + u6[t])^2 - 0.5*fl*kFc*Abs[Cos[oq6 + q3[t] + 
+                          q6[t]]*u1[t] + Sin[oq6 + q3[t] + q6[t]]*u2[t] - 
+                       0.7071068*r*Cos[oq6 + q6[t]]*u3[t] + 0.7071068*r*
+                        Sin[oq6 + q6[t]]*u3[t] + 0.5*fl*(u3[t] + u6[t])]*
+                     (-2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 1.414214*r*
+                       Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq6 + q3[t] + q6[t]]*
+                       (u3[t] + u6[t])) + 0.5*fl*mc*Sin[oq7 + q3[t] + q7[t]]*
+                     (u3[t] + u7[t])^2 - 0.5*fl*kFc*Abs[Cos[oq7 + q3[t] + 
+                          q7[t]]*u1[t] + Sin[oq7 + q3[t] + q7[t]]*u2[t] - 
+                       0.7071068*r*Cos[oq7 + q7[t]]*u3[t] - 0.7071068*r*
+                        Sin[oq7 + q7[t]]*u3[t] + 0.5*fl*(u3[t] + u7[t])]*
+                     (-2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] - 1.414214*r*
+                       Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq7 + q3[t] + q7[t]]*
+                       (u3[t] + u7[t])) + 0.5*fl*mc*Sin[oq8 + q3[t] + q8[t]]*
+                     (u3[t] + u8[t])^2 + 0.5*fl*kFc*Abs[Cos[oq8 + q3[t] + 
+                          q8[t]]*u1[t] + Sin[oq8 + q3[t] + q8[t]]*u2[t] + 
+                       0.7071068*r*Cos[oq8 + q8[t]]*u3[t] - 0.7071068*r*
+                        Sin[oq8 + q8[t]]*u3[t] + 0.5*fl*(u3[t] + u8[t])]*
+                     (2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 1.414214*r*
+                       Sin[q3[t]]*u3[t] + fl*Cos[oq8 + q3[t] + q8[t]]*
+                       (u3[t] + u8[t])))))))) + 
         (-0.3535534*Ic*(0. + 1.*Ic^2*(0. + 0.5*fl*Ib*mc*Cos[oq5 + q3[t] + 
                  q5[t]]))*(2.828427*Ic + fl*mc*r*(Cos[oq5 + q5[t]] + 
               Sin[oq5 + q5[t]])) - 1.*Ic*(0.3535534*(0. + 1.*Ic^2*(0. + 
@@ -3917,13 +4194,26 @@
                      Sin[oq4 + q4[t]]*u3[t]^2 + kTb*Abs[u4[t]]*u4[t] + 
                     0.25*kFb*l^2*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
                        Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
-                        u3[t] + 0.5*l*(u3[t] + u4[t])]*(2.*Cos[oq4 + q3[t] + 
-                         q4[t]]*u1[t] + 2.*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
-                      2.*r*Cos[oq4 + q4[t]]*u3[t] + l*(u3[t] + u4[t]))) - 
-                  1.*Ib*(-1.*kFa*((wvx - 1.*u1[t])^2 + (wvy - 1.*u2[t])^2)^
-                      0.5*(wvy - 1.*u2[t]) + 0.5*kFb*l*Abs[Cos[oq4 + q3[t] + 
-                          q4[t]]*u1[t] + Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
-                       r*Cos[oq4 + q4[t]]*u3[t] + 0.5*l*(u3[t] + u4[t])]*
+                        u3[t] + 0.5*l*(u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*
+                        (4.*u1[t]^2 + 4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*
+                          u3[t] + 8.*r*Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*
+                          u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t]*
+                          (u3[t] + u4[t]) + 4.*l*Sin[oq4 + q3[t] + q4[t]]*
+                          u2[t]*(u3[t] + u4[t]) + 4.*l*r*Cos[oq4 + q4[t]]*
+                          u3[t]*(u3[t] + u4[t]) + l^2*(u3[t] + u4[t])^2)^0.5]*
+                     (2.*Cos[oq4 + q3[t] + q4[t]]*u1[t] + 2.*Sin[oq4 + 
+                         q3[t] + q4[t]]*u2[t] + 2.*r*Cos[oq4 + q4[t]]*u3[t] + 
+                      l*(u3[t] + u4[t]))) - 1.*Ib*(-1.*kFa*((wvx - 1.*u1[t])^
+                        2 + (wvy - 1.*u2[t])^2)^0.5*(wvy - 1.*u2[t]) + 
+                    0.5*kFb*l*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
+                       Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
+                        u3[t] + 0.5*l*(u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*
+                        (4.*u1[t]^2 + 4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*
+                          u3[t] + 8.*r*Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*
+                          u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t]*
+                          (u3[t] + u4[t]) + 4.*l*Sin[oq4 + q3[t] + q4[t]]*
+                          u2[t]*(u3[t] + u4[t]) + 4.*l*r*Cos[oq4 + q4[t]]*
+                          u3[t]*(u3[t] + u4[t]) + l^2*(u3[t] + u4[t])^2)^0.5]*
                      (2.*u2[t] + 2.*r*Sin[q3[t]]*u3[t] + l*Sin[oq4 + q3[t] + 
                          q4[t]]*(u3[t] + u4[t])) - 0.5*mb*(2.*r*Cos[q3[t]]*
                        u3[t]^2 + l*Cos[oq4 + q3[t] + q4[t]]*(u3[t] + u4[t])^
@@ -4071,45 +4361,58 @@
                      Sin[oq4 + q4[t]]*u3[t]^2 + kTb*Abs[u4[t]]*u4[t] + 
                     0.25*kFb*l^2*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
                        Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
-                        u3[t] + 0.5*l*(u3[t] + u4[t])]*(2.*Cos[oq4 + q3[t] + 
-                         q4[t]]*u1[t] + 2.*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
-                      2.*r*Cos[oq4 + q4[t]]*u3[t] + l*(u3[t] + u4[t]))) - 
-                  1.*Ib*(-1.*kFa*(wvx - 1.*u1[t])*((wvx - 1.*u1[t])^2 + 
-                       (wvy - 1.*u2[t])^2)^0.5 + 0.5*kFb*l*Abs[
-                      Cos[oq4 + q3[t] + q4[t]]*u1[t] + Sin[oq4 + q3[t] + 
-                          q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*u3[t] + 
-                       0.5*l*(u3[t] + u4[t])]*(2.*u1[t] + 2.*r*Cos[q3[t]]*
-                       u3[t] + l*Cos[oq4 + q3[t] + q4[t]]*(u3[t] + u4[t])) + 
-                    0.5*mb*(2.*r*Sin[q3[t]]*u3[t]^2 + l*Sin[oq4 + q3[t] + 
-                         q4[t]]*(u3[t] + u4[t])^2) + 0.5*fl*mc*Sin[oq5 + 
-                       q3[t] + q5[t]]*(u3[t] + u5[t])^2 - 0.5*fl*kFc*
-                     Abs[Cos[oq5 + q3[t] + q5[t]]*u1[t] + Sin[oq5 + q3[t] + 
-                          q5[t]]*u2[t] + 0.7071068*r*Cos[oq5 + q5[t]]*u3[t] + 
-                       0.7071068*r*Sin[oq5 + q5[t]]*u3[t] + 0.5*fl*(u3[t] + 
-                         u5[t])]*(-2.*u1[t] - 1.414214*r*Cos[q3[t]]*u3[t] + 
-                      1.414214*r*Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq5 + q3[t] + 
-                         q5[t]]*(u3[t] + u5[t])) + 0.5*fl*mc*Sin[oq6 + 
-                       q3[t] + q6[t]]*(u3[t] + u6[t])^2 - 0.5*fl*kFc*
-                     Abs[Cos[oq6 + q3[t] + q6[t]]*u1[t] + Sin[oq6 + q3[t] + 
-                          q6[t]]*u2[t] - 0.7071068*r*Cos[oq6 + q6[t]]*u3[t] + 
-                       0.7071068*r*Sin[oq6 + q6[t]]*u3[t] + 0.5*fl*(u3[t] + 
-                         u6[t])]*(-2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 
-                      1.414214*r*Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq6 + q3[t] + 
-                         q6[t]]*(u3[t] + u6[t])) + 0.5*fl*mc*Sin[oq7 + 
-                       q3[t] + q7[t]]*(u3[t] + u7[t])^2 - 0.5*fl*kFc*
-                     Abs[Cos[oq7 + q3[t] + q7[t]]*u1[t] + Sin[oq7 + q3[t] + 
-                          q7[t]]*u2[t] - 0.7071068*r*Cos[oq7 + q7[t]]*u3[t] - 
-                       0.7071068*r*Sin[oq7 + q7[t]]*u3[t] + 0.5*fl*(u3[t] + 
-                         u7[t])]*(-2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] - 
-                      1.414214*r*Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq7 + q3[t] + 
-                         q7[t]]*(u3[t] + u7[t])) + 0.5*fl*mc*Sin[oq8 + 
-                       q3[t] + q8[t]]*(u3[t] + u8[t])^2 + 0.5*fl*kFc*
-                     Abs[Cos[oq8 + q3[t] + q8[t]]*u1[t] + Sin[oq8 + q3[t] + 
-                          q8[t]]*u2[t] + 0.7071068*r*Cos[oq8 + q8[t]]*u3[t] - 
-                       0.7071068*r*Sin[oq8 + q8[t]]*u3[t] + 0.5*fl*(u3[t] + 
-                         u8[t])]*(2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 
-                      1.414214*r*Sin[q3[t]]*u3[t] + fl*Cos[oq8 + q3[t] + 
-                         q8[t]]*(u3[t] + u8[t])))))))) + 
+                        u3[t] + 0.5*l*(u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*
+                        (4.*u1[t]^2 + 4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*
+                          u3[t] + 8.*r*Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*
+                          u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t]*
+                          (u3[t] + u4[t]) + 4.*l*Sin[oq4 + q3[t] + q4[t]]*
+                          u2[t]*(u3[t] + u4[t]) + 4.*l*r*Cos[oq4 + q4[t]]*
+                          u3[t]*(u3[t] + u4[t]) + l^2*(u3[t] + u4[t])^2)^0.5]*
+                     (2.*Cos[oq4 + q3[t] + q4[t]]*u1[t] + 2.*Sin[oq4 + 
+                         q3[t] + q4[t]]*u2[t] + 2.*r*Cos[oq4 + q4[t]]*u3[t] + 
+                      l*(u3[t] + u4[t]))) - 1.*Ib*(-1.*kFa*(wvx - 1.*u1[t])*
+                     ((wvx - 1.*u1[t])^2 + (wvy - 1.*u2[t])^2)^0.5 + 
+                    0.5*kFb*l*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
+                       Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
+                        u3[t] + 0.5*l*(u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*
+                        (4.*u1[t]^2 + 4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*
+                          u3[t] + 8.*r*Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*
+                          u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t]*
+                          (u3[t] + u4[t]) + 4.*l*Sin[oq4 + q3[t] + q4[t]]*
+                          u2[t]*(u3[t] + u4[t]) + 4.*l*r*Cos[oq4 + q4[t]]*
+                          u3[t]*(u3[t] + u4[t]) + l^2*(u3[t] + u4[t])^2)^0.5]*
+                     (2.*u1[t] + 2.*r*Cos[q3[t]]*u3[t] + l*Cos[oq4 + q3[t] + 
+                         q4[t]]*(u3[t] + u4[t])) + 0.5*mb*(2.*r*Sin[q3[t]]*
+                       u3[t]^2 + l*Sin[oq4 + q3[t] + q4[t]]*(u3[t] + u4[t])^
+                        2) + 0.5*fl*mc*Sin[oq5 + q3[t] + q5[t]]*
+                     (u3[t] + u5[t])^2 - 0.5*fl*kFc*Abs[Cos[oq5 + q3[t] + 
+                          q5[t]]*u1[t] + Sin[oq5 + q3[t] + q5[t]]*u2[t] + 
+                       0.7071068*r*Cos[oq5 + q5[t]]*u3[t] + 0.7071068*r*
+                        Sin[oq5 + q5[t]]*u3[t] + 0.5*fl*(u3[t] + u5[t])]*
+                     (-2.*u1[t] - 1.414214*r*Cos[q3[t]]*u3[t] + 1.414214*r*
+                       Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq5 + q3[t] + q5[t]]*
+                       (u3[t] + u5[t])) + 0.5*fl*mc*Sin[oq6 + q3[t] + q6[t]]*
+                     (u3[t] + u6[t])^2 - 0.5*fl*kFc*Abs[Cos[oq6 + q3[t] + 
+                          q6[t]]*u1[t] + Sin[oq6 + q3[t] + q6[t]]*u2[t] - 
+                       0.7071068*r*Cos[oq6 + q6[t]]*u3[t] + 0.7071068*r*
+                        Sin[oq6 + q6[t]]*u3[t] + 0.5*fl*(u3[t] + u6[t])]*
+                     (-2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 1.414214*r*
+                       Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq6 + q3[t] + q6[t]]*
+                       (u3[t] + u6[t])) + 0.5*fl*mc*Sin[oq7 + q3[t] + q7[t]]*
+                     (u3[t] + u7[t])^2 - 0.5*fl*kFc*Abs[Cos[oq7 + q3[t] + 
+                          q7[t]]*u1[t] + Sin[oq7 + q3[t] + q7[t]]*u2[t] - 
+                       0.7071068*r*Cos[oq7 + q7[t]]*u3[t] - 0.7071068*r*
+                        Sin[oq7 + q7[t]]*u3[t] + 0.5*fl*(u3[t] + u7[t])]*
+                     (-2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] - 1.414214*r*
+                       Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq7 + q3[t] + q7[t]]*
+                       (u3[t] + u7[t])) + 0.5*fl*mc*Sin[oq8 + q3[t] + q8[t]]*
+                     (u3[t] + u8[t])^2 + 0.5*fl*kFc*Abs[Cos[oq8 + q3[t] + 
+                          q8[t]]*u1[t] + Sin[oq8 + q3[t] + q8[t]]*u2[t] + 
+                       0.7071068*r*Cos[oq8 + q8[t]]*u3[t] - 0.7071068*r*
+                        Sin[oq8 + q8[t]]*u3[t] + 0.5*fl*(u3[t] + u8[t])]*
+                     (2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 1.414214*r*
+                       Sin[q3[t]]*u3[t] + fl*Cos[oq8 + q3[t] + q8[t]]*
+                       (u3[t] + u8[t])))))))) + 
         (-0.3535534*Ic*(0. + 1.*Ic^2*(0. + 0.5*fl*Ib*mc*Cos[oq5 + q3[t] + 
                  q5[t]]))*(2.828427*Ic + fl*mc*r*(Cos[oq5 + q5[t]] + 
               Sin[oq5 + q5[t]])) - 1.*Ic*(0.3535534*(0. + 1.*Ic^2*(0. + 
@@ -4171,16 +4474,29 @@
                      Sin[oq4 + q4[t]]*u3[t]^2 + kTb*Abs[u4[t]]*u4[t] + 
                     0.25*kFb*l^2*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
                        Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
-                        u3[t] + 0.5*l*(u3[t] + u4[t])]*(2.*Cos[oq4 + q3[t] + 
-                         q4[t]]*u1[t] + 2.*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
-                      2.*r*Cos[oq4 + q4[t]]*u3[t] + l*(u3[t] + u4[t]))) - 
-                  1.*Ib*(kTa*Abs[u3[t]]*u3[t] + kTb*Abs[u4[t]]*u4[t] + 
-                    0.25*kFb*l*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
-                       Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
-                        u3[t] + 0.5*l*(u3[t] + u4[t])]*(4.*r*Cos[q3[t]]*
-                       u1[t] + 2.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
-                      4.*r*Sin[q3[t]]*u2[t] + 2.*l*Sin[oq4 + q3[t] + q4[t]]*
-                       u2[t] + 4.*r^2*u3[t] + 4.*l*r*Cos[oq4 + q4[t]]*u3[t] + 
+                        u3[t] + 0.5*l*(u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*
+                        (4.*u1[t]^2 + 4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*
+                          u3[t] + 8.*r*Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*
+                          u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t]*
+                          (u3[t] + u4[t]) + 4.*l*Sin[oq4 + q3[t] + q4[t]]*
+                          u2[t]*(u3[t] + u4[t]) + 4.*l*r*Cos[oq4 + q4[t]]*
+                          u3[t]*(u3[t] + u4[t]) + l^2*(u3[t] + u4[t])^2)^0.5]*
+                     (2.*Cos[oq4 + q3[t] + q4[t]]*u1[t] + 2.*Sin[oq4 + 
+                         q3[t] + q4[t]]*u2[t] + 2.*r*Cos[oq4 + q4[t]]*u3[t] + 
+                      l*(u3[t] + u4[t]))) - 1.*Ib*(kTa*Abs[u3[t]]*u3[t] + 
+                    kTb*Abs[u4[t]]*u4[t] + 0.25*kFb*l*Abs[Cos[oq4 + q3[t] + 
+                          q4[t]]*u1[t] + Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
+                       r*Cos[oq4 + q4[t]]*u3[t] + 0.5*l*(u3[t] + u4[t]) + 
+                       0.5*krb*Sign[u4[t]]*(4.*u1[t]^2 + 4.*u2[t]^2 + 
+                          8.*r*Cos[q3[t]]*u1[t]*u3[t] + 8.*r*Sin[q3[t]]*u2[t]*
+                          u3[t] + 4.*r^2*u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + 
+                          q4[t]]*u1[t]*(u3[t] + u4[t]) + 4.*l*Sin[oq4 + 
+                          q3[t] + q4[t]]*u2[t]*(u3[t] + u4[t]) + 4.*l*r*
+                          Cos[oq4 + q4[t]]*u3[t]*(u3[t] + u4[t]) + l^2*
+                          (u3[t] + u4[t])^2)^0.5]*(4.*r*Cos[q3[t]]*u1[t] + 
+                      2.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t] + 4.*r*Sin[q3[t]]*
+                       u2[t] + 2.*l*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
+                      4.*r^2*u3[t] + 4.*l*r*Cos[oq4 + q4[t]]*u3[t] + 
                       2.*l*r*Cos[oq4 + q4[t]]*u4[t] + l^2*(u3[t] + u4[t])) + 
                     kTc*Abs[u5[t]]*u5[t] - 0.25*fl*kFc*Abs[Cos[oq5 + q3[t] + 
                           q5[t]]*u1[t] + Sin[oq5 + q3[t] + q5[t]]*u2[t] + 
@@ -4520,13 +4836,25 @@
                  Sin[oq4 + q4[t]]*u3[t]^2 + kTb*Abs[u4[t]]*u4[t] + 
                 0.25*kFb*l^2*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
                    Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
-                    u3[t] + 0.5*l*(u3[t] + u4[t])]*(2.*Cos[oq4 + q3[t] + 
+                    u3[t] + 0.5*l*(u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*
+                    (4.*u1[t]^2 + 4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*u3[t] + 
+                      8.*r*Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*u3[t]^2 + 
+                      4.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t]*(u3[t] + u4[t]) + 
+                      4.*l*Sin[oq4 + q3[t] + q4[t]]*u2[t]*(u3[t] + u4[t]) + 
+                      4.*l*r*Cos[oq4 + q4[t]]*u3[t]*(u3[t] + u4[t]) + 
+                      l^2*(u3[t] + u4[t])^2)^0.5]*(2.*Cos[oq4 + q3[t] + 
                      q4[t]]*u1[t] + 2.*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
                   2.*r*Cos[oq4 + q4[t]]*u3[t] + l*(u3[t] + u4[t]))) - 
               1.*Ib*(-1.*kFa*(wvx - 1.*u1[t])*((wvx - 1.*u1[t])^2 + 
                    (wvy - 1.*u2[t])^2)^0.5 + 0.5*kFb*l*Abs[
                   Cos[oq4 + q3[t] + q4[t]]*u1[t] + Sin[oq4 + q3[t] + q4[t]]*
-                    u2[t] + r*Cos[oq4 + q4[t]]*u3[t] + 0.5*l*(u3[t] + u4[t])]*
+                    u2[t] + r*Cos[oq4 + q4[t]]*u3[t] + 0.5*l*(u3[t] + 
+                     u4[t]) + 0.5*krb*Sign[u4[t]]*(4.*u1[t]^2 + 4.*u2[t]^2 + 
+                      8.*r*Cos[q3[t]]*u1[t]*u3[t] + 8.*r*Sin[q3[t]]*u2[t]*
+                       u3[t] + 4.*r^2*u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + q4[t]]*
+                       u1[t]*(u3[t] + u4[t]) + 4.*l*Sin[oq4 + q3[t] + q4[t]]*
+                       u2[t]*(u3[t] + u4[t]) + 4.*l*r*Cos[oq4 + q4[t]]*u3[t]*
+                       (u3[t] + u4[t]) + l^2*(u3[t] + u4[t])^2)^0.5]*
                  (2.*u1[t] + 2.*r*Cos[q3[t]]*u3[t] + l*Cos[oq4 + q3[t] + 
                      q4[t]]*(u3[t] + u4[t])) + 0.5*mb*(2.*r*Sin[q3[t]]*
                    u3[t]^2 + l*Sin[oq4 + q3[t] + q4[t]]*(u3[t] + u4[t])^2) + 
@@ -4661,15 +4989,28 @@
                    u3[t]^2 + kTb*Abs[u4[t]]*u4[t] + 0.25*kFb*l^2*
                    Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + Sin[oq4 + q3[t] + 
                         q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*u3[t] + 0.5*l*
-                      (u3[t] + u4[t])]*(2.*Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
-                    2.*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 2.*r*Cos[oq4 + q4[t]]*
-                     u3[t] + l*(u3[t] + u4[t]))) - 1.*Ib*(-1.*kFa*
-                   (wvx - 1.*u1[t])*((wvx - 1.*u1[t])^2 + (wvy - 1.*u2[t])^2)^
-                    0.5 + 0.5*kFb*l*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
-                     Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
-                      u3[t] + 0.5*l*(u3[t] + u4[t])]*(2.*u1[t] + 
-                    2.*r*Cos[q3[t]]*u3[t] + l*Cos[oq4 + q3[t] + q4[t]]*
-                     (u3[t] + u4[t])) + 0.5*mb*(2.*r*Sin[q3[t]]*u3[t]^2 + 
+                      (u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*(4.*u1[t]^2 + 
+                        4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*u3[t] + 8.*r*
+                         Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*u3[t]^2 + 4.*l*
+                         Cos[oq4 + q3[t] + q4[t]]*u1[t]*(u3[t] + u4[t]) + 
+                        4.*l*Sin[oq4 + q3[t] + q4[t]]*u2[t]*(u3[t] + u4[t]) + 
+                        4.*l*r*Cos[oq4 + q4[t]]*u3[t]*(u3[t] + u4[t]) + 
+                        l^2*(u3[t] + u4[t])^2)^0.5]*(2.*Cos[oq4 + q3[t] + 
+                       q4[t]]*u1[t] + 2.*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
+                    2.*r*Cos[oq4 + q4[t]]*u3[t] + l*(u3[t] + u4[t]))) - 
+                1.*Ib*(-1.*kFa*(wvx - 1.*u1[t])*((wvx - 1.*u1[t])^2 + 
+                     (wvy - 1.*u2[t])^2)^0.5 + 0.5*kFb*l*Abs[
+                    Cos[oq4 + q3[t] + q4[t]]*u1[t] + Sin[oq4 + q3[t] + q4[t]]*
+                      u2[t] + r*Cos[oq4 + q4[t]]*u3[t] + 0.5*l*(u3[t] + 
+                       u4[t]) + 0.5*krb*Sign[u4[t]]*(4.*u1[t]^2 + 
+                        4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*u3[t] + 8.*r*
+                         Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*u3[t]^2 + 4.*l*
+                         Cos[oq4 + q3[t] + q4[t]]*u1[t]*(u3[t] + u4[t]) + 
+                        4.*l*Sin[oq4 + q3[t] + q4[t]]*u2[t]*(u3[t] + u4[t]) + 
+                        4.*l*r*Cos[oq4 + q4[t]]*u3[t]*(u3[t] + u4[t]) + 
+                        l^2*(u3[t] + u4[t])^2)^0.5]*(2.*u1[t] + 2.*r*
+                     Cos[q3[t]]*u3[t] + l*Cos[oq4 + q3[t] + q4[t]]*(u3[t] + 
+                      u4[t])) + 0.5*mb*(2.*r*Sin[q3[t]]*u3[t]^2 + 
                     l*Sin[oq4 + q3[t] + q4[t]]*(u3[t] + u4[t])^2) + 
                   0.5*fl*mc*Sin[oq5 + q3[t] + q5[t]]*(u3[t] + u5[t])^2 - 
                   0.5*fl*kFc*Abs[Cos[oq5 + q3[t] + q5[t]]*u1[t] + 
@@ -4757,44 +5098,57 @@
                    u3[t]^2 + kTb*Abs[u4[t]]*u4[t] + 0.25*kFb*l^2*
                    Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + Sin[oq4 + q3[t] + 
                         q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*u3[t] + 0.5*l*
-                      (u3[t] + u4[t])]*(2.*Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
-                    2.*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 2.*r*Cos[oq4 + q4[t]]*
-                     u3[t] + l*(u3[t] + u4[t]))) - 1.*Ib*(-1.*kFa*
-                   ((wvx - 1.*u1[t])^2 + (wvy - 1.*u2[t])^2)^0.5*(wvy - 
-                    1.*u2[t]) + 0.5*kFb*l*Abs[Cos[oq4 + q3[t] + q4[t]]*
+                      (u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*(4.*u1[t]^2 + 
+                        4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*u3[t] + 8.*r*
+                         Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*u3[t]^2 + 4.*l*
+                         Cos[oq4 + q3[t] + q4[t]]*u1[t]*(u3[t] + u4[t]) + 
+                        4.*l*Sin[oq4 + q3[t] + q4[t]]*u2[t]*(u3[t] + u4[t]) + 
+                        4.*l*r*Cos[oq4 + q4[t]]*u3[t]*(u3[t] + u4[t]) + 
+                        l^2*(u3[t] + u4[t])^2)^0.5]*(2.*Cos[oq4 + q3[t] + 
+                       q4[t]]*u1[t] + 2.*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
+                    2.*r*Cos[oq4 + q4[t]]*u3[t] + l*(u3[t] + u4[t]))) - 
+                1.*Ib*(-1.*kFa*((wvx - 1.*u1[t])^2 + (wvy - 1.*u2[t])^2)^0.5*
+                   (wvy - 1.*u2[t]) + 0.5*kFb*l*Abs[Cos[oq4 + q3[t] + q4[t]]*
                       u1[t] + Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
-                     r*Cos[oq4 + q4[t]]*u3[t] + 0.5*l*(u3[t] + u4[t])]*
-                   (2.*u2[t] + 2.*r*Sin[q3[t]]*u3[t] + l*Sin[oq4 + q3[t] + 
-                       q4[t]]*(u3[t] + u4[t])) - 0.5*mb*(2.*r*Cos[q3[t]]*
-                     u3[t]^2 + l*Cos[oq4 + q3[t] + q4[t]]*(u3[t] + u4[t])^
-                      2) - 0.5*fl*mc*Cos[oq5 + q3[t] + q5[t]]*(u3[t] + u5[t])^
-                    2 + 0.5*fl*kFc*Abs[Cos[oq5 + q3[t] + q5[t]]*u1[t] + 
-                     Sin[oq5 + q3[t] + q5[t]]*u2[t] + 0.7071068*r*
-                      Cos[oq5 + q5[t]]*u3[t] + 0.7071068*r*Sin[oq5 + q5[t]]*
-                      u3[t] + 0.5*fl*(u3[t] + u5[t])]*(2.*u2[t] + 1.414214*r*
-                     Cos[q3[t]]*u3[t] + 1.414214*r*Sin[q3[t]]*u3[t] + 
-                    fl*Sin[oq5 + q3[t] + q5[t]]*(u3[t] + u5[t])) - 
-                  0.5*fl*mc*Cos[oq6 + q3[t] + q6[t]]*(u3[t] + u6[t])^2 - 
-                  0.5*fl*kFc*Abs[Cos[oq6 + q3[t] + q6[t]]*u1[t] + 
-                     Sin[oq6 + q3[t] + q6[t]]*u2[t] - 0.7071068*r*
-                      Cos[oq6 + q6[t]]*u3[t] + 0.7071068*r*Sin[oq6 + q6[t]]*
-                      u3[t] + 0.5*fl*(u3[t] + u6[t])]*(-2.*u2[t] - 1.414214*r*
-                     Cos[q3[t]]*u3[t] + 1.414214*r*Sin[q3[t]]*u3[t] - 
-                    1.*fl*Sin[oq6 + q3[t] + q6[t]]*(u3[t] + u6[t])) - 
-                  0.5*fl*mc*Cos[oq7 + q3[t] + q7[t]]*(u3[t] + u7[t])^2 - 
-                  0.5*fl*kFc*Abs[Cos[oq7 + q3[t] + q7[t]]*u1[t] + 
-                     Sin[oq7 + q3[t] + q7[t]]*u2[t] - 0.7071068*r*
-                      Cos[oq7 + q7[t]]*u3[t] - 0.7071068*r*Sin[oq7 + q7[t]]*
-                      u3[t] + 0.5*fl*(u3[t] + u7[t])]*(-2.*u2[t] + 1.414214*r*
-                     Cos[q3[t]]*u3[t] + 1.414214*r*Sin[q3[t]]*u3[t] - 
-                    1.*fl*Sin[oq7 + q3[t] + q7[t]]*(u3[t] + u7[t])) - 
-                  0.5*fl*mc*Cos[oq8 + q3[t] + q8[t]]*(u3[t] + u8[t])^2 - 
-                  0.5*fl*kFc*Abs[Cos[oq8 + q3[t] + q8[t]]*u1[t] + 
-                     Sin[oq8 + q3[t] + q8[t]]*u2[t] + 0.7071068*r*
-                      Cos[oq8 + q8[t]]*u3[t] - 0.7071068*r*Sin[oq8 + q8[t]]*
-                      u3[t] + 0.5*fl*(u3[t] + u8[t])]*(-2.*u2[t] + 1.414214*r*
-                     Cos[q3[t]]*u3[t] - 1.414214*r*Sin[q3[t]]*u3[t] - 
-                    1.*fl*Sin[oq8 + q3[t] + q8[t]]*(u3[t] + u8[t]))))))))))/
+                     r*Cos[oq4 + q4[t]]*u3[t] + 0.5*l*(u3[t] + u4[t]) + 
+                     0.5*krb*Sign[u4[t]]*(4.*u1[t]^2 + 4.*u2[t]^2 + 
+                        8.*r*Cos[q3[t]]*u1[t]*u3[t] + 8.*r*Sin[q3[t]]*u2[t]*
+                         u3[t] + 4.*r^2*u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + 
+                          q4[t]]*u1[t]*(u3[t] + u4[t]) + 4.*l*Sin[oq4 + 
+                          q3[t] + q4[t]]*u2[t]*(u3[t] + u4[t]) + 4.*l*r*
+                         Cos[oq4 + q4[t]]*u3[t]*(u3[t] + u4[t]) + l^2*
+                         (u3[t] + u4[t])^2)^0.5]*(2.*u2[t] + 2.*r*Sin[q3[t]]*
+                     u3[t] + l*Sin[oq4 + q3[t] + q4[t]]*(u3[t] + u4[t])) - 
+                  0.5*mb*(2.*r*Cos[q3[t]]*u3[t]^2 + l*Cos[oq4 + q3[t] + 
+                       q4[t]]*(u3[t] + u4[t])^2) - 0.5*fl*mc*Cos[oq5 + 
+                     q3[t] + q5[t]]*(u3[t] + u5[t])^2 + 0.5*fl*kFc*
+                   Abs[Cos[oq5 + q3[t] + q5[t]]*u1[t] + Sin[oq5 + q3[t] + 
+                        q5[t]]*u2[t] + 0.7071068*r*Cos[oq5 + q5[t]]*u3[t] + 
+                     0.7071068*r*Sin[oq5 + q5[t]]*u3[t] + 0.5*fl*(u3[t] + 
+                       u5[t])]*(2.*u2[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 
+                    1.414214*r*Sin[q3[t]]*u3[t] + fl*Sin[oq5 + q3[t] + q5[t]]*
+                     (u3[t] + u5[t])) - 0.5*fl*mc*Cos[oq6 + q3[t] + q6[t]]*
+                   (u3[t] + u6[t])^2 - 0.5*fl*kFc*Abs[Cos[oq6 + q3[t] + 
+                        q6[t]]*u1[t] + Sin[oq6 + q3[t] + q6[t]]*u2[t] - 
+                     0.7071068*r*Cos[oq6 + q6[t]]*u3[t] + 0.7071068*r*
+                      Sin[oq6 + q6[t]]*u3[t] + 0.5*fl*(u3[t] + u6[t])]*
+                   (-2.*u2[t] - 1.414214*r*Cos[q3[t]]*u3[t] + 1.414214*r*
+                     Sin[q3[t]]*u3[t] - 1.*fl*Sin[oq6 + q3[t] + q6[t]]*
+                     (u3[t] + u6[t])) - 0.5*fl*mc*Cos[oq7 + q3[t] + q7[t]]*
+                   (u3[t] + u7[t])^2 - 0.5*fl*kFc*Abs[Cos[oq7 + q3[t] + 
+                        q7[t]]*u1[t] + Sin[oq7 + q3[t] + q7[t]]*u2[t] - 
+                     0.7071068*r*Cos[oq7 + q7[t]]*u3[t] - 0.7071068*r*
+                      Sin[oq7 + q7[t]]*u3[t] + 0.5*fl*(u3[t] + u7[t])]*
+                   (-2.*u2[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 1.414214*r*
+                     Sin[q3[t]]*u3[t] - 1.*fl*Sin[oq7 + q3[t] + q7[t]]*
+                     (u3[t] + u7[t])) - 0.5*fl*mc*Cos[oq8 + q3[t] + q8[t]]*
+                   (u3[t] + u8[t])^2 - 0.5*fl*kFc*Abs[Cos[oq8 + q3[t] + 
+                        q8[t]]*u1[t] + Sin[oq8 + q3[t] + q8[t]]*u2[t] + 
+                     0.7071068*r*Cos[oq8 + q8[t]]*u3[t] - 0.7071068*r*
+                      Sin[oq8 + q8[t]]*u3[t] + 0.5*fl*(u3[t] + u8[t])]*
+                   (-2.*u2[t] + 1.414214*r*Cos[q3[t]]*u3[t] - 1.414214*r*
+                     Sin[q3[t]]*u3[t] - 1.*fl*Sin[oq8 + q3[t] + q8[t]]*
+                     (u3[t] + u8[t]))))))))))/
     ((-0.3535534*Ic*(0. + 1.*Ic^2*(0. + 0.5*fl*Ib*mc*
             Cos[oq5 + q3[t] + q5[t]]))*(2.828427*Ic + 
          fl*mc*r*(Cos[oq5 + q5[t]] + Sin[oq5 + q5[t]])) - 
@@ -5123,45 +5477,58 @@
                      Sin[oq4 + q4[t]]*u3[t]^2 + kTb*Abs[u4[t]]*u4[t] + 
                     0.25*kFb*l^2*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
                        Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
-                        u3[t] + 0.5*l*(u3[t] + u4[t])]*(2.*Cos[oq4 + q3[t] + 
-                         q4[t]]*u1[t] + 2.*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
-                      2.*r*Cos[oq4 + q4[t]]*u3[t] + l*(u3[t] + u4[t]))) - 
-                  1.*Ib*(-1.*kFa*(wvx - 1.*u1[t])*((wvx - 1.*u1[t])^2 + 
-                       (wvy - 1.*u2[t])^2)^0.5 + 0.5*kFb*l*Abs[
-                      Cos[oq4 + q3[t] + q4[t]]*u1[t] + Sin[oq4 + q3[t] + 
-                          q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*u3[t] + 
-                       0.5*l*(u3[t] + u4[t])]*(2.*u1[t] + 2.*r*Cos[q3[t]]*
-                       u3[t] + l*Cos[oq4 + q3[t] + q4[t]]*(u3[t] + u4[t])) + 
-                    0.5*mb*(2.*r*Sin[q3[t]]*u3[t]^2 + l*Sin[oq4 + q3[t] + 
-                         q4[t]]*(u3[t] + u4[t])^2) + 0.5*fl*mc*Sin[oq5 + 
-                       q3[t] + q5[t]]*(u3[t] + u5[t])^2 - 0.5*fl*kFc*
-                     Abs[Cos[oq5 + q3[t] + q5[t]]*u1[t] + Sin[oq5 + q3[t] + 
-                          q5[t]]*u2[t] + 0.7071068*r*Cos[oq5 + q5[t]]*u3[t] + 
-                       0.7071068*r*Sin[oq5 + q5[t]]*u3[t] + 0.5*fl*(u3[t] + 
-                         u5[t])]*(-2.*u1[t] - 1.414214*r*Cos[q3[t]]*u3[t] + 
-                      1.414214*r*Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq5 + q3[t] + 
-                         q5[t]]*(u3[t] + u5[t])) + 0.5*fl*mc*Sin[oq6 + 
-                       q3[t] + q6[t]]*(u3[t] + u6[t])^2 - 0.5*fl*kFc*
-                     Abs[Cos[oq6 + q3[t] + q6[t]]*u1[t] + Sin[oq6 + q3[t] + 
-                          q6[t]]*u2[t] - 0.7071068*r*Cos[oq6 + q6[t]]*u3[t] + 
-                       0.7071068*r*Sin[oq6 + q6[t]]*u3[t] + 0.5*fl*(u3[t] + 
-                         u6[t])]*(-2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 
-                      1.414214*r*Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq6 + q3[t] + 
-                         q6[t]]*(u3[t] + u6[t])) + 0.5*fl*mc*Sin[oq7 + 
-                       q3[t] + q7[t]]*(u3[t] + u7[t])^2 - 0.5*fl*kFc*
-                     Abs[Cos[oq7 + q3[t] + q7[t]]*u1[t] + Sin[oq7 + q3[t] + 
-                          q7[t]]*u2[t] - 0.7071068*r*Cos[oq7 + q7[t]]*u3[t] - 
-                       0.7071068*r*Sin[oq7 + q7[t]]*u3[t] + 0.5*fl*(u3[t] + 
-                         u7[t])]*(-2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] - 
-                      1.414214*r*Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq7 + q3[t] + 
-                         q7[t]]*(u3[t] + u7[t])) + 0.5*fl*mc*Sin[oq8 + 
-                       q3[t] + q8[t]]*(u3[t] + u8[t])^2 + 0.5*fl*kFc*
-                     Abs[Cos[oq8 + q3[t] + q8[t]]*u1[t] + Sin[oq8 + q3[t] + 
-                          q8[t]]*u2[t] + 0.7071068*r*Cos[oq8 + q8[t]]*u3[t] - 
-                       0.7071068*r*Sin[oq8 + q8[t]]*u3[t] + 0.5*fl*(u3[t] + 
-                         u8[t])]*(2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 
-                      1.414214*r*Sin[q3[t]]*u3[t] + fl*Cos[oq8 + q3[t] + 
-                         q8[t]]*(u3[t] + u8[t])))))))) + 
+                        u3[t] + 0.5*l*(u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*
+                        (4.*u1[t]^2 + 4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*
+                          u3[t] + 8.*r*Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*
+                          u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t]*
+                          (u3[t] + u4[t]) + 4.*l*Sin[oq4 + q3[t] + q4[t]]*
+                          u2[t]*(u3[t] + u4[t]) + 4.*l*r*Cos[oq4 + q4[t]]*
+                          u3[t]*(u3[t] + u4[t]) + l^2*(u3[t] + u4[t])^2)^0.5]*
+                     (2.*Cos[oq4 + q3[t] + q4[t]]*u1[t] + 2.*Sin[oq4 + 
+                         q3[t] + q4[t]]*u2[t] + 2.*r*Cos[oq4 + q4[t]]*u3[t] + 
+                      l*(u3[t] + u4[t]))) - 1.*Ib*(-1.*kFa*(wvx - 1.*u1[t])*
+                     ((wvx - 1.*u1[t])^2 + (wvy - 1.*u2[t])^2)^0.5 + 
+                    0.5*kFb*l*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
+                       Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
+                        u3[t] + 0.5*l*(u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*
+                        (4.*u1[t]^2 + 4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*
+                          u3[t] + 8.*r*Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*
+                          u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t]*
+                          (u3[t] + u4[t]) + 4.*l*Sin[oq4 + q3[t] + q4[t]]*
+                          u2[t]*(u3[t] + u4[t]) + 4.*l*r*Cos[oq4 + q4[t]]*
+                          u3[t]*(u3[t] + u4[t]) + l^2*(u3[t] + u4[t])^2)^0.5]*
+                     (2.*u1[t] + 2.*r*Cos[q3[t]]*u3[t] + l*Cos[oq4 + q3[t] + 
+                         q4[t]]*(u3[t] + u4[t])) + 0.5*mb*(2.*r*Sin[q3[t]]*
+                       u3[t]^2 + l*Sin[oq4 + q3[t] + q4[t]]*(u3[t] + u4[t])^
+                        2) + 0.5*fl*mc*Sin[oq5 + q3[t] + q5[t]]*
+                     (u3[t] + u5[t])^2 - 0.5*fl*kFc*Abs[Cos[oq5 + q3[t] + 
+                          q5[t]]*u1[t] + Sin[oq5 + q3[t] + q5[t]]*u2[t] + 
+                       0.7071068*r*Cos[oq5 + q5[t]]*u3[t] + 0.7071068*r*
+                        Sin[oq5 + q5[t]]*u3[t] + 0.5*fl*(u3[t] + u5[t])]*
+                     (-2.*u1[t] - 1.414214*r*Cos[q3[t]]*u3[t] + 1.414214*r*
+                       Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq5 + q3[t] + q5[t]]*
+                       (u3[t] + u5[t])) + 0.5*fl*mc*Sin[oq6 + q3[t] + q6[t]]*
+                     (u3[t] + u6[t])^2 - 0.5*fl*kFc*Abs[Cos[oq6 + q3[t] + 
+                          q6[t]]*u1[t] + Sin[oq6 + q3[t] + q6[t]]*u2[t] - 
+                       0.7071068*r*Cos[oq6 + q6[t]]*u3[t] + 0.7071068*r*
+                        Sin[oq6 + q6[t]]*u3[t] + 0.5*fl*(u3[t] + u6[t])]*
+                     (-2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 1.414214*r*
+                       Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq6 + q3[t] + q6[t]]*
+                       (u3[t] + u6[t])) + 0.5*fl*mc*Sin[oq7 + q3[t] + q7[t]]*
+                     (u3[t] + u7[t])^2 - 0.5*fl*kFc*Abs[Cos[oq7 + q3[t] + 
+                          q7[t]]*u1[t] + Sin[oq7 + q3[t] + q7[t]]*u2[t] - 
+                       0.7071068*r*Cos[oq7 + q7[t]]*u3[t] - 0.7071068*r*
+                        Sin[oq7 + q7[t]]*u3[t] + 0.5*fl*(u3[t] + u7[t])]*
+                     (-2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] - 1.414214*r*
+                       Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq7 + q3[t] + q7[t]]*
+                       (u3[t] + u7[t])) + 0.5*fl*mc*Sin[oq8 + q3[t] + q8[t]]*
+                     (u3[t] + u8[t])^2 + 0.5*fl*kFc*Abs[Cos[oq8 + q3[t] + 
+                          q8[t]]*u1[t] + Sin[oq8 + q3[t] + q8[t]]*u2[t] + 
+                       0.7071068*r*Cos[oq8 + q8[t]]*u3[t] - 0.7071068*r*
+                        Sin[oq8 + q8[t]]*u3[t] + 0.5*fl*(u3[t] + u8[t])]*
+                     (2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 1.414214*r*
+                       Sin[q3[t]]*u3[t] + fl*Cos[oq8 + q3[t] + q8[t]]*
+                       (u3[t] + u8[t])))))))) + 
         (-0.3535534*Ic*(0. + 1.*Ic^2*(0. + 0.5*fl*Ib*mc*Cos[oq5 + q3[t] + 
                  q5[t]]))*(2.828427*Ic + fl*mc*r*(Cos[oq5 + q5[t]] + 
               Sin[oq5 + q5[t]])) - 1.*Ic*(0.3535534*(0. + 1.*Ic^2*(0. + 
@@ -5220,13 +5587,26 @@
                      Sin[oq4 + q4[t]]*u3[t]^2 + kTb*Abs[u4[t]]*u4[t] + 
                     0.25*kFb*l^2*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
                        Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
-                        u3[t] + 0.5*l*(u3[t] + u4[t])]*(2.*Cos[oq4 + q3[t] + 
-                         q4[t]]*u1[t] + 2.*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
-                      2.*r*Cos[oq4 + q4[t]]*u3[t] + l*(u3[t] + u4[t]))) - 
-                  1.*Ib*(-1.*kFa*((wvx - 1.*u1[t])^2 + (wvy - 1.*u2[t])^2)^
-                      0.5*(wvy - 1.*u2[t]) + 0.5*kFb*l*Abs[Cos[oq4 + q3[t] + 
-                          q4[t]]*u1[t] + Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
-                       r*Cos[oq4 + q4[t]]*u3[t] + 0.5*l*(u3[t] + u4[t])]*
+                        u3[t] + 0.5*l*(u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*
+                        (4.*u1[t]^2 + 4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*
+                          u3[t] + 8.*r*Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*
+                          u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t]*
+                          (u3[t] + u4[t]) + 4.*l*Sin[oq4 + q3[t] + q4[t]]*
+                          u2[t]*(u3[t] + u4[t]) + 4.*l*r*Cos[oq4 + q4[t]]*
+                          u3[t]*(u3[t] + u4[t]) + l^2*(u3[t] + u4[t])^2)^0.5]*
+                     (2.*Cos[oq4 + q3[t] + q4[t]]*u1[t] + 2.*Sin[oq4 + 
+                         q3[t] + q4[t]]*u2[t] + 2.*r*Cos[oq4 + q4[t]]*u3[t] + 
+                      l*(u3[t] + u4[t]))) - 1.*Ib*(-1.*kFa*((wvx - 1.*u1[t])^
+                        2 + (wvy - 1.*u2[t])^2)^0.5*(wvy - 1.*u2[t]) + 
+                    0.5*kFb*l*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
+                       Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
+                        u3[t] + 0.5*l*(u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*
+                        (4.*u1[t]^2 + 4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*
+                          u3[t] + 8.*r*Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*
+                          u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t]*
+                          (u3[t] + u4[t]) + 4.*l*Sin[oq4 + q3[t] + q4[t]]*
+                          u2[t]*(u3[t] + u4[t]) + 4.*l*r*Cos[oq4 + q4[t]]*
+                          u3[t]*(u3[t] + u4[t]) + l^2*(u3[t] + u4[t])^2)^0.5]*
                      (2.*u2[t] + 2.*r*Sin[q3[t]]*u3[t] + l*Sin[oq4 + q3[t] + 
                          q4[t]]*(u3[t] + u4[t])) - 0.5*mb*(2.*r*Cos[q3[t]]*
                        u3[t]^2 + l*Cos[oq4 + q3[t] + q4[t]]*(u3[t] + u4[t])^
@@ -5374,45 +5754,58 @@
                      Sin[oq4 + q4[t]]*u3[t]^2 + kTb*Abs[u4[t]]*u4[t] + 
                     0.25*kFb*l^2*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
                        Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
-                        u3[t] + 0.5*l*(u3[t] + u4[t])]*(2.*Cos[oq4 + q3[t] + 
-                         q4[t]]*u1[t] + 2.*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
-                      2.*r*Cos[oq4 + q4[t]]*u3[t] + l*(u3[t] + u4[t]))) - 
-                  1.*Ib*(-1.*kFa*(wvx - 1.*u1[t])*((wvx - 1.*u1[t])^2 + 
-                       (wvy - 1.*u2[t])^2)^0.5 + 0.5*kFb*l*Abs[
-                      Cos[oq4 + q3[t] + q4[t]]*u1[t] + Sin[oq4 + q3[t] + 
-                          q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*u3[t] + 
-                       0.5*l*(u3[t] + u4[t])]*(2.*u1[t] + 2.*r*Cos[q3[t]]*
-                       u3[t] + l*Cos[oq4 + q3[t] + q4[t]]*(u3[t] + u4[t])) + 
-                    0.5*mb*(2.*r*Sin[q3[t]]*u3[t]^2 + l*Sin[oq4 + q3[t] + 
-                         q4[t]]*(u3[t] + u4[t])^2) + 0.5*fl*mc*Sin[oq5 + 
-                       q3[t] + q5[t]]*(u3[t] + u5[t])^2 - 0.5*fl*kFc*
-                     Abs[Cos[oq5 + q3[t] + q5[t]]*u1[t] + Sin[oq5 + q3[t] + 
-                          q5[t]]*u2[t] + 0.7071068*r*Cos[oq5 + q5[t]]*u3[t] + 
-                       0.7071068*r*Sin[oq5 + q5[t]]*u3[t] + 0.5*fl*(u3[t] + 
-                         u5[t])]*(-2.*u1[t] - 1.414214*r*Cos[q3[t]]*u3[t] + 
-                      1.414214*r*Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq5 + q3[t] + 
-                         q5[t]]*(u3[t] + u5[t])) + 0.5*fl*mc*Sin[oq6 + 
-                       q3[t] + q6[t]]*(u3[t] + u6[t])^2 - 0.5*fl*kFc*
-                     Abs[Cos[oq6 + q3[t] + q6[t]]*u1[t] + Sin[oq6 + q3[t] + 
-                          q6[t]]*u2[t] - 0.7071068*r*Cos[oq6 + q6[t]]*u3[t] + 
-                       0.7071068*r*Sin[oq6 + q6[t]]*u3[t] + 0.5*fl*(u3[t] + 
-                         u6[t])]*(-2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 
-                      1.414214*r*Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq6 + q3[t] + 
-                         q6[t]]*(u3[t] + u6[t])) + 0.5*fl*mc*Sin[oq7 + 
-                       q3[t] + q7[t]]*(u3[t] + u7[t])^2 - 0.5*fl*kFc*
-                     Abs[Cos[oq7 + q3[t] + q7[t]]*u1[t] + Sin[oq7 + q3[t] + 
-                          q7[t]]*u2[t] - 0.7071068*r*Cos[oq7 + q7[t]]*u3[t] - 
-                       0.7071068*r*Sin[oq7 + q7[t]]*u3[t] + 0.5*fl*(u3[t] + 
-                         u7[t])]*(-2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] - 
-                      1.414214*r*Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq7 + q3[t] + 
-                         q7[t]]*(u3[t] + u7[t])) + 0.5*fl*mc*Sin[oq8 + 
-                       q3[t] + q8[t]]*(u3[t] + u8[t])^2 + 0.5*fl*kFc*
-                     Abs[Cos[oq8 + q3[t] + q8[t]]*u1[t] + Sin[oq8 + q3[t] + 
-                          q8[t]]*u2[t] + 0.7071068*r*Cos[oq8 + q8[t]]*u3[t] - 
-                       0.7071068*r*Sin[oq8 + q8[t]]*u3[t] + 0.5*fl*(u3[t] + 
-                         u8[t])]*(2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 
-                      1.414214*r*Sin[q3[t]]*u3[t] + fl*Cos[oq8 + q3[t] + 
-                         q8[t]]*(u3[t] + u8[t])))))))) + 
+                        u3[t] + 0.5*l*(u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*
+                        (4.*u1[t]^2 + 4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*
+                          u3[t] + 8.*r*Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*
+                          u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t]*
+                          (u3[t] + u4[t]) + 4.*l*Sin[oq4 + q3[t] + q4[t]]*
+                          u2[t]*(u3[t] + u4[t]) + 4.*l*r*Cos[oq4 + q4[t]]*
+                          u3[t]*(u3[t] + u4[t]) + l^2*(u3[t] + u4[t])^2)^0.5]*
+                     (2.*Cos[oq4 + q3[t] + q4[t]]*u1[t] + 2.*Sin[oq4 + 
+                         q3[t] + q4[t]]*u2[t] + 2.*r*Cos[oq4 + q4[t]]*u3[t] + 
+                      l*(u3[t] + u4[t]))) - 1.*Ib*(-1.*kFa*(wvx - 1.*u1[t])*
+                     ((wvx - 1.*u1[t])^2 + (wvy - 1.*u2[t])^2)^0.5 + 
+                    0.5*kFb*l*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
+                       Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
+                        u3[t] + 0.5*l*(u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*
+                        (4.*u1[t]^2 + 4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*
+                          u3[t] + 8.*r*Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*
+                          u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t]*
+                          (u3[t] + u4[t]) + 4.*l*Sin[oq4 + q3[t] + q4[t]]*
+                          u2[t]*(u3[t] + u4[t]) + 4.*l*r*Cos[oq4 + q4[t]]*
+                          u3[t]*(u3[t] + u4[t]) + l^2*(u3[t] + u4[t])^2)^0.5]*
+                     (2.*u1[t] + 2.*r*Cos[q3[t]]*u3[t] + l*Cos[oq4 + q3[t] + 
+                         q4[t]]*(u3[t] + u4[t])) + 0.5*mb*(2.*r*Sin[q3[t]]*
+                       u3[t]^2 + l*Sin[oq4 + q3[t] + q4[t]]*(u3[t] + u4[t])^
+                        2) + 0.5*fl*mc*Sin[oq5 + q3[t] + q5[t]]*
+                     (u3[t] + u5[t])^2 - 0.5*fl*kFc*Abs[Cos[oq5 + q3[t] + 
+                          q5[t]]*u1[t] + Sin[oq5 + q3[t] + q5[t]]*u2[t] + 
+                       0.7071068*r*Cos[oq5 + q5[t]]*u3[t] + 0.7071068*r*
+                        Sin[oq5 + q5[t]]*u3[t] + 0.5*fl*(u3[t] + u5[t])]*
+                     (-2.*u1[t] - 1.414214*r*Cos[q3[t]]*u3[t] + 1.414214*r*
+                       Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq5 + q3[t] + q5[t]]*
+                       (u3[t] + u5[t])) + 0.5*fl*mc*Sin[oq6 + q3[t] + q6[t]]*
+                     (u3[t] + u6[t])^2 - 0.5*fl*kFc*Abs[Cos[oq6 + q3[t] + 
+                          q6[t]]*u1[t] + Sin[oq6 + q3[t] + q6[t]]*u2[t] - 
+                       0.7071068*r*Cos[oq6 + q6[t]]*u3[t] + 0.7071068*r*
+                        Sin[oq6 + q6[t]]*u3[t] + 0.5*fl*(u3[t] + u6[t])]*
+                     (-2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 1.414214*r*
+                       Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq6 + q3[t] + q6[t]]*
+                       (u3[t] + u6[t])) + 0.5*fl*mc*Sin[oq7 + q3[t] + q7[t]]*
+                     (u3[t] + u7[t])^2 - 0.5*fl*kFc*Abs[Cos[oq7 + q3[t] + 
+                          q7[t]]*u1[t] + Sin[oq7 + q3[t] + q7[t]]*u2[t] - 
+                       0.7071068*r*Cos[oq7 + q7[t]]*u3[t] - 0.7071068*r*
+                        Sin[oq7 + q7[t]]*u3[t] + 0.5*fl*(u3[t] + u7[t])]*
+                     (-2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] - 1.414214*r*
+                       Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq7 + q3[t] + q7[t]]*
+                       (u3[t] + u7[t])) + 0.5*fl*mc*Sin[oq8 + q3[t] + q8[t]]*
+                     (u3[t] + u8[t])^2 + 0.5*fl*kFc*Abs[Cos[oq8 + q3[t] + 
+                          q8[t]]*u1[t] + Sin[oq8 + q3[t] + q8[t]]*u2[t] + 
+                       0.7071068*r*Cos[oq8 + q8[t]]*u3[t] - 0.7071068*r*
+                        Sin[oq8 + q8[t]]*u3[t] + 0.5*fl*(u3[t] + u8[t])]*
+                     (2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 1.414214*r*
+                       Sin[q3[t]]*u3[t] + fl*Cos[oq8 + q3[t] + q8[t]]*
+                       (u3[t] + u8[t])))))))) + 
         (-0.3535534*Ic*(0. + 1.*Ic^2*(0. + 0.5*fl*Ib*mc*Cos[oq5 + q3[t] + 
                  q5[t]]))*(2.828427*Ic + fl*mc*r*(Cos[oq5 + q5[t]] + 
               Sin[oq5 + q5[t]])) - 1.*Ic*(0.3535534*(0. + 1.*Ic^2*(0. + 
@@ -5474,16 +5867,29 @@
                      Sin[oq4 + q4[t]]*u3[t]^2 + kTb*Abs[u4[t]]*u4[t] + 
                     0.25*kFb*l^2*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
                        Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
-                        u3[t] + 0.5*l*(u3[t] + u4[t])]*(2.*Cos[oq4 + q3[t] + 
-                         q4[t]]*u1[t] + 2.*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
-                      2.*r*Cos[oq4 + q4[t]]*u3[t] + l*(u3[t] + u4[t]))) - 
-                  1.*Ib*(kTa*Abs[u3[t]]*u3[t] + kTb*Abs[u4[t]]*u4[t] + 
-                    0.25*kFb*l*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
-                       Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
-                        u3[t] + 0.5*l*(u3[t] + u4[t])]*(4.*r*Cos[q3[t]]*
-                       u1[t] + 2.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
-                      4.*r*Sin[q3[t]]*u2[t] + 2.*l*Sin[oq4 + q3[t] + q4[t]]*
-                       u2[t] + 4.*r^2*u3[t] + 4.*l*r*Cos[oq4 + q4[t]]*u3[t] + 
+                        u3[t] + 0.5*l*(u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*
+                        (4.*u1[t]^2 + 4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*
+                          u3[t] + 8.*r*Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*
+                          u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t]*
+                          (u3[t] + u4[t]) + 4.*l*Sin[oq4 + q3[t] + q4[t]]*
+                          u2[t]*(u3[t] + u4[t]) + 4.*l*r*Cos[oq4 + q4[t]]*
+                          u3[t]*(u3[t] + u4[t]) + l^2*(u3[t] + u4[t])^2)^0.5]*
+                     (2.*Cos[oq4 + q3[t] + q4[t]]*u1[t] + 2.*Sin[oq4 + 
+                         q3[t] + q4[t]]*u2[t] + 2.*r*Cos[oq4 + q4[t]]*u3[t] + 
+                      l*(u3[t] + u4[t]))) - 1.*Ib*(kTa*Abs[u3[t]]*u3[t] + 
+                    kTb*Abs[u4[t]]*u4[t] + 0.25*kFb*l*Abs[Cos[oq4 + q3[t] + 
+                          q4[t]]*u1[t] + Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
+                       r*Cos[oq4 + q4[t]]*u3[t] + 0.5*l*(u3[t] + u4[t]) + 
+                       0.5*krb*Sign[u4[t]]*(4.*u1[t]^2 + 4.*u2[t]^2 + 
+                          8.*r*Cos[q3[t]]*u1[t]*u3[t] + 8.*r*Sin[q3[t]]*u2[t]*
+                          u3[t] + 4.*r^2*u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + 
+                          q4[t]]*u1[t]*(u3[t] + u4[t]) + 4.*l*Sin[oq4 + 
+                          q3[t] + q4[t]]*u2[t]*(u3[t] + u4[t]) + 4.*l*r*
+                          Cos[oq4 + q4[t]]*u3[t]*(u3[t] + u4[t]) + l^2*
+                          (u3[t] + u4[t])^2)^0.5]*(4.*r*Cos[q3[t]]*u1[t] + 
+                      2.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t] + 4.*r*Sin[q3[t]]*
+                       u2[t] + 2.*l*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
+                      4.*r^2*u3[t] + 4.*l*r*Cos[oq4 + q4[t]]*u3[t] + 
                       2.*l*r*Cos[oq4 + q4[t]]*u4[t] + l^2*(u3[t] + u4[t])) + 
                     kTc*Abs[u5[t]]*u5[t] - 0.25*fl*kFc*Abs[Cos[oq5 + q3[t] + 
                           q5[t]]*u1[t] + Sin[oq5 + q3[t] + q5[t]]*u2[t] + 
@@ -5824,13 +6230,25 @@
                  Sin[oq4 + q4[t]]*u3[t]^2 + kTb*Abs[u4[t]]*u4[t] + 
                 0.25*kFb*l^2*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
                    Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
-                    u3[t] + 0.5*l*(u3[t] + u4[t])]*(2.*Cos[oq4 + q3[t] + 
+                    u3[t] + 0.5*l*(u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*
+                    (4.*u1[t]^2 + 4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*u3[t] + 
+                      8.*r*Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*u3[t]^2 + 
+                      4.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t]*(u3[t] + u4[t]) + 
+                      4.*l*Sin[oq4 + q3[t] + q4[t]]*u2[t]*(u3[t] + u4[t]) + 
+                      4.*l*r*Cos[oq4 + q4[t]]*u3[t]*(u3[t] + u4[t]) + 
+                      l^2*(u3[t] + u4[t])^2)^0.5]*(2.*Cos[oq4 + q3[t] + 
                      q4[t]]*u1[t] + 2.*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
                   2.*r*Cos[oq4 + q4[t]]*u3[t] + l*(u3[t] + u4[t]))) - 
               1.*Ib*(-1.*kFa*(wvx - 1.*u1[t])*((wvx - 1.*u1[t])^2 + 
                    (wvy - 1.*u2[t])^2)^0.5 + 0.5*kFb*l*Abs[
                   Cos[oq4 + q3[t] + q4[t]]*u1[t] + Sin[oq4 + q3[t] + q4[t]]*
-                    u2[t] + r*Cos[oq4 + q4[t]]*u3[t] + 0.5*l*(u3[t] + u4[t])]*
+                    u2[t] + r*Cos[oq4 + q4[t]]*u3[t] + 0.5*l*(u3[t] + 
+                     u4[t]) + 0.5*krb*Sign[u4[t]]*(4.*u1[t]^2 + 4.*u2[t]^2 + 
+                      8.*r*Cos[q3[t]]*u1[t]*u3[t] + 8.*r*Sin[q3[t]]*u2[t]*
+                       u3[t] + 4.*r^2*u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + q4[t]]*
+                       u1[t]*(u3[t] + u4[t]) + 4.*l*Sin[oq4 + q3[t] + q4[t]]*
+                       u2[t]*(u3[t] + u4[t]) + 4.*l*r*Cos[oq4 + q4[t]]*u3[t]*
+                       (u3[t] + u4[t]) + l^2*(u3[t] + u4[t])^2)^0.5]*
                  (2.*u1[t] + 2.*r*Cos[q3[t]]*u3[t] + l*Cos[oq4 + q3[t] + 
                      q4[t]]*(u3[t] + u4[t])) + 0.5*mb*(2.*r*Sin[q3[t]]*
                    u3[t]^2 + l*Sin[oq4 + q3[t] + q4[t]]*(u3[t] + u4[t])^2) + 
@@ -5965,15 +6383,28 @@
                    u3[t]^2 + kTb*Abs[u4[t]]*u4[t] + 0.25*kFb*l^2*
                    Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + Sin[oq4 + q3[t] + 
                         q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*u3[t] + 0.5*l*
-                      (u3[t] + u4[t])]*(2.*Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
-                    2.*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 2.*r*Cos[oq4 + q4[t]]*
-                     u3[t] + l*(u3[t] + u4[t]))) - 1.*Ib*(-1.*kFa*
-                   (wvx - 1.*u1[t])*((wvx - 1.*u1[t])^2 + (wvy - 1.*u2[t])^2)^
-                    0.5 + 0.5*kFb*l*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
-                     Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
-                      u3[t] + 0.5*l*(u3[t] + u4[t])]*(2.*u1[t] + 
-                    2.*r*Cos[q3[t]]*u3[t] + l*Cos[oq4 + q3[t] + q4[t]]*
-                     (u3[t] + u4[t])) + 0.5*mb*(2.*r*Sin[q3[t]]*u3[t]^2 + 
+                      (u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*(4.*u1[t]^2 + 
+                        4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*u3[t] + 8.*r*
+                         Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*u3[t]^2 + 4.*l*
+                         Cos[oq4 + q3[t] + q4[t]]*u1[t]*(u3[t] + u4[t]) + 
+                        4.*l*Sin[oq4 + q3[t] + q4[t]]*u2[t]*(u3[t] + u4[t]) + 
+                        4.*l*r*Cos[oq4 + q4[t]]*u3[t]*(u3[t] + u4[t]) + 
+                        l^2*(u3[t] + u4[t])^2)^0.5]*(2.*Cos[oq4 + q3[t] + 
+                       q4[t]]*u1[t] + 2.*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
+                    2.*r*Cos[oq4 + q4[t]]*u3[t] + l*(u3[t] + u4[t]))) - 
+                1.*Ib*(-1.*kFa*(wvx - 1.*u1[t])*((wvx - 1.*u1[t])^2 + 
+                     (wvy - 1.*u2[t])^2)^0.5 + 0.5*kFb*l*Abs[
+                    Cos[oq4 + q3[t] + q4[t]]*u1[t] + Sin[oq4 + q3[t] + q4[t]]*
+                      u2[t] + r*Cos[oq4 + q4[t]]*u3[t] + 0.5*l*(u3[t] + 
+                       u4[t]) + 0.5*krb*Sign[u4[t]]*(4.*u1[t]^2 + 
+                        4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*u3[t] + 8.*r*
+                         Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*u3[t]^2 + 4.*l*
+                         Cos[oq4 + q3[t] + q4[t]]*u1[t]*(u3[t] + u4[t]) + 
+                        4.*l*Sin[oq4 + q3[t] + q4[t]]*u2[t]*(u3[t] + u4[t]) + 
+                        4.*l*r*Cos[oq4 + q4[t]]*u3[t]*(u3[t] + u4[t]) + 
+                        l^2*(u3[t] + u4[t])^2)^0.5]*(2.*u1[t] + 2.*r*
+                     Cos[q3[t]]*u3[t] + l*Cos[oq4 + q3[t] + q4[t]]*(u3[t] + 
+                      u4[t])) + 0.5*mb*(2.*r*Sin[q3[t]]*u3[t]^2 + 
                     l*Sin[oq4 + q3[t] + q4[t]]*(u3[t] + u4[t])^2) + 
                   0.5*fl*mc*Sin[oq5 + q3[t] + q5[t]]*(u3[t] + u5[t])^2 - 
                   0.5*fl*kFc*Abs[Cos[oq5 + q3[t] + q5[t]]*u1[t] + 
@@ -6061,44 +6492,57 @@
                    u3[t]^2 + kTb*Abs[u4[t]]*u4[t] + 0.25*kFb*l^2*
                    Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + Sin[oq4 + q3[t] + 
                         q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*u3[t] + 0.5*l*
-                      (u3[t] + u4[t])]*(2.*Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
-                    2.*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 2.*r*Cos[oq4 + q4[t]]*
-                     u3[t] + l*(u3[t] + u4[t]))) - 1.*Ib*(-1.*kFa*
-                   ((wvx - 1.*u1[t])^2 + (wvy - 1.*u2[t])^2)^0.5*(wvy - 
-                    1.*u2[t]) + 0.5*kFb*l*Abs[Cos[oq4 + q3[t] + q4[t]]*
+                      (u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*(4.*u1[t]^2 + 
+                        4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*u3[t] + 8.*r*
+                         Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*u3[t]^2 + 4.*l*
+                         Cos[oq4 + q3[t] + q4[t]]*u1[t]*(u3[t] + u4[t]) + 
+                        4.*l*Sin[oq4 + q3[t] + q4[t]]*u2[t]*(u3[t] + u4[t]) + 
+                        4.*l*r*Cos[oq4 + q4[t]]*u3[t]*(u3[t] + u4[t]) + 
+                        l^2*(u3[t] + u4[t])^2)^0.5]*(2.*Cos[oq4 + q3[t] + 
+                       q4[t]]*u1[t] + 2.*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
+                    2.*r*Cos[oq4 + q4[t]]*u3[t] + l*(u3[t] + u4[t]))) - 
+                1.*Ib*(-1.*kFa*((wvx - 1.*u1[t])^2 + (wvy - 1.*u2[t])^2)^0.5*
+                   (wvy - 1.*u2[t]) + 0.5*kFb*l*Abs[Cos[oq4 + q3[t] + q4[t]]*
                       u1[t] + Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
-                     r*Cos[oq4 + q4[t]]*u3[t] + 0.5*l*(u3[t] + u4[t])]*
-                   (2.*u2[t] + 2.*r*Sin[q3[t]]*u3[t] + l*Sin[oq4 + q3[t] + 
-                       q4[t]]*(u3[t] + u4[t])) - 0.5*mb*(2.*r*Cos[q3[t]]*
-                     u3[t]^2 + l*Cos[oq4 + q3[t] + q4[t]]*(u3[t] + u4[t])^
-                      2) - 0.5*fl*mc*Cos[oq5 + q3[t] + q5[t]]*(u3[t] + u5[t])^
-                    2 + 0.5*fl*kFc*Abs[Cos[oq5 + q3[t] + q5[t]]*u1[t] + 
-                     Sin[oq5 + q3[t] + q5[t]]*u2[t] + 0.7071068*r*
-                      Cos[oq5 + q5[t]]*u3[t] + 0.7071068*r*Sin[oq5 + q5[t]]*
-                      u3[t] + 0.5*fl*(u3[t] + u5[t])]*(2.*u2[t] + 1.414214*r*
-                     Cos[q3[t]]*u3[t] + 1.414214*r*Sin[q3[t]]*u3[t] + 
-                    fl*Sin[oq5 + q3[t] + q5[t]]*(u3[t] + u5[t])) - 
-                  0.5*fl*mc*Cos[oq6 + q3[t] + q6[t]]*(u3[t] + u6[t])^2 - 
-                  0.5*fl*kFc*Abs[Cos[oq6 + q3[t] + q6[t]]*u1[t] + 
-                     Sin[oq6 + q3[t] + q6[t]]*u2[t] - 0.7071068*r*
-                      Cos[oq6 + q6[t]]*u3[t] + 0.7071068*r*Sin[oq6 + q6[t]]*
-                      u3[t] + 0.5*fl*(u3[t] + u6[t])]*(-2.*u2[t] - 1.414214*r*
-                     Cos[q3[t]]*u3[t] + 1.414214*r*Sin[q3[t]]*u3[t] - 
-                    1.*fl*Sin[oq6 + q3[t] + q6[t]]*(u3[t] + u6[t])) - 
-                  0.5*fl*mc*Cos[oq7 + q3[t] + q7[t]]*(u3[t] + u7[t])^2 - 
-                  0.5*fl*kFc*Abs[Cos[oq7 + q3[t] + q7[t]]*u1[t] + 
-                     Sin[oq7 + q3[t] + q7[t]]*u2[t] - 0.7071068*r*
-                      Cos[oq7 + q7[t]]*u3[t] - 0.7071068*r*Sin[oq7 + q7[t]]*
-                      u3[t] + 0.5*fl*(u3[t] + u7[t])]*(-2.*u2[t] + 1.414214*r*
-                     Cos[q3[t]]*u3[t] + 1.414214*r*Sin[q3[t]]*u3[t] - 
-                    1.*fl*Sin[oq7 + q3[t] + q7[t]]*(u3[t] + u7[t])) - 
-                  0.5*fl*mc*Cos[oq8 + q3[t] + q8[t]]*(u3[t] + u8[t])^2 - 
-                  0.5*fl*kFc*Abs[Cos[oq8 + q3[t] + q8[t]]*u1[t] + 
-                     Sin[oq8 + q3[t] + q8[t]]*u2[t] + 0.7071068*r*
-                      Cos[oq8 + q8[t]]*u3[t] - 0.7071068*r*Sin[oq8 + q8[t]]*
-                      u3[t] + 0.5*fl*(u3[t] + u8[t])]*(-2.*u2[t] + 1.414214*r*
-                     Cos[q3[t]]*u3[t] - 1.414214*r*Sin[q3[t]]*u3[t] - 
-                    1.*fl*Sin[oq8 + q3[t] + q8[t]]*(u3[t] + u8[t]))))))))))/
+                     r*Cos[oq4 + q4[t]]*u3[t] + 0.5*l*(u3[t] + u4[t]) + 
+                     0.5*krb*Sign[u4[t]]*(4.*u1[t]^2 + 4.*u2[t]^2 + 
+                        8.*r*Cos[q3[t]]*u1[t]*u3[t] + 8.*r*Sin[q3[t]]*u2[t]*
+                         u3[t] + 4.*r^2*u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + 
+                          q4[t]]*u1[t]*(u3[t] + u4[t]) + 4.*l*Sin[oq4 + 
+                          q3[t] + q4[t]]*u2[t]*(u3[t] + u4[t]) + 4.*l*r*
+                         Cos[oq4 + q4[t]]*u3[t]*(u3[t] + u4[t]) + l^2*
+                         (u3[t] + u4[t])^2)^0.5]*(2.*u2[t] + 2.*r*Sin[q3[t]]*
+                     u3[t] + l*Sin[oq4 + q3[t] + q4[t]]*(u3[t] + u4[t])) - 
+                  0.5*mb*(2.*r*Cos[q3[t]]*u3[t]^2 + l*Cos[oq4 + q3[t] + 
+                       q4[t]]*(u3[t] + u4[t])^2) - 0.5*fl*mc*Cos[oq5 + 
+                     q3[t] + q5[t]]*(u3[t] + u5[t])^2 + 0.5*fl*kFc*
+                   Abs[Cos[oq5 + q3[t] + q5[t]]*u1[t] + Sin[oq5 + q3[t] + 
+                        q5[t]]*u2[t] + 0.7071068*r*Cos[oq5 + q5[t]]*u3[t] + 
+                     0.7071068*r*Sin[oq5 + q5[t]]*u3[t] + 0.5*fl*(u3[t] + 
+                       u5[t])]*(2.*u2[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 
+                    1.414214*r*Sin[q3[t]]*u3[t] + fl*Sin[oq5 + q3[t] + q5[t]]*
+                     (u3[t] + u5[t])) - 0.5*fl*mc*Cos[oq6 + q3[t] + q6[t]]*
+                   (u3[t] + u6[t])^2 - 0.5*fl*kFc*Abs[Cos[oq6 + q3[t] + 
+                        q6[t]]*u1[t] + Sin[oq6 + q3[t] + q6[t]]*u2[t] - 
+                     0.7071068*r*Cos[oq6 + q6[t]]*u3[t] + 0.7071068*r*
+                      Sin[oq6 + q6[t]]*u3[t] + 0.5*fl*(u3[t] + u6[t])]*
+                   (-2.*u2[t] - 1.414214*r*Cos[q3[t]]*u3[t] + 1.414214*r*
+                     Sin[q3[t]]*u3[t] - 1.*fl*Sin[oq6 + q3[t] + q6[t]]*
+                     (u3[t] + u6[t])) - 0.5*fl*mc*Cos[oq7 + q3[t] + q7[t]]*
+                   (u3[t] + u7[t])^2 - 0.5*fl*kFc*Abs[Cos[oq7 + q3[t] + 
+                        q7[t]]*u1[t] + Sin[oq7 + q3[t] + q7[t]]*u2[t] - 
+                     0.7071068*r*Cos[oq7 + q7[t]]*u3[t] - 0.7071068*r*
+                      Sin[oq7 + q7[t]]*u3[t] + 0.5*fl*(u3[t] + u7[t])]*
+                   (-2.*u2[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 1.414214*r*
+                     Sin[q3[t]]*u3[t] - 1.*fl*Sin[oq7 + q3[t] + q7[t]]*
+                     (u3[t] + u7[t])) - 0.5*fl*mc*Cos[oq8 + q3[t] + q8[t]]*
+                   (u3[t] + u8[t])^2 - 0.5*fl*kFc*Abs[Cos[oq8 + q3[t] + 
+                        q8[t]]*u1[t] + Sin[oq8 + q3[t] + q8[t]]*u2[t] + 
+                     0.7071068*r*Cos[oq8 + q8[t]]*u3[t] - 0.7071068*r*
+                      Sin[oq8 + q8[t]]*u3[t] + 0.5*fl*(u3[t] + u8[t])]*
+                   (-2.*u2[t] + 1.414214*r*Cos[q3[t]]*u3[t] - 1.414214*r*
+                     Sin[q3[t]]*u3[t] - 1.*fl*Sin[oq8 + q3[t] + q8[t]]*
+                     (u3[t] + u8[t]))))))))))/
     ((-0.3535534*Ic*(0. + 1.*Ic^2*(0. + 0.5*fl*Ib*mc*
             Cos[oq5 + q3[t] + q5[t]]))*(2.828427*Ic + 
          fl*mc*r*(Cos[oq5 + q5[t]] + Sin[oq5 + q5[t]])) - 
@@ -6427,45 +6871,58 @@
                      Sin[oq4 + q4[t]]*u3[t]^2 + kTb*Abs[u4[t]]*u4[t] + 
                     0.25*kFb*l^2*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
                        Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
-                        u3[t] + 0.5*l*(u3[t] + u4[t])]*(2.*Cos[oq4 + q3[t] + 
-                         q4[t]]*u1[t] + 2.*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
-                      2.*r*Cos[oq4 + q4[t]]*u3[t] + l*(u3[t] + u4[t]))) - 
-                  1.*Ib*(-1.*kFa*(wvx - 1.*u1[t])*((wvx - 1.*u1[t])^2 + 
-                       (wvy - 1.*u2[t])^2)^0.5 + 0.5*kFb*l*Abs[
-                      Cos[oq4 + q3[t] + q4[t]]*u1[t] + Sin[oq4 + q3[t] + 
-                          q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*u3[t] + 
-                       0.5*l*(u3[t] + u4[t])]*(2.*u1[t] + 2.*r*Cos[q3[t]]*
-                       u3[t] + l*Cos[oq4 + q3[t] + q4[t]]*(u3[t] + u4[t])) + 
-                    0.5*mb*(2.*r*Sin[q3[t]]*u3[t]^2 + l*Sin[oq4 + q3[t] + 
-                         q4[t]]*(u3[t] + u4[t])^2) + 0.5*fl*mc*Sin[oq5 + 
-                       q3[t] + q5[t]]*(u3[t] + u5[t])^2 - 0.5*fl*kFc*
-                     Abs[Cos[oq5 + q3[t] + q5[t]]*u1[t] + Sin[oq5 + q3[t] + 
-                          q5[t]]*u2[t] + 0.7071068*r*Cos[oq5 + q5[t]]*u3[t] + 
-                       0.7071068*r*Sin[oq5 + q5[t]]*u3[t] + 0.5*fl*(u3[t] + 
-                         u5[t])]*(-2.*u1[t] - 1.414214*r*Cos[q3[t]]*u3[t] + 
-                      1.414214*r*Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq5 + q3[t] + 
-                         q5[t]]*(u3[t] + u5[t])) + 0.5*fl*mc*Sin[oq6 + 
-                       q3[t] + q6[t]]*(u3[t] + u6[t])^2 - 0.5*fl*kFc*
-                     Abs[Cos[oq6 + q3[t] + q6[t]]*u1[t] + Sin[oq6 + q3[t] + 
-                          q6[t]]*u2[t] - 0.7071068*r*Cos[oq6 + q6[t]]*u3[t] + 
-                       0.7071068*r*Sin[oq6 + q6[t]]*u3[t] + 0.5*fl*(u3[t] + 
-                         u6[t])]*(-2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 
-                      1.414214*r*Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq6 + q3[t] + 
-                         q6[t]]*(u3[t] + u6[t])) + 0.5*fl*mc*Sin[oq7 + 
-                       q3[t] + q7[t]]*(u3[t] + u7[t])^2 - 0.5*fl*kFc*
-                     Abs[Cos[oq7 + q3[t] + q7[t]]*u1[t] + Sin[oq7 + q3[t] + 
-                          q7[t]]*u2[t] - 0.7071068*r*Cos[oq7 + q7[t]]*u3[t] - 
-                       0.7071068*r*Sin[oq7 + q7[t]]*u3[t] + 0.5*fl*(u3[t] + 
-                         u7[t])]*(-2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] - 
-                      1.414214*r*Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq7 + q3[t] + 
-                         q7[t]]*(u3[t] + u7[t])) + 0.5*fl*mc*Sin[oq8 + 
-                       q3[t] + q8[t]]*(u3[t] + u8[t])^2 + 0.5*fl*kFc*
-                     Abs[Cos[oq8 + q3[t] + q8[t]]*u1[t] + Sin[oq8 + q3[t] + 
-                          q8[t]]*u2[t] + 0.7071068*r*Cos[oq8 + q8[t]]*u3[t] - 
-                       0.7071068*r*Sin[oq8 + q8[t]]*u3[t] + 0.5*fl*(u3[t] + 
-                         u8[t])]*(2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 
-                      1.414214*r*Sin[q3[t]]*u3[t] + fl*Cos[oq8 + q3[t] + 
-                         q8[t]]*(u3[t] + u8[t])))))))) + 
+                        u3[t] + 0.5*l*(u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*
+                        (4.*u1[t]^2 + 4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*
+                          u3[t] + 8.*r*Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*
+                          u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t]*
+                          (u3[t] + u4[t]) + 4.*l*Sin[oq4 + q3[t] + q4[t]]*
+                          u2[t]*(u3[t] + u4[t]) + 4.*l*r*Cos[oq4 + q4[t]]*
+                          u3[t]*(u3[t] + u4[t]) + l^2*(u3[t] + u4[t])^2)^0.5]*
+                     (2.*Cos[oq4 + q3[t] + q4[t]]*u1[t] + 2.*Sin[oq4 + 
+                         q3[t] + q4[t]]*u2[t] + 2.*r*Cos[oq4 + q4[t]]*u3[t] + 
+                      l*(u3[t] + u4[t]))) - 1.*Ib*(-1.*kFa*(wvx - 1.*u1[t])*
+                     ((wvx - 1.*u1[t])^2 + (wvy - 1.*u2[t])^2)^0.5 + 
+                    0.5*kFb*l*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
+                       Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
+                        u3[t] + 0.5*l*(u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*
+                        (4.*u1[t]^2 + 4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*
+                          u3[t] + 8.*r*Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*
+                          u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t]*
+                          (u3[t] + u4[t]) + 4.*l*Sin[oq4 + q3[t] + q4[t]]*
+                          u2[t]*(u3[t] + u4[t]) + 4.*l*r*Cos[oq4 + q4[t]]*
+                          u3[t]*(u3[t] + u4[t]) + l^2*(u3[t] + u4[t])^2)^0.5]*
+                     (2.*u1[t] + 2.*r*Cos[q3[t]]*u3[t] + l*Cos[oq4 + q3[t] + 
+                         q4[t]]*(u3[t] + u4[t])) + 0.5*mb*(2.*r*Sin[q3[t]]*
+                       u3[t]^2 + l*Sin[oq4 + q3[t] + q4[t]]*(u3[t] + u4[t])^
+                        2) + 0.5*fl*mc*Sin[oq5 + q3[t] + q5[t]]*
+                     (u3[t] + u5[t])^2 - 0.5*fl*kFc*Abs[Cos[oq5 + q3[t] + 
+                          q5[t]]*u1[t] + Sin[oq5 + q3[t] + q5[t]]*u2[t] + 
+                       0.7071068*r*Cos[oq5 + q5[t]]*u3[t] + 0.7071068*r*
+                        Sin[oq5 + q5[t]]*u3[t] + 0.5*fl*(u3[t] + u5[t])]*
+                     (-2.*u1[t] - 1.414214*r*Cos[q3[t]]*u3[t] + 1.414214*r*
+                       Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq5 + q3[t] + q5[t]]*
+                       (u3[t] + u5[t])) + 0.5*fl*mc*Sin[oq6 + q3[t] + q6[t]]*
+                     (u3[t] + u6[t])^2 - 0.5*fl*kFc*Abs[Cos[oq6 + q3[t] + 
+                          q6[t]]*u1[t] + Sin[oq6 + q3[t] + q6[t]]*u2[t] - 
+                       0.7071068*r*Cos[oq6 + q6[t]]*u3[t] + 0.7071068*r*
+                        Sin[oq6 + q6[t]]*u3[t] + 0.5*fl*(u3[t] + u6[t])]*
+                     (-2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 1.414214*r*
+                       Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq6 + q3[t] + q6[t]]*
+                       (u3[t] + u6[t])) + 0.5*fl*mc*Sin[oq7 + q3[t] + q7[t]]*
+                     (u3[t] + u7[t])^2 - 0.5*fl*kFc*Abs[Cos[oq7 + q3[t] + 
+                          q7[t]]*u1[t] + Sin[oq7 + q3[t] + q7[t]]*u2[t] - 
+                       0.7071068*r*Cos[oq7 + q7[t]]*u3[t] - 0.7071068*r*
+                        Sin[oq7 + q7[t]]*u3[t] + 0.5*fl*(u3[t] + u7[t])]*
+                     (-2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] - 1.414214*r*
+                       Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq7 + q3[t] + q7[t]]*
+                       (u3[t] + u7[t])) + 0.5*fl*mc*Sin[oq8 + q3[t] + q8[t]]*
+                     (u3[t] + u8[t])^2 + 0.5*fl*kFc*Abs[Cos[oq8 + q3[t] + 
+                          q8[t]]*u1[t] + Sin[oq8 + q3[t] + q8[t]]*u2[t] + 
+                       0.7071068*r*Cos[oq8 + q8[t]]*u3[t] - 0.7071068*r*
+                        Sin[oq8 + q8[t]]*u3[t] + 0.5*fl*(u3[t] + u8[t])]*
+                     (2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 1.414214*r*
+                       Sin[q3[t]]*u3[t] + fl*Cos[oq8 + q3[t] + q8[t]]*
+                       (u3[t] + u8[t])))))))) + 
         (-0.3535534*Ic*(0. + 1.*Ic^2*(0. + 0.5*fl*Ib*mc*Cos[oq5 + q3[t] + 
                  q5[t]]))*(2.828427*Ic + fl*mc*r*(Cos[oq5 + q5[t]] + 
               Sin[oq5 + q5[t]])) - 1.*Ic*(0.3535534*(0. + 1.*Ic^2*(0. + 
@@ -6524,13 +6981,26 @@
                      Sin[oq4 + q4[t]]*u3[t]^2 + kTb*Abs[u4[t]]*u4[t] + 
                     0.25*kFb*l^2*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
                        Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
-                        u3[t] + 0.5*l*(u3[t] + u4[t])]*(2.*Cos[oq4 + q3[t] + 
-                         q4[t]]*u1[t] + 2.*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
-                      2.*r*Cos[oq4 + q4[t]]*u3[t] + l*(u3[t] + u4[t]))) - 
-                  1.*Ib*(-1.*kFa*((wvx - 1.*u1[t])^2 + (wvy - 1.*u2[t])^2)^
-                      0.5*(wvy - 1.*u2[t]) + 0.5*kFb*l*Abs[Cos[oq4 + q3[t] + 
-                          q4[t]]*u1[t] + Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
-                       r*Cos[oq4 + q4[t]]*u3[t] + 0.5*l*(u3[t] + u4[t])]*
+                        u3[t] + 0.5*l*(u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*
+                        (4.*u1[t]^2 + 4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*
+                          u3[t] + 8.*r*Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*
+                          u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t]*
+                          (u3[t] + u4[t]) + 4.*l*Sin[oq4 + q3[t] + q4[t]]*
+                          u2[t]*(u3[t] + u4[t]) + 4.*l*r*Cos[oq4 + q4[t]]*
+                          u3[t]*(u3[t] + u4[t]) + l^2*(u3[t] + u4[t])^2)^0.5]*
+                     (2.*Cos[oq4 + q3[t] + q4[t]]*u1[t] + 2.*Sin[oq4 + 
+                         q3[t] + q4[t]]*u2[t] + 2.*r*Cos[oq4 + q4[t]]*u3[t] + 
+                      l*(u3[t] + u4[t]))) - 1.*Ib*(-1.*kFa*((wvx - 1.*u1[t])^
+                        2 + (wvy - 1.*u2[t])^2)^0.5*(wvy - 1.*u2[t]) + 
+                    0.5*kFb*l*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
+                       Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
+                        u3[t] + 0.5*l*(u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*
+                        (4.*u1[t]^2 + 4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*
+                          u3[t] + 8.*r*Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*
+                          u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t]*
+                          (u3[t] + u4[t]) + 4.*l*Sin[oq4 + q3[t] + q4[t]]*
+                          u2[t]*(u3[t] + u4[t]) + 4.*l*r*Cos[oq4 + q4[t]]*
+                          u3[t]*(u3[t] + u4[t]) + l^2*(u3[t] + u4[t])^2)^0.5]*
                      (2.*u2[t] + 2.*r*Sin[q3[t]]*u3[t] + l*Sin[oq4 + q3[t] + 
                          q4[t]]*(u3[t] + u4[t])) - 0.5*mb*(2.*r*Cos[q3[t]]*
                        u3[t]^2 + l*Cos[oq4 + q3[t] + q4[t]]*(u3[t] + u4[t])^
@@ -6678,45 +7148,58 @@
                      Sin[oq4 + q4[t]]*u3[t]^2 + kTb*Abs[u4[t]]*u4[t] + 
                     0.25*kFb*l^2*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
                        Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
-                        u3[t] + 0.5*l*(u3[t] + u4[t])]*(2.*Cos[oq4 + q3[t] + 
-                         q4[t]]*u1[t] + 2.*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
-                      2.*r*Cos[oq4 + q4[t]]*u3[t] + l*(u3[t] + u4[t]))) - 
-                  1.*Ib*(-1.*kFa*(wvx - 1.*u1[t])*((wvx - 1.*u1[t])^2 + 
-                       (wvy - 1.*u2[t])^2)^0.5 + 0.5*kFb*l*Abs[
-                      Cos[oq4 + q3[t] + q4[t]]*u1[t] + Sin[oq4 + q3[t] + 
-                          q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*u3[t] + 
-                       0.5*l*(u3[t] + u4[t])]*(2.*u1[t] + 2.*r*Cos[q3[t]]*
-                       u3[t] + l*Cos[oq4 + q3[t] + q4[t]]*(u3[t] + u4[t])) + 
-                    0.5*mb*(2.*r*Sin[q3[t]]*u3[t]^2 + l*Sin[oq4 + q3[t] + 
-                         q4[t]]*(u3[t] + u4[t])^2) + 0.5*fl*mc*Sin[oq5 + 
-                       q3[t] + q5[t]]*(u3[t] + u5[t])^2 - 0.5*fl*kFc*
-                     Abs[Cos[oq5 + q3[t] + q5[t]]*u1[t] + Sin[oq5 + q3[t] + 
-                          q5[t]]*u2[t] + 0.7071068*r*Cos[oq5 + q5[t]]*u3[t] + 
-                       0.7071068*r*Sin[oq5 + q5[t]]*u3[t] + 0.5*fl*(u3[t] + 
-                         u5[t])]*(-2.*u1[t] - 1.414214*r*Cos[q3[t]]*u3[t] + 
-                      1.414214*r*Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq5 + q3[t] + 
-                         q5[t]]*(u3[t] + u5[t])) + 0.5*fl*mc*Sin[oq6 + 
-                       q3[t] + q6[t]]*(u3[t] + u6[t])^2 - 0.5*fl*kFc*
-                     Abs[Cos[oq6 + q3[t] + q6[t]]*u1[t] + Sin[oq6 + q3[t] + 
-                          q6[t]]*u2[t] - 0.7071068*r*Cos[oq6 + q6[t]]*u3[t] + 
-                       0.7071068*r*Sin[oq6 + q6[t]]*u3[t] + 0.5*fl*(u3[t] + 
-                         u6[t])]*(-2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 
-                      1.414214*r*Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq6 + q3[t] + 
-                         q6[t]]*(u3[t] + u6[t])) + 0.5*fl*mc*Sin[oq7 + 
-                       q3[t] + q7[t]]*(u3[t] + u7[t])^2 - 0.5*fl*kFc*
-                     Abs[Cos[oq7 + q3[t] + q7[t]]*u1[t] + Sin[oq7 + q3[t] + 
-                          q7[t]]*u2[t] - 0.7071068*r*Cos[oq7 + q7[t]]*u3[t] - 
-                       0.7071068*r*Sin[oq7 + q7[t]]*u3[t] + 0.5*fl*(u3[t] + 
-                         u7[t])]*(-2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] - 
-                      1.414214*r*Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq7 + q3[t] + 
-                         q7[t]]*(u3[t] + u7[t])) + 0.5*fl*mc*Sin[oq8 + 
-                       q3[t] + q8[t]]*(u3[t] + u8[t])^2 + 0.5*fl*kFc*
-                     Abs[Cos[oq8 + q3[t] + q8[t]]*u1[t] + Sin[oq8 + q3[t] + 
-                          q8[t]]*u2[t] + 0.7071068*r*Cos[oq8 + q8[t]]*u3[t] - 
-                       0.7071068*r*Sin[oq8 + q8[t]]*u3[t] + 0.5*fl*(u3[t] + 
-                         u8[t])]*(2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 
-                      1.414214*r*Sin[q3[t]]*u3[t] + fl*Cos[oq8 + q3[t] + 
-                         q8[t]]*(u3[t] + u8[t])))))))) + 
+                        u3[t] + 0.5*l*(u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*
+                        (4.*u1[t]^2 + 4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*
+                          u3[t] + 8.*r*Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*
+                          u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t]*
+                          (u3[t] + u4[t]) + 4.*l*Sin[oq4 + q3[t] + q4[t]]*
+                          u2[t]*(u3[t] + u4[t]) + 4.*l*r*Cos[oq4 + q4[t]]*
+                          u3[t]*(u3[t] + u4[t]) + l^2*(u3[t] + u4[t])^2)^0.5]*
+                     (2.*Cos[oq4 + q3[t] + q4[t]]*u1[t] + 2.*Sin[oq4 + 
+                         q3[t] + q4[t]]*u2[t] + 2.*r*Cos[oq4 + q4[t]]*u3[t] + 
+                      l*(u3[t] + u4[t]))) - 1.*Ib*(-1.*kFa*(wvx - 1.*u1[t])*
+                     ((wvx - 1.*u1[t])^2 + (wvy - 1.*u2[t])^2)^0.5 + 
+                    0.5*kFb*l*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
+                       Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
+                        u3[t] + 0.5*l*(u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*
+                        (4.*u1[t]^2 + 4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*
+                          u3[t] + 8.*r*Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*
+                          u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t]*
+                          (u3[t] + u4[t]) + 4.*l*Sin[oq4 + q3[t] + q4[t]]*
+                          u2[t]*(u3[t] + u4[t]) + 4.*l*r*Cos[oq4 + q4[t]]*
+                          u3[t]*(u3[t] + u4[t]) + l^2*(u3[t] + u4[t])^2)^0.5]*
+                     (2.*u1[t] + 2.*r*Cos[q3[t]]*u3[t] + l*Cos[oq4 + q3[t] + 
+                         q4[t]]*(u3[t] + u4[t])) + 0.5*mb*(2.*r*Sin[q3[t]]*
+                       u3[t]^2 + l*Sin[oq4 + q3[t] + q4[t]]*(u3[t] + u4[t])^
+                        2) + 0.5*fl*mc*Sin[oq5 + q3[t] + q5[t]]*
+                     (u3[t] + u5[t])^2 - 0.5*fl*kFc*Abs[Cos[oq5 + q3[t] + 
+                          q5[t]]*u1[t] + Sin[oq5 + q3[t] + q5[t]]*u2[t] + 
+                       0.7071068*r*Cos[oq5 + q5[t]]*u3[t] + 0.7071068*r*
+                        Sin[oq5 + q5[t]]*u3[t] + 0.5*fl*(u3[t] + u5[t])]*
+                     (-2.*u1[t] - 1.414214*r*Cos[q3[t]]*u3[t] + 1.414214*r*
+                       Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq5 + q3[t] + q5[t]]*
+                       (u3[t] + u5[t])) + 0.5*fl*mc*Sin[oq6 + q3[t] + q6[t]]*
+                     (u3[t] + u6[t])^2 - 0.5*fl*kFc*Abs[Cos[oq6 + q3[t] + 
+                          q6[t]]*u1[t] + Sin[oq6 + q3[t] + q6[t]]*u2[t] - 
+                       0.7071068*r*Cos[oq6 + q6[t]]*u3[t] + 0.7071068*r*
+                        Sin[oq6 + q6[t]]*u3[t] + 0.5*fl*(u3[t] + u6[t])]*
+                     (-2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 1.414214*r*
+                       Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq6 + q3[t] + q6[t]]*
+                       (u3[t] + u6[t])) + 0.5*fl*mc*Sin[oq7 + q3[t] + q7[t]]*
+                     (u3[t] + u7[t])^2 - 0.5*fl*kFc*Abs[Cos[oq7 + q3[t] + 
+                          q7[t]]*u1[t] + Sin[oq7 + q3[t] + q7[t]]*u2[t] - 
+                       0.7071068*r*Cos[oq7 + q7[t]]*u3[t] - 0.7071068*r*
+                        Sin[oq7 + q7[t]]*u3[t] + 0.5*fl*(u3[t] + u7[t])]*
+                     (-2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] - 1.414214*r*
+                       Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq7 + q3[t] + q7[t]]*
+                       (u3[t] + u7[t])) + 0.5*fl*mc*Sin[oq8 + q3[t] + q8[t]]*
+                     (u3[t] + u8[t])^2 + 0.5*fl*kFc*Abs[Cos[oq8 + q3[t] + 
+                          q8[t]]*u1[t] + Sin[oq8 + q3[t] + q8[t]]*u2[t] + 
+                       0.7071068*r*Cos[oq8 + q8[t]]*u3[t] - 0.7071068*r*
+                        Sin[oq8 + q8[t]]*u3[t] + 0.5*fl*(u3[t] + u8[t])]*
+                     (2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 1.414214*r*
+                       Sin[q3[t]]*u3[t] + fl*Cos[oq8 + q3[t] + q8[t]]*
+                       (u3[t] + u8[t])))))))) + 
         (-0.3535534*Ic*(0. + 1.*Ic^2*(0. + 0.5*fl*Ib*mc*Cos[oq5 + q3[t] + 
                  q5[t]]))*(2.828427*Ic + fl*mc*r*(Cos[oq5 + q5[t]] + 
               Sin[oq5 + q5[t]])) - 1.*Ic*(0.3535534*(0. + 1.*Ic^2*(0. + 
@@ -6778,16 +7261,29 @@
                      Sin[oq4 + q4[t]]*u3[t]^2 + kTb*Abs[u4[t]]*u4[t] + 
                     0.25*kFb*l^2*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
                        Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
-                        u3[t] + 0.5*l*(u3[t] + u4[t])]*(2.*Cos[oq4 + q3[t] + 
-                         q4[t]]*u1[t] + 2.*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
-                      2.*r*Cos[oq4 + q4[t]]*u3[t] + l*(u3[t] + u4[t]))) - 
-                  1.*Ib*(kTa*Abs[u3[t]]*u3[t] + kTb*Abs[u4[t]]*u4[t] + 
-                    0.25*kFb*l*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
-                       Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
-                        u3[t] + 0.5*l*(u3[t] + u4[t])]*(4.*r*Cos[q3[t]]*
-                       u1[t] + 2.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
-                      4.*r*Sin[q3[t]]*u2[t] + 2.*l*Sin[oq4 + q3[t] + q4[t]]*
-                       u2[t] + 4.*r^2*u3[t] + 4.*l*r*Cos[oq4 + q4[t]]*u3[t] + 
+                        u3[t] + 0.5*l*(u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*
+                        (4.*u1[t]^2 + 4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*
+                          u3[t] + 8.*r*Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*
+                          u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t]*
+                          (u3[t] + u4[t]) + 4.*l*Sin[oq4 + q3[t] + q4[t]]*
+                          u2[t]*(u3[t] + u4[t]) + 4.*l*r*Cos[oq4 + q4[t]]*
+                          u3[t]*(u3[t] + u4[t]) + l^2*(u3[t] + u4[t])^2)^0.5]*
+                     (2.*Cos[oq4 + q3[t] + q4[t]]*u1[t] + 2.*Sin[oq4 + 
+                         q3[t] + q4[t]]*u2[t] + 2.*r*Cos[oq4 + q4[t]]*u3[t] + 
+                      l*(u3[t] + u4[t]))) - 1.*Ib*(kTa*Abs[u3[t]]*u3[t] + 
+                    kTb*Abs[u4[t]]*u4[t] + 0.25*kFb*l*Abs[Cos[oq4 + q3[t] + 
+                          q4[t]]*u1[t] + Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
+                       r*Cos[oq4 + q4[t]]*u3[t] + 0.5*l*(u3[t] + u4[t]) + 
+                       0.5*krb*Sign[u4[t]]*(4.*u1[t]^2 + 4.*u2[t]^2 + 
+                          8.*r*Cos[q3[t]]*u1[t]*u3[t] + 8.*r*Sin[q3[t]]*u2[t]*
+                          u3[t] + 4.*r^2*u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + 
+                          q4[t]]*u1[t]*(u3[t] + u4[t]) + 4.*l*Sin[oq4 + 
+                          q3[t] + q4[t]]*u2[t]*(u3[t] + u4[t]) + 4.*l*r*
+                          Cos[oq4 + q4[t]]*u3[t]*(u3[t] + u4[t]) + l^2*
+                          (u3[t] + u4[t])^2)^0.5]*(4.*r*Cos[q3[t]]*u1[t] + 
+                      2.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t] + 4.*r*Sin[q3[t]]*
+                       u2[t] + 2.*l*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
+                      4.*r^2*u3[t] + 4.*l*r*Cos[oq4 + q4[t]]*u3[t] + 
                       2.*l*r*Cos[oq4 + q4[t]]*u4[t] + l^2*(u3[t] + u4[t])) + 
                     kTc*Abs[u5[t]]*u5[t] - 0.25*fl*kFc*Abs[Cos[oq5 + q3[t] + 
                           q5[t]]*u1[t] + Sin[oq5 + q3[t] + q5[t]]*u2[t] + 
@@ -7128,13 +7624,25 @@
                  Sin[oq4 + q4[t]]*u3[t]^2 + kTb*Abs[u4[t]]*u4[t] + 
                 0.25*kFb*l^2*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
                    Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
-                    u3[t] + 0.5*l*(u3[t] + u4[t])]*(2.*Cos[oq4 + q3[t] + 
+                    u3[t] + 0.5*l*(u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*
+                    (4.*u1[t]^2 + 4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*u3[t] + 
+                      8.*r*Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*u3[t]^2 + 
+                      4.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t]*(u3[t] + u4[t]) + 
+                      4.*l*Sin[oq4 + q3[t] + q4[t]]*u2[t]*(u3[t] + u4[t]) + 
+                      4.*l*r*Cos[oq4 + q4[t]]*u3[t]*(u3[t] + u4[t]) + 
+                      l^2*(u3[t] + u4[t])^2)^0.5]*(2.*Cos[oq4 + q3[t] + 
                      q4[t]]*u1[t] + 2.*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
                   2.*r*Cos[oq4 + q4[t]]*u3[t] + l*(u3[t] + u4[t]))) - 
               1.*Ib*(-1.*kFa*(wvx - 1.*u1[t])*((wvx - 1.*u1[t])^2 + 
                    (wvy - 1.*u2[t])^2)^0.5 + 0.5*kFb*l*Abs[
                   Cos[oq4 + q3[t] + q4[t]]*u1[t] + Sin[oq4 + q3[t] + q4[t]]*
-                    u2[t] + r*Cos[oq4 + q4[t]]*u3[t] + 0.5*l*(u3[t] + u4[t])]*
+                    u2[t] + r*Cos[oq4 + q4[t]]*u3[t] + 0.5*l*(u3[t] + 
+                     u4[t]) + 0.5*krb*Sign[u4[t]]*(4.*u1[t]^2 + 4.*u2[t]^2 + 
+                      8.*r*Cos[q3[t]]*u1[t]*u3[t] + 8.*r*Sin[q3[t]]*u2[t]*
+                       u3[t] + 4.*r^2*u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + q4[t]]*
+                       u1[t]*(u3[t] + u4[t]) + 4.*l*Sin[oq4 + q3[t] + q4[t]]*
+                       u2[t]*(u3[t] + u4[t]) + 4.*l*r*Cos[oq4 + q4[t]]*u3[t]*
+                       (u3[t] + u4[t]) + l^2*(u3[t] + u4[t])^2)^0.5]*
                  (2.*u1[t] + 2.*r*Cos[q3[t]]*u3[t] + l*Cos[oq4 + q3[t] + 
                      q4[t]]*(u3[t] + u4[t])) + 0.5*mb*(2.*r*Sin[q3[t]]*
                    u3[t]^2 + l*Sin[oq4 + q3[t] + q4[t]]*(u3[t] + u4[t])^2) + 
@@ -7269,15 +7777,28 @@
                    u3[t]^2 + kTb*Abs[u4[t]]*u4[t] + 0.25*kFb*l^2*
                    Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + Sin[oq4 + q3[t] + 
                         q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*u3[t] + 0.5*l*
-                      (u3[t] + u4[t])]*(2.*Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
-                    2.*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 2.*r*Cos[oq4 + q4[t]]*
-                     u3[t] + l*(u3[t] + u4[t]))) - 1.*Ib*(-1.*kFa*
-                   (wvx - 1.*u1[t])*((wvx - 1.*u1[t])^2 + (wvy - 1.*u2[t])^2)^
-                    0.5 + 0.5*kFb*l*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
-                     Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
-                      u3[t] + 0.5*l*(u3[t] + u4[t])]*(2.*u1[t] + 
-                    2.*r*Cos[q3[t]]*u3[t] + l*Cos[oq4 + q3[t] + q4[t]]*
-                     (u3[t] + u4[t])) + 0.5*mb*(2.*r*Sin[q3[t]]*u3[t]^2 + 
+                      (u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*(4.*u1[t]^2 + 
+                        4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*u3[t] + 8.*r*
+                         Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*u3[t]^2 + 4.*l*
+                         Cos[oq4 + q3[t] + q4[t]]*u1[t]*(u3[t] + u4[t]) + 
+                        4.*l*Sin[oq4 + q3[t] + q4[t]]*u2[t]*(u3[t] + u4[t]) + 
+                        4.*l*r*Cos[oq4 + q4[t]]*u3[t]*(u3[t] + u4[t]) + 
+                        l^2*(u3[t] + u4[t])^2)^0.5]*(2.*Cos[oq4 + q3[t] + 
+                       q4[t]]*u1[t] + 2.*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
+                    2.*r*Cos[oq4 + q4[t]]*u3[t] + l*(u3[t] + u4[t]))) - 
+                1.*Ib*(-1.*kFa*(wvx - 1.*u1[t])*((wvx - 1.*u1[t])^2 + 
+                     (wvy - 1.*u2[t])^2)^0.5 + 0.5*kFb*l*Abs[
+                    Cos[oq4 + q3[t] + q4[t]]*u1[t] + Sin[oq4 + q3[t] + q4[t]]*
+                      u2[t] + r*Cos[oq4 + q4[t]]*u3[t] + 0.5*l*(u3[t] + 
+                       u4[t]) + 0.5*krb*Sign[u4[t]]*(4.*u1[t]^2 + 
+                        4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*u3[t] + 8.*r*
+                         Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*u3[t]^2 + 4.*l*
+                         Cos[oq4 + q3[t] + q4[t]]*u1[t]*(u3[t] + u4[t]) + 
+                        4.*l*Sin[oq4 + q3[t] + q4[t]]*u2[t]*(u3[t] + u4[t]) + 
+                        4.*l*r*Cos[oq4 + q4[t]]*u3[t]*(u3[t] + u4[t]) + 
+                        l^2*(u3[t] + u4[t])^2)^0.5]*(2.*u1[t] + 2.*r*
+                     Cos[q3[t]]*u3[t] + l*Cos[oq4 + q3[t] + q4[t]]*(u3[t] + 
+                      u4[t])) + 0.5*mb*(2.*r*Sin[q3[t]]*u3[t]^2 + 
                     l*Sin[oq4 + q3[t] + q4[t]]*(u3[t] + u4[t])^2) + 
                   0.5*fl*mc*Sin[oq5 + q3[t] + q5[t]]*(u3[t] + u5[t])^2 - 
                   0.5*fl*kFc*Abs[Cos[oq5 + q3[t] + q5[t]]*u1[t] + 
@@ -7365,44 +7886,57 @@
                    u3[t]^2 + kTb*Abs[u4[t]]*u4[t] + 0.25*kFb*l^2*
                    Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + Sin[oq4 + q3[t] + 
                         q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*u3[t] + 0.5*l*
-                      (u3[t] + u4[t])]*(2.*Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
-                    2.*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 2.*r*Cos[oq4 + q4[t]]*
-                     u3[t] + l*(u3[t] + u4[t]))) - 1.*Ib*(-1.*kFa*
-                   ((wvx - 1.*u1[t])^2 + (wvy - 1.*u2[t])^2)^0.5*(wvy - 
-                    1.*u2[t]) + 0.5*kFb*l*Abs[Cos[oq4 + q3[t] + q4[t]]*
+                      (u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*(4.*u1[t]^2 + 
+                        4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*u3[t] + 8.*r*
+                         Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*u3[t]^2 + 4.*l*
+                         Cos[oq4 + q3[t] + q4[t]]*u1[t]*(u3[t] + u4[t]) + 
+                        4.*l*Sin[oq4 + q3[t] + q4[t]]*u2[t]*(u3[t] + u4[t]) + 
+                        4.*l*r*Cos[oq4 + q4[t]]*u3[t]*(u3[t] + u4[t]) + 
+                        l^2*(u3[t] + u4[t])^2)^0.5]*(2.*Cos[oq4 + q3[t] + 
+                       q4[t]]*u1[t] + 2.*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
+                    2.*r*Cos[oq4 + q4[t]]*u3[t] + l*(u3[t] + u4[t]))) - 
+                1.*Ib*(-1.*kFa*((wvx - 1.*u1[t])^2 + (wvy - 1.*u2[t])^2)^0.5*
+                   (wvy - 1.*u2[t]) + 0.5*kFb*l*Abs[Cos[oq4 + q3[t] + q4[t]]*
                       u1[t] + Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
-                     r*Cos[oq4 + q4[t]]*u3[t] + 0.5*l*(u3[t] + u4[t])]*
-                   (2.*u2[t] + 2.*r*Sin[q3[t]]*u3[t] + l*Sin[oq4 + q3[t] + 
-                       q4[t]]*(u3[t] + u4[t])) - 0.5*mb*(2.*r*Cos[q3[t]]*
-                     u3[t]^2 + l*Cos[oq4 + q3[t] + q4[t]]*(u3[t] + u4[t])^
-                      2) - 0.5*fl*mc*Cos[oq5 + q3[t] + q5[t]]*(u3[t] + u5[t])^
-                    2 + 0.5*fl*kFc*Abs[Cos[oq5 + q3[t] + q5[t]]*u1[t] + 
-                     Sin[oq5 + q3[t] + q5[t]]*u2[t] + 0.7071068*r*
-                      Cos[oq5 + q5[t]]*u3[t] + 0.7071068*r*Sin[oq5 + q5[t]]*
-                      u3[t] + 0.5*fl*(u3[t] + u5[t])]*(2.*u2[t] + 1.414214*r*
-                     Cos[q3[t]]*u3[t] + 1.414214*r*Sin[q3[t]]*u3[t] + 
-                    fl*Sin[oq5 + q3[t] + q5[t]]*(u3[t] + u5[t])) - 
-                  0.5*fl*mc*Cos[oq6 + q3[t] + q6[t]]*(u3[t] + u6[t])^2 - 
-                  0.5*fl*kFc*Abs[Cos[oq6 + q3[t] + q6[t]]*u1[t] + 
-                     Sin[oq6 + q3[t] + q6[t]]*u2[t] - 0.7071068*r*
-                      Cos[oq6 + q6[t]]*u3[t] + 0.7071068*r*Sin[oq6 + q6[t]]*
-                      u3[t] + 0.5*fl*(u3[t] + u6[t])]*(-2.*u2[t] - 1.414214*r*
-                     Cos[q3[t]]*u3[t] + 1.414214*r*Sin[q3[t]]*u3[t] - 
-                    1.*fl*Sin[oq6 + q3[t] + q6[t]]*(u3[t] + u6[t])) - 
-                  0.5*fl*mc*Cos[oq7 + q3[t] + q7[t]]*(u3[t] + u7[t])^2 - 
-                  0.5*fl*kFc*Abs[Cos[oq7 + q3[t] + q7[t]]*u1[t] + 
-                     Sin[oq7 + q3[t] + q7[t]]*u2[t] - 0.7071068*r*
-                      Cos[oq7 + q7[t]]*u3[t] - 0.7071068*r*Sin[oq7 + q7[t]]*
-                      u3[t] + 0.5*fl*(u3[t] + u7[t])]*(-2.*u2[t] + 1.414214*r*
-                     Cos[q3[t]]*u3[t] + 1.414214*r*Sin[q3[t]]*u3[t] - 
-                    1.*fl*Sin[oq7 + q3[t] + q7[t]]*(u3[t] + u7[t])) - 
-                  0.5*fl*mc*Cos[oq8 + q3[t] + q8[t]]*(u3[t] + u8[t])^2 - 
-                  0.5*fl*kFc*Abs[Cos[oq8 + q3[t] + q8[t]]*u1[t] + 
-                     Sin[oq8 + q3[t] + q8[t]]*u2[t] + 0.7071068*r*
-                      Cos[oq8 + q8[t]]*u3[t] - 0.7071068*r*Sin[oq8 + q8[t]]*
-                      u3[t] + 0.5*fl*(u3[t] + u8[t])]*(-2.*u2[t] + 1.414214*r*
-                     Cos[q3[t]]*u3[t] - 1.414214*r*Sin[q3[t]]*u3[t] - 
-                    1.*fl*Sin[oq8 + q3[t] + q8[t]]*(u3[t] + u8[t]))))))))))/
+                     r*Cos[oq4 + q4[t]]*u3[t] + 0.5*l*(u3[t] + u4[t]) + 
+                     0.5*krb*Sign[u4[t]]*(4.*u1[t]^2 + 4.*u2[t]^2 + 
+                        8.*r*Cos[q3[t]]*u1[t]*u3[t] + 8.*r*Sin[q3[t]]*u2[t]*
+                         u3[t] + 4.*r^2*u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + 
+                          q4[t]]*u1[t]*(u3[t] + u4[t]) + 4.*l*Sin[oq4 + 
+                          q3[t] + q4[t]]*u2[t]*(u3[t] + u4[t]) + 4.*l*r*
+                         Cos[oq4 + q4[t]]*u3[t]*(u3[t] + u4[t]) + l^2*
+                         (u3[t] + u4[t])^2)^0.5]*(2.*u2[t] + 2.*r*Sin[q3[t]]*
+                     u3[t] + l*Sin[oq4 + q3[t] + q4[t]]*(u3[t] + u4[t])) - 
+                  0.5*mb*(2.*r*Cos[q3[t]]*u3[t]^2 + l*Cos[oq4 + q3[t] + 
+                       q4[t]]*(u3[t] + u4[t])^2) - 0.5*fl*mc*Cos[oq5 + 
+                     q3[t] + q5[t]]*(u3[t] + u5[t])^2 + 0.5*fl*kFc*
+                   Abs[Cos[oq5 + q3[t] + q5[t]]*u1[t] + Sin[oq5 + q3[t] + 
+                        q5[t]]*u2[t] + 0.7071068*r*Cos[oq5 + q5[t]]*u3[t] + 
+                     0.7071068*r*Sin[oq5 + q5[t]]*u3[t] + 0.5*fl*(u3[t] + 
+                       u5[t])]*(2.*u2[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 
+                    1.414214*r*Sin[q3[t]]*u3[t] + fl*Sin[oq5 + q3[t] + q5[t]]*
+                     (u3[t] + u5[t])) - 0.5*fl*mc*Cos[oq6 + q3[t] + q6[t]]*
+                   (u3[t] + u6[t])^2 - 0.5*fl*kFc*Abs[Cos[oq6 + q3[t] + 
+                        q6[t]]*u1[t] + Sin[oq6 + q3[t] + q6[t]]*u2[t] - 
+                     0.7071068*r*Cos[oq6 + q6[t]]*u3[t] + 0.7071068*r*
+                      Sin[oq6 + q6[t]]*u3[t] + 0.5*fl*(u3[t] + u6[t])]*
+                   (-2.*u2[t] - 1.414214*r*Cos[q3[t]]*u3[t] + 1.414214*r*
+                     Sin[q3[t]]*u3[t] - 1.*fl*Sin[oq6 + q3[t] + q6[t]]*
+                     (u3[t] + u6[t])) - 0.5*fl*mc*Cos[oq7 + q3[t] + q7[t]]*
+                   (u3[t] + u7[t])^2 - 0.5*fl*kFc*Abs[Cos[oq7 + q3[t] + 
+                        q7[t]]*u1[t] + Sin[oq7 + q3[t] + q7[t]]*u2[t] - 
+                     0.7071068*r*Cos[oq7 + q7[t]]*u3[t] - 0.7071068*r*
+                      Sin[oq7 + q7[t]]*u3[t] + 0.5*fl*(u3[t] + u7[t])]*
+                   (-2.*u2[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 1.414214*r*
+                     Sin[q3[t]]*u3[t] - 1.*fl*Sin[oq7 + q3[t] + q7[t]]*
+                     (u3[t] + u7[t])) - 0.5*fl*mc*Cos[oq8 + q3[t] + q8[t]]*
+                   (u3[t] + u8[t])^2 - 0.5*fl*kFc*Abs[Cos[oq8 + q3[t] + 
+                        q8[t]]*u1[t] + Sin[oq8 + q3[t] + q8[t]]*u2[t] + 
+                     0.7071068*r*Cos[oq8 + q8[t]]*u3[t] - 0.7071068*r*
+                      Sin[oq8 + q8[t]]*u3[t] + 0.5*fl*(u3[t] + u8[t])]*
+                   (-2.*u2[t] + 1.414214*r*Cos[q3[t]]*u3[t] - 1.414214*r*
+                     Sin[q3[t]]*u3[t] - 1.*fl*Sin[oq8 + q3[t] + q8[t]]*
+                     (u3[t] + u8[t]))))))))))/
     ((-0.3535534*Ic*(0. + 1.*Ic^2*(0. + 0.5*fl*Ib*mc*
             Cos[oq5 + q3[t] + q5[t]]))*(2.828427*Ic + 
          fl*mc*r*(Cos[oq5 + q5[t]] + Sin[oq5 + q5[t]])) - 
@@ -7731,45 +8265,58 @@
                      Sin[oq4 + q4[t]]*u3[t]^2 + kTb*Abs[u4[t]]*u4[t] + 
                     0.25*kFb*l^2*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
                        Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
-                        u3[t] + 0.5*l*(u3[t] + u4[t])]*(2.*Cos[oq4 + q3[t] + 
-                         q4[t]]*u1[t] + 2.*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
-                      2.*r*Cos[oq4 + q4[t]]*u3[t] + l*(u3[t] + u4[t]))) - 
-                  1.*Ib*(-1.*kFa*(wvx - 1.*u1[t])*((wvx - 1.*u1[t])^2 + 
-                       (wvy - 1.*u2[t])^2)^0.5 + 0.5*kFb*l*Abs[
-                      Cos[oq4 + q3[t] + q4[t]]*u1[t] + Sin[oq4 + q3[t] + 
-                          q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*u3[t] + 
-                       0.5*l*(u3[t] + u4[t])]*(2.*u1[t] + 2.*r*Cos[q3[t]]*
-                       u3[t] + l*Cos[oq4 + q3[t] + q4[t]]*(u3[t] + u4[t])) + 
-                    0.5*mb*(2.*r*Sin[q3[t]]*u3[t]^2 + l*Sin[oq4 + q3[t] + 
-                         q4[t]]*(u3[t] + u4[t])^2) + 0.5*fl*mc*Sin[oq5 + 
-                       q3[t] + q5[t]]*(u3[t] + u5[t])^2 - 0.5*fl*kFc*
-                     Abs[Cos[oq5 + q3[t] + q5[t]]*u1[t] + Sin[oq5 + q3[t] + 
-                          q5[t]]*u2[t] + 0.7071068*r*Cos[oq5 + q5[t]]*u3[t] + 
-                       0.7071068*r*Sin[oq5 + q5[t]]*u3[t] + 0.5*fl*(u3[t] + 
-                         u5[t])]*(-2.*u1[t] - 1.414214*r*Cos[q3[t]]*u3[t] + 
-                      1.414214*r*Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq5 + q3[t] + 
-                         q5[t]]*(u3[t] + u5[t])) + 0.5*fl*mc*Sin[oq6 + 
-                       q3[t] + q6[t]]*(u3[t] + u6[t])^2 - 0.5*fl*kFc*
-                     Abs[Cos[oq6 + q3[t] + q6[t]]*u1[t] + Sin[oq6 + q3[t] + 
-                          q6[t]]*u2[t] - 0.7071068*r*Cos[oq6 + q6[t]]*u3[t] + 
-                       0.7071068*r*Sin[oq6 + q6[t]]*u3[t] + 0.5*fl*(u3[t] + 
-                         u6[t])]*(-2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 
-                      1.414214*r*Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq6 + q3[t] + 
-                         q6[t]]*(u3[t] + u6[t])) + 0.5*fl*mc*Sin[oq7 + 
-                       q3[t] + q7[t]]*(u3[t] + u7[t])^2 - 0.5*fl*kFc*
-                     Abs[Cos[oq7 + q3[t] + q7[t]]*u1[t] + Sin[oq7 + q3[t] + 
-                          q7[t]]*u2[t] - 0.7071068*r*Cos[oq7 + q7[t]]*u3[t] - 
-                       0.7071068*r*Sin[oq7 + q7[t]]*u3[t] + 0.5*fl*(u3[t] + 
-                         u7[t])]*(-2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] - 
-                      1.414214*r*Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq7 + q3[t] + 
-                         q7[t]]*(u3[t] + u7[t])) + 0.5*fl*mc*Sin[oq8 + 
-                       q3[t] + q8[t]]*(u3[t] + u8[t])^2 + 0.5*fl*kFc*
-                     Abs[Cos[oq8 + q3[t] + q8[t]]*u1[t] + Sin[oq8 + q3[t] + 
-                          q8[t]]*u2[t] + 0.7071068*r*Cos[oq8 + q8[t]]*u3[t] - 
-                       0.7071068*r*Sin[oq8 + q8[t]]*u3[t] + 0.5*fl*(u3[t] + 
-                         u8[t])]*(2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 
-                      1.414214*r*Sin[q3[t]]*u3[t] + fl*Cos[oq8 + q3[t] + 
-                         q8[t]]*(u3[t] + u8[t])))))))) + 
+                        u3[t] + 0.5*l*(u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*
+                        (4.*u1[t]^2 + 4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*
+                          u3[t] + 8.*r*Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*
+                          u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t]*
+                          (u3[t] + u4[t]) + 4.*l*Sin[oq4 + q3[t] + q4[t]]*
+                          u2[t]*(u3[t] + u4[t]) + 4.*l*r*Cos[oq4 + q4[t]]*
+                          u3[t]*(u3[t] + u4[t]) + l^2*(u3[t] + u4[t])^2)^0.5]*
+                     (2.*Cos[oq4 + q3[t] + q4[t]]*u1[t] + 2.*Sin[oq4 + 
+                         q3[t] + q4[t]]*u2[t] + 2.*r*Cos[oq4 + q4[t]]*u3[t] + 
+                      l*(u3[t] + u4[t]))) - 1.*Ib*(-1.*kFa*(wvx - 1.*u1[t])*
+                     ((wvx - 1.*u1[t])^2 + (wvy - 1.*u2[t])^2)^0.5 + 
+                    0.5*kFb*l*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
+                       Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
+                        u3[t] + 0.5*l*(u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*
+                        (4.*u1[t]^2 + 4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*
+                          u3[t] + 8.*r*Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*
+                          u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t]*
+                          (u3[t] + u4[t]) + 4.*l*Sin[oq4 + q3[t] + q4[t]]*
+                          u2[t]*(u3[t] + u4[t]) + 4.*l*r*Cos[oq4 + q4[t]]*
+                          u3[t]*(u3[t] + u4[t]) + l^2*(u3[t] + u4[t])^2)^0.5]*
+                     (2.*u1[t] + 2.*r*Cos[q3[t]]*u3[t] + l*Cos[oq4 + q3[t] + 
+                         q4[t]]*(u3[t] + u4[t])) + 0.5*mb*(2.*r*Sin[q3[t]]*
+                       u3[t]^2 + l*Sin[oq4 + q3[t] + q4[t]]*(u3[t] + u4[t])^
+                        2) + 0.5*fl*mc*Sin[oq5 + q3[t] + q5[t]]*
+                     (u3[t] + u5[t])^2 - 0.5*fl*kFc*Abs[Cos[oq5 + q3[t] + 
+                          q5[t]]*u1[t] + Sin[oq5 + q3[t] + q5[t]]*u2[t] + 
+                       0.7071068*r*Cos[oq5 + q5[t]]*u3[t] + 0.7071068*r*
+                        Sin[oq5 + q5[t]]*u3[t] + 0.5*fl*(u3[t] + u5[t])]*
+                     (-2.*u1[t] - 1.414214*r*Cos[q3[t]]*u3[t] + 1.414214*r*
+                       Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq5 + q3[t] + q5[t]]*
+                       (u3[t] + u5[t])) + 0.5*fl*mc*Sin[oq6 + q3[t] + q6[t]]*
+                     (u3[t] + u6[t])^2 - 0.5*fl*kFc*Abs[Cos[oq6 + q3[t] + 
+                          q6[t]]*u1[t] + Sin[oq6 + q3[t] + q6[t]]*u2[t] - 
+                       0.7071068*r*Cos[oq6 + q6[t]]*u3[t] + 0.7071068*r*
+                        Sin[oq6 + q6[t]]*u3[t] + 0.5*fl*(u3[t] + u6[t])]*
+                     (-2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 1.414214*r*
+                       Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq6 + q3[t] + q6[t]]*
+                       (u3[t] + u6[t])) + 0.5*fl*mc*Sin[oq7 + q3[t] + q7[t]]*
+                     (u3[t] + u7[t])^2 - 0.5*fl*kFc*Abs[Cos[oq7 + q3[t] + 
+                          q7[t]]*u1[t] + Sin[oq7 + q3[t] + q7[t]]*u2[t] - 
+                       0.7071068*r*Cos[oq7 + q7[t]]*u3[t] - 0.7071068*r*
+                        Sin[oq7 + q7[t]]*u3[t] + 0.5*fl*(u3[t] + u7[t])]*
+                     (-2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] - 1.414214*r*
+                       Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq7 + q3[t] + q7[t]]*
+                       (u3[t] + u7[t])) + 0.5*fl*mc*Sin[oq8 + q3[t] + q8[t]]*
+                     (u3[t] + u8[t])^2 + 0.5*fl*kFc*Abs[Cos[oq8 + q3[t] + 
+                          q8[t]]*u1[t] + Sin[oq8 + q3[t] + q8[t]]*u2[t] + 
+                       0.7071068*r*Cos[oq8 + q8[t]]*u3[t] - 0.7071068*r*
+                        Sin[oq8 + q8[t]]*u3[t] + 0.5*fl*(u3[t] + u8[t])]*
+                     (2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 1.414214*r*
+                       Sin[q3[t]]*u3[t] + fl*Cos[oq8 + q3[t] + q8[t]]*
+                       (u3[t] + u8[t])))))))) + 
         (-0.3535534*Ic*(0. + 1.*Ic^2*(0. + 0.5*fl*Ib*mc*Cos[oq5 + q3[t] + 
                  q5[t]]))*(2.828427*Ic + fl*mc*r*(Cos[oq5 + q5[t]] + 
               Sin[oq5 + q5[t]])) - 1.*Ic*(0.3535534*(0. + 1.*Ic^2*(0. + 
@@ -7828,13 +8375,26 @@
                      Sin[oq4 + q4[t]]*u3[t]^2 + kTb*Abs[u4[t]]*u4[t] + 
                     0.25*kFb*l^2*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
                        Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
-                        u3[t] + 0.5*l*(u3[t] + u4[t])]*(2.*Cos[oq4 + q3[t] + 
-                         q4[t]]*u1[t] + 2.*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
-                      2.*r*Cos[oq4 + q4[t]]*u3[t] + l*(u3[t] + u4[t]))) - 
-                  1.*Ib*(-1.*kFa*((wvx - 1.*u1[t])^2 + (wvy - 1.*u2[t])^2)^
-                      0.5*(wvy - 1.*u2[t]) + 0.5*kFb*l*Abs[Cos[oq4 + q3[t] + 
-                          q4[t]]*u1[t] + Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
-                       r*Cos[oq4 + q4[t]]*u3[t] + 0.5*l*(u3[t] + u4[t])]*
+                        u3[t] + 0.5*l*(u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*
+                        (4.*u1[t]^2 + 4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*
+                          u3[t] + 8.*r*Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*
+                          u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t]*
+                          (u3[t] + u4[t]) + 4.*l*Sin[oq4 + q3[t] + q4[t]]*
+                          u2[t]*(u3[t] + u4[t]) + 4.*l*r*Cos[oq4 + q4[t]]*
+                          u3[t]*(u3[t] + u4[t]) + l^2*(u3[t] + u4[t])^2)^0.5]*
+                     (2.*Cos[oq4 + q3[t] + q4[t]]*u1[t] + 2.*Sin[oq4 + 
+                         q3[t] + q4[t]]*u2[t] + 2.*r*Cos[oq4 + q4[t]]*u3[t] + 
+                      l*(u3[t] + u4[t]))) - 1.*Ib*(-1.*kFa*((wvx - 1.*u1[t])^
+                        2 + (wvy - 1.*u2[t])^2)^0.5*(wvy - 1.*u2[t]) + 
+                    0.5*kFb*l*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
+                       Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
+                        u3[t] + 0.5*l*(u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*
+                        (4.*u1[t]^2 + 4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*
+                          u3[t] + 8.*r*Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*
+                          u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t]*
+                          (u3[t] + u4[t]) + 4.*l*Sin[oq4 + q3[t] + q4[t]]*
+                          u2[t]*(u3[t] + u4[t]) + 4.*l*r*Cos[oq4 + q4[t]]*
+                          u3[t]*(u3[t] + u4[t]) + l^2*(u3[t] + u4[t])^2)^0.5]*
                      (2.*u2[t] + 2.*r*Sin[q3[t]]*u3[t] + l*Sin[oq4 + q3[t] + 
                          q4[t]]*(u3[t] + u4[t])) - 0.5*mb*(2.*r*Cos[q3[t]]*
                        u3[t]^2 + l*Cos[oq4 + q3[t] + q4[t]]*(u3[t] + u4[t])^
@@ -7982,45 +8542,58 @@
                      Sin[oq4 + q4[t]]*u3[t]^2 + kTb*Abs[u4[t]]*u4[t] + 
                     0.25*kFb*l^2*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
                        Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
-                        u3[t] + 0.5*l*(u3[t] + u4[t])]*(2.*Cos[oq4 + q3[t] + 
-                         q4[t]]*u1[t] + 2.*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
-                      2.*r*Cos[oq4 + q4[t]]*u3[t] + l*(u3[t] + u4[t]))) - 
-                  1.*Ib*(-1.*kFa*(wvx - 1.*u1[t])*((wvx - 1.*u1[t])^2 + 
-                       (wvy - 1.*u2[t])^2)^0.5 + 0.5*kFb*l*Abs[
-                      Cos[oq4 + q3[t] + q4[t]]*u1[t] + Sin[oq4 + q3[t] + 
-                          q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*u3[t] + 
-                       0.5*l*(u3[t] + u4[t])]*(2.*u1[t] + 2.*r*Cos[q3[t]]*
-                       u3[t] + l*Cos[oq4 + q3[t] + q4[t]]*(u3[t] + u4[t])) + 
-                    0.5*mb*(2.*r*Sin[q3[t]]*u3[t]^2 + l*Sin[oq4 + q3[t] + 
-                         q4[t]]*(u3[t] + u4[t])^2) + 0.5*fl*mc*Sin[oq5 + 
-                       q3[t] + q5[t]]*(u3[t] + u5[t])^2 - 0.5*fl*kFc*
-                     Abs[Cos[oq5 + q3[t] + q5[t]]*u1[t] + Sin[oq5 + q3[t] + 
-                          q5[t]]*u2[t] + 0.7071068*r*Cos[oq5 + q5[t]]*u3[t] + 
-                       0.7071068*r*Sin[oq5 + q5[t]]*u3[t] + 0.5*fl*(u3[t] + 
-                         u5[t])]*(-2.*u1[t] - 1.414214*r*Cos[q3[t]]*u3[t] + 
-                      1.414214*r*Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq5 + q3[t] + 
-                         q5[t]]*(u3[t] + u5[t])) + 0.5*fl*mc*Sin[oq6 + 
-                       q3[t] + q6[t]]*(u3[t] + u6[t])^2 - 0.5*fl*kFc*
-                     Abs[Cos[oq6 + q3[t] + q6[t]]*u1[t] + Sin[oq6 + q3[t] + 
-                          q6[t]]*u2[t] - 0.7071068*r*Cos[oq6 + q6[t]]*u3[t] + 
-                       0.7071068*r*Sin[oq6 + q6[t]]*u3[t] + 0.5*fl*(u3[t] + 
-                         u6[t])]*(-2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 
-                      1.414214*r*Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq6 + q3[t] + 
-                         q6[t]]*(u3[t] + u6[t])) + 0.5*fl*mc*Sin[oq7 + 
-                       q3[t] + q7[t]]*(u3[t] + u7[t])^2 - 0.5*fl*kFc*
-                     Abs[Cos[oq7 + q3[t] + q7[t]]*u1[t] + Sin[oq7 + q3[t] + 
-                          q7[t]]*u2[t] - 0.7071068*r*Cos[oq7 + q7[t]]*u3[t] - 
-                       0.7071068*r*Sin[oq7 + q7[t]]*u3[t] + 0.5*fl*(u3[t] + 
-                         u7[t])]*(-2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] - 
-                      1.414214*r*Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq7 + q3[t] + 
-                         q7[t]]*(u3[t] + u7[t])) + 0.5*fl*mc*Sin[oq8 + 
-                       q3[t] + q8[t]]*(u3[t] + u8[t])^2 + 0.5*fl*kFc*
-                     Abs[Cos[oq8 + q3[t] + q8[t]]*u1[t] + Sin[oq8 + q3[t] + 
-                          q8[t]]*u2[t] + 0.7071068*r*Cos[oq8 + q8[t]]*u3[t] - 
-                       0.7071068*r*Sin[oq8 + q8[t]]*u3[t] + 0.5*fl*(u3[t] + 
-                         u8[t])]*(2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 
-                      1.414214*r*Sin[q3[t]]*u3[t] + fl*Cos[oq8 + q3[t] + 
-                         q8[t]]*(u3[t] + u8[t])))))))) + 
+                        u3[t] + 0.5*l*(u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*
+                        (4.*u1[t]^2 + 4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*
+                          u3[t] + 8.*r*Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*
+                          u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t]*
+                          (u3[t] + u4[t]) + 4.*l*Sin[oq4 + q3[t] + q4[t]]*
+                          u2[t]*(u3[t] + u4[t]) + 4.*l*r*Cos[oq4 + q4[t]]*
+                          u3[t]*(u3[t] + u4[t]) + l^2*(u3[t] + u4[t])^2)^0.5]*
+                     (2.*Cos[oq4 + q3[t] + q4[t]]*u1[t] + 2.*Sin[oq4 + 
+                         q3[t] + q4[t]]*u2[t] + 2.*r*Cos[oq4 + q4[t]]*u3[t] + 
+                      l*(u3[t] + u4[t]))) - 1.*Ib*(-1.*kFa*(wvx - 1.*u1[t])*
+                     ((wvx - 1.*u1[t])^2 + (wvy - 1.*u2[t])^2)^0.5 + 
+                    0.5*kFb*l*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
+                       Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
+                        u3[t] + 0.5*l*(u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*
+                        (4.*u1[t]^2 + 4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*
+                          u3[t] + 8.*r*Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*
+                          u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t]*
+                          (u3[t] + u4[t]) + 4.*l*Sin[oq4 + q3[t] + q4[t]]*
+                          u2[t]*(u3[t] + u4[t]) + 4.*l*r*Cos[oq4 + q4[t]]*
+                          u3[t]*(u3[t] + u4[t]) + l^2*(u3[t] + u4[t])^2)^0.5]*
+                     (2.*u1[t] + 2.*r*Cos[q3[t]]*u3[t] + l*Cos[oq4 + q3[t] + 
+                         q4[t]]*(u3[t] + u4[t])) + 0.5*mb*(2.*r*Sin[q3[t]]*
+                       u3[t]^2 + l*Sin[oq4 + q3[t] + q4[t]]*(u3[t] + u4[t])^
+                        2) + 0.5*fl*mc*Sin[oq5 + q3[t] + q5[t]]*
+                     (u3[t] + u5[t])^2 - 0.5*fl*kFc*Abs[Cos[oq5 + q3[t] + 
+                          q5[t]]*u1[t] + Sin[oq5 + q3[t] + q5[t]]*u2[t] + 
+                       0.7071068*r*Cos[oq5 + q5[t]]*u3[t] + 0.7071068*r*
+                        Sin[oq5 + q5[t]]*u3[t] + 0.5*fl*(u3[t] + u5[t])]*
+                     (-2.*u1[t] - 1.414214*r*Cos[q3[t]]*u3[t] + 1.414214*r*
+                       Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq5 + q3[t] + q5[t]]*
+                       (u3[t] + u5[t])) + 0.5*fl*mc*Sin[oq6 + q3[t] + q6[t]]*
+                     (u3[t] + u6[t])^2 - 0.5*fl*kFc*Abs[Cos[oq6 + q3[t] + 
+                          q6[t]]*u1[t] + Sin[oq6 + q3[t] + q6[t]]*u2[t] - 
+                       0.7071068*r*Cos[oq6 + q6[t]]*u3[t] + 0.7071068*r*
+                        Sin[oq6 + q6[t]]*u3[t] + 0.5*fl*(u3[t] + u6[t])]*
+                     (-2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 1.414214*r*
+                       Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq6 + q3[t] + q6[t]]*
+                       (u3[t] + u6[t])) + 0.5*fl*mc*Sin[oq7 + q3[t] + q7[t]]*
+                     (u3[t] + u7[t])^2 - 0.5*fl*kFc*Abs[Cos[oq7 + q3[t] + 
+                          q7[t]]*u1[t] + Sin[oq7 + q3[t] + q7[t]]*u2[t] - 
+                       0.7071068*r*Cos[oq7 + q7[t]]*u3[t] - 0.7071068*r*
+                        Sin[oq7 + q7[t]]*u3[t] + 0.5*fl*(u3[t] + u7[t])]*
+                     (-2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] - 1.414214*r*
+                       Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq7 + q3[t] + q7[t]]*
+                       (u3[t] + u7[t])) + 0.5*fl*mc*Sin[oq8 + q3[t] + q8[t]]*
+                     (u3[t] + u8[t])^2 + 0.5*fl*kFc*Abs[Cos[oq8 + q3[t] + 
+                          q8[t]]*u1[t] + Sin[oq8 + q3[t] + q8[t]]*u2[t] + 
+                       0.7071068*r*Cos[oq8 + q8[t]]*u3[t] - 0.7071068*r*
+                        Sin[oq8 + q8[t]]*u3[t] + 0.5*fl*(u3[t] + u8[t])]*
+                     (2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 1.414214*r*
+                       Sin[q3[t]]*u3[t] + fl*Cos[oq8 + q3[t] + q8[t]]*
+                       (u3[t] + u8[t])))))))) + 
         (-0.3535534*Ic*(0. + 1.*Ic^2*(0. + 0.5*fl*Ib*mc*Cos[oq5 + q3[t] + 
                  q5[t]]))*(2.828427*Ic + fl*mc*r*(Cos[oq5 + q5[t]] + 
               Sin[oq5 + q5[t]])) - 1.*Ic*(0.3535534*(0. + 1.*Ic^2*(0. + 
@@ -8082,16 +8655,29 @@
                      Sin[oq4 + q4[t]]*u3[t]^2 + kTb*Abs[u4[t]]*u4[t] + 
                     0.25*kFb*l^2*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
                        Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
-                        u3[t] + 0.5*l*(u3[t] + u4[t])]*(2.*Cos[oq4 + q3[t] + 
-                         q4[t]]*u1[t] + 2.*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
-                      2.*r*Cos[oq4 + q4[t]]*u3[t] + l*(u3[t] + u4[t]))) - 
-                  1.*Ib*(kTa*Abs[u3[t]]*u3[t] + kTb*Abs[u4[t]]*u4[t] + 
-                    0.25*kFb*l*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
-                       Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
-                        u3[t] + 0.5*l*(u3[t] + u4[t])]*(4.*r*Cos[q3[t]]*
-                       u1[t] + 2.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
-                      4.*r*Sin[q3[t]]*u2[t] + 2.*l*Sin[oq4 + q3[t] + q4[t]]*
-                       u2[t] + 4.*r^2*u3[t] + 4.*l*r*Cos[oq4 + q4[t]]*u3[t] + 
+                        u3[t] + 0.5*l*(u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*
+                        (4.*u1[t]^2 + 4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*
+                          u3[t] + 8.*r*Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*
+                          u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t]*
+                          (u3[t] + u4[t]) + 4.*l*Sin[oq4 + q3[t] + q4[t]]*
+                          u2[t]*(u3[t] + u4[t]) + 4.*l*r*Cos[oq4 + q4[t]]*
+                          u3[t]*(u3[t] + u4[t]) + l^2*(u3[t] + u4[t])^2)^0.5]*
+                     (2.*Cos[oq4 + q3[t] + q4[t]]*u1[t] + 2.*Sin[oq4 + 
+                         q3[t] + q4[t]]*u2[t] + 2.*r*Cos[oq4 + q4[t]]*u3[t] + 
+                      l*(u3[t] + u4[t]))) - 1.*Ib*(kTa*Abs[u3[t]]*u3[t] + 
+                    kTb*Abs[u4[t]]*u4[t] + 0.25*kFb*l*Abs[Cos[oq4 + q3[t] + 
+                          q4[t]]*u1[t] + Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
+                       r*Cos[oq4 + q4[t]]*u3[t] + 0.5*l*(u3[t] + u4[t]) + 
+                       0.5*krb*Sign[u4[t]]*(4.*u1[t]^2 + 4.*u2[t]^2 + 
+                          8.*r*Cos[q3[t]]*u1[t]*u3[t] + 8.*r*Sin[q3[t]]*u2[t]*
+                          u3[t] + 4.*r^2*u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + 
+                          q4[t]]*u1[t]*(u3[t] + u4[t]) + 4.*l*Sin[oq4 + 
+                          q3[t] + q4[t]]*u2[t]*(u3[t] + u4[t]) + 4.*l*r*
+                          Cos[oq4 + q4[t]]*u3[t]*(u3[t] + u4[t]) + l^2*
+                          (u3[t] + u4[t])^2)^0.5]*(4.*r*Cos[q3[t]]*u1[t] + 
+                      2.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t] + 4.*r*Sin[q3[t]]*
+                       u2[t] + 2.*l*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
+                      4.*r^2*u3[t] + 4.*l*r*Cos[oq4 + q4[t]]*u3[t] + 
                       2.*l*r*Cos[oq4 + q4[t]]*u4[t] + l^2*(u3[t] + u4[t])) + 
                     kTc*Abs[u5[t]]*u5[t] - 0.25*fl*kFc*Abs[Cos[oq5 + q3[t] + 
                           q5[t]]*u1[t] + Sin[oq5 + q3[t] + q5[t]]*u2[t] + 
@@ -8432,13 +9018,25 @@
                  Sin[oq4 + q4[t]]*u3[t]^2 + kTb*Abs[u4[t]]*u4[t] + 
                 0.25*kFb*l^2*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
                    Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
-                    u3[t] + 0.5*l*(u3[t] + u4[t])]*(2.*Cos[oq4 + q3[t] + 
+                    u3[t] + 0.5*l*(u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*
+                    (4.*u1[t]^2 + 4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*u3[t] + 
+                      8.*r*Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*u3[t]^2 + 
+                      4.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t]*(u3[t] + u4[t]) + 
+                      4.*l*Sin[oq4 + q3[t] + q4[t]]*u2[t]*(u3[t] + u4[t]) + 
+                      4.*l*r*Cos[oq4 + q4[t]]*u3[t]*(u3[t] + u4[t]) + 
+                      l^2*(u3[t] + u4[t])^2)^0.5]*(2.*Cos[oq4 + q3[t] + 
                      q4[t]]*u1[t] + 2.*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
                   2.*r*Cos[oq4 + q4[t]]*u3[t] + l*(u3[t] + u4[t]))) - 
               1.*Ib*(-1.*kFa*(wvx - 1.*u1[t])*((wvx - 1.*u1[t])^2 + 
                    (wvy - 1.*u2[t])^2)^0.5 + 0.5*kFb*l*Abs[
                   Cos[oq4 + q3[t] + q4[t]]*u1[t] + Sin[oq4 + q3[t] + q4[t]]*
-                    u2[t] + r*Cos[oq4 + q4[t]]*u3[t] + 0.5*l*(u3[t] + u4[t])]*
+                    u2[t] + r*Cos[oq4 + q4[t]]*u3[t] + 0.5*l*(u3[t] + 
+                     u4[t]) + 0.5*krb*Sign[u4[t]]*(4.*u1[t]^2 + 4.*u2[t]^2 + 
+                      8.*r*Cos[q3[t]]*u1[t]*u3[t] + 8.*r*Sin[q3[t]]*u2[t]*
+                       u3[t] + 4.*r^2*u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + q4[t]]*
+                       u1[t]*(u3[t] + u4[t]) + 4.*l*Sin[oq4 + q3[t] + q4[t]]*
+                       u2[t]*(u3[t] + u4[t]) + 4.*l*r*Cos[oq4 + q4[t]]*u3[t]*
+                       (u3[t] + u4[t]) + l^2*(u3[t] + u4[t])^2)^0.5]*
                  (2.*u1[t] + 2.*r*Cos[q3[t]]*u3[t] + l*Cos[oq4 + q3[t] + 
                      q4[t]]*(u3[t] + u4[t])) + 0.5*mb*(2.*r*Sin[q3[t]]*
                    u3[t]^2 + l*Sin[oq4 + q3[t] + q4[t]]*(u3[t] + u4[t])^2) + 
@@ -8573,15 +9171,28 @@
                    u3[t]^2 + kTb*Abs[u4[t]]*u4[t] + 0.25*kFb*l^2*
                    Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + Sin[oq4 + q3[t] + 
                         q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*u3[t] + 0.5*l*
-                      (u3[t] + u4[t])]*(2.*Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
-                    2.*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 2.*r*Cos[oq4 + q4[t]]*
-                     u3[t] + l*(u3[t] + u4[t]))) - 1.*Ib*(-1.*kFa*
-                   (wvx - 1.*u1[t])*((wvx - 1.*u1[t])^2 + (wvy - 1.*u2[t])^2)^
-                    0.5 + 0.5*kFb*l*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
-                     Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
-                      u3[t] + 0.5*l*(u3[t] + u4[t])]*(2.*u1[t] + 
-                    2.*r*Cos[q3[t]]*u3[t] + l*Cos[oq4 + q3[t] + q4[t]]*
-                     (u3[t] + u4[t])) + 0.5*mb*(2.*r*Sin[q3[t]]*u3[t]^2 + 
+                      (u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*(4.*u1[t]^2 + 
+                        4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*u3[t] + 8.*r*
+                         Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*u3[t]^2 + 4.*l*
+                         Cos[oq4 + q3[t] + q4[t]]*u1[t]*(u3[t] + u4[t]) + 
+                        4.*l*Sin[oq4 + q3[t] + q4[t]]*u2[t]*(u3[t] + u4[t]) + 
+                        4.*l*r*Cos[oq4 + q4[t]]*u3[t]*(u3[t] + u4[t]) + 
+                        l^2*(u3[t] + u4[t])^2)^0.5]*(2.*Cos[oq4 + q3[t] + 
+                       q4[t]]*u1[t] + 2.*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
+                    2.*r*Cos[oq4 + q4[t]]*u3[t] + l*(u3[t] + u4[t]))) - 
+                1.*Ib*(-1.*kFa*(wvx - 1.*u1[t])*((wvx - 1.*u1[t])^2 + 
+                     (wvy - 1.*u2[t])^2)^0.5 + 0.5*kFb*l*Abs[
+                    Cos[oq4 + q3[t] + q4[t]]*u1[t] + Sin[oq4 + q3[t] + q4[t]]*
+                      u2[t] + r*Cos[oq4 + q4[t]]*u3[t] + 0.5*l*(u3[t] + 
+                       u4[t]) + 0.5*krb*Sign[u4[t]]*(4.*u1[t]^2 + 
+                        4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*u3[t] + 8.*r*
+                         Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*u3[t]^2 + 4.*l*
+                         Cos[oq4 + q3[t] + q4[t]]*u1[t]*(u3[t] + u4[t]) + 
+                        4.*l*Sin[oq4 + q3[t] + q4[t]]*u2[t]*(u3[t] + u4[t]) + 
+                        4.*l*r*Cos[oq4 + q4[t]]*u3[t]*(u3[t] + u4[t]) + 
+                        l^2*(u3[t] + u4[t])^2)^0.5]*(2.*u1[t] + 2.*r*
+                     Cos[q3[t]]*u3[t] + l*Cos[oq4 + q3[t] + q4[t]]*(u3[t] + 
+                      u4[t])) + 0.5*mb*(2.*r*Sin[q3[t]]*u3[t]^2 + 
                     l*Sin[oq4 + q3[t] + q4[t]]*(u3[t] + u4[t])^2) + 
                   0.5*fl*mc*Sin[oq5 + q3[t] + q5[t]]*(u3[t] + u5[t])^2 - 
                   0.5*fl*kFc*Abs[Cos[oq5 + q3[t] + q5[t]]*u1[t] + 
@@ -8669,44 +9280,57 @@
                    u3[t]^2 + kTb*Abs[u4[t]]*u4[t] + 0.25*kFb*l^2*
                    Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + Sin[oq4 + q3[t] + 
                         q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*u3[t] + 0.5*l*
-                      (u3[t] + u4[t])]*(2.*Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
-                    2.*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 2.*r*Cos[oq4 + q4[t]]*
-                     u3[t] + l*(u3[t] + u4[t]))) - 1.*Ib*(-1.*kFa*
-                   ((wvx - 1.*u1[t])^2 + (wvy - 1.*u2[t])^2)^0.5*(wvy - 
-                    1.*u2[t]) + 0.5*kFb*l*Abs[Cos[oq4 + q3[t] + q4[t]]*
+                      (u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*(4.*u1[t]^2 + 
+                        4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*u3[t] + 8.*r*
+                         Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*u3[t]^2 + 4.*l*
+                         Cos[oq4 + q3[t] + q4[t]]*u1[t]*(u3[t] + u4[t]) + 
+                        4.*l*Sin[oq4 + q3[t] + q4[t]]*u2[t]*(u3[t] + u4[t]) + 
+                        4.*l*r*Cos[oq4 + q4[t]]*u3[t]*(u3[t] + u4[t]) + 
+                        l^2*(u3[t] + u4[t])^2)^0.5]*(2.*Cos[oq4 + q3[t] + 
+                       q4[t]]*u1[t] + 2.*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
+                    2.*r*Cos[oq4 + q4[t]]*u3[t] + l*(u3[t] + u4[t]))) - 
+                1.*Ib*(-1.*kFa*((wvx - 1.*u1[t])^2 + (wvy - 1.*u2[t])^2)^0.5*
+                   (wvy - 1.*u2[t]) + 0.5*kFb*l*Abs[Cos[oq4 + q3[t] + q4[t]]*
                       u1[t] + Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
-                     r*Cos[oq4 + q4[t]]*u3[t] + 0.5*l*(u3[t] + u4[t])]*
-                   (2.*u2[t] + 2.*r*Sin[q3[t]]*u3[t] + l*Sin[oq4 + q3[t] + 
-                       q4[t]]*(u3[t] + u4[t])) - 0.5*mb*(2.*r*Cos[q3[t]]*
-                     u3[t]^2 + l*Cos[oq4 + q3[t] + q4[t]]*(u3[t] + u4[t])^
-                      2) - 0.5*fl*mc*Cos[oq5 + q3[t] + q5[t]]*(u3[t] + u5[t])^
-                    2 + 0.5*fl*kFc*Abs[Cos[oq5 + q3[t] + q5[t]]*u1[t] + 
-                     Sin[oq5 + q3[t] + q5[t]]*u2[t] + 0.7071068*r*
-                      Cos[oq5 + q5[t]]*u3[t] + 0.7071068*r*Sin[oq5 + q5[t]]*
-                      u3[t] + 0.5*fl*(u3[t] + u5[t])]*(2.*u2[t] + 1.414214*r*
-                     Cos[q3[t]]*u3[t] + 1.414214*r*Sin[q3[t]]*u3[t] + 
-                    fl*Sin[oq5 + q3[t] + q5[t]]*(u3[t] + u5[t])) - 
-                  0.5*fl*mc*Cos[oq6 + q3[t] + q6[t]]*(u3[t] + u6[t])^2 - 
-                  0.5*fl*kFc*Abs[Cos[oq6 + q3[t] + q6[t]]*u1[t] + 
-                     Sin[oq6 + q3[t] + q6[t]]*u2[t] - 0.7071068*r*
-                      Cos[oq6 + q6[t]]*u3[t] + 0.7071068*r*Sin[oq6 + q6[t]]*
-                      u3[t] + 0.5*fl*(u3[t] + u6[t])]*(-2.*u2[t] - 1.414214*r*
-                     Cos[q3[t]]*u3[t] + 1.414214*r*Sin[q3[t]]*u3[t] - 
-                    1.*fl*Sin[oq6 + q3[t] + q6[t]]*(u3[t] + u6[t])) - 
-                  0.5*fl*mc*Cos[oq7 + q3[t] + q7[t]]*(u3[t] + u7[t])^2 - 
-                  0.5*fl*kFc*Abs[Cos[oq7 + q3[t] + q7[t]]*u1[t] + 
-                     Sin[oq7 + q3[t] + q7[t]]*u2[t] - 0.7071068*r*
-                      Cos[oq7 + q7[t]]*u3[t] - 0.7071068*r*Sin[oq7 + q7[t]]*
-                      u3[t] + 0.5*fl*(u3[t] + u7[t])]*(-2.*u2[t] + 1.414214*r*
-                     Cos[q3[t]]*u3[t] + 1.414214*r*Sin[q3[t]]*u3[t] - 
-                    1.*fl*Sin[oq7 + q3[t] + q7[t]]*(u3[t] + u7[t])) - 
-                  0.5*fl*mc*Cos[oq8 + q3[t] + q8[t]]*(u3[t] + u8[t])^2 - 
-                  0.5*fl*kFc*Abs[Cos[oq8 + q3[t] + q8[t]]*u1[t] + 
-                     Sin[oq8 + q3[t] + q8[t]]*u2[t] + 0.7071068*r*
-                      Cos[oq8 + q8[t]]*u3[t] - 0.7071068*r*Sin[oq8 + q8[t]]*
-                      u3[t] + 0.5*fl*(u3[t] + u8[t])]*(-2.*u2[t] + 1.414214*r*
-                     Cos[q3[t]]*u3[t] - 1.414214*r*Sin[q3[t]]*u3[t] - 
-                    1.*fl*Sin[oq8 + q3[t] + q8[t]]*(u3[t] + u8[t]))))))))))/
+                     r*Cos[oq4 + q4[t]]*u3[t] + 0.5*l*(u3[t] + u4[t]) + 
+                     0.5*krb*Sign[u4[t]]*(4.*u1[t]^2 + 4.*u2[t]^2 + 
+                        8.*r*Cos[q3[t]]*u1[t]*u3[t] + 8.*r*Sin[q3[t]]*u2[t]*
+                         u3[t] + 4.*r^2*u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + 
+                          q4[t]]*u1[t]*(u3[t] + u4[t]) + 4.*l*Sin[oq4 + 
+                          q3[t] + q4[t]]*u2[t]*(u3[t] + u4[t]) + 4.*l*r*
+                         Cos[oq4 + q4[t]]*u3[t]*(u3[t] + u4[t]) + l^2*
+                         (u3[t] + u4[t])^2)^0.5]*(2.*u2[t] + 2.*r*Sin[q3[t]]*
+                     u3[t] + l*Sin[oq4 + q3[t] + q4[t]]*(u3[t] + u4[t])) - 
+                  0.5*mb*(2.*r*Cos[q3[t]]*u3[t]^2 + l*Cos[oq4 + q3[t] + 
+                       q4[t]]*(u3[t] + u4[t])^2) - 0.5*fl*mc*Cos[oq5 + 
+                     q3[t] + q5[t]]*(u3[t] + u5[t])^2 + 0.5*fl*kFc*
+                   Abs[Cos[oq5 + q3[t] + q5[t]]*u1[t] + Sin[oq5 + q3[t] + 
+                        q5[t]]*u2[t] + 0.7071068*r*Cos[oq5 + q5[t]]*u3[t] + 
+                     0.7071068*r*Sin[oq5 + q5[t]]*u3[t] + 0.5*fl*(u3[t] + 
+                       u5[t])]*(2.*u2[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 
+                    1.414214*r*Sin[q3[t]]*u3[t] + fl*Sin[oq5 + q3[t] + q5[t]]*
+                     (u3[t] + u5[t])) - 0.5*fl*mc*Cos[oq6 + q3[t] + q6[t]]*
+                   (u3[t] + u6[t])^2 - 0.5*fl*kFc*Abs[Cos[oq6 + q3[t] + 
+                        q6[t]]*u1[t] + Sin[oq6 + q3[t] + q6[t]]*u2[t] - 
+                     0.7071068*r*Cos[oq6 + q6[t]]*u3[t] + 0.7071068*r*
+                      Sin[oq6 + q6[t]]*u3[t] + 0.5*fl*(u3[t] + u6[t])]*
+                   (-2.*u2[t] - 1.414214*r*Cos[q3[t]]*u3[t] + 1.414214*r*
+                     Sin[q3[t]]*u3[t] - 1.*fl*Sin[oq6 + q3[t] + q6[t]]*
+                     (u3[t] + u6[t])) - 0.5*fl*mc*Cos[oq7 + q3[t] + q7[t]]*
+                   (u3[t] + u7[t])^2 - 0.5*fl*kFc*Abs[Cos[oq7 + q3[t] + 
+                        q7[t]]*u1[t] + Sin[oq7 + q3[t] + q7[t]]*u2[t] - 
+                     0.7071068*r*Cos[oq7 + q7[t]]*u3[t] - 0.7071068*r*
+                      Sin[oq7 + q7[t]]*u3[t] + 0.5*fl*(u3[t] + u7[t])]*
+                   (-2.*u2[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 1.414214*r*
+                     Sin[q3[t]]*u3[t] - 1.*fl*Sin[oq7 + q3[t] + q7[t]]*
+                     (u3[t] + u7[t])) - 0.5*fl*mc*Cos[oq8 + q3[t] + q8[t]]*
+                   (u3[t] + u8[t])^2 - 0.5*fl*kFc*Abs[Cos[oq8 + q3[t] + 
+                        q8[t]]*u1[t] + Sin[oq8 + q3[t] + q8[t]]*u2[t] + 
+                     0.7071068*r*Cos[oq8 + q8[t]]*u3[t] - 0.7071068*r*
+                      Sin[oq8 + q8[t]]*u3[t] + 0.5*fl*(u3[t] + u8[t])]*
+                   (-2.*u2[t] + 1.414214*r*Cos[q3[t]]*u3[t] - 1.414214*r*
+                     Sin[q3[t]]*u3[t] - 1.*fl*Sin[oq8 + q3[t] + q8[t]]*
+                     (u3[t] + u8[t]))))))))))/
     ((-0.3535534*Ic*(0. + 1.*Ic^2*(0. + 0.5*fl*Ib*mc*
             Cos[oq5 + q3[t] + q5[t]]))*(2.828427*Ic + 
          fl*mc*r*(Cos[oq5 + q5[t]] + Sin[oq5 + q5[t]])) - 
@@ -9035,45 +9659,58 @@
                      Sin[oq4 + q4[t]]*u3[t]^2 + kTb*Abs[u4[t]]*u4[t] + 
                     0.25*kFb*l^2*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
                        Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
-                        u3[t] + 0.5*l*(u3[t] + u4[t])]*(2.*Cos[oq4 + q3[t] + 
-                         q4[t]]*u1[t] + 2.*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
-                      2.*r*Cos[oq4 + q4[t]]*u3[t] + l*(u3[t] + u4[t]))) - 
-                  1.*Ib*(-1.*kFa*(wvx - 1.*u1[t])*((wvx - 1.*u1[t])^2 + 
-                       (wvy - 1.*u2[t])^2)^0.5 + 0.5*kFb*l*Abs[
-                      Cos[oq4 + q3[t] + q4[t]]*u1[t] + Sin[oq4 + q3[t] + 
-                          q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*u3[t] + 
-                       0.5*l*(u3[t] + u4[t])]*(2.*u1[t] + 2.*r*Cos[q3[t]]*
-                       u3[t] + l*Cos[oq4 + q3[t] + q4[t]]*(u3[t] + u4[t])) + 
-                    0.5*mb*(2.*r*Sin[q3[t]]*u3[t]^2 + l*Sin[oq4 + q3[t] + 
-                         q4[t]]*(u3[t] + u4[t])^2) + 0.5*fl*mc*Sin[oq5 + 
-                       q3[t] + q5[t]]*(u3[t] + u5[t])^2 - 0.5*fl*kFc*
-                     Abs[Cos[oq5 + q3[t] + q5[t]]*u1[t] + Sin[oq5 + q3[t] + 
-                          q5[t]]*u2[t] + 0.7071068*r*Cos[oq5 + q5[t]]*u3[t] + 
-                       0.7071068*r*Sin[oq5 + q5[t]]*u3[t] + 0.5*fl*(u3[t] + 
-                         u5[t])]*(-2.*u1[t] - 1.414214*r*Cos[q3[t]]*u3[t] + 
-                      1.414214*r*Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq5 + q3[t] + 
-                         q5[t]]*(u3[t] + u5[t])) + 0.5*fl*mc*Sin[oq6 + 
-                       q3[t] + q6[t]]*(u3[t] + u6[t])^2 - 0.5*fl*kFc*
-                     Abs[Cos[oq6 + q3[t] + q6[t]]*u1[t] + Sin[oq6 + q3[t] + 
-                          q6[t]]*u2[t] - 0.7071068*r*Cos[oq6 + q6[t]]*u3[t] + 
-                       0.7071068*r*Sin[oq6 + q6[t]]*u3[t] + 0.5*fl*(u3[t] + 
-                         u6[t])]*(-2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 
-                      1.414214*r*Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq6 + q3[t] + 
-                         q6[t]]*(u3[t] + u6[t])) + 0.5*fl*mc*Sin[oq7 + 
-                       q3[t] + q7[t]]*(u3[t] + u7[t])^2 - 0.5*fl*kFc*
-                     Abs[Cos[oq7 + q3[t] + q7[t]]*u1[t] + Sin[oq7 + q3[t] + 
-                          q7[t]]*u2[t] - 0.7071068*r*Cos[oq7 + q7[t]]*u3[t] - 
-                       0.7071068*r*Sin[oq7 + q7[t]]*u3[t] + 0.5*fl*(u3[t] + 
-                         u7[t])]*(-2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] - 
-                      1.414214*r*Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq7 + q3[t] + 
-                         q7[t]]*(u3[t] + u7[t])) + 0.5*fl*mc*Sin[oq8 + 
-                       q3[t] + q8[t]]*(u3[t] + u8[t])^2 + 0.5*fl*kFc*
-                     Abs[Cos[oq8 + q3[t] + q8[t]]*u1[t] + Sin[oq8 + q3[t] + 
-                          q8[t]]*u2[t] + 0.7071068*r*Cos[oq8 + q8[t]]*u3[t] - 
-                       0.7071068*r*Sin[oq8 + q8[t]]*u3[t] + 0.5*fl*(u3[t] + 
-                         u8[t])]*(2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 
-                      1.414214*r*Sin[q3[t]]*u3[t] + fl*Cos[oq8 + q3[t] + 
-                         q8[t]]*(u3[t] + u8[t])))))))) + 
+                        u3[t] + 0.5*l*(u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*
+                        (4.*u1[t]^2 + 4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*
+                          u3[t] + 8.*r*Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*
+                          u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t]*
+                          (u3[t] + u4[t]) + 4.*l*Sin[oq4 + q3[t] + q4[t]]*
+                          u2[t]*(u3[t] + u4[t]) + 4.*l*r*Cos[oq4 + q4[t]]*
+                          u3[t]*(u3[t] + u4[t]) + l^2*(u3[t] + u4[t])^2)^0.5]*
+                     (2.*Cos[oq4 + q3[t] + q4[t]]*u1[t] + 2.*Sin[oq4 + 
+                         q3[t] + q4[t]]*u2[t] + 2.*r*Cos[oq4 + q4[t]]*u3[t] + 
+                      l*(u3[t] + u4[t]))) - 1.*Ib*(-1.*kFa*(wvx - 1.*u1[t])*
+                     ((wvx - 1.*u1[t])^2 + (wvy - 1.*u2[t])^2)^0.5 + 
+                    0.5*kFb*l*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
+                       Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
+                        u3[t] + 0.5*l*(u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*
+                        (4.*u1[t]^2 + 4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*
+                          u3[t] + 8.*r*Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*
+                          u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t]*
+                          (u3[t] + u4[t]) + 4.*l*Sin[oq4 + q3[t] + q4[t]]*
+                          u2[t]*(u3[t] + u4[t]) + 4.*l*r*Cos[oq4 + q4[t]]*
+                          u3[t]*(u3[t] + u4[t]) + l^2*(u3[t] + u4[t])^2)^0.5]*
+                     (2.*u1[t] + 2.*r*Cos[q3[t]]*u3[t] + l*Cos[oq4 + q3[t] + 
+                         q4[t]]*(u3[t] + u4[t])) + 0.5*mb*(2.*r*Sin[q3[t]]*
+                       u3[t]^2 + l*Sin[oq4 + q3[t] + q4[t]]*(u3[t] + u4[t])^
+                        2) + 0.5*fl*mc*Sin[oq5 + q3[t] + q5[t]]*
+                     (u3[t] + u5[t])^2 - 0.5*fl*kFc*Abs[Cos[oq5 + q3[t] + 
+                          q5[t]]*u1[t] + Sin[oq5 + q3[t] + q5[t]]*u2[t] + 
+                       0.7071068*r*Cos[oq5 + q5[t]]*u3[t] + 0.7071068*r*
+                        Sin[oq5 + q5[t]]*u3[t] + 0.5*fl*(u3[t] + u5[t])]*
+                     (-2.*u1[t] - 1.414214*r*Cos[q3[t]]*u3[t] + 1.414214*r*
+                       Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq5 + q3[t] + q5[t]]*
+                       (u3[t] + u5[t])) + 0.5*fl*mc*Sin[oq6 + q3[t] + q6[t]]*
+                     (u3[t] + u6[t])^2 - 0.5*fl*kFc*Abs[Cos[oq6 + q3[t] + 
+                          q6[t]]*u1[t] + Sin[oq6 + q3[t] + q6[t]]*u2[t] - 
+                       0.7071068*r*Cos[oq6 + q6[t]]*u3[t] + 0.7071068*r*
+                        Sin[oq6 + q6[t]]*u3[t] + 0.5*fl*(u3[t] + u6[t])]*
+                     (-2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 1.414214*r*
+                       Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq6 + q3[t] + q6[t]]*
+                       (u3[t] + u6[t])) + 0.5*fl*mc*Sin[oq7 + q3[t] + q7[t]]*
+                     (u3[t] + u7[t])^2 - 0.5*fl*kFc*Abs[Cos[oq7 + q3[t] + 
+                          q7[t]]*u1[t] + Sin[oq7 + q3[t] + q7[t]]*u2[t] - 
+                       0.7071068*r*Cos[oq7 + q7[t]]*u3[t] - 0.7071068*r*
+                        Sin[oq7 + q7[t]]*u3[t] + 0.5*fl*(u3[t] + u7[t])]*
+                     (-2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] - 1.414214*r*
+                       Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq7 + q3[t] + q7[t]]*
+                       (u3[t] + u7[t])) + 0.5*fl*mc*Sin[oq8 + q3[t] + q8[t]]*
+                     (u3[t] + u8[t])^2 + 0.5*fl*kFc*Abs[Cos[oq8 + q3[t] + 
+                          q8[t]]*u1[t] + Sin[oq8 + q3[t] + q8[t]]*u2[t] + 
+                       0.7071068*r*Cos[oq8 + q8[t]]*u3[t] - 0.7071068*r*
+                        Sin[oq8 + q8[t]]*u3[t] + 0.5*fl*(u3[t] + u8[t])]*
+                     (2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 1.414214*r*
+                       Sin[q3[t]]*u3[t] + fl*Cos[oq8 + q3[t] + q8[t]]*
+                       (u3[t] + u8[t])))))))) + 
         (-0.3535534*Ic*(0. + 1.*Ic^2*(0. + 0.5*fl*Ib*mc*Cos[oq5 + q3[t] + 
                  q5[t]]))*(2.828427*Ic + fl*mc*r*(Cos[oq5 + q5[t]] + 
               Sin[oq5 + q5[t]])) - 1.*Ic*(0.3535534*(0. + 1.*Ic^2*(0. + 
@@ -9132,13 +9769,26 @@
                      Sin[oq4 + q4[t]]*u3[t]^2 + kTb*Abs[u4[t]]*u4[t] + 
                     0.25*kFb*l^2*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
                        Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
-                        u3[t] + 0.5*l*(u3[t] + u4[t])]*(2.*Cos[oq4 + q3[t] + 
-                         q4[t]]*u1[t] + 2.*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
-                      2.*r*Cos[oq4 + q4[t]]*u3[t] + l*(u3[t] + u4[t]))) - 
-                  1.*Ib*(-1.*kFa*((wvx - 1.*u1[t])^2 + (wvy - 1.*u2[t])^2)^
-                      0.5*(wvy - 1.*u2[t]) + 0.5*kFb*l*Abs[Cos[oq4 + q3[t] + 
-                          q4[t]]*u1[t] + Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
-                       r*Cos[oq4 + q4[t]]*u3[t] + 0.5*l*(u3[t] + u4[t])]*
+                        u3[t] + 0.5*l*(u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*
+                        (4.*u1[t]^2 + 4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*
+                          u3[t] + 8.*r*Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*
+                          u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t]*
+                          (u3[t] + u4[t]) + 4.*l*Sin[oq4 + q3[t] + q4[t]]*
+                          u2[t]*(u3[t] + u4[t]) + 4.*l*r*Cos[oq4 + q4[t]]*
+                          u3[t]*(u3[t] + u4[t]) + l^2*(u3[t] + u4[t])^2)^0.5]*
+                     (2.*Cos[oq4 + q3[t] + q4[t]]*u1[t] + 2.*Sin[oq4 + 
+                         q3[t] + q4[t]]*u2[t] + 2.*r*Cos[oq4 + q4[t]]*u3[t] + 
+                      l*(u3[t] + u4[t]))) - 1.*Ib*(-1.*kFa*((wvx - 1.*u1[t])^
+                        2 + (wvy - 1.*u2[t])^2)^0.5*(wvy - 1.*u2[t]) + 
+                    0.5*kFb*l*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
+                       Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
+                        u3[t] + 0.5*l*(u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*
+                        (4.*u1[t]^2 + 4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*
+                          u3[t] + 8.*r*Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*
+                          u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t]*
+                          (u3[t] + u4[t]) + 4.*l*Sin[oq4 + q3[t] + q4[t]]*
+                          u2[t]*(u3[t] + u4[t]) + 4.*l*r*Cos[oq4 + q4[t]]*
+                          u3[t]*(u3[t] + u4[t]) + l^2*(u3[t] + u4[t])^2)^0.5]*
                      (2.*u2[t] + 2.*r*Sin[q3[t]]*u3[t] + l*Sin[oq4 + q3[t] + 
                          q4[t]]*(u3[t] + u4[t])) - 0.5*mb*(2.*r*Cos[q3[t]]*
                        u3[t]^2 + l*Cos[oq4 + q3[t] + q4[t]]*(u3[t] + u4[t])^
@@ -9286,45 +9936,58 @@
                      Sin[oq4 + q4[t]]*u3[t]^2 + kTb*Abs[u4[t]]*u4[t] + 
                     0.25*kFb*l^2*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
                        Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
-                        u3[t] + 0.5*l*(u3[t] + u4[t])]*(2.*Cos[oq4 + q3[t] + 
-                         q4[t]]*u1[t] + 2.*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
-                      2.*r*Cos[oq4 + q4[t]]*u3[t] + l*(u3[t] + u4[t]))) - 
-                  1.*Ib*(-1.*kFa*(wvx - 1.*u1[t])*((wvx - 1.*u1[t])^2 + 
-                       (wvy - 1.*u2[t])^2)^0.5 + 0.5*kFb*l*Abs[
-                      Cos[oq4 + q3[t] + q4[t]]*u1[t] + Sin[oq4 + q3[t] + 
-                          q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*u3[t] + 
-                       0.5*l*(u3[t] + u4[t])]*(2.*u1[t] + 2.*r*Cos[q3[t]]*
-                       u3[t] + l*Cos[oq4 + q3[t] + q4[t]]*(u3[t] + u4[t])) + 
-                    0.5*mb*(2.*r*Sin[q3[t]]*u3[t]^2 + l*Sin[oq4 + q3[t] + 
-                         q4[t]]*(u3[t] + u4[t])^2) + 0.5*fl*mc*Sin[oq5 + 
-                       q3[t] + q5[t]]*(u3[t] + u5[t])^2 - 0.5*fl*kFc*
-                     Abs[Cos[oq5 + q3[t] + q5[t]]*u1[t] + Sin[oq5 + q3[t] + 
-                          q5[t]]*u2[t] + 0.7071068*r*Cos[oq5 + q5[t]]*u3[t] + 
-                       0.7071068*r*Sin[oq5 + q5[t]]*u3[t] + 0.5*fl*(u3[t] + 
-                         u5[t])]*(-2.*u1[t] - 1.414214*r*Cos[q3[t]]*u3[t] + 
-                      1.414214*r*Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq5 + q3[t] + 
-                         q5[t]]*(u3[t] + u5[t])) + 0.5*fl*mc*Sin[oq6 + 
-                       q3[t] + q6[t]]*(u3[t] + u6[t])^2 - 0.5*fl*kFc*
-                     Abs[Cos[oq6 + q3[t] + q6[t]]*u1[t] + Sin[oq6 + q3[t] + 
-                          q6[t]]*u2[t] - 0.7071068*r*Cos[oq6 + q6[t]]*u3[t] + 
-                       0.7071068*r*Sin[oq6 + q6[t]]*u3[t] + 0.5*fl*(u3[t] + 
-                         u6[t])]*(-2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 
-                      1.414214*r*Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq6 + q3[t] + 
-                         q6[t]]*(u3[t] + u6[t])) + 0.5*fl*mc*Sin[oq7 + 
-                       q3[t] + q7[t]]*(u3[t] + u7[t])^2 - 0.5*fl*kFc*
-                     Abs[Cos[oq7 + q3[t] + q7[t]]*u1[t] + Sin[oq7 + q3[t] + 
-                          q7[t]]*u2[t] - 0.7071068*r*Cos[oq7 + q7[t]]*u3[t] - 
-                       0.7071068*r*Sin[oq7 + q7[t]]*u3[t] + 0.5*fl*(u3[t] + 
-                         u7[t])]*(-2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] - 
-                      1.414214*r*Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq7 + q3[t] + 
-                         q7[t]]*(u3[t] + u7[t])) + 0.5*fl*mc*Sin[oq8 + 
-                       q3[t] + q8[t]]*(u3[t] + u8[t])^2 + 0.5*fl*kFc*
-                     Abs[Cos[oq8 + q3[t] + q8[t]]*u1[t] + Sin[oq8 + q3[t] + 
-                          q8[t]]*u2[t] + 0.7071068*r*Cos[oq8 + q8[t]]*u3[t] - 
-                       0.7071068*r*Sin[oq8 + q8[t]]*u3[t] + 0.5*fl*(u3[t] + 
-                         u8[t])]*(2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 
-                      1.414214*r*Sin[q3[t]]*u3[t] + fl*Cos[oq8 + q3[t] + 
-                         q8[t]]*(u3[t] + u8[t])))))))) + 
+                        u3[t] + 0.5*l*(u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*
+                        (4.*u1[t]^2 + 4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*
+                          u3[t] + 8.*r*Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*
+                          u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t]*
+                          (u3[t] + u4[t]) + 4.*l*Sin[oq4 + q3[t] + q4[t]]*
+                          u2[t]*(u3[t] + u4[t]) + 4.*l*r*Cos[oq4 + q4[t]]*
+                          u3[t]*(u3[t] + u4[t]) + l^2*(u3[t] + u4[t])^2)^0.5]*
+                     (2.*Cos[oq4 + q3[t] + q4[t]]*u1[t] + 2.*Sin[oq4 + 
+                         q3[t] + q4[t]]*u2[t] + 2.*r*Cos[oq4 + q4[t]]*u3[t] + 
+                      l*(u3[t] + u4[t]))) - 1.*Ib*(-1.*kFa*(wvx - 1.*u1[t])*
+                     ((wvx - 1.*u1[t])^2 + (wvy - 1.*u2[t])^2)^0.5 + 
+                    0.5*kFb*l*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
+                       Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
+                        u3[t] + 0.5*l*(u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*
+                        (4.*u1[t]^2 + 4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*
+                          u3[t] + 8.*r*Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*
+                          u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t]*
+                          (u3[t] + u4[t]) + 4.*l*Sin[oq4 + q3[t] + q4[t]]*
+                          u2[t]*(u3[t] + u4[t]) + 4.*l*r*Cos[oq4 + q4[t]]*
+                          u3[t]*(u3[t] + u4[t]) + l^2*(u3[t] + u4[t])^2)^0.5]*
+                     (2.*u1[t] + 2.*r*Cos[q3[t]]*u3[t] + l*Cos[oq4 + q3[t] + 
+                         q4[t]]*(u3[t] + u4[t])) + 0.5*mb*(2.*r*Sin[q3[t]]*
+                       u3[t]^2 + l*Sin[oq4 + q3[t] + q4[t]]*(u3[t] + u4[t])^
+                        2) + 0.5*fl*mc*Sin[oq5 + q3[t] + q5[t]]*
+                     (u3[t] + u5[t])^2 - 0.5*fl*kFc*Abs[Cos[oq5 + q3[t] + 
+                          q5[t]]*u1[t] + Sin[oq5 + q3[t] + q5[t]]*u2[t] + 
+                       0.7071068*r*Cos[oq5 + q5[t]]*u3[t] + 0.7071068*r*
+                        Sin[oq5 + q5[t]]*u3[t] + 0.5*fl*(u3[t] + u5[t])]*
+                     (-2.*u1[t] - 1.414214*r*Cos[q3[t]]*u3[t] + 1.414214*r*
+                       Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq5 + q3[t] + q5[t]]*
+                       (u3[t] + u5[t])) + 0.5*fl*mc*Sin[oq6 + q3[t] + q6[t]]*
+                     (u3[t] + u6[t])^2 - 0.5*fl*kFc*Abs[Cos[oq6 + q3[t] + 
+                          q6[t]]*u1[t] + Sin[oq6 + q3[t] + q6[t]]*u2[t] - 
+                       0.7071068*r*Cos[oq6 + q6[t]]*u3[t] + 0.7071068*r*
+                        Sin[oq6 + q6[t]]*u3[t] + 0.5*fl*(u3[t] + u6[t])]*
+                     (-2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 1.414214*r*
+                       Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq6 + q3[t] + q6[t]]*
+                       (u3[t] + u6[t])) + 0.5*fl*mc*Sin[oq7 + q3[t] + q7[t]]*
+                     (u3[t] + u7[t])^2 - 0.5*fl*kFc*Abs[Cos[oq7 + q3[t] + 
+                          q7[t]]*u1[t] + Sin[oq7 + q3[t] + q7[t]]*u2[t] - 
+                       0.7071068*r*Cos[oq7 + q7[t]]*u3[t] - 0.7071068*r*
+                        Sin[oq7 + q7[t]]*u3[t] + 0.5*fl*(u3[t] + u7[t])]*
+                     (-2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] - 1.414214*r*
+                       Sin[q3[t]]*u3[t] - 1.*fl*Cos[oq7 + q3[t] + q7[t]]*
+                       (u3[t] + u7[t])) + 0.5*fl*mc*Sin[oq8 + q3[t] + q8[t]]*
+                     (u3[t] + u8[t])^2 + 0.5*fl*kFc*Abs[Cos[oq8 + q3[t] + 
+                          q8[t]]*u1[t] + Sin[oq8 + q3[t] + q8[t]]*u2[t] + 
+                       0.7071068*r*Cos[oq8 + q8[t]]*u3[t] - 0.7071068*r*
+                        Sin[oq8 + q8[t]]*u3[t] + 0.5*fl*(u3[t] + u8[t])]*
+                     (2.*u1[t] + 1.414214*r*Cos[q3[t]]*u3[t] + 1.414214*r*
+                       Sin[q3[t]]*u3[t] + fl*Cos[oq8 + q3[t] + q8[t]]*
+                       (u3[t] + u8[t])))))))) + 
         (-0.3535534*Ic*(0. + 1.*Ic^2*(0. + 0.5*fl*Ib*mc*Cos[oq5 + q3[t] + 
                  q5[t]]))*(2.828427*Ic + fl*mc*r*(Cos[oq5 + q5[t]] + 
               Sin[oq5 + q5[t]])) - 1.*Ic*(0.3535534*(0. + 1.*Ic^2*(0. + 
@@ -9386,16 +10049,29 @@
                      Sin[oq4 + q4[t]]*u3[t]^2 + kTb*Abs[u4[t]]*u4[t] + 
                     0.25*kFb*l^2*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
                        Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
-                        u3[t] + 0.5*l*(u3[t] + u4[t])]*(2.*Cos[oq4 + q3[t] + 
-                         q4[t]]*u1[t] + 2.*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
-                      2.*r*Cos[oq4 + q4[t]]*u3[t] + l*(u3[t] + u4[t]))) - 
-                  1.*Ib*(kTa*Abs[u3[t]]*u3[t] + kTb*Abs[u4[t]]*u4[t] + 
-                    0.25*kFb*l*Abs[Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
-                       Sin[oq4 + q3[t] + q4[t]]*u2[t] + r*Cos[oq4 + q4[t]]*
-                        u3[t] + 0.5*l*(u3[t] + u4[t])]*(4.*r*Cos[q3[t]]*
-                       u1[t] + 2.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t] + 
-                      4.*r*Sin[q3[t]]*u2[t] + 2.*l*Sin[oq4 + q3[t] + q4[t]]*
-                       u2[t] + 4.*r^2*u3[t] + 4.*l*r*Cos[oq4 + q4[t]]*u3[t] + 
+                        u3[t] + 0.5*l*(u3[t] + u4[t]) + 0.5*krb*Sign[u4[t]]*
+                        (4.*u1[t]^2 + 4.*u2[t]^2 + 8.*r*Cos[q3[t]]*u1[t]*
+                          u3[t] + 8.*r*Sin[q3[t]]*u2[t]*u3[t] + 4.*r^2*
+                          u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t]*
+                          (u3[t] + u4[t]) + 4.*l*Sin[oq4 + q3[t] + q4[t]]*
+                          u2[t]*(u3[t] + u4[t]) + 4.*l*r*Cos[oq4 + q4[t]]*
+                          u3[t]*(u3[t] + u4[t]) + l^2*(u3[t] + u4[t])^2)^0.5]*
+                     (2.*Cos[oq4 + q3[t] + q4[t]]*u1[t] + 2.*Sin[oq4 + 
+                         q3[t] + q4[t]]*u2[t] + 2.*r*Cos[oq4 + q4[t]]*u3[t] + 
+                      l*(u3[t] + u4[t]))) - 1.*Ib*(kTa*Abs[u3[t]]*u3[t] + 
+                    kTb*Abs[u4[t]]*u4[t] + 0.25*kFb*l*Abs[Cos[oq4 + q3[t] + 
+                          q4[t]]*u1[t] + Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
+                       r*Cos[oq4 + q4[t]]*u3[t] + 0.5*l*(u3[t] + u4[t]) + 
+                       0.5*krb*Sign[u4[t]]*(4.*u1[t]^2 + 4.*u2[t]^2 + 
+                          8.*r*Cos[q3[t]]*u1[t]*u3[t] + 8.*r*Sin[q3[t]]*u2[t]*
+                          u3[t] + 4.*r^2*u3[t]^2 + 4.*l*Cos[oq4 + q3[t] + 
+                          q4[t]]*u1[t]*(u3[t] + u4[t]) + 4.*l*Sin[oq4 + 
+                          q3[t] + q4[t]]*u2[t]*(u3[t] + u4[t]) + 4.*l*r*
+                          Cos[oq4 + q4[t]]*u3[t]*(u3[t] + u4[t]) + l^2*
+                          (u3[t] + u4[t])^2)^0.5]*(4.*r*Cos[q3[t]]*u1[t] + 
+                      2.*l*Cos[oq4 + q3[t] + q4[t]]*u1[t] + 4.*r*Sin[q3[t]]*
+                       u2[t] + 2.*l*Sin[oq4 + q3[t] + q4[t]]*u2[t] + 
+                      4.*r^2*u3[t] + 4.*l*r*Cos[oq4 + q4[t]]*u3[t] + 
                       2.*l*r*Cos[oq4 + q4[t]]*u4[t] + l^2*(u3[t] + u4[t])) + 
                     kTc*Abs[u5[t]]*u5[t] - 0.25*fl*kFc*Abs[Cos[oq5 + q3[t] + 
                           q5[t]]*u1[t] + Sin[oq5 + q3[t] + q5[t]]*u2[t] + 

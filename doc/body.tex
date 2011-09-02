@@ -115,9 +115,9 @@ $s_j \in \R $, and sensor weights $n_{ji} \in [-4, 4]$.
 
 \begin{table}
   \begin{center}
-    \begin{tabular}{ | l | l | l | }
+    \begin{tabular}{ | l | c | l | }
       \hline
-      Variable & Value & Description \\
+      Sensor Variable & Value & Description \\
       \hline
       $s_1$ & $||(u_1, u_2) - (w_1, w_2)||$ & relative translational speed \\
       $s_2$ & $u_3$ & angular speed \\
@@ -125,22 +125,17 @@ $s_j \in \R $, and sensor weights $n_{ji} \in [-4, 4]$.
       $s_4$ & $target_\theta$ & angle to target \\              
       $s_5$ & $q_4$ & position of tail \\                       
       $s_6$ & $u_4$ & speed of tail \\                          
-      $s_{7 + 2 i}$ & $q_{5 + i}$ & position of foot $i \in [0, 3]$ \\        
-      $s_{8 + 2 i}$ & $u_{5 + i}$ & speed of foot $i \in [0, 3]$ \\           
+      $s_{7 + 2 i}$ & $q_{5 + i}$ & position of each foot $i \in [0, 3]$ \\        
+      $s_{8 + 2 i}$ & $u_{5 + i}$ & speed of each foot $i \in [0, 3]$ \\           
       \hline
     \end{tabular}
   \end{center}
-  \caption{Description of sensors}
-  \label{table:sensor}
+  \caption[Sensors]{\label{table:sensor}Description of available sensors}
 \end{table}
 
-The following sensors are used: $\{s_1, s_2, \ldots, s_{14}\} =
-\{||(u_1, u_2)||, u_3, ||target - (q_1, q_2)||, \text{angle to
-  target}, q_4, u_4, q_5, u_5, q_6, u_6, q_7, u_7, q_8, u_8\}$.  The
-$s_1$ and $s_2$ sensors provide the translational and rotational speed
-of the body.  A range finder for a target is given by the $s_3$ and
-$s_4$ sensors.  Proprioceptive sesnsors are given by the $s_5, s_6,
-\ldots, s_{14}$ sensors.
+Table~\ref{table:sensor} describes the sensors.  A range finder for a
+target is given by the $s_3$ and $s_4$ sensors.  Proprioceptive
+sesnsors are given by the $s_5, s_6, \ldots, s_{14}$ sensors.
 
 Five motor neurons are used.  Each neuron exerts a torque on its
 associated limb.  The torque for each limb $T(q_i)$ is given in

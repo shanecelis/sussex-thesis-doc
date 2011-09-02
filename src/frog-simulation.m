@@ -6,10 +6,6 @@
 
 SetDirectory["/Users/shane/School/sussex/thesis/code/src"];
 
-
-pstateCount = 16;
-
-
 rectangle[x_, y_, w_, h_, angle_] := 
     Rotate[Rectangle[{x - w/2, y - h/2},{x + w/2, y + h/2}], angle]
 

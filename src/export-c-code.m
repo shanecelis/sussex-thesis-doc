@@ -266,15 +266,12 @@ makeFrogCTRNNSolver[] :=
            makeIntegratorC[step, 0.01]
           ]
 
-RK4StepSize = 0.02;
-
-mySign[x_Real] := 
+mySign[x_] := 
     Piecewise[{{ 1, x > 0},
                {-1, x < 0},
                {0, True}}]
 
-(*compilableSubs = {Clip -> myClip, Sign -> mySign};*)
-compilableSubs = Clip -> myClip;
+compilableSubs = {Clip -> myClip, Sign -> mySign};
 
 (* This can't be automatically converted to C. *)
 simpleBoundary[x_, {a_, b_}] := UnitStep[x - b]  - UnitStep[-x + a]

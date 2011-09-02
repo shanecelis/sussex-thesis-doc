@@ -171,5 +171,11 @@ CoefficientArrays[eqns1, vars]
   Then solve for u in  m0 . u = -m1 and it's done.
 * Write Luc
   Paper or data?
-
+  data
 * Perhaps the tasks should be that there is a current
+
+  mean_speed 0.01 m/s for trials over period 1, 2, 4, 1
+  
+  These are some good values for the simulation.
+{Tmax -> 1/1000, kTa -> -0.00423449, kTb -> -6.6176*10^-6, 
+ kFa -> -0.0001, kFb -> -20., krb -> -0.392443, P -> 1}

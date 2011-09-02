@@ -76,13 +76,31 @@ params = {r       -> 0.025 m,
          };
 Protect@@keys[params];
 
-gaParams = {
+RK4StepSize = 0.01;
+
+ctrnnGaParams = {
+    geneCountGA -> ctrnnParamCount,
+    geneToConstantsFunc -> ctrnnGeneToConstants
+                };
+physicsGaParams = {
+    geneCountGA -> 7,
+    geneToConstantsFunc -> physicsGeneToConstants,
+    fitnessFunc -> fitnessForPhysics,
+    fitnessDataFunc -> fitnessForPhysicsData
+
+                  };
+periodGaParams = {
+    geneCountGA -> 1,
+    geneToConstantsFunc -> periodGeneToConstants
+                  };
+
+gaParams = physicsGaParams~Join~{
     target -> {0, 0.01},
-    tmax -> 20,
+    tmax -> 10,
     expName -> Ap,
     phase -> 1,
     deltat -> 0.01,
-    dataDeltat -> 0.5,
+    dataDeltat -> 0.1,
 
     fitnessFunc -> fitnessForSpeed,
     fitnessDataFunc -> fitnessForSpeedData,
@@ -97,6 +115,7 @@ gaParams = {
     
     dummy -> None
            };
+
 Protect@@keys[gaParams];
 minimize = minimise /. gaParams;
 
@@ -208,19 +227,23 @@ constantsInit = {
     P -> 1}
 Protect@@justSymbol[constantsLayout];
 
-nodeCount        = 5;
 motorCount       = 5;
 sensorCount      = 14;
 
 (* state info *)
-limbLengthsCount = 2;
-stateCount       = 1 + pstateCount + nodeCount + limbLengthsCount + recordCount;
 recordCount      = 2;
-recordBegin      = 25;
-tailstateBegin   = 23;
-qstateBegin      = 2;
-ustateBegin      = 10;
-nodeBegin        = ustateBegin + 8;
+qstateCount      = 8;
+ustateCount      = 8;
+tailStateCount   = 2;
+nodeCount        = 5;
+pstateCount      = qstateCount + ustateCount;
+stateCount       = 1 + pstateCount + nodeCount + tailStateCount + recordCount;
+qstateBegin      = 1 + 1;
+ustateBegin      = 1 + qstateCount + 1;
+nodeBegin        = 1 + pstateCount + 1;
+tailstateBegin   = 1 + pstateCount + nodeCount + 1;
+recordBegin      = 1 + pstateCount + nodeCount + tailStateCount + 1;
+
 
 (* constants info *)
 ctrnnParamCount  = nodeCount^2 + 2 nodeCount + sensorCount * motorCount;
@@ -234,3 +257,7 @@ physBegin        = ctrnnParamCount + targetCount + pointsCount + 1;
 
 qindex[num_] := qstateBegin + num - 1
 uindex[num_] := ustateBegin + num - 1
+
+geneCount = geneCountGA /. gaParams;
+               
+

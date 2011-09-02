@@ -6,7 +6,7 @@
 
 %SetCompatible (AUTOLEV)
 autorhs           on
-autoz             off
+autoz             on
 body              a,b,c,d,e,f 
                   % central body (a), tail (b), feet clockwise (c---f)
 point             o,jb,jc,jd,je,jf 
@@ -130,11 +130,11 @@ wv> = wvx * n1> + wvy * n2>
 % kFa = -rho/2 * Cdcirc  * Acirc 
 force_ao> = kFa * (v_ao_n> - wv>) * mag(v_ao_n> - wv>)
 % kFb = -rho/2 * Cdplate * ld 
-krb = 0
+%krb = 0
 krc = 0
 wv> = 0>
-%force_bo> = kFb * l * (v_bo_n> - wv>) * abs(dot(b1>, (v_bo_n> - wv>)) + krb * SIGN(u4) * mag(v_bo_n>)) 
-force_bo> = kFb * l * (v_bo_n> - wv>) * abs(dot(b1>, (v_bo_n> - wv>)) + krb * mag(v_bo_n>))  
+ force_bo> = kFb * l * (v_bo_n> - wv>) * abs(dot(b1>, (v_bo_n> - wv>)) + krb * SIGN(u4) * mag(v_bo_n>)) 
+%force_bo> = kFb * l * (v_bo_n> - wv>) * abs(dot(b1>, (v_bo_n> - wv>)) + krb * mag(v_bo_n>)) 
 %force_bo> = b1> * sign(u4)
 % kFc = -rho/2 * Cdplate * fld
 force_co> = kFc * fl * (v_co_n> - wv>) * abs(dot(c1>, (v_co_n> - wv>)) + krc * mag(v_co_n>))
@@ -146,6 +146,6 @@ i_c_co>> = inertia(co, c)
 i_d_do>> = inertia(do, d)
 i_e_eo>> = inertia(eo, e)
 i_f_fo>> = inertia(fo, f)
-%eqns = fr() + frstar()
-%eqns 
-fr() + frstar()
+eqns = fr() + frstar()
+%eqns
+%fr() + frstar()

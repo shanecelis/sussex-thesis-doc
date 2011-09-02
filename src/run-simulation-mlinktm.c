@@ -345,7 +345,7 @@ int was_aborted() {
 
 
 
-void run_simulation_mlink2( double *state, long stateLength, 
+void run_simulation_mlink( double *state, long stateLength, 
      double step_size, double *constants, long constantsLength, 
      double time) {
   long dims[1];
@@ -382,7 +382,7 @@ void run_simulation_mlink2( double *state, long stateLength,
 }
 
 
-void run_simulation_mlink( double *state, long stateLength, 
+void run_simulation_mlink_g2c( double *state, long stateLength, 
      double step_size, double *constants, long constantsLength, 
      double time) {
   int err;
@@ -392,7 +392,7 @@ void run_simulation_mlink( double *state, long stateLength,
     failed_with_message0("runSimulationMlink::errg2c");
     return;
   }
-  run_simulation_mlink2(state, stateLength, step_size, constants2, 
+  run_simulation_mlink(state, stateLength, step_size, constants2, 
                         constantsLength, time);
 }
 
@@ -444,7 +444,7 @@ L0:	return res;
 } /* _tr0 */
 
 
-void run_simulation_mlink2 P(( double * _tp1, long _tpl1, double _tp2, double * _tp3, long _tpl3, double _tp4));
+void run_simulation_mlink_g2c P(( double * _tp1, long _tpl1, double _tp2, double * _tp3, long _tpl3, double _tp4));
 
 #if MLPROTOTYPES
 static int _tr1( MLINK mlp)
@@ -465,7 +465,7 @@ static int _tr1(mlp) MLINK mlp;
 	if ( ! MLGetReal( mlp, &_tp4) ) goto L3;
 	if ( ! MLNewPacket(mlp) ) goto L4;
 
-	run_simulation_mlink2(_tp1, _tpl1, _tp2, _tp3, _tpl3, _tp4);
+	run_simulation_mlink_g2c(_tp1, _tpl1, _tp2, _tp3, _tpl3, _tp4);
 
 	res = 1;
 L4: L3:	MLDisownRealList( mlp, _tp3, _tpl3);
@@ -482,7 +482,7 @@ static struct func {
 	const char  *f_name;
 	} _tramps[2] = {
 		{ 4, 0, _tr0, "run_simulation_mlink" },
-		{ 4, 0, _tr1, "run_simulation_mlink2" }
+		{ 4, 0, _tr1, "run_simulation_mlink_g2c" }
 		};
 
 static const char* evalstrs[] = {
@@ -490,9 +490,9 @@ static const char* evalstrs[] = {
 	"e_] := runSimulationMlink[N[state], N[stepSize], N[constants], N",
 	"[time]]",
 	(const char*)0,
-	"runSimulationMlink2[ state:{___}, stepSize_, constants:{___}, ti",
-	"me_] := runSimulationMlink2[N[state], N[stepSize], N[constants],",
-	" N[time]]",
+	"runSimulationMlinkG2C[ state:{___}, stepSize_, constants:{___}, ",
+	"time_] := runSimulationMlinkG2C[N[state], N[stepSize], N[constan",
+	"ts], N[time]]",
 	(const char*)0,
 	(const char*)0
 };
@@ -515,7 +515,7 @@ int MLInstall(mlp) MLINK mlp;
 	_res = MLConnect(mlp);
 	if (_res) _res = _definepattern(mlp, (char *)"runSimulationMlink[ state:{___Real}, stepSize_Real, constants:{___Real}, time_Real]", (char *)"{ state, stepSize, constants, time }", 0);
 	if (_res) _res = _doevalstr( mlp, 0);
-	if (_res) _res = _definepattern(mlp, (char *)"runSimulationMlink2[ state:{___Real}, stepSize_Real, constants:{___Real}, time_Real]", (char *)"{ state, stepSize, constants, time }", 1);
+	if (_res) _res = _definepattern(mlp, (char *)"runSimulationMlinkG2C[ state:{___Real}, stepSize_Real, constants:{___Real}, time_Real]", (char *)"{ state, stepSize, constants, time }", 1);
 	if (_res) _res = _doevalstr( mlp, 1);
 	if (_res) _res = MLPutSymbol( mlp, "End");
 	if (_res) _res = MLFlush( mlp);
