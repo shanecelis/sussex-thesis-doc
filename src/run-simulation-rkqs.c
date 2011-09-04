@@ -10,7 +10,6 @@
 #include "rkqs.h"
 #include "run-simulation.h"
 
-#define MAX_STEPS   10000
 //static MTensor state, constants, results, points;
 static WolframLibraryData libData = 0;
 
@@ -151,7 +150,7 @@ int run_simulation(double *init_state, double step_size,
                    double *constants_arg, double time, 
                    double *state_result, int (*continue_loop)(void))
 {
-  int    i, j, err = 0;
+  int    i, j, err = 0, ec = 0; /* ec = exit-code */
   double t, torig;
   double h, hnext, hmin, hmean, hmax;
   double constants[CONSTANTS_COUNT], dstatedt[STATE_COUNT], 
@@ -182,17 +181,17 @@ int run_simulation(double *init_state, double step_size,
   for (j = 0; j < MAX_STEPS; j++) {
     err = frog_deriv(t, state, dstatedt, constants); 
     if (err)
-      return err; 
+      return (1 << 8 | err); 
 #ifdef RKQS
     {
-    for(i = 0; i < STATE_COUNT; i++)
+    for(i = 0; i < STATE_COUNT; i++) 
       state_scale[i] = fabs(state[i]) + fabs(dstatedt[i] * h) + TINY;
 
     err = rkqs(state, dstatedt, STATE_COUNT, &t, 
                h, 1.e-5, state_scale, &hdid, &hnext, next_state, 
                &frog_deriv, constants);
 
-    #ifdef COLLISIONS
+#ifdef COLLISIONS
     if (detect_collision(next_state) * detect_collision(state) < 0.0) {
       //printf("collision detected for hdid %f\n", hdid);
       if (hdid > step_size ) {
@@ -201,14 +200,14 @@ int run_simulation(double *init_state, double step_size,
         continue;
       }
     }
-    #endif
+#endif //COLLISIONS
     // Swap next_state and state
     temp_state = state;
     state = next_state;
     next_state = temp_state;
-    #ifdef COLLISIONS
+#ifdef COLLISIONS
     process_collision(state);
-    #endif
+#endif // COLLISIONS
     hmean += hdid;
     hmin = fmin(hmin, hdid);
     hmax = fmax(hmax, hdid);
@@ -225,7 +224,7 @@ int run_simulation(double *init_state, double step_size,
               h, state, &frog_deriv, constants);
     hdid = hnext = h = step_size;
   }
-#endif
+#endif // RK4
     if (j % 1000) {
       //printf("t = %f, h = %f, hnext = %f, hdid = %f, s[0] = %f\n", t, h, hnext, hdid, state[0]);
     }
@@ -233,10 +232,17 @@ int run_simulation(double *init_state, double step_size,
       return 1;*/
     h = hnext;
     if (err)
-      return err;
+      return (1 << 7 | err);
     t = state[0];
     if ((t+h-time)*(t+h-torig) > 0.0) 
       h = time - t; // If stepsize can overshoot, decrease.
+
+    for(i = 0; i < STATE_COUNT; i++) {
+      if (isnan(state[i])) {
+        ec = 2;
+        goto finish;
+      }
+    }
 
     if (continue_loop) {
       if ((*continue_loop)() != 0)
@@ -247,18 +253,18 @@ int run_simulation(double *init_state, double step_size,
       hmean /= (double) j;
       //printf("hmin = %f, hmean = %f, hmax = %f\n", hmin, hmean, hmax);
       //printf("result ");
-      for (i = 0; i < STATE_COUNT; i++) {
-        state_result[i] = state[i];
-        if (isnan(state[i]))
-          return 2;
-        //printf("%f ", state[i]);
-      }
       //printf("\n");
-      return 0;
+      ec = 0;
+      goto finish;
     }
-
   }
-  return 1;
+  ec = 1;
+
+finish:
+  for (i = 0; i < STATE_COUNT; i++) 
+    state_result[i] = state[i];
+
+  return ec;
 }
 
 
@@ -304,6 +310,6 @@ int physics_constants( double *physics_constants_result)
   Tresult.data_pointer = physics_constants_result;
   MTensor TTresult = &Tresult;
 
-  err = physicsConstants(libData, &TTresult); 
+  err = physicsConstants(libData, &TTresult);
   return err;
 }

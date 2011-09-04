@@ -154,8 +154,19 @@ output eqns[1],eqns[2],eqns[3],eqns[4],eqns[5],eqns[6],eqns[7],eqns[8]
 code algebraic() eqns.c
 
 
+The following doesn't really work. 
 output u1',u2',u3',u4',u5',u6',u7',u8'
 code algebraic() doteqns.c
+
+makeDiffLinearPiecewise
+Function[{x$},\[Piecewise]	
+If[tpts[1]==tpts[3],tpts[4],(tpts[4]-tpts[2])/(tpts[3]-tpts[1])]	tpts[1]<=x$<tpts[3]
+If[tpts[3]==tpts[5],tpts[6],(tpts[6]-tpts[4])/(tpts[5]-tpts[3])]	tpts[3]<=x$<tpts[5]
+0	True
+
+
+
+]
 
 * If using krb and krc are worth it, then here's the plan
   Make krc into krcr (right) and krcl (left).
@@ -174,8 +185,110 @@ CoefficientArrays[eqns1, vars]
   data
 * Perhaps the tasks should be that there is a current
 
+* Results of running physicsGa with a periodic controller
+
   mean_speed 0.01 m/s for trials over period 1, 2, 4, 1
   
   These are some good values for the simulation.
 {Tmax -> 1/1000, kTa -> -0.00423449, kTb -> -6.6176*10^-6, 
  kFa -> -0.0001, kFb -> -20., krb -> -0.392443, P -> 1}
+
+{0.932722,0.974615,0.263539,0.229476,0.998992,0.376426,0.0251018}
+
+{0.932722,1,0.0746009,0,1,0.376426,0}
+
+{0.932722,1,0,0,1,0.364205,0}
+
+{1,1,0.363013,0.105396,1,0.753401,0.079405}
+
+{1,1,0.212535,0.105396,1,0.741468,0.0487105}
+
+
+{1,0.969951,0.117928,0,0.899441,0.575204,0}
+
+{1,0.969951,0.117928,0,1,0.482833,0}
+
+
+{1,0.967328,0.0567434,0,1,0.303778,0}
+
+
+{Tmax -> 0.000718821, kTa -> -0.00515681, kTb -> -0.0000740018, 
+ kFa -> -0.00001, kFb -> -40., krb -> 0.483058, P -> 2.45023}
+
+{1,0.967328,0.525969,0,1,0.824505,0}
+
+{0.714155,0.949381,0.621323,0,1,0.647053,0.202168}
+
+{0.714155,0.949381,0.737392,0,1,0.734799,0.282316}
+
+- - - 
+
+mean_speed 0.01
+
+{Tmax -> 0.000833414, kTa -> -0.00471398, kTb -> -0.0000335441, 
+ kFa -> -0.00001, kFb -> -100., krb -> -0.554415, P -> 1.9931}
+
+{0.714155,0.949381,0.509428,0,0.898525,0.544746,0.186111}
+
+{0.714155,0.949381,0.385095,0.00614009,1,0.222792,0.243066}
+
+{0.730215,0.949381,0.385095,0.0100187,1,0.222792,0.172679}
+
+{0.730215,0.953814,0.328728,0,1,0.222792,0.19862}
+
+- - - 
+mean_speed 0.01
+{Tmax -> 0.000833414, kTa -> -0.00471398, kTb -> -0.0000335441, 
+ kFa -> -0.001, kFb -> -100., krb -> -0.554415, P -> 1.9931}
+
+mean_speed 0.01
+{Tmax -> 0.000833414, kTa -> -0.00515681, kTb -> -0.0000335441, 
+ kFa -> -0.001, kFb -> -100., krb -> -0.554415, P -> 1.90515}
+
+Best period 1.93906 with a mean_time of 0.0145
+* How to add new constants
+** params.m
+  - update constantsLayout
+  - update constantsCount
+    - add count
+    - add begin
+** export-c-code.m
+  - update makeFrogMorphDiff[] call to makeDiffFuncWithConstants[]
+** frog-ga.m
+  - update argsForTarget[]
+* Need a better fitness function for physics
+  It should be stable for a range of values.  
+
+
+{Tmax -> 0.00228531, kTa -> -0.0001, kTb -> -0.000010346, 
+ kFa -> -0.444462, kFb -> -38.9811, krb -> 0.0774702}
+- - -
+
+{Tmax -> 0.000869623, kTa -> -0.0001, kTb -> -1.*10^-6, 
+ kFa -> -0.691528, kFb -> -50.2169, krb -> -0.632065}
+
+{{{4.43, -0.0001}, {10., 0.00606927}, {10., 
+   0.000208243}}, {{4.43, -0.00396932}, {10., -0.00312771}, {10., \
+-0.00124179}}}
+
+- - -
+
+{Tmax -> 0.00127648, kTa -> -0.0001, kTb -> -1.*10^-6, 
+ kFa -> -0.60544, kFb -> -50.2169, krb -> -0.8982}
+
+{{10.,0.00800062},{5.01,-0.0001},{3.24,-0.0001}}
+
+{{10.,-0.00330318},{5.01,0.0049846},{3.24,0.00236741}}
+
+Behaves a little funny.
+
+- - -
+
+{Tmax -> 0.00249832, kTa -> -0.0001, kTb -> -1.*10^-6, 
+ kFa -> -0.665985, kFb -> -17.3329, krb -> -0.386061}
+
+{{10.,0.0156169},{10.,0.00146063},{10.,0.00203503}}
+
+{{10.,0.00237452},{10.,-0.00375585},{10.,0.00146965}}
+
+Better, still swims funny.

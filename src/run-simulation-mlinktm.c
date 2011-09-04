@@ -304,23 +304,37 @@ MLYDEFN( devyield_result, MLDefaultYielder, ( MLINK mlp, MLYieldParameters yp))
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdarg.h>
 #include <mathlink.h>
 #include "run-simulation.h"
 
-# line 311 "run-simulation-mlinktm.c"
+# line 312 "run-simulation-mlinktm.c"
 
 
-# line 39 "run-simulation-mlink.tm"
-void failed_with_message0(char *msg) {
-    char buf[255];
-    MLClearError(stdlink); 
-    MLNewPacket(stdlink); 
-    snprintf(buf, 255, "Message[%s]", msg);
-    MLEvaluate(stdlink, (char *) buf);
-    MLNextPacket(stdlink); 
+# line 47 "run-simulation-mlink.tm"
+int message(const char *fmt, ...)
+{
+  va_list ap;
+  char buf[255];
+  int len;
+  len = sprintf(buf, "Message[");
+  va_start(ap, fmt);
+  len += vsnprintf(buf + len, 255 - len, fmt, ap);
+  va_end(ap);
+  len += sprintf(buf + len, "]");
+  //printf("message = '%s'\n", buf);
+  MLClearError(stdlink); 
+  MLNewPacket(stdlink); 
+  MLEvaluate(stdlink, (char *) buf);
+  MLNextPacket(stdlink); 
+  return len;
+}
+
+void failed() {
     MLNewPacket(stdlink); 
     MLPutSymbol(stdlink, (char *) "$Failed");
 }
+
 
 int was_aborted() {
   int code, param;
@@ -353,29 +367,30 @@ void run_simulation_mlink( double *state, long stateLength,
   double result[STATE_COUNT];
   int err;
   if (stateLength != STATE_COUNT) {
-    failed_with_message0("runSimulationMlink::invstcnt");
+    message("runSimulationMlink::invstcnt, %d", stateLength);
+    failed();
     return;
   }
   if (constantsLength != CONSTANTS_COUNT) {
-    failed_with_message0("runSimulationMlink::invcnstscnt");
+    message("runSimulationMlink::invconscnt, %d", constantsLength);
+    failed();
     return;
   }
 
-  /* err = gene_to_ctrnn(constants, constants2); */
-  /* if (err) { */
-  /*   failed_with_message0("runSimulationMlink::errg2c"); */
-  /*   return; */
-  /* } */
   dims[0] = STATE_COUNT;
   err = run_simulation(state, step_size, constants, state[0] + time, 
                        result, &was_aborted);
   if (err == 3) {
+    message("runSimulationMlink::aborted, %f", result[0]);
     // Aborted.
     return;
   }
-  if (err) {
-    failed_with_message0("runSimulationMlink::errsim");
-    return;
+  if (err == 2) {
+    message("runSimulationMlink::errnan, %f", result[0]);
+  } else if (err == 1) {
+    message("runSimulationMlink::errmaxstep, %d", MAX_STEPS);
+  } else if (err) {
+    message("runSimulationMlink::errsim, %d", err);
   }
 
   MLPutDoubleArray(stdlink, result, dims, NULL /* header*/, d /* rank */);
@@ -389,7 +404,8 @@ void run_simulation_mlink_g2c( double *state, long stateLength,
   double constants2[CONSTANTS_COUNT];
   err = gene_to_ctrnn(constants, constants2);
   if (err) {
-    failed_with_message0("runSimulationMlink::errg2c");
+    message("runSimulationMlink::errg2c");
+    failed();
     return;
   }
   run_simulation_mlink(state, stateLength, step_size, constants2, 
@@ -410,7 +426,7 @@ int main(argc, argv)
   err = sim_uninit();
   return err;
 }
-# line 414 "run-simulation-mlinktm.c"
+# line 430 "run-simulation-mlinktm.c"
 
 
 void run_simulation_mlink P(( double * _tp1, long _tpl1, double _tp2, double * _tp3, long _tpl3, double _tp4));
@@ -494,9 +510,24 @@ static const char* evalstrs[] = {
 	"time_] := runSimulationMlinkG2C[N[state], N[stepSize], N[constan",
 	"ts], N[time]]",
 	(const char*)0,
+	"runSimulationMlink::errsim = \"Simulation exited with err ``.\";",
+	(const char*)0,
+	"runSimulationMlink::invstcnt = \"Invalid state count ``.\";",
+	(const char*)0,
+	"runSimulationMlink::invconscnt = \"Invalid constants count ``.\";",
+	(const char*)0,
+	"runSimulationMlink::errnan = \"Saw NaN at time ``.\";",
+	(const char*)0,
+	"runSimulationMlink::errmaxstep = \"Reached max time step ``.\";",
+	(const char*)0,
+	"runSimulationMlink::errg2c = \"Error converting genes to constant",
+	"s.\";",
+	(const char*)0,
+	"runSimulationMlink::aborted = \"Aborted at time ``.\";",
+	(const char*)0,
 	(const char*)0
 };
-#define CARDOF_EVALSTRS 2
+#define CARDOF_EVALSTRS 9
 
 static int _definepattern P(( MLINK, char*, char*, int));
 
@@ -517,6 +548,13 @@ int MLInstall(mlp) MLINK mlp;
 	if (_res) _res = _doevalstr( mlp, 0);
 	if (_res) _res = _definepattern(mlp, (char *)"runSimulationMlinkG2C[ state:{___Real}, stepSize_Real, constants:{___Real}, time_Real]", (char *)"{ state, stepSize, constants, time }", 1);
 	if (_res) _res = _doevalstr( mlp, 1);
+	if (_res) _res = _doevalstr( mlp, 2);
+	if (_res) _res = _doevalstr( mlp, 3);
+	if (_res) _res = _doevalstr( mlp, 4);
+	if (_res) _res = _doevalstr( mlp, 5);
+	if (_res) _res = _doevalstr( mlp, 6);
+	if (_res) _res = _doevalstr( mlp, 7);
+	if (_res) _res = _doevalstr( mlp, 8);
 	if (_res) _res = MLPutSymbol( mlp, "End");
 	if (_res) _res = MLFlush( mlp);
 	return _res;

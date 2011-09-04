@@ -1,3 +1,9 @@
+\begin{comment}
+  mention Minimal Simulation guy
+  
+  
+\end{comment}
+
 \chapter{Method}
 
 This experiment uses a two-dimensional, aquatic environment to test
@@ -52,21 +58,29 @@ the generalised speeds of the body $u_i = \frac{d q_i}{d t}$.
   \includegraphics[scale=0.6]{fig/confvars.pdf} 
   \caption[Diagram of configuration variables]{\label{confvars}Diagram
     of the configuration variables $\{q_1, q_2, \ldots, q_8\}$ that
-    fully describe the physical state of the body at a given time $t$}
+    fully describe the physical state of the body at time $t$}
 \end{figure}
 
 \section{Forces}
 
 For each limb a drag force $\bv F_D$ opposes its direction of motion
 which are given by Equation~\ref{drag-force-eq} where $\rho$ is the
-density of the fluid, $c_d$ is the drag coefficient shown in
-Figure~\ref{drag-force}.  The width of the limb $w$ is set to zero
-since the drag contributed by the limb when the velocity is
-perpendicular to the normal is not considered to be significant.
+density of the fluid, $c_d$ is the drag coefficient, $l$ is the length
+of the limb, $w$ is the width of the limb, $\bhv n$ is the normal of
+the limb, $\bv v_b$ is the velocity of the center of mass of the limb,
+$\bv v_c$ is the velocity of the current, $\bv v$ is the relative
+velocity of the limb in the current, $A$ is the reference area---an
+orthographic projection of the limb shape on a plane perpendicular to
+the direction of motion.  Figure~\ref{drag-force} shows these values
+for a limb.  The shape of the limb is taken to be a rod of length $l$,
+width $w$, and depth $d$.  However, for the purposes of computing the
+drag force, the width of the limb $w$ is set to zero since $w \ll l$
+and the force it might contribute is not considered significant.
 
 \begin{eqnarray}
   A &=& l\,d~ |\bhv v \cdot \bhv n| + l\, w~|\bhv v \times \bhv n|\\
   w &=& 0 \\
+  \bv v &=& \bv v_b - \bv v_c \\
   \bv F_D &=& -\frac{1}{2} \rho\,c_d~||\bv v||^2\,A~\bhv v \\
   \bv F_D &=& -\frac{1}{2} \rho\, c_d~ l\,d~|\bv v \cdot \bhv n|\bv v \label{drag-force-eq} 
 \end{eqnarray}
@@ -77,7 +91,7 @@ perpendicular to the normal is not considered to be significant.
   \figtitle{Diagram of Drag Force} 
   \includegraphics[scale=0.7]{fig/drag-force.pdf} 
   \vspace{-45pt}
-  \caption[Diagram of drag force]{\label{drag-force}For each limb its
+  \caption[Diagram of drag force]{\label{drag-force}For each limb determine
     length $l$, width $w$, depth $d$ (not shown), velocity $\bv v $,
     normal vector $\bhv n$ determine its drag force $\bv F_D$.}
 \end{figure}
@@ -135,12 +149,12 @@ $s_j \in \R $, and sensor weights $n_{ji} \in [-4, 4]$.
 
 Table~\ref{table:sensor} describes the sensors.  A range finder for a
 target is given by the $s_3$ and $s_4$ sensors.  Proprioceptive
-sesnsors are given by the $s_5, s_6, \ldots, s_{14}$ sensors.
+sesnsors are given by the $s_5, s_6, \ldots, s_{14}$ sensors.  Five
+motor neurons are used with weighted inputs from all sensors.  Each
+neuron exerts a torque on an associated limb.  The torque for each
+limb $T(q_i)$ is given in Equation~\ref{limb-torque}.
 
-Five motor neurons are used.  Each neuron exerts a torque on its
-associated limb.  The torque for each limb $T(q_i)$ is given in
-Equation~\ref{limb-torque}.
-
+% XXX Also there is a boundary condition.
 \begin{eqnarray}
   T(q_{i + 3}) &=& T_{max}~clip(y_i) \text{ for } i \in [1,5] \label{limb-torque} \\
   clip(x) &=& \begin{cases}
@@ -154,8 +168,8 @@ Equation~\ref{limb-torque}.
 
 The CTRNN controller is specified by a real vector gene $\bv g \in [0,
   1]^{105}$.  Each gene component $g_k$ is associated with one and
-only one of the CTRNN parameters $\tau_i, w_{ij}, \theta_j, \text{ and
-} n_{ij}$.  The $w_{ij}, \theta_j,$ and $ n_{ij}$ parameters are
+only one of the CTRNN parameters $\tau_i, w_{ji}, \theta_i, \text{ and
+} n_{ji}$.  The $w_{ji}, \theta_i,$ and $ n_{ji}$ parameters are
 linearly mapped from the domain of the gene $[0,1]$ to the domain of
 each parameter.  The $\tau$ parameter uses a non-linear mapping
 $\tau_i = 10^{-2 + 3 g_k}$.
@@ -163,14 +177,14 @@ $\tau_i = 10^{-2 + 3 g_k}$.
 \section{Morphological Change}\label{morph-change}
 
 Morphological change is considered over phylogenetic and ontogenetic
-time.  Two adult forms are evolved: A) frog with a tail $(\red{l_t},
-\blue{l_f}) = (1,1).$ B) frog without a tail $(\red{l_t}, \blue{l_f}) =
+time.  Two adult forms are evolved: A) frog with a tail $({l_t},
+{l_f}) = (1,1).$ B) frog without a tail $({l_t}, {l_f}) =
 (0,1).$ The control case is no morphological change denoted $An$ and
 $Bn$.  The first experimental cases concern phylogenetic change
 denoted $Ap$ and $Bp$, which are divided into phases $p_i$.  The
 second experimental case concerns ontogenetic change denoted $Ao$ and
-$Bo$.  Figure~\ref{morph-regiment} shows the tail length $\red{l_t}$ in
-red and feet length $\blue{l_f}$ in blue for each experimental case.
+$Bo$.  Figure~\ref{morph-regiment} shows the tail length ${l_t}$ in
+red and feet length ${l_f}$ in blue for each experimental case.
 The exact values used are recorded in the
 Appendix~\ref{morph-regiment-values}.
 
@@ -191,11 +205,11 @@ Appendix~\ref{morph-regiment-values}.
 In the test cases $Bp$ and $Bo$ the infant form is not conserved in
 the adult form.  However, the controller may conserve some behaviour
 acquired in the infant form that is useful in the adult form, which
-may also accelerate evolution.  To determine whether this may happen,
-two types of CTRNN controllers are considered: 1) the ``lobotomised''
+may accelerate evolution.  To determine whether this happens, two
+types of CTRNN controllers are considered: 1) a ``lobotomised''
 controller, which has two independent CTRNNs, one for the tail; one
-for the feet. 2) the ``non-lobotomised'' controller, which has one
-CTRNN that controls both the tail and feet.  These are shown in
+for the feet. 2) a ``non-lobotomised'' controller, which has one CTRNN
+that controls both the tail and feet.  These are shown in
 Figure~\ref{ctrnn-figures}.
 
 \begin{figure}[h]
@@ -208,11 +222,31 @@ Figure~\ref{ctrnn-figures}.
     for the tail and legs.}
 \end{figure}
 
+The sensors are altered for the ``lobotomised'' controller.  The tail
+brain does not receive proprioceptive sensors from the feet $\{s_7,
+s_8, \ldots, s_14\}$.  Likewise, the foot brain does not receive
+proprioceptive sensors from the tail $s_5$ and $s_6$.  Otherwise, the
+sensors are the same.\footnote{Implementation note: the
+  ``lobotomised'' controller is the same as the ``non-lobotomised''
+  with a specific set of weights $w_{ji} = 0$ and sensor coefficients
+  $n_{ji} = 0$.}
+
 \section{Tasks}
 
 To confirm the results are not spurious or a special case for one
-particular task, multiple tasks are considered.  
+particular task, multiple tasks of varying difficulty are considered.
+The basic task is locomotion to a target.  Changing the target
+location was considered, but it is hard to say what positions of the
+target would be more difficult.  Instead of changing the target
+location, varying the current of the liquid $\bv v_c$ is considered.
 
-
-
+\begin{figure}
+  \centering
+  \includegraphics[scale=0.8]{fig/tasks.pdf} 
+  \caption[Tasks]{\label{fig:tasks}Tasks shown in increasing levels of
+    difficulty.  In task 1 the current assists the individual to the
+    target.  In task 2 there is no current.  In task 3 the current
+    pulls the individual laterally away from the target.  In task 4
+    the current is directly against the target.}
+\end{figure} 
 

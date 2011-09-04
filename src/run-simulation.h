@@ -7,6 +7,7 @@
 #define TARGET_DISTANCE  (0.04 * METERS)
 
 #define STEP_SIZE        0.01
+#define MAX_STEPS        10000
 
 // state info
 #define STATE_COUNT      26
@@ -22,19 +23,17 @@
 
 // constants info
 #define GENE_COUNT       105
+#define CTRNN_COUNT      105 // ctrnn parameter count
 #define TARGET_COUNT     2
 #define POINTS_COUNT     12
-#define PHYS_COUNT       22 
-                         // was 19
-#define CONSTANTS_COUNT  (GENE_COUNT + TARGET_COUNT + POINTS_COUNT + PHYS_COUNT)
-#define TARGET_BEGIN     (GENE_COUNT)
-#define POINTS_BEGIN     (GENE_COUNT + TARGET_COUNT)
-#define PHYS_BEGIN       (GENE_COUNT + TARGET_COUNT + POINTS_COUNT)
-#define PERIOD_INDEX     (GENE_COUNT + TARGET_COUNT + POINTS_COUNT + PHYS_COUNT - 1)
+#define PHYS_COUNT       21 
+#define PERIOD_COUNT     11
 
-//#define runSimulation runSimulationAdaptive
-//#define Initialize_runSimulation Initialize_runSimulationAdaptive
-//#define Uninitialize_runSimulation Uninitialize_runSimulationAdaptive
+#define CONSTANTS_COUNT  (CTRNN_COUNT + TARGET_COUNT + POINTS_COUNT + PHYS_COUNT + PERIOD_COUNT)
+#define TARGET_BEGIN     (CTRNN_COUNT)
+#define POINTS_BEGIN     (CTRNN_COUNT + TARGET_COUNT)
+#define PHYS_BEGIN       (CTRNN_COUNT + TARGET_COUNT + POINTS_COUNT)
+#define PERIOD_BEGIN     (CTRNN_COUNT + TARGET_COUNT + POINTS_COUNT + PHYS_COUNT +1)
 
 int sim_init();
 

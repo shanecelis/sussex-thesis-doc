@@ -8,11 +8,12 @@ pop = 30;
 len = 10;
 rec = 0.5;
 mut = 0.1;
-evaluations = 0;
+(*evaluations = evaluations~or~0;*)
+setMaybe[evalutions, 0];
 
 end = 10^6;
  
-
+useEvaluationCache = True;
 minimize = False;
 
 
@@ -20,12 +21,20 @@ initGA[] := (genes = RandomInteger[{0, 1}, {pop, len}];
              clearCacheGA[];
              evaluations = 0;
              )
-clearCacheGA[] := evaluationCache = Table[None, {pop}];
+
+
+clearCacheGA[] := (evaluationCache = Table[None, {pop}];)
+
+
+seedPop[init_] := (genes = Table[init, {pop}];
+                   Map[mutate, Range[pop]];
+                   Map[mutate, Range[pop]];
+                   Map[mutate, Range[pop]];)
 
 
 (* Minimizes fitness of an example card problem that attempts to arrange cards from [1,10] into sum and product piles of 36 and 360 respectively. *)
 
-
+(*
 evaluate[n_] := 
     Module[{sum, prod, fitness, g, cards},
            cards = Range[1,10];
@@ -35,11 +44,11 @@ evaluate[n_] :=
            fitness = Abs[sum - sumtarg]/sumtarg  + Abs[prod - prodtarg]/prodtarg;
            fitness
           ]
-
+*)
 
 evaluateCached[n_] := 
     Module[{},
-           If[evaluationCache[[n]] === None,
+           If[evaluationCache[[n]] === None || useEvaluationCache === False,
               evaluationCache[[n]] = evaluate[n]];
            evaluationCache[[n]]]
 
@@ -58,6 +67,7 @@ lessThan[a_, b_] := If[minimize,
                        a < b,
                        a > b];
 
+beginTournament[] := Null
 
 runGA[] := 
     Module[{a, b, W, L, temp},
@@ -65,7 +75,9 @@ runGA[] :=
            For[Null, evaluations < end, evaluations++,
                a = RandomInteger[{1, pop}];
                b = RandomInteger[{1, pop}];
-               If[ evaluateCached[a] ~lessThan~ evaluateCached[b],
+               beginTournament[];
+               If[Quiet[evaluateCached[a] ~lessThan~ evaluateCached[b], 
+                         {CompiledFunction::cfn}],
                    W = a; L = b,
                    W = b; L = a];
                crossover[L, W];
@@ -75,9 +87,10 @@ runGA[] :=
                (*If[evaluate[L] ~lessThan~ 0.01,
                  Print[L];
                  Break[]];*)
-               If[Mod[evaluations,1000] == 0,
+               (*
+                  If[Mod[evaluations,1000] == 0,
                   Print[genes[[bestIndividual[]]]]
-                 ];
+                 ];*)
               ];
            bestIndividual[];
            evaluations
@@ -85,11 +98,11 @@ runGA[] :=
 
 
 bestIndividual[] := 
-    Module[{best},
-           sortedIndividuals = Sort[Range[1, pop], 
-                                    evaluateCached[#1] ~lessThan~ evaluateCached[#2]&];
+    Module[{best, list},
+           list = Quiet[Sort[Range[1, pop], 
+                       evaluateCached[#1] ~lessThan~ evaluateCached[#2]&]];
 
-           best = sortedIndividuals[[1]];
+           best = list[[1]];
            evaluate[best];
            best];
 

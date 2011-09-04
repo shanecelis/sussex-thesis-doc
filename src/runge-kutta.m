@@ -39,7 +39,7 @@ makeRungeKuttaStep[funcArg_] :=
                     state + 1/6 (k1 + 2 k2 + 2 k3 + k4)]]] 
 
 
-makeRungeKuttaWithConstants[funcArg_] := 
+makeRungeKuttaStepWithConstants[funcArg_] := 
     With[{func = funcArg},
          Function[{state, h, c},
              Module[{k1,k2,k3,k4},

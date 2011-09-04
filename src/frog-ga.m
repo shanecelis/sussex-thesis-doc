@@ -9,7 +9,61 @@
 
 getGene[i_Integer] := genes[[i]]
 getGene[i_List] := i
- 
+
+
+
+(* ::Subtitle:: *)
+(*Real Number Mutation*)
+
+mutationSigma = 1;
+
+
+mutationVector[] :=Map[Evaluate,RandomChoice[{mutationRate, 1 - mutationRate} -> {Unevaluated[RandomReal[NormalDistribution[0,mutationSigma]]], 0}, len]]
+
+
+mutationVector[] :=Map[Evaluate,RandomChoice[{mutationRate, 1 - mutationRate} -> {Unevaluated[RandomReal[UniformDistribution[{-.2, .2}]]], 0}, len]]
+
+
+(* Do I need to clip these values? *)
+
+
+(* ::Subtitle:: *)
+(*BGA Functions*)
+
+
+
+
+mutate[L_] := 
+    (genes[[L]] = Map[Clip[#, {0, 1}]&,genes[[L]] + mutationVector[] ])
+
+
+initGA[] := 
+    (genes = RandomReal[{0, 1}, {pop, len}];
+     evaluationCache = Table[None, {pop}];
+     evaluations = 0;)
+
+initGene[] := RandomReal[{0,1}, {len}];
+
+argsForRun[gene_] := 
+    argsForTarget@@({gene, target, tmax, expName, phase, deltat} /. gaParams)
+
+argsForTarget[i_, target_, tmax_, expName_, phaseArg_, stepSize_] :=     
+    Module[{experiment, phase, args, myctrnn, myphyscons},
+           experiment = expName;
+           phase = phaseArg; 
+           args = {
+               joinFlat[{0} (* time *), 
+                        Table[0.0, {pstateCount}] (* pvars *),
+                        makeZeroCTRNNState[nodeCount] (* cvars *), 
+                        experimentInit[experiment, phase] (* gvars: 
+                                                             tail and feet sizes *),
+                        Table[0., {recordCount}] (* rvars: initial recording variables *)],
+               stepSize,
+               geneToConstants[i],
+               tmax};
+           args]
+
+
 geneToCTRNN[i_] := 
     Module[{W, theta,Ts,gain, n, gene},
            gene = getGene[i];
@@ -41,115 +95,200 @@ geneToCTRNNLinSensor[i_] := geneToCTRNNLinSensor[genes[[i]]]
            res]
 
 
-
-(* ::Subtitle:: *)
-(*Real Number Mutation*)
-
-mutationSigma = 1;
-
-
-mutationVector[] :=Map[Evaluate,RandomChoice[{mutationRate, 1 - mutationRate} -> {Unevaluated[RandomReal[NormalDistribution[0,mutationSigma]]], 0}, len]]
-
-
-mutationVector[] :=Map[Evaluate,RandomChoice[{mutationRate, 1 - mutationRate} -> {Unevaluated[RandomReal[UniformDistribution[{-.2, .2}]]], 0}, len]]
-
-
-(* Do I need to clip these values? *)
-
-
-(* ::Subtitle:: *)
-(*BGA Functions*)
-
-
-pop = 30;
-len = geneCount;
-mut = mutationRate = 1/geneCount;
-rec = 0.5; (* recombination *)
-end = 10^6;
-
-minimize = minimise /. gaParams;
-
-
-mutate[L_] := 
-    (genes[[L]] = Map[Clip[#, {0, 1}]&,genes[[L]] + mutationVector[] ])
-
-
-initGA[] := 
-    (genes = RandomReal[{0, 1}, {pop, len}];
-     evaluationCache = Table[None, {pop}];
-     evaluations = 0;)
-
-initGene[] := RandomReal[{0,1}, {len}];
-
-        
-
-argsForRun[gene_] := 
-    argsForTarget@@({gene, target, tmax, expName, phase, deltat} /. gaParams)
-
-argsForTarget[i_, target_, tmax_, expName_, phaseArg_, stepSize_] :=     
-    Module[{experiment, phase, args, myctrnn, myphyscons},
-           experiment = expName;
-           phase = phaseArg; 
-           
-           args = {
-               joinFlat[{0} (* time *), 
-                        Table[0.0, {pstateCount}] (* pvars *),
-                        makeZeroCTRNNState[nodeCount] (* cvars *), 
-                        experimentInit[experiment, phase] (* gvars: 
-                                                             tail and feet sizes *),
-                        Table[0., {recordCount}] (* rvars: initial recording variables *)],
-               stepSize,
-               geneToConstants[i],
-               tmax};
-           args]
-
-On[Assert];
-
 gscale[gi_, range_] := Rescale[gi, {0, 1}, range]
+gunscale[gi_, range_] := Rescale[gi, range, {0, 1}]
 
 physicsGeneToRules[i_] := 
     Module[{g},
            g = getGene[i];
     (* Tmax, kTa, kTb, kFa, kFb, krb *)
-    {Tmax -> 10^gscale[g[[1]], {-6, -3}],
-     kTa  ->    gscale[g[[2]], {-0.1, -0.001}],
-     kTb  ->    gscale[g[[3]], {-0.000001, -0.0001}],
-     kFa  ->    gscale[g[[4]], {-0.0001, -1}],
-     kFb  ->    gscale[g[[5]], {-0.001, -20}],
-     krb  ->    gscale[g[[6]], {-1, 1}],
-     P    ->    gscale[g[[7]], {1, 6}]
+    {Tmax -> 10^gscale[g[[1]], {-6, -2}],
+     kTa  ->    gscale[g[[2]], {-0.1, -0.0001}],
+     kTb  ->    gscale[g[[3]], {-0.000001, -0.0001}], 
+     kFa  ->    gscale[g[[4]], {-0.001, -1}], (* 4 *)
+     kFb  ->    gscale[g[[5]], {-0.001, -100}], (* 5 *)
+     krb  ->    gscale[g[[6]], {-1, 1}]
     } ]
-                           
 
+rand[{a_, b_}] := RandomReal[{a, b} //. units];
+
+
+randomStateRules[] :=
+    Module[{rules, rev, a},
+           rev = 2 Pi/s;
+           a = 0.25;
+           rules =
+   { t -> 0,
+     q1 -> rand[10cm {-1, 1}],
+     q2 -> rand[10cm {-1, 1}],
+     q3 -> rand[Pi {-1, 1}],
+     q4 -> rand[Pi/2 {-1, 1}],
+     q5 -> rand[Pi/2 {-1, 1}],
+     q6 -> rand[Pi/2 {-1, 1}],
+     q7 -> rand[Pi/2 {-1, 1}],
+     q8 -> rand[Pi/2 {-1, 1}],
+     u1 -> rand[{-1 cm/s, 1 cm/s}],
+     u2 -> rand[{-1 cm/s, 1 cm/s}],
+     u3 -> rand[a rev {-1, 1}],
+     u4 -> rand[a rev {-1, 1}],
+     u5 -> rand[a rev {-1, 1}],
+     u6 -> rand[a rev {-1, 1}],
+     u7 -> rand[a rev {-1, 1}],
+     u8 -> rand[a rev {-1, 1}],
+     ys[1] -> 0,  ys[2] -> 0,  ys[3] -> 0,  ys[4] -> 0,  ys[5] -> 0,  
+     lg -> 1,  fg -> 0,
+     r[1] -> 0,  r[2] -> 0
+   }]
+
+randomState[] := stateLayout /. randomStateRules[]
+
+
+
+physicsValuesToGenes[vArg_] := 
+    Block[{gscale = gunscale},
+          Module[{v},
+                 v = vArg;
+                 v[[1]] = Log[10, v[[1]]];
+                 v = values[physicsGeneToRules[v]];
+                 v[[1]] = Log[10, v[[1]]];
+                 v]]
+
+physicsPreRules = {};
 
 physicsGeneToConstants[i_] := 
     Module[{myctrnn, myphyscons},
            myctrnn = makeZeroCTRNNLinSensor[nodeCount, sensorCount];
            myctrnn[[3]] = {};
-           myphyscons = physcons //. physicsGeneToRules[i]~Join~params;
+           myphyscons = physcons //. physicsPreRules~Join~physicsGeneToRules[i]~Join~params;
            (*myphyscons = physcons //. params;*)
            joinFlat[myctrnn,
                     target /. gaParams, 
                     experimentPoints@@({expName, tmax, phase} /. gaParams),
-                    myphyscons ]]
+                    myphyscons,
+                    makeZeroPeriodValues[]]]
 
 
+(*
 fitnessForPhysics[i_] := 
     Mean[{fitnessForSpeed[i]}~Join~Map[runSpeedForPeriod[i,#]&, {1, 2, 4}]]
 
 fitnessForPhysicsData[i_] := 
     {fitnessForSpeedData[i]}~Join~Map[runSpeedForPeriodData[i,#]&, {1, 2, 4}]
+*)
+
+getTimeAndSpeedWithState[i_, state_, period_, tmax_] :=
+    Module[{args, time, res},
+           args = argsForRun[i];
+           args[[1]] = state;
+           args[[3]] = Drop[args[[3]], -periodCount]~Join~period;
+           args[[4]] = tmax;
+           res = Catch[Check[endState = runSimulationGA@@args;
+                       If[endState === $Failed,
+                          $Failed,
+                          {endState[[1]],endState[[recordBegin + 1]]/endState[[1]]}],
+                       {endState[[1]], -0.0001}, 
+                       {runSimulationMlink::errnan,
+                        runSimulationMlink::errsim}]];
+           If[res === $Failed,
+              {0.0001, -0.0001},
+              res]
+          ]
+
+getTimeAndSpeedWithStateData[i_, state_, period_, tmax_] :=
+    Module[{args, time, res},
+           args = argsForRun[i];
+           args[[1]] = state;
+           args[[2]] = dataDeltat /. gaParams;
+           args[[3]] = Drop[args[[3]], -periodCount]~Join~period;
+           args[[4]] = tmax;
+           runSolver3[runSimulationGA, Sequence@@args]
+          ]
+
+
+noControllerPeriod = periodLayout /. 
+    {f1 -> 0, psi1 -> 0, f2 -> 0, psi2 -> 0,
+     f3 -> 0, psi3 -> 0, f4 -> 0, psi4 -> 0,
+     f5 -> 0, psi5 -> 0, kys -> 0};
+
+beginTournament[] :=
+    Module[{},
+           (* Setup some random state and controllers *)
+           If[True && (Mod[evaluations, 100] == 0 || Head[tourStates] =!= List),
+              clearCacheGA[];
+              tourStates = Table[randomState[], {3}];
+              tourPeriods = Table[randomPeriod[], {3}];
+             ]
+          ]
+           
+fitnessForPhysics[i_] := 
+    Quiet[Module[{res, res2, mytmax, f1, f2},
+           mytmax = tmax /. gaParams;
+           res = MapThread[getTimeAndSpeedWithState[i, #1, #2, mytmax]&, 
+                                 {tourStates, tourPeriods}];
+           res2 = MapThread[getTimeAndSpeedWithState[i, #1, noControllerPeriod, mytmax (*#2[[1]]*)]&, 
+                                 {tourStates, res}];
+                 f1 = Mean[MapThread[Times,Transpose[res]]];
+                 f2 = Mean[MapThread[Times,Transpose[res2]]];
+                 Abs[f1^2/f2]
+          ], {runSimulationMlink::errnan, runSimulationMlink::errsim}]
+
+fitnessForPhysicsData[i_] := 
+    Quiet[Module[{res, res2, mytmax, f1, f2},
+           mytmax = tmax /. gaParams;
+           res = MapThread[getTimeAndSpeedWithState[i, #1, #2, mytmax]&, 
+                                 {tourStates, tourPeriods}];
+           res2 = MapThread[getTimeAndSpeedWithState[i, #1, noControllerPeriod, #2[[1]]]&, 
+                                 {tourStates, res}];
+                 Print[res];
+                 Print[res2];
+
+
+                 Join[
+                     MapThread[getTimeAndSpeedWithStateData[i, #1, #2, mytmax]&, 
+                                 {tourStates, tourPeriods}],
+                     MapThread[getTimeAndSpeedWithStateData[i, #1, noControllerPeriod, #2[[1]]]&, 
+                                 {tourStates, res}]]
+          ], {runSimulationMlink::errnan, runSimulationMlink::errsim}]
+
     
+periodGeneToValues[i_] :=
+    Module[{startAt},
+           startAt = 5;
+           startAt = 7;
+           (periodLayout /. periodGeneToRules[i]) Table[1, {startAt - 1}]~Join~Table[0, {periodCount - startAt + 1}]
+          ]
+
+makeZeroPeriodValues[] :=
+    periodLayout /. {f1 -> 0, psi1 -> 0, f2 -> 0, psi2 -> 0,
+                       f3 -> 0, psi3 -> 0, f4 -> 0, psi4 -> 0,
+                       f5 -> 0, psi5 -> 0, kys -> 1};
+
+randomPeriodRules[] :=
+    periodGeneToRules[RandomReal[{0,1}, {geneCountGA /. periodGaParams}]]
+
+randomPeriod[] := periodLayout /. randomPeriodRules[]
+
+periodGeneToRules[i_] := 
+    Module[{g, res},
+           g = getGene[i];
+           res = Join[
+               Map[Symbol["f" <> ToString[#]] -> gscale[g[[2 # - 1]], {0, 2}]&, Range[5]],
+               Map[Symbol["psi" <> ToString[#]] -> gscale[g[[2 #]], {0, 1}]&, Range[5]],
+               (* Ignore what the last gene says and turn off the CTRNN. *)
+               {kys -> 0}];
+           res 
+          ]
+
 
 periodGeneToConstants[i_] := 
     Module[{myctrnn},
            myctrnn = makeZeroCTRNNLinSensor[nodeCount, sensorCount];
            myctrnn[[3]] = {};
-           joinFlat[Flatten[myctrnn] + .1,
+           joinFlat[Flatten[myctrnn],
                     target /. gaParams, 
                     experimentPoints@@({expName, tmax, phase} /. gaParams),
-                    Drop[physcons //. params, -1],
-                    20.0 getGene[i]]]
+                    physcons //. params,
+                    periodGeneToValues[i]]]
     
 
 ctrnnGeneToConstants[i_] := 
@@ -159,7 +298,8 @@ ctrnnGeneToConstants[i_] :=
            joinFlat[geneToCTRNNLinSensor[gene],
                     target //. gaParams, 
                     experimentPoints@@({expName, tmax, phase} //. gaParams),
-                    physcons //. params]]
+                    physcons //. params,
+                    makeZeroPeriodValues[]]]
 
 
 keepGoodChance = 0.01;
@@ -209,21 +349,19 @@ fitnessForSpeed[i_] :=
            args = argsForRun[i];
            fitness = Catch[endState = runSimulationGA@@args;
                            If[endState === $Failed,
-                              Throw[$Failed],
-                              endState[[recordBegin + 1]]/(tmax /. gaParams)]];
+                              $Failed,
+                              endState[[recordBegin + 1]]/endState[[1]]]];
            If[fitness === $Failed,
               -1.0,
               fitness]
           ]
 
-runSpeedForPeriod[i_, p_] := Block[{params = {P -> p}~Join~params},
+runSpeedForPeriod[i_, p_] := Block[{physicsPreRules = {P -> p}~Join~physicsPreRules},
                                fitnessForSpeed[i]]
 
-runSpeedForPeriodData[i_, p_] := Block[{params = {P -> p}~Join~params},
+runSpeedForPeriodData[i_, p_] := Block[{physicsPreRules = {P -> p}~Join~physicsPreRules},
                                fitnessForSpeedData[i]]
 
-
-default[this_, that_] := If[this === None, that, this]
 
 fitnessForSpeedData[i_] := 
     Module[{},

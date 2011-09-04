@@ -5,9 +5,10 @@ OS=$(shell uname -s)
 MATHEMATICA=1
 
 #CPPFLAGS = -g -I/Applications/Mathematica.app/SystemFiles/IncludeFiles/C
-CPPFLAGS = -g -I../include -Wall -Werror -I/opt/local/include -DJUST_EQNS -DRKQS
-
-#-DRK4
+CPPFLAGS = -g -I../include -Wall -Werror -I/opt/local/include -DRK4
+#-DRKQS
+# -DJUST_EQNS
+#
 # -DCOLLISIONS
 
 MOBJS = 
@@ -75,7 +76,7 @@ run: run-sim-main
 frog.out: frog.al
 	(cat frog.al; echo "quit") > frogq.al
 	(yes | al frogq.al) > frog.out
-	unix2dos frog.out
+	dos2unix frog.out
 
 frog_eqns.txt: frog.out
 	(echo "! rhseqns = "; cat frog.out | grep Result) > frog_eqns.txt

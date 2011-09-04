@@ -12,6 +12,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdarg.h>
 #include <mathlink.h>
 #include "run-simulation.h"
 
@@ -35,17 +36,37 @@
 
 :Evaluate:      runSimulationMlinkG2C[ state:{___}, stepSize_, constants:{___}, time_] := runSimulationMlinkG2C[N[state], N[stepSize], N[constants], N[time]]
 
+:Evaluate: runSimulationMlink::errsim = "Simulation exited with err ``.";
+:Evaluate: runSimulationMlink::invstcnt = "Invalid state count ``.";
+:Evaluate: runSimulationMlink::invconscnt = "Invalid constants count ``.";
+:Evaluate: runSimulationMlink::errnan = "Saw NaN at time ``.";
+:Evaluate: runSimulationMlink::errmaxstep = "Reached max time step ``.";
+:Evaluate: runSimulationMlink::errg2c = "Error converting genes to constants.";
+:Evaluate: runSimulationMlink::aborted = "Aborted at time ``.";
 
-void failed_with_message0(char *msg) {
-    char buf[255];
-    MLClearError(stdlink); 
-    MLNewPacket(stdlink); 
-    snprintf(buf, 255, "Message[%s]", msg);
-    MLEvaluate(stdlink, (char *) buf);
-    MLNextPacket(stdlink); 
+int message(const char *fmt, ...)
+{
+  va_list ap;
+  char buf[255];
+  int len;
+  len = sprintf(buf, "Message[");
+  va_start(ap, fmt);
+  len += vsnprintf(buf + len, 255 - len, fmt, ap);
+  va_end(ap);
+  len += sprintf(buf + len, "]");
+  //printf("message = '%s'\n", buf);
+  MLClearError(stdlink); 
+  MLNewPacket(stdlink); 
+  MLEvaluate(stdlink, (char *) buf);
+  MLNextPacket(stdlink); 
+  return len;
+}
+
+void failed() {
     MLNewPacket(stdlink); 
     MLPutSymbol(stdlink, (char *) "$Failed");
 }
+
 
 int was_aborted() {
   int code, param;
@@ -78,29 +99,30 @@ void run_simulation_mlink( double *state, long stateLength,
   double result[STATE_COUNT];
   int err;
   if (stateLength != STATE_COUNT) {
-    failed_with_message0("runSimulationMlink::invstcnt");
+    message("runSimulationMlink::invstcnt, %d", stateLength);
+    failed();
     return;
   }
   if (constantsLength != CONSTANTS_COUNT) {
-    failed_with_message0("runSimulationMlink::invcnstscnt");
+    message("runSimulationMlink::invconscnt, %d", constantsLength);
+    failed();
     return;
   }
 
-  /* err = gene_to_ctrnn(constants, constants2); */
-  /* if (err) { */
-  /*   failed_with_message0("runSimulationMlink::errg2c"); */
-  /*   return; */
-  /* } */
   dims[0] = STATE_COUNT;
   err = run_simulation(state, step_size, constants, state[0] + time, 
                        result, &was_aborted);
   if (err == 3) {
+    message("runSimulationMlink::aborted, %f", result[0]);
     // Aborted.
     return;
   }
-  if (err) {
-    failed_with_message0("runSimulationMlink::errsim");
-    return;
+  if (err == 2) {
+    message("runSimulationMlink::errnan, %f", result[0]);
+  } else if (err == 1) {
+    message("runSimulationMlink::errmaxstep, %d", MAX_STEPS);
+  } else if (err) {
+    message("runSimulationMlink::errsim, %d", err);
   }
 
   MLPutDoubleArray(stdlink, result, dims, NULL /* header*/, d /* rank */);
@@ -114,7 +136,8 @@ void run_simulation_mlink_g2c( double *state, long stateLength,
   double constants2[CONSTANTS_COUNT];
   err = gene_to_ctrnn(constants, constants2);
   if (err) {
-    failed_with_message0("runSimulationMlink::errg2c");
+    message("runSimulationMlink::errg2c");
+    failed();
     return;
   }
   run_simulation_mlink(state, stateLength, step_size, constants2, 
