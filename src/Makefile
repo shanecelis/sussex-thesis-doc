@@ -29,7 +29,7 @@ EXTRA_LIBS = -lstdc++ -framework Foundation
 LDFLAGS = -L/Applications/Mathematica.app/SystemFiles/Libraries/MacOSX-x86-64 -lWolframRTL_Static_Minimal
 CPPFLAGS += -I $(INCDIR)
 
-MOBJS = util.mo bga.mo ctrnn.mo params.mo frog-ga.mo frog-simulation.mo runge-kutta.mo export-c-code.mo experiments.mo
+MOBJS = util.mo bga.mo ctrnn.mo params.mo frog-ga.mo frog-simulation.mo frog-morph-diff.mo runge-kutta.mo export-c-code.mo experiments.mo
 endif
 
 LDFLAGS += -lalps -lstdc++ /opt/local/lib/libgsl.a -framework vecLib
@@ -97,7 +97,7 @@ ifeq ($(MATHEMATICA),1)
 %.mo : %.m
 	mathload $< > $@
 
-run-simulation-mlinktm.c : run-simulation-mlink.tm
+run-simulation-mlinktm.c : run-simulation-mlink.tm run-simulation.h
 	${MPREP} $? -o $@
 
 run-simulation-mlink : run-simulation-mlinktm.o $(SIM_OBJS)
@@ -109,7 +109,7 @@ frog_eqns.m: frog_eqns.txt parenparser mr.pl
 frog_eqns_dotsolved.m: frog_eqns.m make-frog_eqns_dotsolved.m
 	mathload make-frog_eqns_dotsolved.m
 
-frogRHS.c frogRHS.h: frog_eqns_dotsolved.m make-frogRHSC.m
+frogRHS.c frogRHS.h: frog_eqns_dotsolved.m make-frogRHSC.m frog-morph-diff.mo
 	mathload make-frogRHSC.m 
 
 endif

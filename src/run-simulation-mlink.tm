@@ -24,7 +24,7 @@
 :ReturnType:    Manual
 :End:
 
-:Evaluate:      runSimulationMlink[ state:{___}, stepSize_, constants:{___}, time_] := runSimulationMlink[N[state], N[stepSize], N[constants], N[time]]
+:Evaluate:      runSimulationMlink[ state:{___?NumberQ}, stepSize_?NumberQ, constants:{___?NumberQ}, time_?NumberQ] := runSimulationMlink[N[state], N[stepSize], N[constants], N[time]]
 
 :Begin:
 :Function:      run_simulation_mlink_g2c

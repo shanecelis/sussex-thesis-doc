@@ -4,17 +4,16 @@
 (*Bacterial GA*)
 
 
-pop = 30;
-len = 10;
-rec = 0.5;
-mut = 0.1;
-(*evaluations = evaluations~or~0;*)
+setMaybe[pop, 30];
+setMaybe[len, 10];
+setMaybe[rec, 0.5];
+setMaybe[mut, 0.1];
 setMaybe[evalutions, 0];
 
-end = 10^6;
+setMaybe[end, 10^6];
  
-useEvaluationCache = True;
-minimize = False;
+setMaybe[useEvaluationCache, True];
+setMaybe[minimize, False];
 
 
 initGA[] := (genes = RandomInteger[{0, 1}, {pop, len}];
@@ -69,10 +68,13 @@ lessThan[a_, b_] := If[minimize,
 
 beginTournament[] := Null
 
-runGA[] := 
+runGA[howMany_:None] := 
     Module[{a, b, W, L, temp},
+           If[howMany === None,
+              myend = end,
+              myend = evaluations + howMany];
            (*temp = PrintTemporary[0];*)
-           For[Null, evaluations < end, evaluations++,
+           For[Null, evaluations < myend, evaluations++,
                a = RandomInteger[{1, pop}];
                b = RandomInteger[{1, pop}];
                beginTournament[];

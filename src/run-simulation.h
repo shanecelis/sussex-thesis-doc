@@ -10,10 +10,13 @@
 #define MAX_STEPS        10000
 
 // state info
-#define STATE_COUNT      26
 #define QSTATE_COUNT     8
 #define USTATE_COUNT     8
-#define RECORD_COUNT     2
+#define NODE_COUNT       5
+#define TAILSTATE_COUNT  2
+#define RECORD_COUNT     4
+#define STATE_COUNT      (1 + QSTATE_COUNT + USTATE_COUNT + NODE_COUNT + TAILSTATE_COUNT + RECORD_COUNT)
+
 #define QSTATE_BEGIN     1
 #define USTATE_BEGIN     9
 #define TAILSTATE_BEGIN  22

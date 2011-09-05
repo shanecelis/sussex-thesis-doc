@@ -502,9 +502,9 @@ static struct func {
 		};
 
 static const char* evalstrs[] = {
-	"runSimulationMlink[ state:{___}, stepSize_, constants:{___}, tim",
-	"e_] := runSimulationMlink[N[state], N[stepSize], N[constants], N",
-	"[time]]",
+	"runSimulationMlink[ state:{___?NumberQ}, stepSize_?NumberQ, cons",
+	"tants:{___?NumberQ}, time_?NumberQ] := runSimulationMlink[N[stat",
+	"e], N[stepSize], N[constants], N[time]]",
 	(const char*)0,
 	"runSimulationMlinkG2C[ state:{___}, stepSize_, constants:{___}, ",
 	"time_] := runSimulationMlinkG2C[N[state], N[stepSize], N[constan",

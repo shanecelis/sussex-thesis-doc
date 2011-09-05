@@ -118,7 +118,7 @@ stateInit =
      u1 -> 0, u2 -> 0, u3 -> 0, u4 -> 0, u5 -> 0, u6 -> 0, u7 -> 0, u8 -> 0,    
      ys[1] -> 0,  ys[2] -> 0,  ys[3] -> 0,  ys[4] -> 0,  ys[5] -> 0,  
      lg -> 1,  fg -> 0,  
-     r[1] -> 0,  r[2] -> 0};
+     r[1] -> 0,  r[2] -> 0, r[3] -> 0, r[4] -> 0};
 
 stateLayout = keys[stateInit];
 
@@ -211,13 +211,14 @@ motorCount       = 5;
 sensorCount      = 14;
 
 (* state info *)
-recordCount      = 2;
 qstateCount      = 8;
 ustateCount      = 8;
-tailStateCount   = 2;
-nodeCount        = 5;
 pstateCount      = qstateCount + ustateCount;
+nodeCount        = 5;
+tailStateCount   = 2;
+recordCount      = 4;
 stateCount       = 1 + pstateCount + nodeCount + tailStateCount + recordCount;
+
 qstateBegin      = 1 + 1;
 ustateBegin      = 1 + qstateCount + 1;
 nodeBegin        = 1 + pstateCount + 1;
@@ -275,8 +276,8 @@ gaParams = Join[
     {
     target -> {0, 0.01},
     tmax -> 10,
-    expName -> Ap,
-    phase -> 1,
+    expName -> Ap, (*Ap,*)
+    phase -> 4,
     deltat -> 0.01,
     dataDeltat -> 0.1,
 

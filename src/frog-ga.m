@@ -3,8 +3,11 @@
 (* ::Title:: *)
 (*Frog GA*)
 
+
 (* ::Subtitle:: *)
 (*Direct Gene Encoding*)
+
+
  
 
 getGene[i_Integer] := genes[[i]]
@@ -14,6 +17,7 @@ getGene[i_List] := i
 
 (* ::Subtitle:: *)
 (*Real Number Mutation*)
+
 
 mutationSigma = 1;
 
@@ -29,8 +33,6 @@ mutationVector[] :=Map[Evaluate,RandomChoice[{mutationRate, 1 - mutationRate} ->
 
 (* ::Subtitle:: *)
 (*BGA Functions*)
-
-
 
 
 mutate[L_] := 
@@ -98,6 +100,9 @@ geneToCTRNNLinSensor[i_] := geneToCTRNNLinSensor[genes[[i]]]
 gscale[gi_, range_] := Rescale[gi, {0, 1}, range]
 gunscale[gi_, range_] := Rescale[gi, range, {0, 1}]
 
+physicsGeneLayout = { Tmax, kTa, kTb, kFa, kFb, krb };
+
+
 physicsGeneToRules[i_] := 
     Module[{g},
            g = getGene[i];
@@ -107,16 +112,20 @@ physicsGeneToRules[i_] :=
      kTb  ->    gscale[g[[3]], {-0.000001, -0.0001}], 
      kFa  ->    gscale[g[[4]], {-0.001, -1}], (* 4 *)
      kFb  ->    gscale[g[[5]], {-0.001, -100}], (* 5 *)
-     krb  ->    gscale[g[[6]], {-1, 1}]
+     krb  ->    gscale[g[[6]], {-1, 1}],
+     kTc  ->    gscale[g[[3]], {-0.000001, -0.0001}], 
+     kFc  ->    gscale[g[[5]], {-0.001, -100}], 
+     krc  ->    gscale[g[[6]], {-1, 1}]
     } ]
 
 rand[{a_, b_}] := RandomReal[{a, b} //. units];
 
 
 randomStateRules[] :=
-    Module[{rules, rev, a},
+    Module[{rules, rev, a, gpts},
            rev = 2 Pi/s;
            a = 0.25;
+           gpts = experimentInit@@({expName, phase} /. gaParams);
            rules =
    { t -> 0,
      q1 -> rand[10cm {-1, 1}],
@@ -136,8 +145,8 @@ randomStateRules[] :=
      u7 -> rand[a rev {-1, 1}],
      u8 -> rand[a rev {-1, 1}],
      ys[1] -> 0,  ys[2] -> 0,  ys[3] -> 0,  ys[4] -> 0,  ys[5] -> 0,  
-     lg -> 1,  fg -> 0,
-     r[1] -> 0,  r[2] -> 0
+     lg -> gpts[[1]],  fg -> gpts[[2]],
+     r[1] -> 0,  r[2] -> 0, r[3] -> 0, r[4] -> 0
    }]
 
 randomState[] := stateLayout /. randomStateRules[]
@@ -149,7 +158,7 @@ physicsValuesToGenes[vArg_] :=
           Module[{v},
                  v = vArg;
                  v[[1]] = Log[10, v[[1]]];
-                 v = values[physicsGeneToRules[v]];
+                 v = physicsGeneLayout /. physicsGeneToRules[v];
                  v[[1]] = Log[10, v[[1]]];
                  v]]
 
@@ -165,7 +174,7 @@ physicsGeneToConstants[i_] :=
                     target /. gaParams, 
                     experimentPoints@@({expName, tmax, phase} /. gaParams),
                     myphyscons,
-                    makeZeroPeriodValues[]]]
+                    tourPeriods[[1]]]]
 
 
 (*
@@ -185,12 +194,17 @@ getTimeAndSpeedWithState[i_, state_, period_, tmax_] :=
            res = Catch[Check[endState = runSimulationGA@@args;
                        If[endState === $Failed,
                           $Failed,
-                          {endState[[1]],endState[[recordBegin + 1]]/endState[[1]]}],
-                       {endState[[1]], -0.0001}, 
+                          (* it worked! *)
+                          {endState[[1]],
+                           Norm[{endState[[recordBegin + 1]], 
+                                 endState[[recordBegin + 2]]}/endState[[1]]],
+                           endState[[recordBegin + 3]]/endState[[1]]
+                          }],
+                       {endState[[1]], -0.0001, -0.0001}, 
                        {runSimulationMlink::errnan,
                         runSimulationMlink::errsim}]];
            If[res === $Failed,
-              {0.0001, -0.0001},
+              {0.0001, -0.0001, -0.0001},
               res]
           ]
 
@@ -211,18 +225,30 @@ noControllerPeriod = periodLayout /.
      f5 -> 0, psi5 -> 0, kys -> 0};
 
 beginTournament[] :=
-    Module[{},
+    Module[{ind},
            (* Setup some random state and controllers *)
-           If[True && (Mod[evaluations, 100] == 0 || Head[tourStates] =!= List),
+           If[True && (Mod[evaluations, 1000] == 0 || Head[tourStates] =!= List),
+              If[evaluations > 50,
+                 ind = bestIndividual[];
+                 Print[{genes[[ind]], evaluate[ind], physicsGeneToRules[ind]}];
+                ];
               clearCacheGA[];
-              tourStates = Table[randomState[], {3}];
-              tourPeriods = Table[randomPeriod[], {3}];
+
+              newPhysicsTournament[];
              ]
+          ]
+
+newPhysicsTournament[] := 
+    Module[{},
+           tourStates = Table[randomState[], {3}];
+           tourPeriods = Table[randomPeriod[], {3}];
           ]
            
 fitnessForPhysics[i_] := 
     Quiet[Module[{res, res2, mytmax, f1, f2},
            mytmax = tmax /. gaParams;
+           If[Head[tourStates] === Symbol, 
+              newPhysicsTournament[]];
            res = MapThread[getTimeAndSpeedWithState[i, #1, #2, mytmax]&, 
                                  {tourStates, tourPeriods}];
            res2 = MapThread[getTimeAndSpeedWithState[i, #1, noControllerPeriod, mytmax (*#2[[1]]*)]&, 
@@ -233,21 +259,22 @@ fitnessForPhysics[i_] :=
           ], {runSimulationMlink::errnan, runSimulationMlink::errsim}]
 
 fitnessForPhysicsData[i_] := 
-    Quiet[Module[{res, res2, mytmax, f1, f2},
-           mytmax = tmax /. gaParams;
-           res = MapThread[getTimeAndSpeedWithState[i, #1, #2, mytmax]&, 
-                                 {tourStates, tourPeriods}];
-           res2 = MapThread[getTimeAndSpeedWithState[i, #1, noControllerPeriod, #2[[1]]]&, 
-                                 {tourStates, res}];
-                 Print[res];
-                 Print[res2];
-
-
+    Quiet[
+        Module[{res, res2, mytmax, f1, f2, tmp},
+               mytmax = tmax /. gaParams;
+               res = Flatten[Outer[{
+                   tmp = getTimeAndSpeedWithState[i, #1, #2, mytmax],
+                   getTimeAndSpeedWithState[i, #1, noControllerPeriod, tmp[[1]]]}&, 
+                           tourStates, tourPeriods, 1],1];
+               res
+               (*  Print[res];
+                 *)
+                 (*
                  Join[
                      MapThread[getTimeAndSpeedWithStateData[i, #1, #2, mytmax]&, 
                                  {tourStates, tourPeriods}],
                      MapThread[getTimeAndSpeedWithStateData[i, #1, noControllerPeriod, #2[[1]]]&, 
-                                 {tourStates, res}]]
+                                 {tourStates, res}]]*)
           ], {runSimulationMlink::errnan, runSimulationMlink::errsim}]
 
     
