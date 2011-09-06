@@ -32,9 +32,12 @@ CPPFLAGS += -I $(INCDIR)
 MOBJS = util.mo bga.mo ctrnn.mo params.mo frog-ga.mo frog-simulation.mo frog-morph-diff.mo runge-kutta.mo export-c-code.mo experiments.mo
 endif
 
-LDFLAGS += -lalps -lstdc++ 
+
+LDFLAGS += -lstdc++ 
+LDLIBS = /usr/local/lib/libalps.a
 #LDLIBS = /opt/local/lib/libgsl.a -framework vecLib
 #/opt/local/lib/libgslcblas.a
+
 #LDFLAGS = -L/Applications/Mathematica.app/SystemFiles/Libraries/MacOSX-x86-64 -lWolframRTL -L. -lalps -lstdc++
 
 

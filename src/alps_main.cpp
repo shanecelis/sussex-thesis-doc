@@ -14,6 +14,7 @@ using namespace alps;
 
 extern "C" {
 #include "run-simulation.h"
+#include <stdlib.h>
 }
 
 #include "alps_frog.h"
