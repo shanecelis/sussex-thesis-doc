@@ -2,7 +2,7 @@
 # thesis code
 
 OS=$(shell uname -s)
-MATHEMATICA=1
+MATHEMATICA=0
 
 #CPPFLAGS = -g -I/Applications/Mathematica.app/SystemFiles/IncludeFiles/C
 CPPFLAGS = -g -I../include -Wall -Werror -I/opt/local/include -DRK4
@@ -32,7 +32,8 @@ CPPFLAGS += -I $(INCDIR)
 MOBJS = util.mo bga.mo ctrnn.mo params.mo frog-ga.mo frog-simulation.mo frog-morph-diff.mo runge-kutta.mo export-c-code.mo experiments.mo
 endif
 
-LDFLAGS += -lalps -lstdc++ /opt/local/lib/libgsl.a -framework vecLib
+LDFLAGS += -lalps -lstdc++ 
+#LDLIBS = /opt/local/lib/libgsl.a -framework vecLib
 #/opt/local/lib/libgslcblas.a
 #LDFLAGS = -L/Applications/Mathematica.app/SystemFiles/Libraries/MacOSX-x86-64 -lWolframRTL -L. -lalps -lstdc++
 
@@ -59,7 +60,7 @@ clean:
 
 run-simulation.o: run-simulation.c run-simulation.h
 
-$(SIM_OBJS): run-simulation.h
+$(SIM_OBJS) alps_main.o frog_eval.o run-sim-main.o run-simulation-mlink.tm alps_frog.o: run-simulation.h
 
 run-sim-main: run-sim-main.o $(SIM_OBJS)
 
@@ -69,9 +70,6 @@ frog_eval: frog_eval.o alps_frog.o genes_real.o $(SIM_OBJS)
 
 # These aren't really necessary anymore since I'm linking to the
 # static library.
-
-run: run-sim-main
-	DYLD_LIBRARY_PATH=/Applications/Mathematica.app/SystemFiles/Libraries/MacOSX-x86-64:. ./run-sim-main
 
 frog.out: frog.al
 	(cat frog.al; echo "quit") > frogq.al

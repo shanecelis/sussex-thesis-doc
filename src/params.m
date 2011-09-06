@@ -282,7 +282,7 @@ gaParams = Join[
     (*physicsGaParams,
     speedGaParams,*)
     {
-    target -> {0, 0.5},
+    target -> {0, 0.25},
     tmax -> 10,
     expName -> Bo, (*Ap,*)
     phase -> 4,

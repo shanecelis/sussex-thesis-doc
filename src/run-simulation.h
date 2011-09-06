@@ -4,7 +4,7 @@
 #define TIME_MAX         10.0
 #define BODY_RADIUS      (0.025 * METERS)
 
-#define TARGET_DISTANCE  (0.5 * METERS)
+#define TARGET_DISTANCE  (0.25 * METERS) 
 
 #define STEP_SIZE        0.01
 #define MAX_STEPS        10000
