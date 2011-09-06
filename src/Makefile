@@ -2,7 +2,7 @@
 # thesis code
 
 OS=$(shell uname -s)
-MATHEMATICA=1
+MATHEMATICA=0
 
 #CPPFLAGS = -g -I/Applications/Mathematica.app/SystemFiles/IncludeFiles/C
 CPPFLAGS = -g -I../include -Wall -Werror
@@ -28,7 +28,10 @@ CPPFLAGS += -I $(INCDIR)
 MOBJS = bga.mo ctrnn.mo frog-ga.mo frog-simulation.mo runge-kutta.mo export-c-code.mo experiments.mo
 endif
 
-LDFLAGS += -lalps -lstdc++
+#LDFLAGS += -lalps -lstdc++
+
+LDFLAGS += -lstdc++ 
+LDLIBS = /usr/local/lib/libalps.a
 #LDFLAGS = -L/Applications/Mathematica.app/SystemFiles/Libraries/MacOSX-x86-64 -lWolframRTL -L. -lalps -lstdc++
 
 
