@@ -496,7 +496,7 @@ animateMorph[data_, opts: OptionsPattern[]] :=
                            data], 1/timePerFrame, 
                        AnimationRepetitions -> 1,
                       DisplayAllSteps -> False,
-                      ImageSize -> 100]]
+                      ImageSize -> imageSize]]
 
 
 showDataStats[data_] := 

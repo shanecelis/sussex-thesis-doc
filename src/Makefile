@@ -97,7 +97,8 @@ ifeq ($(MATHEMATICA),1)
 %.mo : %.m
 	mathload $< > $@
 
-run-simulation-mlinktm.c : run-simulation-mlink.tm run-simulation.h
+run-simulation-mlinktm.o : run-simulation.h
+run-simulation-mlinktm.c : run-simulation-mlink.tm 
 	${MPREP} $? -o $@
 
 run-simulation-mlink : run-simulation-mlinktm.o $(SIM_OBJS)

@@ -1,10 +1,10 @@
 /* run-simulation.h */
 
 #define METERS           1.0
-#define TIME_MAX         20.0
+#define TIME_MAX         10.0
 #define BODY_RADIUS      (0.025 * METERS)
 
-#define TARGET_DISTANCE  (0.04 * METERS)
+#define TARGET_DISTANCE  (0.5 * METERS)
 
 #define STEP_SIZE        0.01
 #define MAX_STEPS        10000
@@ -36,7 +36,7 @@
 #define TARGET_BEGIN     (CTRNN_COUNT)
 #define POINTS_BEGIN     (CTRNN_COUNT + TARGET_COUNT)
 #define PHYS_BEGIN       (CTRNN_COUNT + TARGET_COUNT + POINTS_COUNT)
-#define PERIOD_BEGIN     (CTRNN_COUNT + TARGET_COUNT + POINTS_COUNT + PHYS_COUNT +1)
+#define PERIOD_BEGIN     (CTRNN_COUNT + TARGET_COUNT + POINTS_COUNT + PHYS_COUNT)
 
 int sim_init();
 
@@ -58,3 +58,5 @@ void lobotomise_brains(double *constants);
 int physics_constants(double *physcons);
 
 int gene_to_ctrnn(double *constants, double *result);
+
+int period_constants(double *period_constants_result);

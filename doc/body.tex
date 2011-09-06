@@ -1,6 +1,9 @@
 \begin{comment}
   mention Minimal Simulation guy
   
+
+  conventions bold denotes a vector
+  hat means its a unit vector
   
 \end{comment}
 
@@ -16,8 +19,7 @@ forms which may be parametrically varied by two variables $l_t, l_f
 of morphological change will be described in detail in
 section~\ref{morph-change}.  In the inspiring case, the individual
 begins as a ``tadpole'' bearing only a tail. It transforms into a
-``frog'' with four limbs. Its task is to swim to a target with or
-against varying currents.
+``frog'' with four limbs. Its task is to swim to a target.
 
 %\begin{wrapfigure}{r}{0.5\textwidth}
 \begin{figure}[h]
@@ -69,13 +71,14 @@ density of the fluid, $c_d$ is the drag coefficient, $l$ is the length
 of the limb, $w$ is the width of the limb, $\bhv n$ is the normal of
 the limb, $\bv v_b$ is the velocity of the center of mass of the limb,
 $\bv v_c$ is the velocity of the current, $\bv v$ is the relative
-velocity of the limb in the current, $A$ is the reference area---an
-orthographic projection of the limb shape on a plane perpendicular to
-the direction of motion.  Figure~\ref{drag-force} shows these values
-for a limb.  The shape of the limb is taken to be a rod of length $l$,
-width $w$, and depth $d$.  However, for the purposes of computing the
-drag force, the width of the limb $w$ is set to zero since $w \ll l$
-and the force it might contribute is not considered significant.
+velocity of the limb with respect to the current, $A$ is the reference
+area---an orthographic projection of the limb shape on a plane
+perpendicular to the direction of motion.  Figure~\ref{drag-force}
+shows these values for a limb.  The shape of the limb is taken to be a
+rod of length $l$, width $w$, and depth $d$.  However, for the
+purposes of computing the drag force, the width of the limb $w$ is set
+to zero since $w \ll l$ and the force it might contribute is not
+considered significant.
 
 \begin{eqnarray}
   A &=& l\,d~ |\bhv v \cdot \bhv n| + l\, w~|\bhv v \times \bhv n|\\
@@ -91,14 +94,15 @@ and the force it might contribute is not considered significant.
   \figtitle{Diagram of Drag Force} 
   \includegraphics[scale=0.7]{fig/drag-force.pdf} 
   \vspace{-45pt}
-  \caption[Diagram of drag force]{\label{drag-force}For each limb determine
-    length $l$, width $w$, depth $d$ (not shown), velocity $\bv v $,
-    normal vector $\bhv n$ determine its drag force $\bv F_D$.}
+  \caption[Diagram of drag force]{\label{drag-force}For each limb the
+    length $l$, width $w$, depth $d$ (not shown), velocity of limb
+    $\bv v_b $, velocity of current $\bv v_c$,, normal vector $\bhv n$
+    determine its drag force $\bv F_D$.}
 \end{figure}
 
 In addition, a drag force and drag torque is exerted on the central
 body.  The full equations of motion are given in the
-Appendix~\ref{physeqs-sec}.
+Appendix~\ref{app:physeqns}.
 
 \begin{comment}
 
@@ -226,27 +230,57 @@ The sensors are altered for the ``lobotomised'' controller.  The tail
 brain does not receive proprioceptive sensors from the feet $\{s_7,
 s_8, \ldots, s_14\}$.  Likewise, the foot brain does not receive
 proprioceptive sensors from the tail $s_5$ and $s_6$.  Otherwise, the
-sensors are the same.\footnote{Implementation note: the
-  ``lobotomised'' controller is the same as the ``non-lobotomised''
-  with a specific set of weights $w_{ji} = 0$ and sensor coefficients
-  $n_{ji} = 0$.}
+sensors are the same.\footnote{Note on the implementation: the
+  ``lobotomised'' controller code is the same as the
+  ``non-lobotomised'' with a specific set of weights $w_{ji}$ and
+  sensor coefficients $n_{ji}$ set to zero.}
 
 \section{Tasks}
 
 To confirm the results are not spurious or a special case for one
 particular task, multiple tasks of varying difficulty are considered.
 The basic task is locomotion to a target.  Changing the target
-location was considered, but it is hard to say what positions of the
-target would be more difficult.  Instead of changing the target
-location, varying the current of the liquid $\bv v_c$ is considered.
+location was considered, but it is hard to ascertain what positions of
+the target would be more difficult.  The infant ``tadpole'' form with
+its tail directed to the south and a target to the west have to turn
+before it could locomote toward the target, so it may be more
+difficult for the infant form.  However, the adult ``frog'' form is
+symmetric with respect to targets placed in the cardinal directions,
+so there is no discernable difference in difficulty.  Changing the
+position of the target does not provide a simple means of constructing
+more difficult tasks.  
+
+\begin{comment}
+Bongard's work has a task that is simpler for the infant than for the adult
+\end{comment}
+
+Instead of changing the target location, varying the velocity of
+current $\bv v_c$ is considered.  
+
+Each individual is affected similarly by the current--regardless of
+its morphology.\footnote{This differs from Bongard's work where the
+  task was easier for the infant form due to its morphology.}  In task
+1 the current assists the individual to the target.  In task 2 there
+is no current.  In task 3 the current pulls the individual laterally
+away from the target.  In task 4 the current is directly against the
+target. Figure~\ref{fig:tasks} shows a diagram of the tasks.  The
+tasks are meant to be in an ascending order of
+difficulty.\footnote{One could argue that the task 1 may in fact be
+  more difficult because it may require two skills: go and stop.}
 
 \begin{figure}
   \centering
   \includegraphics[scale=0.8]{fig/tasks.pdf} 
-  \caption[Tasks]{\label{fig:tasks}Tasks shown in increasing levels of
-    difficulty.  In task 1 the current assists the individual to the
-    target.  In task 2 there is no current.  In task 3 the current
-    pulls the individual laterally away from the target.  In task 4
-    the current is directly against the target.}
+  \caption[Tasks]{\label{fig:tasks}Tasks shown in an ascending order
+    of difficulty.}
 \end{figure} 
 
+
+\begin{comment}
+
+  big conclusions:
+   - tasks need not be easier because of morphology (if it works)
+   - simpler controllers can accelerate evolution
+     - hmm, I could switch between an oscillator and a CTRNN
+     - maybe even if nothing is conserved between the infant and adult form
+\end{comment}

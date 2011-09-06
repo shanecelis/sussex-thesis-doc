@@ -28,7 +28,7 @@ static int    evaluation_succ_count = 0;
 static int    evaluation_failed_count = 0;
 static bool   asked_to_terminate = false;
 
-const int     target_count = 4;
+const int     targets_count = 4;
 const double  targets[4][2] = {{0., 1.},                  /* north */
                                {-1./M_SQRT2, 1./M_SQRT2}, /* north-west */
                                {-1., 0.},                 /* west */
@@ -66,16 +66,8 @@ int run_frog(const vector<double>& genes,
   }
   
   constants[TARGET_BEGIN] = targetx;
-  constants[TARGET_BEGIN + 1] = targety;
+  constants[TARGET_BEGIN + 1] = targety; 
   experiment_points(expName, time_max, phase, constants + POINTS_BEGIN);
-  /*
-  double physcons_values[] = {0.06,0.06,0.00001,0.00001,0.025,-0.018,0.,0.,
-                              -0.04,-2.5,-2.5,0.2,0,0.025,0.00195,0.00195,
-      7.812500000000002e-6,2.3399999999999996e-6,2.3399999999999996e-6,0.,0.};
-  for (int i = 0; i < PHYS_COUNT; i++) {
-    constants[PHYS_BEGIN + i] = physcons_values[i];
-    }*/
-  err = physics_constants(constants + PHYS_BEGIN);
 
   experiment_init_state(constants + POINTS_BEGIN, 
                         state + TAILSTATE_BEGIN, 
@@ -83,6 +75,8 @@ int run_frog(const vector<double>& genes,
   if (lobotomise) {
     lobotomise_brains(constants);
   }
+  err = physics_constants(constants + PHYS_BEGIN);
+  err = period_constants(constants + PERIOD_BEGIN);
   
   err = gene_to_ctrnn(constants, constants2);
 
@@ -90,6 +84,7 @@ int run_frog(const vector<double>& genes,
     err = run_simulation(state, STEP_SIZE, constants2, time_max, result, NULL);
 
   if (err) {
+    //printf("ERROR!\n");
     evaluation_failed_count++;
     return err;
   } else {
@@ -101,13 +96,14 @@ int run_frog(const vector<double>& genes,
 double mean_distance_norm(double *result, double time_max)
 {
   /* normalised average distance to target */
-  double dist = result[RECORD_BEGIN]/time_max;
+  double dist = result[RECORD_BEGIN]/result[0];
   return dist/target_distance;
 }
 
 double mean_speed(double *result, double time_max)
 {
-  return result[RECORD_BEGIN + 1]/time_max; 
+  // XXX assumes the initial time was not zero.
+  return result[RECORD_BEGIN + 2]/result[0]; 
 }
 
 bool evaluate_frog(vector<double>& fitness, 
@@ -119,8 +115,8 @@ bool evaluate_frog(vector<double>& fitness,
     cerr << "error: target_index < 0" << endl;
     return false;
   }
-  if (target_index >= target_count) {
-    cerr << "error: target_index >= target_count" << endl;
+  if (target_index >= targets_count) {
+    cerr << "error: target_index >= targets_count" << endl;
     return false;
   }
   double time_max = TIME_MAX;
@@ -128,7 +124,7 @@ bool evaluate_frog(vector<double>& fitness,
   int err = run_frog(((Individ_Real*)individ)->get_genes(), 
                      time_max,
                      targets[target_index][0] * target_distance, 
-                     targets[target_index][1] * target_distance, 
+                     targets[target_index][1] * target_distance,
                      expName, phase, lobotomise, result);
 
   double (*fitfunc)(double *, double) = fitness_evals[fitness_type].evaluator;

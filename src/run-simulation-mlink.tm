@@ -70,11 +70,12 @@ void failed() {
 
 int was_aborted() {
   int code, param;
+  if (stdyielder)
+    stdyielder(stdlink, (MLYieldParameters)0);
   //MLGetYieldFunction(stdlink)(stdlink, (MLYieldParameters)0 );
-  if (MLMessageReady(stdlink) && MLGetMessage(stdlink, &code, &param)) {
+  if (MLAbort || (MLMessageReady(stdlink) && MLGetMessage(stdlink, &code, &param))) {
     switch (code){
     case MLAbortMessage:
-      MLPutFunction(stdlink, (char *) "Abort", 0);
       //MLEndPacket(stdlink);
       //MLFlush(stdlink);
       return 1;
@@ -112,9 +113,12 @@ void run_simulation_mlink( double *state, long stateLength,
   dims[0] = STATE_COUNT;
   err = run_simulation(state, step_size, constants, state[0] + time, 
                        result, &was_aborted);
-  if (err == 3) {
-    message("runSimulationMlink::aborted, %f", result[0]);
+  if (err == 3 || MLAbort) {
     // Aborted.
+    MLClearError(stdlink);
+    MLNewPacket(stdlink);
+    MLPutFunction(stdlink, (char *) "Abort", 0);
+    //message("runSimulationMlink::aborted, %f", result[0]);
     return;
   }
   if (err == 2) {

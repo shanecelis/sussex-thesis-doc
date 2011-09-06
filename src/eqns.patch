@@ -1,0 +1,85 @@
+*** eqns.c	Tue Aug 30 22:24:15 2011
+--- gold_eqns.c	Tue Aug 30 22:24:03 2011
+***************
+*** 1,5 ****
+  /* The name of this program is eqns.c */
+! /* Created by Autolev 4.1 on Tue Aug 30 22:24:15 2011 */
+  
+  #include <ctype.h> 
+  #include <math.h>  
+--- 1,6 ----
++ #ifndef JUST_EQNS
+  /* The name of this program is eqns.c */
+! /* Created by Autolev 4.1 on Tue Aug 30 22:19:07 2011 */
+  
+  #include <ctype.h> 
+  #include <math.h>  
+***************
+*** 14,25 ****
+  void     readf     (FILE *Fp, double *next, ...);
+  void     pgets     (FILE *Fp, double *x);
+  void     writef    (FILE *Fp, char format[], ...);
+! 
+  double   fl,Ia,Ib,Ic,kFa,kFb,kFc,krb,krc,kTa,kTb,kTc,l,ma,mb,mc,oq4,oq5,oq6,oq7,
+    oq8,r,Tq4,Tq5,Tq6,Tq7,Tq8,wvx,wvy,q3,q4,q5,q6,q7,q8,u1,u2,u3,u4,u5,u6,u7,u8,
+    u1p,u2p,u3p,u4p,u5p,u6p,u7p,u8p;
+- double   Pi,DEGtoRAD,RADtoDEG,z[147];
+  
+  /* ................................ MAIN ............................. */
+  int      main         (void)
+  {
+--- 15,27 ----
+  void     readf     (FILE *Fp, double *next, ...);
+  void     pgets     (FILE *Fp, double *x);
+  void     writef    (FILE *Fp, char format[], ...);
+! #endif // JUST_EQNS
+  double   fl,Ia,Ib,Ic,kFa,kFb,kFc,krb,krc,kTa,kTb,kTc,l,ma,mb,mc,oq4,oq5,oq6,oq7,
+    oq8,r,Tq4,Tq5,Tq6,Tq7,Tq8,wvx,wvy,q3,q4,q5,q6,q7,q8,u1,u2,u3,u4,u5,u6,u7,u8,
+    u1p,u2p,u3p,u4p,u5p,u6p,u7p,u8p;
+  
++ double   Pi,DEGtoRAD,RADtoDEG,z[147];
++ #ifndef JUST_EQNS
+  /* ................................ MAIN ............................. */
+  int      main         (void)
+  {
+***************
+*** 74,80 ****
+  /* ................................ EQNS1 ............................. */
+  void     eqns1        (void)
+  {
+! 
+  /* Evaluate constants */
+    z[1] = cos(q3);
+    z[2] = sin(q3);
+--- 76,82 ----
+  /* ................................ EQNS1 ............................. */
+  void     eqns1        (void)
+  {
+! #endif // JUST_EQNS
+  /* Evaluate constants */
+    z[1] = cos(q3);
+    z[2] = sin(q3);
+***************
+*** 289,295 ****
+    z[145] = z[111]*(z[9]-z[10])*z[30];
+    z[146] = z[111]*(z[11]+z[12])*z[30];
+  
+! 
+  /* Evaluate output quantities */
+  }
+  
+--- 291,297 ----
+    z[145] = z[111]*(z[9]-z[10])*z[30];
+    z[146] = z[111]*(z[11]+z[12])*z[30];
+  
+! #ifndef JUST_EQNS
+  /* Evaluate output quantities */
+  }
+  
+***************
+*** 376,378 ****
+--- 378,381 ----
+  }
+  
+  
++ #endif // JUST_EQNS

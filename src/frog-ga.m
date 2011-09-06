@@ -136,9 +136,9 @@ randomStateRules[] :=
      q6 -> rand[Pi/2 {-1, 1}],
      q7 -> rand[Pi/2 {-1, 1}],
      q8 -> rand[Pi/2 {-1, 1}],
-     u1 -> rand[{-1 cm/s, 1 cm/s}],
-     u2 -> rand[{-1 cm/s, 1 cm/s}],
-     u3 -> rand[a rev {-1, 1}],
+     u1 -> rand[2 {-1, 1}cm/s],
+     u2 -> rand[2 {-1, 1}cm/s],
+     u3 -> rand[2 a rev {-1, 1}],
      u4 -> rand[a rev {-1, 1}],
      u5 -> rand[a rev {-1, 1}],
      u6 -> rand[a rev {-1, 1}],
@@ -227,7 +227,7 @@ noControllerPeriod = periodLayout /.
 beginTournament[] :=
     Module[{ind},
            (* Setup some random state and controllers *)
-           If[True && (Mod[evaluations, 1000] == 0 || Head[tourStates] =!= List),
+           If[True && (Mod[evaluations, 300] == 0 || Head[tourStates] =!= List),
               If[evaluations > 50,
                  ind = bestIndividual[];
                  Print[{genes[[ind]], evaluate[ind], physicsGeneToRules[ind]}];
@@ -240,10 +240,10 @@ beginTournament[] :=
 
 newPhysicsTournament[] := 
     Module[{},
-           tourStates = Table[randomState[], {3}];
-           tourPeriods = Table[randomPeriod[], {3}];
+           tourStates = Table[randomState[], {5}];
+           tourPeriods = Table[randomPeriod[], {2}];
           ]
-           
+(*           
 fitnessForPhysics[i_] := 
     Quiet[Module[{res, res2, mytmax, f1, f2},
            mytmax = tmax /. gaParams;
@@ -251,12 +251,13 @@ fitnessForPhysics[i_] :=
               newPhysicsTournament[]];
            res = MapThread[getTimeAndSpeedWithState[i, #1, #2, mytmax]&, 
                                  {tourStates, tourPeriods}];
-           res2 = MapThread[getTimeAndSpeedWithState[i, #1, noControllerPeriod, mytmax (*#2[[1]]*)]&, 
+           res2 = MapThread[getTimeAndSpeedWithState[i, #1, noControllerPeriod, mytmax)]&, 
                                  {tourStates, res}];
                  f1 = Mean[MapThread[Times,Transpose[res]]];
                  f2 = Mean[MapThread[Times,Transpose[res2]]];
                  Abs[f1^2/f2]
           ], {runSimulationMlink::errnan, runSimulationMlink::errsim}]
+*)
 
 fitnessForPhysicsData[i_] := 
     Quiet[
@@ -266,15 +267,30 @@ fitnessForPhysicsData[i_] :=
                    tmp = getTimeAndSpeedWithState[i, #1, #2, mytmax],
                    getTimeAndSpeedWithState[i, #1, noControllerPeriod, tmp[[1]]]}&, 
                            tourStates, tourPeriods, 1],1];
-               res
-               (*  Print[res];
-                 *)
-                 (*
-                 Join[
-                     MapThread[getTimeAndSpeedWithStateData[i, #1, #2, mytmax]&, 
-                                 {tourStates, tourPeriods}],
-                     MapThread[getTimeAndSpeedWithStateData[i, #1, noControllerPeriod, #2[[1]]]&, 
-                                 {tourStates, res}]]*)
+               Print[res];
+               res = Map[Times@@#&, res, {2}];
+               res = Map[#[[1]]/#[[2]]&, res, {1}];
+               Mean[res]/(1 + StandardDeviation[res]);
+               Flatten[Outer[{
+                   tmp = getTimeAndSpeedWithStateData[i, #1, #2, mytmax],
+                   getTimeAndSpeedWithStateData[i, #1, noControllerPeriod, tmp[[-1, 1]]]}&, 
+                             tourStates, tourPeriods, 1],1]
+          ], {runSimulationMlink::errnan, runSimulationMlink::errsim}]
+
+
+
+fitnessForPhysics[i_] := 
+    Quiet[
+        Module[{res, res2, mytmax, f1, f2, tmp},
+               mytmax = tmax /. gaParams;
+               res = Flatten[Outer[{
+                   tmp = getTimeAndSpeedWithState[i, #1, #2, mytmax],
+                   getTimeAndSpeedWithState[i, #1, noControllerPeriod, tmp[[1]]]}&, 
+                           tourStates, tourPeriods, 1],1];
+               res = Map[Times@@#&, res, {2}];
+               res = Map[#[[1]]/#[[2]]&, res, {1}];
+               Mean[res]
+               (*/(1 + StandardDeviation[res])*)
           ], {runSimulationMlink::errnan, runSimulationMlink::errsim}]
 
     
@@ -353,10 +369,13 @@ fitnessToTargetRecordGoodAndBad[i_, target_, experiment_, phase_] :=
 fitnessToTarget[i_] :=
     Module[{ (*endState,*) fitness, args},
            args = argsForRun[i];
-           fitness = Catch[endState = runSimulationGA@@args;
+           fitness = Catch[Check[endState = runSimulationGA@@args;
                            If[endState === $Failed,
-                              Throw[$Failed],
-                              endState[[recordBegin]]/(endState[[1]] * Norm[target /. gaParams])]];
+                              $Failed,
+                              endState[[recordBegin]]/(endState[[1]] * Norm[target /. gaParams])],
+                           $Failed, 
+                       {runSimulationMlink::errnan,
+                        runSimulationMlink::errsim}]];
            If[fitness === $Failed,
               666.6,
               fitness]
@@ -367,8 +386,9 @@ fitnessToTargetData[i_] :=
     Module[{ (*endState,*) args},
            args = argsForRun[i];
            args[[2]] = dataDeltat /. gaParams;
-           runSolver3[runSimulationGA, Sequence@@args];
+           runSolver3[runSimulationGA, Sequence@@args]
           ] 
+
 
 
 fitnessForSpeed[i_] := 
@@ -407,11 +427,15 @@ fitnessToMultipleTargets[iOrGene_] :=
 evaluate[i_] := (fitnessFunc /. gaParams)[i]
 evaluateData[i_] := (fitnessDataFunc /. gaParams)[i]
 geneToConstants[i_] := (geneToConstantsFunc /. gaParams)[i]
+animate[i_] := (animateFunc /. gaParams)[i]
 
-animateEvaluate[i_] := 
+genericAnimate[i_] := animateMorph[evaluateData[i]]
+
+
+animateToTarget[i_] := 
     Module[{},
            data = evaluateData[i];
-           animateMorph[data]]
+           animateMorph[data, showTarget -> target /. gaParams, showStart -> True]]
 
 runSimulationGA[args___] := (runSimulationGAFunc /. gaParams // ReleaseHold)@@List[args]
 

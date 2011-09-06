@@ -109,7 +109,7 @@ eqnsForCTRNN[ctrnn_List,OptionsPattern[]] :=
            Tinv = DiagonalMatrix[Ts^-1];
            bound = IdentityMatrix[n];
            bound = DiagonalMatrix[Map[1 - Abs[boundaries[#, {-2,2}]]&, y]];
-           eqns = MapThread[#1 == #2&, {dy, Tinv . (-y +bound . ( W . sigma[y + theta] + gain Map[#[t]&,input]))
+           eqns = MapThread[#1 == #2&, {dy, Tinv . (-y + bound . ( W . sigma[y + theta] + gain Map[#[t]&,input]))
                                         (* try to keep it bounded *)
                                         (*- 100 y  Map[Abs[boundaries[#, {-2,2}]]&}, y]*)
                             }];

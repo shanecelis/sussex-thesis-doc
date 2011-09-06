@@ -62,9 +62,18 @@ crossover[L_,W_] :=  For[i = 1, i < len, i++,
                             genes[[L,i]] = genes[[W,i]]]];
 
 
-lessThan[a_, b_] := If[minimize,
-                       a < b,
-                       a > b];
+lessThan[a_?NumberQ, b_?NumberQ] := If[minimize,
+                                       a < b,
+                                       a > b];
+
+(* if lessThan -> True, then a is the winner *)
+lessThan[a_?NumberQ, b_] := True
+
+lessThan[a_, b_?NumberQ] := False
+
+lessThan[a_, b_] := (Message[lessThan::nocmp];
+                     True)
+                               
 
 beginTournament[] := Null
 

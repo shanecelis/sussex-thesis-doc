@@ -313,3 +313,12 @@ int physics_constants( double *physics_constants_result)
   err = physicsConstants(libData, &TTresult);
   return err;
 }
+
+int period_constants(double *period_constants_result)
+{
+  int i;
+  for (i = 0; i < PERIOD_COUNT; i++)
+    period_constants_result[i] = 0.0;
+  period_constants_result[PERIOD_COUNT - 1] = 1.0;
+  return 0;
+}

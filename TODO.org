@@ -185,6 +185,8 @@ CoefficientArrays[eqns1, vars]
   data
 * Perhaps the tasks should be that there is a current
 
+yes.
+
 * Results of running physicsGa with a periodic controller
 
   mean_speed 0.01 m/s for trials over period 1, 2, 4, 1
@@ -202,7 +204,6 @@ CoefficientArrays[eqns1, vars]
 {1,1,0.363013,0.105396,1,0.753401,0.079405}
 
 {1,1,0.212535,0.105396,1,0.741468,0.0487105}
-
 
 {1,0.969951,0.117928,0,0.899441,0.575204,0}
 
@@ -415,3 +416,94 @@ run with Ap phase 4
 
 Not bad:
 {0.966669,1,0,0.645704,0.0762052,0.231538}
+
+
+- - - 
+
+Looks good for Ap, 4
+
+In[32]:= physicsGeneToRules[20]
+
+Out[32]= {Tmax -> 0.00179702, kTa -> -0.0001, kTb -> -5.79837*10^-6, 
+ kFa -> -0.568908, kFb -> -9.14654, krb -> -0.367788, 
+ kTc -> -5.79837*10^-6, kFc -> -9.14654, krc -> -0.367788}
+
+In[35]:= genes[[20]]
+
+Out[35]= {0.813638, 1, 0.0484684, 0.568476, 0.0914563, 0.316106}
+
+- - - 
+
+Looks so so for Ap, 1
+
+{Tmax->1/100,kTa->-0.0001,kTb->-5.24068*10^-6,kFa->-0.001,kFb->-0.001,krb->-0.305359,kTc->-5.24068*10^-6,kFc->-0.001,krc->-0.305359}
+
+{1,1,0.0428352,0,0,0.347321}
+
+{{{10.,0.239127,66.3896},
+{10.,0.00443041,1.59175}},{{10.,0.232681,68.8254},{10.,0.00443041,1.59175}},
+{{0.04,-0.0001,-0.0001},{0.04,0.00550653,4.49608}},{{10.,0.23496,68.6017},
+{10.,0.00417637,2.48587}},{{0.04,-0.0001,-0.0001},{0.04,0.0104845,4.1964}},{{10.,0.229374,69.3391},{10.,0.0146378,0.703453}},{{0.07,-0.0001,-0.0001},{0.07,0.00685154,4.51477}},
+{{10.,0.22497,68.9413},{10.,0.00917901,1.58644}},
+{{0.04,-0.0001,-0.0001},{0.04,0.00929578,4.12972}},
+{{10.,0.290785,69.1101},{10.,0.0120847,2.12298}}}
+
+- - -
+
+Bo, 3
+
+{{0.393114,0.79338,0.584896,0.0715843,0.412925,0.798408},1.47897*10^7,{Tmax->0.0000373644,kTa->-0.0207413,kTb->-0.0000589047,kFa->-0.0725127,kFb->-41.2931,krb->0.596815,kTc->-0.0000589047,kFc->-41.2931,krc->0.596815}}
+
+{{0.570101,1,0.621373,0.964465,0.486417,0.803591},37.5186,{Tmax->0.000190724,kTa->-0.0001,kTb->-0.000062516,kFa->-0.9645,kFb->-48.6423,krb->0.607182,kTc->-0.000062516,kFc->-48.6423,krc->0.607182}}
+
+{{0.518086,0.977717,0.619515,1,0.703179,0.812793},7.48747*10^6,{Tmax->0.000118126,kTa->-0.00232611,kTb->-0.000062332,kFa->-1.,kFb->-70.3182,krb->0.625585,kTc->-0.000062332,kFc->-70.3182,krc->0.625585}}
+
+{{0.597107,0.989763,0.474453,0.924291,0.703179,0.304487},2.82863*10^7,{Tmax->0.000244584,kTa->-0.00112268,kTb->-0.0000479709,kFa->-0.924367,kFb->-70.3182,krb->-0.391027,kTc->-0.0000479709,kFc->-70.3182,krc->-0.391027}}
+
+{{0.574215,1,0.279551,0.924291,0.703179,1},5.14301*10^7,{Tmax->0.000198089,kTa->-0.0001,kTb->-0.0000286755,kFa->-0.924367,kFb->-70.3182,krb->1,kTc->-0.0000286755,kFc->-70.3182,krc->1}}
+
+{{0.674303,1,0.00106523,1,0.523402,0.14825},228.737,{Tmax->0.000497982,kTa->-0.0001,kTb->-1.10546*10^-6,kFa->-1.,kFb->-52.3407,krb->-0.7035,kTc->-1.10546*10^-6,kFc->-52.3407,krc->-0.7035}}
+
+{{0.696031,1,0,1,0.670667,0.352966},2.67236*10^8,{Tmax->0.00060831,kTa->-0.0001,kTb->-1.*10^-6,kFa->-1.,kFb->-67.067,krb->-0.294067,kTc->-1.*10^-6,kFc->-67.067,krc->-0.294067}}
+
+{{0.674906,1,0.0206495,0.80304,0.670667,0.169507},2.15019*10^8,{Tmax->0.000500753,kTa->-0.0001,kTb->-3.0443*10^-6,kFa->-0.803237,kFb->-67.067,krb->-0.660985,kTc->-3.0443*10^-6,kFc->-67.067,krc->-0.660985}}
+
+{{0.627829,1,0.177,1,0.919237,0.543696},3.26276*10^7,{Tmax->0.000324574,kTa->-0.0001,kTb->-0.000018523,kFa->-1.,kFb->-91.9237,krb->0.0873923,kTc->-0.000018523,kFc->-91.9237,krc->0.0873923}}
+
+{{0.740798,1,0,0.754379,0.466785,0.805641},408.592,{Tmax->0.000918739,kTa->-0.0001,kTb->-1.*10^-6,kFa->-0.754624,kFb->-46.679,krb->0.611281,kTc->-1.*10^-6,kFc->-46.679,krc->0.611281}}
+
+not a bad one, works on 
+
+{Tmax->0.000500753,kTa->-0.0001,kTb->-0.0000171353,kFa->-1.,kFb->-63.5601,krb->0.269987,kTc->-0.0000171353,kFc->-63.5601,krc->0.269987}
+
+- - -
+
+Simulation is working.  Let's see if it keeps it up.  CHECK RESULTS TOMORROW!
+
+The results are in.  Ran with
+
+#define TIME_MAX         20.0
+#define TARGET_DISTANCE  (0.04 * METERS)
+
+
+- - - 
+
+Not working:
+/Applications/Mathematica.app/SystemFiles/Links/MathLink/DeveloperKit/CompilerAdditions/mprep
+run-simulation.h -o run-simulation-mlinktm.c
+
+cc -g -I../include -Wall -Werror -I/opt/local/include -DRK4 -I
+/Applications/Mathematica.app/SystemFiles/Links/MathLink/DeveloperKit/CompilerAdditions
+-c -o run-simulation-mlinktm.o run-simulation-mlinktm.c
+
+
+Working:
+
+/Applications/Mathematica.app/SystemFiles/Links/MathLink/DeveloperKit/CompilerAdditions/mprep
+run-simulation-mlink.tm -o run-simulation-mlinktm.c
+
+cc -g -I../include -Wall -Werror -I/opt/local/include -DRK4 -I
+/Applications/Mathematica.app/SystemFiles/Links/MathLink/DeveloperKit/CompilerAdditions
+-c -o run-simulation-mlinktm.o run-simulation-mlinktm.c
+
+Looks exactly the same.

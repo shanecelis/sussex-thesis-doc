@@ -34,7 +34,7 @@ Press Enter to continue.    (1) % frog.al
    (6)    (6) %SetCompatible (AUTOLEV)
    (7) autorhs           on
    (8) autoz             off
-   (9) body              a,b,c,d,e,f 
+   (9) body              a,b,c,d,e,f
    (10) % central body (a), tail (b), feet clockwise (c---f)
    (11) point             o,jb,jc,jd,je,jf 
    (12) % origin and pin joint points for each body

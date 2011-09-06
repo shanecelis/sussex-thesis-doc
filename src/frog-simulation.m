@@ -42,7 +42,7 @@ Options[drawFrog] = {showDistance -> False,
 drawFrog[{q1_,q2_,q3_,q4_, q5_, q6_, q7_, q8_}, r_, l_, fl_, 
          OptionsPattern[]] := 
     Module[{body, tail, limb, foot5, foot6, foot7, foot8, distanceLine, 
-            range, target},
+            range, target, diskSize},
            body = Disk[{q1,q2},r 1.05 ];
            limb = Rotate[rectangle[0, 0 , 0.2 r , 1, 0],0,{0,0}];
            tail = Translate[Rotate[Scale[limb, {1, l}], q4, {0, l/2}], {q1, q2 - r -l/2 }];
@@ -59,17 +59,18 @@ drawFrog[{q1_,q2_,q3_,q4_, q5_, q6_, q7_, q8_}, r_, l_, fl_,
                            {},
                            target = OptionValue[toTarget];
                            {Black, Line[{{q1,q2},target}]}];
+           diskSize = 0.1 r;
            startDisk = If[OptionValue[showStart] === False,
                           {},
-                          {Disk[{0,0}, .1 r]}];
+                          {Point[{0,0}], Disk[{0,0}, diskSize]}];
 
            targetDisk = If[OptionValue[showTarget] === None,
                            {},
                            target = OptionValue[showTarget];
-                           {Disk[target, .1 r]}];
+                           {Point[target], Disk[target, diskSize]}];
                             
            range = If[OptionValue[plotRange] === Automatic,
-                      chooseRange[7(r ){{-1,1},{-1,1}}, 
+                      chooseRange[7(r ){{-.5,.5},{-.1,1}}, 
                                   {{q1,q2}, {0,0}, target}, 
                                   2#&],
                       OptionValue[plotRange]];
@@ -86,7 +87,7 @@ drawFrog[{q1_,q2_,q3_,q4_, q5_, q6_, q7_, q8_}, r_, l_, fl_,
                targetLine,
                startDisk,
                targetDisk
-                    }, PlotRange -> range]]
+                    }, PlotRange -> range, ImageSize -> imageSize]]
 
 
 footTorque[angle_] := radialSpring2[angle] + periodicSwing

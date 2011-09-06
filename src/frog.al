@@ -7,7 +7,7 @@
 %SetCompatible (AUTOLEV)
 autorhs           on
 autoz             off
-body              a,b,c,d,e,f 
+body              a,b,c,d,e,f
                   % central body (a), tail (b), feet clockwise (c---f)
 point             o,jb,jc,jd,je,jf 
                   % origin and pin joint points for each body

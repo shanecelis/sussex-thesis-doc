@@ -6,7 +6,7 @@
 units = {cm      -> 0.01 m,          
          m -> 1, kg -> 1, s -> 1};
 
-
+imageSize = 100;
 
 params = Join[
           units,
@@ -55,7 +55,7 @@ params = Join[
           oq5 -> 1 Pi/4,
           oq6 -> 3 Pi/4,
           oq7 -> 5 Pi/4,
-          oq8 -> 7 Pi/4,
+          oq8 -> 7 Pi/4
           (* What the constants used to be:
              kFa-> -rho/2 * Cdcirc  * Acirc 
              kFb -> -rho/2 * Cdplate * depth 
@@ -88,22 +88,27 @@ params = Join[
           krb   -> 0.0,
           P     -> 1,*)
 
+           (*
           Tmax -> 0.000833414, 
           kTa  -> -0.00515681, 
           kTb  -> -0.0000335441, 
           kFa  -> -0.5,
-          kFb  -> -75, (*-75., *)
+          kFb  -> -75, 
           krb  -> -0.554415, 
-          (*P    -> 1.90515,*)
-          (* f1 = psi1 = 0, no periodic controller torque *)
-          (*f1   -> 0.524893,*)
 
 
           Tfmax -> Tmax,
           kTc   -> kTb 10,
           kFc   -> kFb,
           krc   -> 0,
-
+              *)
+          },
+    (* gene {0.813638, 1, 0.0484684, 0.568476, 0.0914563, 0.316106}
+       worked well for Ap phase 4 *)
+    {Tmax -> 0.00179702, kTa -> -0.0001, kTb -> -5.79837*10^-6, 
+     kFa -> -0.568908, kFb -> -9.14654, krb -> -0.367788, 
+     kTc -> -5.79837*10^-6, kFc -> -9.14654, krc -> -0.367788, Tfmax -> Tmax},
+    {
           wvx   -> 0,
           wvy   -> 0,
           dummy -> None
@@ -266,22 +271,26 @@ speedGaParams = {
 targetGaParams = {
     fitnessFunc -> fitnessToTarget,
     fitnessDataFunc -> fitnessToTargetData,
+    animateFunc -> animateToTarget,
     minimise -> True 
                  };
 
 
 gaParams = Join[
-    physicsGaParams,
-    speedGaParams,
+    ctrnnGaParams,
+    targetGaParams,
+    (*physicsGaParams,
+    speedGaParams,*)
     {
-    target -> {0, 0.01},
+    target -> {0, 0.5},
     tmax -> 10,
-    expName -> Ap, (*Ap,*)
+    expName -> Bo, (*Ap,*)
     phase -> 4,
     deltat -> 0.01,
     dataDeltat -> 0.1,
 
     runSimulationGAFunc -> Hold[runSimulationMlink],
+    animateFunc -> genericAnimate,
     
     dummy -> None
     }];
