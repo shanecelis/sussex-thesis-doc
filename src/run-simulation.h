@@ -9,6 +9,9 @@
 #define STEP_SIZE        0.01
 #define MAX_STEPS        10000
 
+#define MAX_EVALS        10000
+//#define MAX_EVALS        10
+
 // state info
 #define QSTATE_COUNT     8
 #define USTATE_COUNT     8

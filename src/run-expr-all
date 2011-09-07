@@ -3,20 +3,22 @@
 
 usage()
 {
-   echo "usage: run-expr-all [-hf] [-n num] [-c count] [-F fitness-type] <results-name>" >&2;
+   echo "usage: run-expr-all [-hf] [-i id] [-n nice] [-c count] [-F fitness-type] <results-name>" >&2;
 }
 
 force=0;
 num=1;
 count=1;
 fitnessType=0;
-while getopts hfc:n:F: opt; do
+nice=0;
+while getopts hfc:i:F:n: opt; do
 	case $opt in
 	    f) force=1;;
-        h) usage;;
+            h) usage;;
 	    c) count=$OPTARG;;
-        n) num=$OPTARG;;
-        F) fitnessType=$OPTARG;;
+            n) num=$OPTARG;;
+            F) fitnessType=$OPTARG;;
+	    n) nice=$OPTARG;;
 	    *) echo "error: invalid option given." >&2; usage;;
 	esac
 done
@@ -27,13 +29,15 @@ if [ $# -ne 1 ]; then
     exit 2;
 fi
 
-for target in 1; do # 2 3 4; do 
-    for lobotomise in 0 1; do
-        for exp in Bo An Bn Ap Bp Ao; do
-            if ! run-expr -F $fitnessType -n $num -c $count -d "$1" $exp $target $lobotomise; then
-                echo "error: run-expr exited with error code ${PIPESTATUS}" >&2;
-                exit 1;
-            fi
-        done
+for ((i = $num; i < ($num + $count); i++)); do 
+    for target in 1; do # 2 3 4; do 
+	for lobotomise in 0; do # 1; do
+            for exp in An Bn Ap Bp Ao Bo; do
+		if ! run-expr -F $fitnessType -n $i -c 1 -d "$1" $exp $target $lobotomise; then
+                    echo "error: run-expr exited with error code ${PIPESTATUS}" >&2;
+                    exit 1;
+		fi
+            done
+	done
     done
 done
