@@ -3,24 +3,27 @@
 
 usage()
 {
-    echo "usage: run-expr [-f] [-i id] [-n nice] [-c count] [-d results-dir] [-F fitness-type] <experiment-name> <target-index> <lobotomise>" >&2;
+    echo "usage: run-expr [-fp] [-i id] [-n nice] [-c count] [-d results-dir] [-F fitness-type] <experiment-name> <target-index> <lobotomise>" >&2;
 }
 
 
 force=0;
+parallel=0;
 count=1;
 num=1;
 nice=0;
 resultsDir=".";
 fitnessType=0;
-while getopts hfc:i:d:F:n: opt; do
+while getopts phfc:i:d:F:n:P: opt; do
 	case $opt in
 	    f) force=1;;
-            h) usage;;
-            d) resultsDir="$OPTARG";;
-            i) num=$OPTARG;;
+        p) parallel=1;;
+        P) parallel=$OPTARG;;
+        h) usage;;
+        d) resultsDir="$OPTARG";;
+        i) num=$OPTARG;;
 	    c) count=$OPTARG;;
-            F) fitnessType=$OPTARG;;
+        F) fitnessType=$OPTARG;;
 	    n) nice=$OPTARG;;
 	    *) echo "error: invalid option given." >&2; usage;;
 	esac
@@ -32,11 +35,19 @@ if [ $# -ne 3 ]; then
     exit 2;
 fi
 
+function echome()
+{
+    set -x
+    "$@"
+    set +x
+}
+    
 expName="$1";
 targetIndex="$2";
 lobotomise="$3";
 for ((i = $num; i < ($num + $count); i++)); do 
     dir="$resultsDir/$expName-t$targetIndex-l$lobotomise/r$i";
+    errorlog="$resultsDir/error.log";
     mkdir -p "$dir";
 
     # Add a check to not overwrite currently existing results?
@@ -45,10 +56,23 @@ for ((i = $num; i < ($num + $count); i++)); do
         echo "warning: '$outfile' already exists; skipping." >&2;
     else
 
-        echo nice -n $nice alps_main "$expName" "$targetIndex" "$lobotomise" "$dir/pop-phase" "$fitnessType" '2>&1 >' "$outfile"
-        if ! nice -n $nice alps_main "$expName" "$targetIndex" "$lobotomise" "$dir/pop-phase" "$fitnessType" 2>&1 > "$outfile"; then
-            echo "error: alps_main failed with exit code ${PIPESTATUS}" >&2;
-            exit 1;
+        if [ $parallel -eq 0 ]; then
+            if ! echome nice -n $nice alps_main "$expName" "$targetIndex" "$lobotomise" "$dir/pop-phase" "$fitnessType" 2>> "$errorlog" | tee "$outfile"; then
+                echo "error: alps_main failed with exit code ${PIPESTATUS}" >&2;
+                exit 1;
+            fi
+        elif [ $parallel -eq 1 ]; then
+            echome nice -n $nice alps_main "$expName" "$targetIndex" "$lobotomise" "$dir/pop-phase" "$fitnessType" 2>> "$errorlog" > "$outfile" &
+        elif [ $parallel -eq 2 ]; then
+            echome nice -n $nice alps_main "$expName" "$targetIndex" "$lobotomise" "$dir/pop-phase" "$fitnessType" 2>> "$errorlog" > "$outfile" 
+        else
+            echo "error: invalid parallel value $parallel" >&2;
+            exit 2;
         fi
     fi
 done
+
+if [ $parallel -eq 1 ]; then
+    echo "run-expr: Waiting for processes to die.";
+    wait;
+fi

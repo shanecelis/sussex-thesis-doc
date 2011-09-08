@@ -9,7 +9,7 @@
 #define STEP_SIZE        0.01
 #define MAX_STEPS        10000
 
-#define MAX_EVALS        10000
+#define MAX_EVALS        60000
 //#define MAX_EVALS        10
 
 // state info

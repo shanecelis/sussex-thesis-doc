@@ -507,3 +507,5 @@ cc -g -I../include -Wall -Werror -I/opt/local/include -DRK4 -I
 -c -o run-simulation-mlinktm.o run-simulation-mlinktm.c
 
 Looks exactly the same.
+* BUGS
+  - memory leak, probably in ALPS.  :(
