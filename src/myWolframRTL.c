@@ -49,12 +49,13 @@ void myMTensor_free( MTensor a)
 
 MTensorInitializationData myGetInitializedMTensors(struct st_WolframLibraryData* libdata , mint num)
 {
+  mint i;
   MTensorInitializationData res;
   res = (MTensorInitializationData) malloc(sizeof(struct M_TENSOR_INITIALIZATION_DATA_STRUCT));
   res->tensors = malloc(sizeof (MTensor) * num);
   res->n = num;
   res->in_use = 1;
-  mint i;
+  //printf("myGetInitializedMTensors %d\n", num);
   for (i = 0; i < num; i++) {
     res->tensors[i] = NULL;
   }
@@ -125,11 +126,16 @@ void myNOOP()
 
 void myReleaseInitializedMTensors(MTensorInitializationData a)
 {
+  //printf("myReleaseInitializedMTensors, released: ");
   mint i;
   for (i = 0; i < a->n; i++) {
-    if (a->tensors[i])
+    if (a->tensors[i]) {
+      //printf("%d ", i);
       myMTensor_free(a->tensors[i]);
+    }
   }
+  free(a->tensors);
+  //printf("\n");
   free(a);
 }
 

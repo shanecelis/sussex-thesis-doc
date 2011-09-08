@@ -107,7 +107,8 @@ double mean_speed(double *result, double time_max)
 }
 
 bool evaluate_frog(vector<double>& fitness, 
-                   Individual* individ,
+                   vector<double>& genes, 
+                   //Individual* individ,
                    const char* expName, int phase, 
                    int target_index, bool lobotomise, int fitness_type)
 {
@@ -121,7 +122,8 @@ bool evaluate_frog(vector<double>& fitness,
   }
   double time_max = TIME_MAX;
   double result[STATE_COUNT];
-  int err = run_frog(((Individ_Real*)individ)->get_genes(), 
+  int err = run_frog(genes,
+    //((Individ_Real*)individ)->get_genes(), 
                      time_max,
                      targets[target_index][0] * target_distance, 
                      targets[target_index][1] * target_distance,
@@ -292,7 +294,10 @@ int ea_engine(const char *exp_name, int target_index, bool lobotomise,
 
     vector<double> fitness;
     fitness.resize(1);
-    int result = evaluate_frog(fitness, individ, 
+    vector<double> genes = ((Individ_Real*)individ)->get_genes();
+    int result = evaluate_frog(fitness, 
+                               genes,
+                               //individ, 
                                exp_name, phase, 
                                target_index, 
                                lobotomise,

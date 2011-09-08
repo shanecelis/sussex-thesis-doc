@@ -3,6 +3,9 @@
 
 OS=$(shell uname -s)
 MATHEMATICA=0
+ifeq ($(OS),Darwin)
+	MATHEMATICA=1
+endif
 
 #CPPFLAGS = -g -I/Applications/Mathematica.app/SystemFiles/IncludeFiles/C
 CPPFLAGS = -g -I../include -Wall -Werror -I/opt/local/include -DRK4
@@ -87,6 +90,7 @@ eqns.txt: frog.out
 
 eqns.c: frog.al
 	(cat frog.al; echo "output eqns[1],eqns[2],eqns[3],eqns[4],eqns[5],eqns[6],eqns[7],eqns[8]"; echo "code algebraic() eqns.c"; echo "quit") > frogu.al
+	dos2unix eqns.c
 	(echo "! rhseqns = "; yes | al frogu.al | grep Result) > eqns.c.txt
 
 eqns-fixed.c: eqns.c eqns.patch

@@ -507,3 +507,6 @@ cc -g -I../include -Wall -Werror -I/opt/local/include -DRK4 -I
 -c -o run-simulation-mlinktm.o run-simulation-mlinktm.c
 
 Looks exactly the same.
+
+* Amazon EC2 instance
+  ssh -i scelis.pem ec2-user@ec2-75-101-238-63.compute-1.amazonaws.com

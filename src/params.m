@@ -284,8 +284,8 @@ gaParams = Join[
     {
     target -> {0, 0.25},
     tmax -> 10,
-    expName -> Bo, (*Ap,*)
-    phase -> 4,
+    expName -> Ap, (*Ap,*)
+    phase -> 2,
     deltat -> 0.01,
     dataDeltat -> 0.1,
 

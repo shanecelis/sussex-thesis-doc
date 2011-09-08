@@ -154,9 +154,9 @@ int run_simulation(double *init_state, double step_size,
   double t, torig;
   double h, hnext, hmin, hmean, hmax;
   double constants[CONSTANTS_COUNT], dstatedt[STATE_COUNT], 
-    temp_state_array[STATE_COUNT], *next_state, *state, hdid;
+    temp_state_array[STATE_COUNT], *next_state, *state, hdid, *temp_state;
 #ifdef RKQS
-  double state_scale[STATE_COUNT], *temp_state;
+  double state_scale[STATE_COUNT]
 #endif 
  
   assert(init_state != NULL);
@@ -201,6 +201,25 @@ int run_simulation(double *init_state, double step_size,
       }
     }
 #endif //COLLISIONS
+    hmean += hdid;
+    hmin = fmin(hmin, hdid);
+    hmax = fmax(hmax, hdid);
+    }
+#endif //RKQS
+#ifdef RKCK
+  {
+    err = rkck(state, dstatedt, STATE_COUNT, t, 
+               h, next_state, state_scale, &frog_deriv);
+    hdid = hnext = h = 0.02;
+  }
+#endif //RKCK
+#ifdef RK4
+  {
+    err = rk4(state, dstatedt, STATE_COUNT, t,
+              h, next_state, &frog_deriv, constants);
+    hdid = hnext = h = step_size;
+  }
+#endif // RK4
     // Swap next_state and state
     temp_state = state;
     state = next_state;
@@ -208,23 +227,8 @@ int run_simulation(double *init_state, double step_size,
 #ifdef COLLISIONS
     process_collision(state);
 #endif // COLLISIONS
-    hmean += hdid;
-    hmin = fmin(hmin, hdid);
-    hmax = fmax(hmax, hdid);
-    }
-#endif //RKQS
-/*  {
-    err = rkck(state, dstatedt, STATE_COUNT, t, 
-               h, state, state_scale, &frog_deriv);
-    hdid = hnext = h = 0.02;
-    }*/
-#ifdef RK4
-  {
-    err = rk4(state, dstatedt, STATE_COUNT, t,
-              h, state, &frog_deriv, constants);
-    hdid = hnext = h = step_size;
-  }
-#endif // RK4
+
+
     if (j % 1000) {
       //printf("t = %f, h = %f, hnext = %f, hdid = %f, s[0] = %f\n", t, h, hnext, hdid, state[0]);
     }
