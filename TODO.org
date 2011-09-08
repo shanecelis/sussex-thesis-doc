@@ -510,3 +510,6 @@ Looks exactly the same.
 
 * Amazon EC2 instance
   ssh -i scelis.pem ec2-user@ec2-75-101-238-63.compute-1.amazonaws.com
+* BUGS
+  - memory leak, probably in ALPS.  :(
+

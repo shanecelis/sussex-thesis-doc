@@ -177,7 +177,7 @@ void setup_pop_gen(Individual* individ_config, AlpsSState* pop)
     pop->set_recomb_prob(0.5);
     pop->set_rec_rand2_prob(1.0);
     pop->set_print_gen_stats(true);
-    pop->set_print_results_rate(100);
+    pop->set_print_results_rate(1000);
 
   } else if (type == 3) {
 
