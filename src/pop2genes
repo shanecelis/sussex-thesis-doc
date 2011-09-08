@@ -1,4 +1,4 @@
-#!/usr/bin/env perl -n
+#!/usr/bin/perl -n
 # pop2genes
 
 if (/^([\d\.]+ ){105}/) {

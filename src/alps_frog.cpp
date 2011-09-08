@@ -151,7 +151,7 @@ void setup_pop_gen(Individual* individ_config, AlpsSState* pop)
   int age_scheme = ALPS_AGING_FIBONACCI1;
   int Number_Layers = -1;
 
-  pop->set_max_evals(30000);
+  pop->set_max_evals(MAX_EVALS);
 
   if (type == 1) {
     // Configuration for a regular EA/GA:

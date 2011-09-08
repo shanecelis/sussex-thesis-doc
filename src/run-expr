@@ -3,23 +3,25 @@
 
 usage()
 {
-    echo "usage: run-expr [-f] [-n num] [-c count] [-d results-dir] [-F fitness-type] <experiment-name> <target-index> <lobotomise>" >&2;
+    echo "usage: run-expr [-f] [-i id] [-n nice] [-c count] [-d results-dir] [-F fitness-type] <experiment-name> <target-index> <lobotomise>" >&2;
 }
 
 
 force=0;
 count=1;
 num=1;
+nice=0;
 resultsDir=".";
 fitnessType=0;
-while getopts hfc:n:d:F: opt; do
+while getopts hfc:i:d:F:n: opt; do
 	case $opt in
 	    f) force=1;;
-        h) usage;;
-        d) resultsDir="$OPTARG";;
-        n) num=$OPTARG;;
+            h) usage;;
+            d) resultsDir="$OPTARG";;
+            i) num=$OPTARG;;
 	    c) count=$OPTARG;;
-        F) fitnessType=$OPTARG;;
+            F) fitnessType=$OPTARG;;
+	    n) nice=$OPTARG;;
 	    *) echo "error: invalid option given." >&2; usage;;
 	esac
 done
@@ -39,10 +41,12 @@ for ((i = $num; i < ($num + $count); i++)); do
 
     # Add a check to not overwrite currently existing results?
     outfile="$dir/output.txt";
-    if [ "$force" -eq 1 ] && [ -f "$outfile"  ]; then
+    if [ "$force" -eq 0 ] && [ -f "$outfile"  ]; then
         echo "warning: '$outfile' already exists; skipping." >&2;
     else
-        if ! alps_main "$expName" "$targetIndex" "$lobotomise" "$dir/pop-phase" "$fitnessType" | tee "$outfile"; then
+
+        echo nice -n $nice alps_main "$expName" "$targetIndex" "$lobotomise" "$dir/pop-phase" "$fitnessType" '2>&1 >' "$outfile"
+        if ! nice -n $nice alps_main "$expName" "$targetIndex" "$lobotomise" "$dir/pop-phase" "$fitnessType" 2>&1 > "$outfile"; then
             echo "error: alps_main failed with exit code ${PIPESTATUS}" >&2;
             exit 1;
         fi
