@@ -21,6 +21,7 @@ using namespace alps_random;
 
 extern "C" {
 #include "run-simulation.h"
+#include <unistd.h>
 }
 #include "genes_real.h"
 
@@ -233,7 +234,8 @@ int ea_engine(const char *exp_name, int target_index, bool lobotomise,
               const char *pop_save, int fitness_type)
 {
   time_t begin = time(NULL);
-  seed_random((long) time(NULL));
+  pid_t pid = getpid();
+  seed_random((long) time(NULL) ^ pid);
   if (is_random_seed_set()) {
     cout << "random-seed-set " << get_random_seed() << endl;
   } else {

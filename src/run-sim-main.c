@@ -37,7 +37,7 @@ int main(int argc, char **argv)
     return err;
   }
     
-  while (1)
+  //while (1)
     err = run_simulation(state, STEP_SIZE, constants, tmax, result, NULL); 
 
   if (err) {
