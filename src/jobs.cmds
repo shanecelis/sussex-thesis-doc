@@ -1,0 +1,9 @@
+sleep 1; echo pid $$ ppid $PPID; 
+sleep 2; echo n
+sleep 1; echo bye
+sleep 3; echo what
+sleep 1; echo what
+sleep 0; echo hi
+sleep 0; echo what
+sleep 0; echo bye really
+sleep 2; echo stuff > myout

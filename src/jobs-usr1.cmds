@@ -1,0 +1,9 @@
+sleep 1; echo pid $$ ppid $PPID    ; kill -s SIGUSR1 $PPID
+sleep 2; echo n                    ; kill -s SIGUSR1 $PPID
+sleep 1; echo bye                  ; kill -s SIGUSR1 $PPID
+sleep 3; echo what                 ; kill -s SIGUSR1 $PPID
+sleep 1; echo what                 ; kill -s SIGUSR1 $PPID
+sleep 0; echo hi                   ; kill -s SIGUSR1 $PPID
+sleep 0; echo what                 ; kill -s SIGUSR1 $PPID
+sleep 0; echo bye really           ; kill -s SIGUSR1 $PPID
+sleep 2; echo stuff > myout        ; kill -s SIGUSR1 $PPID

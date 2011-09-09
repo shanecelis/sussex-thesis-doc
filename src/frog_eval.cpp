@@ -13,6 +13,7 @@ using namespace std;
 extern "C" {
 #include "run-simulation.h"
 #include <stdlib.h>
+#include <stdarg.h>
 }
 
 #include "alps_frog.h"

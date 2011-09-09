@@ -1,0 +1,64 @@
+#!/bin/bash
+# run-cmds-parallel
+
+function usage()
+{
+    echo "usage: run-jobs [-h] [-s signals] [-p parallel-count]" >&2;
+    echo "reads a list of commands through the stdin and executes them in parallel." >&2;
+    exit 2;
+}
+
+signals=SIGCHLD;
+parallel=1
+while getopts hs:p: opt; do
+	case $opt in
+	    f) force=1;;
+        p) parallel=$OPTARG;;
+        h) usage;;
+	    s) signals=$OPTARG;;
+	    *) echo "error: invalid option given." >&2; usage;;
+	esac
+done
+shift $[ OPTIND - 1 ]
+
+if [ $# -ne 0 ]; then
+    usage;
+fi
+
+set -bm
+
+startjob() {
+    if ! read -p "command: " cmd; then
+        echo "warning: got EOF" >&2;
+        return 1;
+    fi
+    bash -c "$cmd" &
+    return 0;
+  # if [ $count -lt $total_jobs ]; then
+  #   yourjob.sh &
+  #   count=$(($count+1))
+  # fi
+}
+
+for signal in $signals; do
+    trap 'startjob' $signal
+done
+
+count=0
+while [ $count -lt $parallel ]; do
+  startjob || break;
+  count=$(($count+1))
+done
+
+while true; do
+    wait
+    startjob || break;
+    sleep 1;
+done
+# if [ $gotEOF -eq 0 ]; then
+#     echo "warning: did not see an EOF." >&2;
+#     sleep 1;
+#     wait;
+# fi
+
+echo $$
