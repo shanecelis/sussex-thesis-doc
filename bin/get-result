@@ -6,4 +6,4 @@ if [ $# -ne 2 ]; then
    exit 2;
 fi
 
-scp -ri ~/.ec2/scelis.pem ec2-user@ec2-50-16-125-122.compute-1.amazonaws.com:"$1" "$2"
+scp -ri ~/.ec2/scelis.pem ec2-user@$EC2_HOST:"$1" "$2"

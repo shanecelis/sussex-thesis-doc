@@ -110,8 +110,8 @@ params = Join[
      kTc -> -5.79837*10^-6, kFc -> -9.14654, krc -> -0.367788, 
      Tfmax -> 0.00179702},
     {
-          wvx   -> 0,
-          wvy   -> 0,
+          wvx   -> .02 0,
+          wvy   -> .02 0,
           dummy -> None
          }];
 Protect@@keys[params];

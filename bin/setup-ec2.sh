@@ -11,7 +11,8 @@ command -v make   || sudo yum -y install make
 command -v emacs  || sudo yum -y install emacs
 command -v patch  || sudo yum -y install patch
 command -v screen || sudo yum -y install screen
+command -v mpstat || sudo yum -y install sysstat
 
-pushd dotfiles/ && git submodule update --init && ./relink -f install; popd
-pushd alps/ && ./configure && make && sudo make install; popd
-pushd sussex-thesis/src && make; popd
+[ -e dotfiles/gist ] || (pushd dotfiles/ && git submodule update --init && ./relink -f install; popd)
+[ -e alps/Makefile ] || (pushd alps/ && ./configure && make && sudo make install; popd)
+[ -e sussex-thesis/src/alps_main ] || (pushd sussex-thesis/src && make; popd)
