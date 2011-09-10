@@ -122,7 +122,7 @@ void run_simulation_mlink( double *state, long stateLength,
     return;
   }
   if (err == 2) {
-    message("runSimulationMlink::errnan, %f", result[0]);
+    message("runSimulationMlink::errnan, %lf", result[0]);
   } else if (err == 1) {
     message("runSimulationMlink::errmaxstep, %d", MAX_STEPS);
   } else if (err) {

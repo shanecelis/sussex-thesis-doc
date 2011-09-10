@@ -14,6 +14,7 @@ extern "C" {
 #include "run-simulation.h"
 #include <stdlib.h>
 #include <stdarg.h>
+#include <math.h>
 }
 
 #include "alps_frog.h"
@@ -50,6 +51,8 @@ pgets(Fp,NULL);                        /* Always get a newline at the end   */
 }
 
 int main(int argc, char **argv) {
+
+  printf("%1.40lf\n", M_PI_2);
 
   if (argc < 3 || argc > 7) {
     cerr << "usage: eval_frog <individual.ind> <experiment-name> [phase] [target-index] [lobotomise] [fitness-type]" << endl;

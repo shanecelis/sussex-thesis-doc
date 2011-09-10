@@ -107,7 +107,8 @@ params = Join[
        worked well for Ap phase 4 *)
     {Tmax -> 0.00179702, kTa -> -0.0001, kTb -> -5.79837*10^-6, 
      kFa -> -0.568908, kFb -> -9.14654, krb -> -0.367788, 
-     kTc -> -5.79837*10^-6, kFc -> -9.14654, krc -> -0.367788, Tfmax -> Tmax},
+     kTc -> -5.79837*10^-6, kFc -> -9.14654, krc -> -0.367788, 
+     Tfmax -> 0.00179702},
     {
           wvx   -> 0,
           wvy   -> 0,
@@ -211,6 +212,7 @@ constantsInit = Join[
 
 constantsLayout = keys[constantsInit];
 Protect@@justSymbol[constantsLayout];
+constantsToRules[constants_] := MapThread[Rule, {constantsLayout, constants}]
 
 motorCount       = 5;
 sensorCount      = 14;
@@ -255,7 +257,8 @@ physicsGaParams = {
     geneCountGA -> 6,
     geneToConstantsFunc -> physicsGeneToConstants,
     fitnessFunc -> fitnessForPhysics,
-    fitnessDataFunc -> fitnessForPhysicsData
+    fitnessDataFunc -> fitnessForPhysicsData,
+    minimise -> False
                   };
 periodGaParams = {
     geneCountGA -> periodCount, 
@@ -277,15 +280,15 @@ targetGaParams = {
 
 
 gaParams = Join[
-    ctrnnGaParams,
-    targetGaParams,
-    (*physicsGaParams,
-    speedGaParams,*)
+    (*ctrnnGaParams,
+    targetGaParams,*)
+    physicsGaParams,
+      (* speedGaParams,*)
     {
     target -> {0, 0.25},
     tmax -> 10,
     expName -> Ap, (*Ap,*)
-    phase -> 2,
+    phase -> 1,
     deltat -> 0.01,
     dataDeltat -> 0.1,
 

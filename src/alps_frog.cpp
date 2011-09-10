@@ -21,6 +21,7 @@ using namespace alps_random;
 
 extern "C" {
 #include "run-simulation.h"
+#include <unistd.h>
 }
 #include "genes_real.h"
 
@@ -34,6 +35,11 @@ const double  targets[4][2] = {{0., 1.},                  /* north */
                                {-1., 0.},                 /* west */
                                {0., -1.}};                /* south */
 const double  target_distance = TARGET_DISTANCE;
+
+#define STANDARD_TYPE 2
+#define DEBUG_TYPE    3
+
+static int    type = STANDARD_TYPE;
 
 struct fitness_evaluator
 {
@@ -80,6 +86,11 @@ int run_frog(const vector<double>& genes,
   err = period_constants(constants + PERIOD_BEGIN);
   
   err = gene_to_ctrnn(constants, constants2);
+
+  // printf(":m: constants -> { %lf", constants2[0]);
+  // for (int i = 1; i < CONSTANTS_COUNT; i++)
+  //   printf(", %1.31lf", constants2[i]);
+  // printf("}\n");
 
   if (! err)
     err = run_simulation(state, STEP_SIZE, constants2, time_max, result, NULL);
@@ -147,7 +158,8 @@ void setup_pop_gen(Individual* individ_config, AlpsSState* pop)
 {
   (void) individ_config;
   AlpsLayer layer_def;
-  int type = 2;
+  //int type = 2;                 // standard
+  //int type = 3;                 // debug
   int age_gap = 5;
   int age_scheme = ALPS_AGING_FIBONACCI1;
   int Number_Layers = -1;
@@ -193,7 +205,7 @@ void setup_pop_gen(Individual* individ_config, AlpsSState* pop)
     pop->set_recomb_prob(0.5);
     pop->set_rec_rand2_prob(1.0);
     pop->set_print_results_rate(9);
-    pop->set_max_evals(10);
+    pop->set_max_evals(1000);
     fitness_evals[0].goal_fitness = 0.9;
     pop->set_print_gen_stats(true);
   } else {
@@ -229,12 +241,44 @@ char *save_population_for_phase(Alps* pop, const char *pop_save_prefix, int phas
   return save_population(pop, pop_save_prefix, suffix);
 }
 
+int write_array(const char *filename, int n, double *array) {
+  FILE *in = fopen(filename, "w");
+  int fd = fileno(in);
+  write(fd, &n, sizeof(int));
+  write(fd, array, sizeof(double) * n);
+  fclose(in);
+  return 0;
+}
+
+int read_array(const char *filename, int *n, double *array) {
+  FILE *in = fopen(filename, "r");
+  int fd = fileno(in);
+  read(fd, n, sizeof(int));
+  read(fd, array, sizeof(double) * *n);
+  fclose(in);
+  return 0;
+}
+
+
+char *save_genes_for_phase(vector<double>& genes, const char *pop_save_prefix, 
+                           int phase)
+{
+  static char gene_save_name[255];
+  sprintf(gene_save_name, "%s%d-genes.bin", pop_save_prefix, phase);
+
+  double dgenes[GENE_COUNT];
+  for (int i = 0; i < GENE_COUNT; i++) 
+    dgenes[i] = genes[i];
+  write_array(gene_save_name, GENE_COUNT, dgenes);
+  return gene_save_name;
+}
 
 int ea_engine(const char *exp_name, int target_index, bool lobotomise, 
               const char *pop_save, int fitness_type)
 {
   time_t begin = time(NULL);
-  seed_random((long) time(NULL));
+  pid_t pid = getpid();
+  seed_random((long) time(NULL) ^ pid);
   if (is_random_seed_set()) {
     cout << "random-seed-set " << get_random_seed() << endl;
   } else {
@@ -303,6 +347,7 @@ int ea_engine(const char *exp_name, int target_index, bool lobotomise,
                                target_index, 
                                lobotomise,
                                fitness_type);
+
     if (result == false) {
       // Error evaluating this individual.
       Population->evaluate_error(index, individ);
@@ -316,6 +361,18 @@ int ea_engine(const char *exp_name, int target_index, bool lobotomise,
         save_population_for_phase(Population, pop_save, phase);
 
         cout << phase << " " << evaluation_failed_count << " "<< evaluation_succ_count << endl;
+        vector<double> genes = ((Individ_Real*)individ)->get_genes();
+        printf(":m: {expName -> %s, phase -> %d, tmax -> %lf, "
+               "evalFailedCount -> %d, evalSuccCount -> %d, fitness -> %lf, "
+               "bestGene -> { %lf", 
+               exp_name, phase, TIME_MAX, evaluation_failed_count, 
+               evaluation_succ_count, fitness[0], genes[0]);
+        for (int i = 1; i < GENE_COUNT; i++) 
+          printf(", %lf", genes[i]);
+        printf("} }\n");
+
+        save_genes_for_phase(genes, pop_save, phase);
+
         phase++;
         if (phase > phase_count) {
           expected_termination = true;
