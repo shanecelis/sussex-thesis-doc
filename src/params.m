@@ -120,7 +120,7 @@ RK4StepSize = 0.01;
 
 stateInit = 
     {t -> 0, 
-     q1 -> 0, q2 -> 0, q3 -> 0, q4 -> 0, q5 -> 0, q6 -> 0, q7 -> 0, q8 -> 0, 
+     q1 -> 0, q2 -> 0, q3 -> Pi, q4 -> 0, q5 -> 0, q6 -> 0, q7 -> 0, q8 -> 0, 
      u1 -> 0, u2 -> 0, u3 -> 0, u4 -> 0, u5 -> 0, u6 -> 0, u7 -> 0, u8 -> 0,    
      ys[1] -> 0,  ys[2] -> 0,  ys[3] -> 0,  ys[4] -> 0,  ys[5] -> 0,  
      lg -> 1,  fg -> 0,  
@@ -280,9 +280,9 @@ targetGaParams = {
 
 
 gaParams = Join[
-    (*ctrnnGaParams,
-    targetGaParams,*)
-    physicsGaParams,
+    ctrnnGaParams,
+    targetGaParams,
+    (*physicsGaParams,*)
       (* speedGaParams,*)
     {
     target -> {0, 0.25},
@@ -291,6 +291,7 @@ gaParams = Join[
     phase -> 1,
     deltat -> 0.01,
     dataDeltat -> 0.1,
+    lobotomise -> False,
 
     runSimulationGAFunc -> Hold[runSimulationMlink],
     animateFunc -> genericAnimate,

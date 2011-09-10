@@ -9,5 +9,7 @@ bool evaluate_frog(vector<double>& fitness, vector<double>& genes, //Individual*
                    const char *expName, int phase, int target_index, bool lobotomise, int fitness_type);
 
 void register_signal_handlers();
+int read_array(const char *filename, int *n, double *array);
+int write_array(const char *filename, int n, double *array);
 extern "C" void signal_func(int sig);
 #endif /* _ALPS_FROG_H_ */

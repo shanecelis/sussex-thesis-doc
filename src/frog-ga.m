@@ -46,16 +46,28 @@ initGA[] :=
 
 initGene[] := RandomReal[{0,1}, {len}];
 
+lobotomiseConstants[constants_] := 
+    Module[{result, i, indexes},
+           indexes = {2, 3, 4, 5, 6, 11, 16, 21, 54, 55, 68, 69, 82, 83, 96, 
+                      97, 42, 43, 44, 45, 46, 47, 48, 49};
+           result = constants;
+           For[i = 1, i <= Length[indexes], i++, 
+               result[[indexes[[i]]]] = 0
+              ];
+           result]
+
 argsForRun[gene_] := 
     argsForTarget@@({gene, target, tmax, expName, phase, deltat} /. gaParams)
 
 argsForTarget[i_, target_, tmax_, expName_, phaseArg_, stepSize_] :=     
-    Module[{experiment, phase, args, myctrnn, myphyscons},
+    Module[{experiment, phase, args, myctrnn, myphyscons, pvars},
            experiment = expName;
            phase = phaseArg; 
+           pvars = Table[0.0, {pstateCount}];
+           pvars[[3]] = N[Pi]; (* q3 = Pi *)
            args = {
                joinFlat[{0} (* time *), 
-                        Table[0.0, {pstateCount}] (* pvars *),
+                        pvars (* pvars *),
                         makeZeroCTRNNState[nodeCount] (* cvars *), 
                         experimentInit[experiment, phase] (* gvars: 
                                                              tail and feet sizes *),
@@ -374,17 +386,23 @@ fitnessToTargetData[i_, expNameArg_, phaseArg_] :=
           fitnessToTargetData[i]]
 
 eval[runResults_] := 
-    Block[{gaParams = {expName -> (expName /. runResults), 
-                       phase -> (phase /. runResults),
-                       tmax -> (tmax /. runResults)
-                      }~Join~gaParams},
+    Block[{gaParams = 
+           FilterRules[runResults, 
+                       {expName, phase, tmax, lobotomise}]~Join~gaParams},
           evaluate[bestGene /. runResults]]
 
 evalData[runResults_] := 
-    Block[{gaParams = {expName -> (expName /. runResults), 
-                       phase -> (phase /. runResults),
-                       tmax -> (tmax /. runResults)}~Join~gaParams},
+    Block[{gaParams = 
+           FilterRules[runResults, 
+                       {expName, phase, tmax, lobotomise}]~Join~gaParams},
           evaluateData[bestGene /. runResults]]
+
+evalArgs[runResults_] := 
+    Block[{gaParams = 
+           FilterRules[runResults, 
+                       {expName, phase, tmax, lobotomise}]~Join~gaParams},
+          argsForRun[bestGene /. runResults]]
+
 
 
 (*
@@ -449,7 +467,11 @@ fitnessToMultipleTargets[iOrGene_] :=
 
 evaluate[i_] := (fitnessFunc /. gaParams)[i]
 evaluateData[i_] := (fitnessDataFunc /. gaParams)[i]
-geneToConstants[i_] := (geneToConstantsFunc /. gaParams)[i]
+geneToConstants[i_] := Module[{result}, 
+                              result = (geneToConstantsFunc /. gaParams)[i];
+                              If[(lobotomise /. gaParams) === True,
+                                 lobotomiseConstants[result],
+                                 result]]
 animate[i_] := (animateFunc /. gaParams)[i]
 
 genericAnimate[i_] := animateMorph[evaluateData[i]]

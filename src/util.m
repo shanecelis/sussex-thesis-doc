@@ -38,3 +38,4 @@ or[var_, value_] :=
        var]
 
 
+replicate[list_, num_] := PadRight[{}, Length[list] * num, list]

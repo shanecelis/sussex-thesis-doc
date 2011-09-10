@@ -15,6 +15,7 @@ extern "C" {
 #include <stdlib.h>
 #include <stdarg.h>
 #include <math.h>
+#include <assert.h>
 }
 
 #include "alps_frog.h"
@@ -50,12 +51,19 @@ va_end(args);                          /* Help function make normal return  */
 pgets(Fp,NULL);                        /* Always get a newline at the end   */
 }
 
+int has_suffix(const char *filename, const char *suffix) {
+  char *dot;
+  dot = strrchr(filename, '.');
+  if (dot)
+    return strcmp(dot, suffix) == 0;
+  else
+    return 0;
+}
+
 int main(int argc, char **argv) {
 
-  printf("%1.40lf\n", M_PI_2);
-
   if (argc < 3 || argc > 7) {
-    cerr << "usage: eval_frog <individual.ind> <experiment-name> [phase] [target-index] [lobotomise] [fitness-type]" << endl;
+    cerr << "usage: eval_frog <individual.ind|gene.bin> <experiment-name> [phase] [target-index] [lobotomise] [fitness-type]" << endl;
     return 2;
   }
   int err = 0, i;
@@ -69,20 +77,33 @@ int main(int argc, char **argv) {
   vector<double> genes;
   sim_init();
 
-  if (!individ->read(argv[1])) {
-    cerr << "warning: not a Individ_Real file type; trying to read gene as numbers." << endl;
-    double x;
-    FILE *in = fopen(argv[1], "r");
+  if (has_suffix(argv[1], ".bin")) {
+    // double x;
+    // FILE *in = fopen(argv[1], "r");
 
+    // for (i = 0; i < GENE_COUNT; i++) {
+    //   pgets(in, &x);
+    //   //cout << "got " << x << endl;
+    //   genes[i] = x;
+    // }
+    // fclose(in);
+    double bgenes[GENE_COUNT];
+    int n;
     genes.resize(GENE_COUNT);	
-    for (i = 0; i < GENE_COUNT; i++) {
-      pgets(in, &x);
-      //cout << "got " << x << endl;
-      genes[i] = x;
+    read_array(argv[1], &n, bgenes);
+    assert(n == GENE_COUNT);
+    for (i = 0; i < GENE_COUNT; i++)
+      genes[i] = bgenes[i];
+
+  } else if (has_suffix(argv[1], ".ind")) {
+    if (! individ->read(argv[1])) {
+      cerr << "error: cannot read .ind file" << endl;
+      return 3;
     }
-    fclose(in);
-  } else {
     genes = ((Individ_Real*)individ)->get_genes();
+  } else {
+    cerr << "error: cannot determine file type for '" << argv[1] << "'" << endl;
+    return 1;
   }
 
   fitness.resize(1);
@@ -111,6 +132,8 @@ int main(int argc, char **argv) {
     cout << "fitness: " << fitness[0] << endl;
   } else {
     err = 1;
+    cerr << "err: " << err << endl;
+  
   }
   sim_uninit();
   return err;

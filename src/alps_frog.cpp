@@ -36,8 +36,8 @@ const double  targets[4][2] = {{0., 1.},                  /* north */
                                {0., -1.}};                /* south */
 const double  target_distance = TARGET_DISTANCE;
 
-#define STANDARD_TYPE 2
-#define DEBUG_TYPE    3
+#define       STANDARD_TYPE 2
+#define       DEBUG_TYPE    3
 
 static int    type = STANDARD_TYPE;
 
