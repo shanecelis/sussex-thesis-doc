@@ -16,7 +16,9 @@ extern "C" {
 #include <stdarg.h>
 #include <math.h>
 #include <assert.h>
+#include <string.h>
 }
+
 
 #include "alps_frog.h"
 
@@ -51,7 +53,7 @@ va_end(args);                          /* Help function make normal return  */
 pgets(Fp,NULL);                        /* Always get a newline at the end   */
 }
 
-int has_suffix(const char *filename, const char *suffix) {
+int has_suffix(char *filename, const char *suffix) {
   char *dot;
   dot = strrchr(filename, '.');
   if (dot)
