@@ -36,10 +36,6 @@ const double  targets[4][2] = {{0., 1.},                  /* north */
                                {0., -1.}};                /* south */
 const double  target_distance = TARGET_DISTANCE;
 
-#define       STANDARD_TYPE 2
-#define       DEBUG_TYPE    3
-
-static int    type = STANDARD_TYPE;
 
 struct fitness_evaluator
 {
@@ -79,13 +75,15 @@ int run_frog(const vector<double>& genes,
   experiment_init_state(constants + POINTS_BEGIN, 
                         state + TAILSTATE_BEGIN, 
                         state + TAILSTATE_BEGIN + 1);
-  if (lobotomise) {
-    lobotomise_brains(constants);
-  }
   err = physics_constants(constants + PHYS_BEGIN);
   err = period_constants(constants + PERIOD_BEGIN);
   
   err = gene_to_ctrnn(constants, constants2);
+
+  if (lobotomise) {
+    lobotomise_brains(constants2);
+  }
+
 
   // printf(":m: constants -> { %lf", constants2[0]);
   // for (int i = 1; i < CONSTANTS_COUNT; i++)
@@ -154,7 +152,7 @@ bool evaluate_frog(vector<double>& fitness,
 }
 
 
-void setup_pop_gen(Individual* individ_config, AlpsSState* pop)
+void setup_pop_gen(Individual* individ_config, AlpsSState* pop, int run_type)
 {
   (void) individ_config;
   AlpsLayer layer_def;
@@ -166,18 +164,19 @@ void setup_pop_gen(Individual* individ_config, AlpsSState* pop)
 
   pop->set_max_evals(MAX_EVALS);
 
-  if (type == 1) {
-    // Configuration for a regular EA/GA:
-    Number_Layers = 1;
-    layer_def.set_select_type(ALPS_SELECT_TOURN);
-    layer_def.set_size(10);
-    layer_def.set_elitism(1);
-    layer_def.set_tourn_size(2);
-    pop->set_recomb_prob(0.5);
-    pop->set_rec_rand2_prob(1.0); // 1.0
-    //pop->set_print_results_rate(100); // 400
+  // if (run_type == /* 1*/) {
+  //   // Configuration for a regular EA/GA:
+  //   Number_Layers = 1;
+  //   layer_def.set_select_type(ALPS_SELECT_TOURN);
+  //   layer_def.set_size(10);
+  //   layer_def.set_elitism(1);
+  //   layer_def.set_tourn_size(2);
+  //   pop->set_recomb_prob(0.5);
+  //   pop->set_rec_rand2_prob(1.0); // 1.0
+  //   //pop->set_print_results_rate(100); // 400
 
-  } else if (type == 2) {
+  // } else 
+    if (run_type == 0 /* 2 */ ) {
     Number_Layers = 16;
     age_gap = 10; //4
     //age_scheme = ALPS_AGING_EXP3;
@@ -192,7 +191,7 @@ void setup_pop_gen(Individual* individ_config, AlpsSState* pop)
     pop->set_print_gen_stats(true);
     pop->set_print_results_rate(1000);
 
-  } else if (type == 3) {
+  } else if (run_type == 1/*3*/) {
 
     // For debug purposes.
     Number_Layers = 3;
@@ -209,8 +208,8 @@ void setup_pop_gen(Individual* individ_config, AlpsSState* pop)
     fitness_evals[0].goal_fitness = 0.9;
     pop->set_print_gen_stats(true);
   } else {
-    cerr << "alps_frog :: setup_pop_gen() - error, invalid EA type:"
-         << type << "\n";
+    cerr << "alps_frog :: setup_pop_gen() - error, invalid EA run_type:"
+         << run_type << "\n";
     return;
   }
 
@@ -274,17 +273,17 @@ char *save_genes_for_phase(vector<double>& genes, const char *pop_save_prefix,
 }
 
 int ea_engine(const char *exp_name, int target_index, bool lobotomise, 
-              const char *pop_save, int fitness_type)
+              const char *pop_save, int fitness_type, int run_type)
 {
   time_t begin = time(NULL);
   pid_t pid = getpid();
   seed_random((long) time(NULL) ^ pid);
+  long random_seed = get_random_seed();
   if (is_random_seed_set()) {
-    cout << "random-seed-set " << get_random_seed() << endl;
+    cout << "random-seed-set " << random_seed << endl;
   } else {
-    cout << "random-seed-NOT-set " << get_random_seed() << endl;
+    cout << "random-seed-NOT-set " << random_seed << endl;
   }
-  cout << "fitness-type " << fitness_type << endl;
 
   int Number_Genes = GENE_COUNT; // minus the size of the target
   //const char *exp_name = "Ap";
@@ -296,6 +295,13 @@ int ea_engine(const char *exp_name, int target_index, bool lobotomise,
     cerr << "error: phase count failed (" << err << ")" << endl;
     return err;
   }
+
+  printf(":m: (* Preamble *)\n");
+  printf(":m: {expName -> %s, phaseCount -> %d, lobotomise -> %s, task -> %d, "
+         "tmax -> %.2lf, fitnessType -> %d, runType -> %d, randomSeed -> %ld }\n",
+         exp_name, phase_count, lobotomise ? "True" : "False", target_index + 1, 
+         TIME_MAX, fitness_type, run_type, random_seed);
+  fflush(stdout);
 
   /*Genes_Real *individ_config = new Genes_Real(Number_Genes);
     individ_config->mutate_prob = 0.05;*/
@@ -312,7 +318,7 @@ int ea_engine(const char *exp_name, int target_index, bool lobotomise,
 
   // Configure a generational ALPS population:
   Alps *Population = new AlpsSState("frog", individ_config);
-  setup_pop_gen(individ_config, (AlpsSState*)Population);
+  setup_pop_gen(individ_config, (AlpsSState*)Population, run_type);
 
   //Population->set_print_debug(true);
   //Population->write_header(cout);
@@ -362,16 +368,24 @@ int ea_engine(const char *exp_name, int target_index, bool lobotomise,
 
         cout << phase << " " << evaluation_failed_count << " "<< evaluation_succ_count << endl;
         vector<double> genes = ((Individ_Real*)individ)->get_genes();
-        printf(":m: {expName -> %s, phase -> %d, tmax -> %lf, "
-               "evalFailedCount -> %d, evalSuccCount -> %d, fitness -> %lf, "
-               "bestGene -> { %lf", 
-               exp_name, phase, TIME_MAX, evaluation_failed_count, 
-               evaluation_succ_count, fitness[0], genes[0]);
+        char *gene_bin = save_genes_for_phase(genes, pop_save, phase);
+
+        printf(":m:\n");
+        printf(":m: (* End of phase %d *)\n", phase);
+        printf(":m: {expName -> %s, phaseCount -> %d, lobotomise -> %s, task -> %d, "
+               "tmax -> %.2lf, fitnessType -> %d, runType -> %d, randomSeed -> %ld, \n"
+               ":m:  phase   -> %d, evalFailedCount -> %d, evalSuccCount -> %d, fitness -> %lf, "
+               "bestGeneFilename -> \"%s\", \n"
+               ":m:  bestGene -> { %lf", 
+               exp_name, phase_count, lobotomise ? "True" : "False", target_index + 1, 
+               TIME_MAX, fitness_type, run_type, random_seed, 
+               phase, evaluation_failed_count, evaluation_succ_count, 
+               fitness[0], gene_bin, genes[0]);
         for (int i = 1; i < GENE_COUNT; i++) 
           printf(", %lf", genes[i]);
         printf("} }\n");
 
-        save_genes_for_phase(genes, pop_save, phase);
+
 
         phase++;
         if (phase > phase_count) {

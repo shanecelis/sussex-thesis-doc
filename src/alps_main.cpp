@@ -20,9 +20,33 @@ extern "C" {
 #include "alps_frog.h"
 
 int main(int argc, char **argv) {
+  int c;
+  int fitness_type = 0;
+  int run_type = STANDARD_RUN;
+  while ((c = getopt (argc, argv, "DT:F:")) != -1)
+    switch (c)
+    {
+    case 'D':
+      run_type = DEBUG_RUN;
+      break;
+    case 'T':
+      run_type = atoi(optarg);
+      break;
+    case 'F':
+      fitness_type = atoi(optarg);
+    case '?':
+      break;
+    default:
+      abort ();
+    }
+  
+  // next argument at argv[optind]
+  argc -= (optind - 1);
+  argv += (optind - 1);
+  
 
-  if (argc != 5 && argc != 6) {
-    cerr << "usage: alps_frog <experiment-name> <target-index> <lobotomise> <population-save> [fitness-type]" << endl;
+  if (argc != 5) {
+    cerr << "usage: alps_frog [-D] [-T run-type] [-F fitness-type] <experiment-name> <target-index> <lobotomise> <population-save> " << endl;
     cerr << "experiment names: An, Bn, Ap, Bp, Ao, Bo" << endl;
     return 2;
   }
@@ -32,11 +56,8 @@ int main(int argc, char **argv) {
   int target_index = atoi(argv[2]) - 1;
   bool lobotomise = (atoi(argv[3]) == 1);
   
-  int fitness_type = 0;
-  if (argc == 6)
-    fitness_type = atoi(argv[5]);
-
-  int err = ea_engine(argv[1], target_index, lobotomise, argv[4], fitness_type);
+  int err = ea_engine(argv[1], target_index, lobotomise, argv[4], fitness_type, 
+                      run_type);
 
   sim_uninit();
   return err;

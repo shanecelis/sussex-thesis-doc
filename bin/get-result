@@ -1,0 +1,9 @@
+#!/bin/bash
+# get-result
+
+if [ $# -ne 2 ]; then
+   echo "usage: get-result <result-directory> <dest-directory>" >&2;
+   exit 2;
+fi
+
+scp -ri ~/.ec2/scelis.pem ec2-user@ec2-50-16-125-122.compute-1.amazonaws.com:"$1" "$2"

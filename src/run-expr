@@ -3,7 +3,7 @@
 
 usage()
 {
-    echo "usage: run-expr [-fp] [-i id] [-n nice] [-c count] [-d results-dir] [-F fitness-type] <experiment-name> <target-index> <lobotomise>" >&2;
+    echo "usage: run-expr [-Dfp] [-i id] [-n nice] [-c count] [-d results-dir] [-F fitness-type] <experiment-name> <target-index> <lobotomise>" >&2;
 }
 
 
@@ -14,7 +14,8 @@ num=1;
 nice=0;
 resultsDir=".";
 fitnessType=0;
-while getopts phfc:i:d:F:n:P: opt; do
+runType=0; # STANDARD_RUN
+while getopts phfc:i:d:F:n:P:D opt; do
 	case $opt in
 	    f) force=1;;
         p) parallel=1;;
@@ -25,6 +26,7 @@ while getopts phfc:i:d:F:n:P: opt; do
 	    c) count=$OPTARG;;
         F) fitnessType=$OPTARG;;
 	    n) nice=$OPTARG;;
+        D) runType=1;; #DEBUG_RUN
 	    *) echo "error: invalid option given." >&2; usage;;
 	esac
 done
@@ -35,11 +37,17 @@ if [ $# -ne 3 ]; then
     exit 2;
 fi
 
-function echome()
+function echo_alps()
 {
-    set -x
-    "$@"
-    set +x
+   echo "$@" "alps_main -T $runType -F $fitnessType $expName $targetIndex $lobotomise $dir/pop-phase ";
+}
+function run_alps()
+{
+    if [ $nice -eq 0 ]; then
+        alps_main -T "$runType" -F "$fitnessType" "$expName" "$targetIndex" "$lobotomise" "$dir/pop-phase"
+    else
+        nice -n $nice alps_main -T "$runType" -F "$fitnessType" "$expName" "$targetIndex" "$lobotomise" "$dir/pop-phase"
+    fi
 }
     
 expName="$1";
@@ -57,14 +65,23 @@ for ((i = $num; i < ($num + $count); i++)); do
     else
 
         if [ $parallel -eq 0 ]; then
-            if ! echome nice -n $nice alps_main "$expName" "$targetIndex" "$lobotomise" "$dir/pop-phase" "$fitnessType" 2>> "$errorlog" | tee "$outfile"; then
+            echo -n "Teeing: "
+            echo_alps -n
+            echo "2>> $errorlog | tee $outfile"
+            if ! run_alps  2>> "$errorlog" | tee "$outfile"; then
                 echo "error: alps_main failed with exit code ${PIPESTATUS}" >&2;
                 exit 1;
             fi
         elif [ $parallel -eq 1 ]; then
-            echome nice -n $nice alps_main "$expName" "$targetIndex" "$lobotomise" "$dir/pop-phase" "$fitnessType" 2>> "$errorlog" > "$outfile" &
+            echo -n "Spawning: "
+            echo_alps -n
+            echo "2>> $errorlog > $outfile &"
+            run_alps 2>> "$errorlog" > "$outfile" &
         elif [ $parallel -eq 2 ]; then
-            echome nice -n $nice alps_main "$expName" "$targetIndex" "$lobotomise" "$dir/pop-phase" "$fitnessType" 2>> "$errorlog" > "$outfile" 
+            echo -n "Running: "
+            echo_alps -n 
+            echo "2>> $errorlog > $outfile"
+            run_alps 2>> "$errorlog" > "$outfile" 
         else
             echo "error: invalid parallel value $parallel" >&2;
             exit 2;

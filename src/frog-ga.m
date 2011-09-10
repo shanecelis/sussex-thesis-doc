@@ -403,6 +403,19 @@ evalArgs[runResults_] :=
                        {expName, phase, tmax, lobotomise}]~Join~gaParams},
           argsForRun[bestGene /. runResults]]
 
+readArray[filename_] := 
+    Module[{stream, n, genes},
+           stream = OpenRead[filename, BinaryFormat -> True];
+           n = BinaryRead[stream, "Integer32"];
+           genes = BinaryReadList[stream, "Real64"];
+           Close[stream];
+           genes]
+
+evalBin[runResults_] := 
+    Block[{gaParams = 
+           FilterRules[runResults, 
+                       {expName, phase, tmax, lobotomise}]~Join~gaParams},
+          evaluate[readArray[bestGeneFilename /. runResults]]]
 
 
 (*

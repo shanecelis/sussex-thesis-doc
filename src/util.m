@@ -39,3 +39,16 @@ or[var_, value_] :=
 
 
 replicate[list_, num_] := PadRight[{}, Length[list] * num, list]
+
+
+pbpaste[] := RunThrough["pbpaste", ""]
+pbcopy[expr_] := RunThrough["pbcopy", expr]
+exec[command_] := ReadList["!"<>command, String]
+
+(* paste and strip :m: prefixes *)
+
+processMstrip[list_] := Select[list, # =!= Null&]
+mstripp[] := processMstrip[ReadList["! /Users/shane/sc/thesis/src/mstrip -p"]]
+mstrip[file_] := processMStrip[ReadList["! /Users/shane/sc/thesis/src/mstrip "<>file]]
+
+(*RunThrough[command, expr]*)
