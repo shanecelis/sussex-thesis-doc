@@ -44,6 +44,8 @@ for signal in $signals; do
     trap 'startjob' $signal
 done
 
+export KILL_PPID=yes;
+
 count=0
 while [ $count -lt $parallel ]; do
   startjob || break;

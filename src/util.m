@@ -48,7 +48,9 @@ exec[command_] := ReadList["!"<>command, String]
 (* paste and strip :m: prefixes *)
 
 processMstrip[list_] := Select[list, # =!= Null&]
+mstripp[phase_] := resultsList[mstripp[], phase]
 mstripp[] := processMstrip[ReadList["! /Users/shane/sc/thesis/src/mstrip -p"]]
 mstrip[file_] := processMStrip[ReadList["! /Users/shane/sc/thesis/src/mstrip "<>file]]
+resultsList[list_, phaseArg_] := First[Select[list, (phase /. #) === phaseArg&]]
 
 (*RunThrough[command, expr]*)

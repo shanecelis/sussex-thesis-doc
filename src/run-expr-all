@@ -3,7 +3,8 @@
 
 usage()
 {
-   echo "usage: run-expr-all [-hfp] [-i id] [-n nice] [-c count] [-F fitness-type] <results-name>" >&2;
+   echo "usage: run-expr-all [-hfp] [-P parallel-code] [-i id] [-n nice] [-c count] [-F fitness-type] <results-name>" >&2;
+   exit 2;
 }
 
 parallel=0;
@@ -13,9 +14,10 @@ count=1;
 fitnessType=0;
 nice=0;
 options="";
-while getopts hfpc:i:F:n: opt; do
+while getopts hfpc:i:F:n:P: opt; do
 	case $opt in
 	    f) force=1;options="-f ";;
+        P) parallel=$OPTARG;;
 	    p) parallel=1;;
         h) usage;;
 	    c) count=$OPTARG;;
@@ -29,7 +31,6 @@ shift $[ OPTIND - 1 ]
 
 if [ $# -ne 1 ]; then
     usage;
-    exit 2;
 fi
 
 for ((i = $num; i < ($num + $count); i++)); do 
@@ -41,15 +42,19 @@ for ((i = $num; i < ($num + $count); i++)); do
                         echo "error: run-expr exited with error code ${PIPESTATUS}" >&2;
                         exit 1;
 		            fi
-                else
+                elif [ $parallel -eq 1 ]; then
                     run-expr $options -P 2 -F $fitnessType -i $i -c 1 -d "$1" $exp $target $lobotomise &
+                elif [ $parallel -eq 2 ]; then
+                    echo "run-expr $options -P 2 -F $fitnessType -i $i -c 1 -d $1 $exp $target $lobotomise"
+                else 
+                    echo "error: unknown parallel code: $parallel" >&2;
+                    exit 3;
                 fi
             done
 	    done
     done
-    if [ $parallel -ne 0 ]; then
+    if [ $parallel -eq 1 ]; then
         echo "run-expr-all: Waiting for jobs to finish for run $i before starting new ones."
         wait
     fi
 done
-

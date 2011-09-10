@@ -82,6 +82,9 @@ for ((i = $num; i < ($num + $count); i++)); do
             echo_alps -n 
             echo "2>> $errorlog > $outfile"
             run_alps 2>> "$errorlog" > "$outfile" 
+            if [ "$KILL_PPID" == "yes" ]; then
+                kill -SIGUSR1 $PPID
+            fi
         else
             echo "error: invalid parallel value $parallel" >&2;
             exit 2;
