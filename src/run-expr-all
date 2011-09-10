@@ -34,7 +34,7 @@ fi
 
 for ((i = $num; i < ($num + $count); i++)); do 
     for target in 1; do # 2 3 4; do 
-	    for lobotomise in 0; do # 1; do
+	    for lobotomise in 1; do # 1; do
             for exp in An Bn Ap Bp Ao Bo; do
                 if [ $parallel -eq 0 ]; then
 		            if ! run-expr $options -F $fitnessType -i $i -c 1 -d "$1" $exp $target $lobotomise; then
@@ -47,9 +47,9 @@ for ((i = $num; i < ($num + $count); i++)); do
             done
 	    done
     done
+    if [ $parallel -ne 0 ]; then
+        echo "run-expr-all: Waiting for jobs to finish for run $i before starting new ones."
+        wait
+    fi
 done
 
-if [ $parallel -ne 0 ]; then
-    echo "run-expr-all: Waiting for jobs to finish."
-    wait
-fi

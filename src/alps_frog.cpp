@@ -70,7 +70,8 @@ int run_frog(const vector<double>& genes,
   for (int i = 0; i < STATE_COUNT; i++) {
     state[i] = 0.0;
   }
-  
+
+  state[Q_BEGIN(3)] = M_PI;
   constants[TARGET_BEGIN] = targetx;
   constants[TARGET_BEGIN + 1] = targety; 
   experiment_points(expName, time_max, phase, constants + POINTS_BEGIN);
