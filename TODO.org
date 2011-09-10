@@ -511,5 +511,11 @@ Looks exactly the same.
 * Amazon EC2 instance
   ssh -i scelis.pem ec2-user@ec2-75-101-238-63.compute-1.amazonaws.com
 * BUGS
-  - memory leak, probably in ALPS.  :(
+  - memory leak... FIXED!
 
+* What is the problem?
+  Maybe the tadpole form can't move forward by tail motion?
+
+* Is the final genome actually represented in the population?
+
+XXX Left off trying to find better physics constants again.  :(

@@ -87,8 +87,7 @@ runGA[howMany_:None] :=
                a = RandomInteger[{1, pop}];
                b = RandomInteger[{1, pop}];
                beginTournament[];
-               If[Quiet[evaluateCached[a] ~lessThan~ evaluateCached[b], 
-                         {CompiledFunction::cfn}],
+               If[evaluateCached[a] ~lessThan~ evaluateCached[b], 
                    W = a; L = b,
                    W = b; L = a];
                crossover[L, W];

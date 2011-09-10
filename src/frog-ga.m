@@ -115,7 +115,8 @@ physicsGeneToRules[i_] :=
      krb  ->    gscale[g[[6]], {-1, 1}],
      kTc  ->    gscale[g[[3]], {-0.000001, -0.0001}], 
      kFc  ->    gscale[g[[5]], {-0.001, -100}], 
-     krc  ->    gscale[g[[6]], {-1, 1}]
+     krc  ->    gscale[g[[6]], {-1, 1}],
+     Tfmax -> 10^gscale[g[[1]], {-6, -2}]
     } ]
 
 rand[{a_, b_}] := RandomReal[{a, b} //. units];
@@ -130,7 +131,7 @@ randomStateRules[] :=
    { t -> 0,
      q1 -> rand[10cm {-1, 1}],
      q2 -> rand[10cm {-1, 1}],
-     q3 -> rand[Pi {-1, 1}],
+     q3 -> 0, (*rand[Pi {-1, 1}],*)
      q4 -> rand[Pi/2 {-1, 1}],
      q5 -> rand[Pi/2 {-1, 1}],
      q6 -> rand[Pi/2 {-1, 1}],
@@ -177,14 +178,6 @@ physicsGeneToConstants[i_] :=
                     tourPeriods[[1]]]]
 
 
-(*
-fitnessForPhysics[i_] := 
-    Mean[{fitnessForSpeed[i]}~Join~Map[runSpeedForPeriod[i,#]&, {1, 2, 4}]]
-
-fitnessForPhysicsData[i_] := 
-    {fitnessForSpeedData[i]}~Join~Map[runSpeedForPeriodData[i,#]&, {1, 2, 4}]
-*)
-
 getTimeAndSpeedWithState[i_, state_, period_, tmax_] :=
     Module[{args, time, res},
            args = argsForRun[i];
@@ -195,16 +188,25 @@ getTimeAndSpeedWithState[i_, state_, period_, tmax_] :=
                        If[endState === $Failed,
                           $Failed,
                           (* it worked! *)
-                          {endState[[1]],
-                           Norm[{endState[[recordBegin + 1]], 
-                                 endState[[recordBegin + 2]]}/endState[[1]]],
+                          {If[endState[[1]] < tmax, 0, endState[[1]]],
+
+                           (* a) normalised speed *)
+                           (*Norm[{endState[[recordBegin + 1]], 
+                                 endState[[recordBegin + 2]]}/endState[[1]]],*)
+
+                           (* OR *)
+                           (* b) reciprocal of distance to target *)
+                           (*(1/(endState[[recordBegin]]/(Norm[target /. gaParams] endState[[1]] + 0.01) + 1))^2,*)
+                           (* OR *)
+                           (* c) y speed *)
+                           endState[[recordBegin + 2]]/endState[[1]],
                            endState[[recordBegin + 3]]/endState[[1]]
                           }],
-                       {endState[[1]], -0.0001, -0.0001}, 
+                       {endState[[1]], -0.0001, 0.0001}, 
                        {runSimulationMlink::errnan,
                         runSimulationMlink::errsim}]];
            If[res === $Failed,
-              {0.0001, -0.0001, -0.0001},
+              {0.0001, -0.0001, 0.0001},
               res]
           ]
 
@@ -227,7 +229,7 @@ noControllerPeriod = periodLayout /.
 beginTournament[] :=
     Module[{ind},
            (* Setup some random state and controllers *)
-           If[True && (Mod[evaluations, 300] == 0 || Head[tourStates] =!= List),
+           If[True && (Mod[evaluations, 200] == 0 || Head[tourStates] =!= List),
               If[evaluations > 50,
                  ind = bestIndividual[];
                  Print[{genes[[ind]], evaluate[ind], physicsGeneToRules[ind]}];
@@ -240,8 +242,9 @@ beginTournament[] :=
 
 newPhysicsTournament[] := 
     Module[{},
-           tourStates = Table[randomState[], {5}];
-           tourPeriods = Table[randomPeriod[], {2}];
+           tourStates = Table[randomState[], {2}];
+           tourPeriods = Table[randomPeriod[], {4}];
+           tourPeriods[[4,1]] = 1.95; (* a known good value *)
           ]
 (*           
 fitnessForPhysics[i_] := 
@@ -315,7 +318,7 @@ periodGeneToRules[i_] :=
     Module[{g, res},
            g = getGene[i];
            res = Join[
-               Map[Symbol["f" <> ToString[#]] -> gscale[g[[2 # - 1]], {0, 2}]&, Range[5]],
+               Map[Symbol["f" <> ToString[#]] -> gscale[g[[2 # - 1]], {0, 2.5}]&, Range[5]],
                Map[Symbol["psi" <> ToString[#]] -> gscale[g[[2 #]], {0, 1}]&, Range[5]],
                (* Ignore what the last gene says and turn off the CTRNN. *)
                {kys -> 0}];
@@ -362,6 +365,27 @@ fitnessToTargetRecordGoodAndBad[i_, target_, experiment_, phase_] :=
            fitness]
 
 
+fitnessToTarget[i_, expNameArg_, phaseArg_] :=
+    Block[{gaParams = {expName -> expNameArg, phase -> phaseArg}~Join~gaParams},
+          fitnessToTarget[i]]
+
+fitnessToTargetData[i_, expNameArg_, phaseArg_] :=
+    Block[{gaParams = {expName -> expNameArg, phase -> phaseArg}~Join~gaParams},
+          fitnessToTargetData[i]]
+
+eval[runResults_] := 
+    Block[{gaParams = {expName -> (expName /. runResults), 
+                       phase -> (phase /. runResults),
+                       tmax -> (tmax /. runResults)
+                      }~Join~gaParams},
+          evaluate[bestGene /. runResults]]
+
+evalData[runResults_] := 
+    Block[{gaParams = {expName -> (expName /. runResults), 
+                       phase -> (phase /. runResults),
+                       tmax -> (tmax /. runResults)}~Join~gaParams},
+          evaluateData[bestGene /. runResults]]
+
 
 (*
    Calculate the mean distance using the diff 
@@ -388,7 +412,6 @@ fitnessToTargetData[i_] :=
            args[[2]] = dataDeltat /. gaParams;
            runSolver3[runSimulationGA, Sequence@@args]
           ] 
-
 
 
 fitnessForSpeed[i_] := 
