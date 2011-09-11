@@ -27,11 +27,16 @@ fi
 
 set -bm
 
+jobcount() {
+    jobs -p | wc -l
+}
+
 startjob() {
     if ! read -p "command: " cmd; then
         echo "warning: got EOF" >&2;
         return 1;
     fi
+    echo "Starting: $cmd";
     bash -c "$cmd" &
     return 0;
   # if [ $count -lt $total_jobs ]; then
@@ -40,8 +45,22 @@ startjob() {
   # fi
 }
 
+startjobs() {
+
+    jc=$(jobcount);
+    neededJobs=$(($parallel - $jc));
+    if [ $neededJobs -lt 0 ]; then
+        # Do nothing.
+        :
+    else
+        for ((i = 0; i < $neededJobs; i++)); do
+            startjob
+        done
+    fi
+}
+
 for signal in $signals; do
-    trap 'startjob' $signal
+    trap 'startjobs' $signal
 done
 
 export KILL_PPID=yes;

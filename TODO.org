@@ -523,3 +523,7 @@ XXX Left off trying to find better physics constants again.  :(
 When the likelihood that a result occurred by chance alone is below a
 certain level, one or more asterisks are displayed. Popular
 significance levels are 0.05 (*), 0.01 (**), and 0.001 (***).
+
+* For running things I'm using:
+$ run-expr-all -P 2 -i 3 -c 98 res2 > run.cmds
+$ run-cmds-parallel -s SIGUSR1 -p 8 < run.cmds | tee run.output
