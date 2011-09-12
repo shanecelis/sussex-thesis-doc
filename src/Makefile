@@ -127,3 +127,5 @@ frogRHS-fixed.c: frogRHS.c frogRHS.patch
 	patch -i frogRHS.patch frogRHS.c -o frogRHS-fixed.c
 
 frog-ga.mo: bga.mo params.mo
+
+alpsish: alpsish.o pareto_front.o

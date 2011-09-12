@@ -294,10 +294,10 @@ gaParams = Join[
     {
     target -> {0, 0.25},
     currentSpeed -> 0.01, 
-    task -> 1,
+    task -> 2,
     tmax -> 10,
-    expName -> Ap, (*Ap,*)
-    phase -> 1,
+    expName -> Ao, (*Ap,*)
+    phase -> 3,
     deltat -> 0.01,
     dataDeltat -> 0.1,
     lobotomise -> False,

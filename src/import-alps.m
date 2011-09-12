@@ -3,7 +3,7 @@
 (* ::Title:: *)
 (*Code*)
 importALPSGenes[filename_] := 
- Select[Import[filename, "Table"], Length[#] == geneCount &]
+ Select[Import[lookupFile[filename], "Table"], Length[#] == geneCount &]
 
 importALPSOut[filename_] := 
  Select[Import[filename, "Table"], Length[#] == 3 &]
