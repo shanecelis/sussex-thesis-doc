@@ -3,7 +3,8 @@
 
 usage()
 {
-   echo "usage: run-expr-all [-hfpn] [-P parallel-code] [-i id] [-n nice] [-c count] [-F fitness-type] [-L|T|B L|T|B-types] <results-name>" >&2;
+
+   echo "usage: run-expr-all [-hfpD] [-P parallel-code] [-i id] [-n nice] [-c count] [-F fitness-type] <results-name>" >&2;
    exit 2;
 }
 
@@ -18,7 +19,7 @@ ltypes="0 1";
 ttypes="1 2 3 4";
 btypes="An Bn Ap Bp Ao Bo";
 dryrun=0;
-while getopts hfpc:i:F:n:P:L:T:B:n opt; do
+while getopts hfpc:i:F:n:P:L:T:B: opt; do
 	case $opt in
 	    f) force=1;options="-f ";;
         L) ltypes="$OPTARG";;
@@ -27,7 +28,6 @@ while getopts hfpc:i:F:n:P:L:T:B:n opt; do
         P) parallel=$OPTARG;;
 	    p) parallel=1;;
         h) usage;;
-        n) dryrun=1;;
 	    c) count=$OPTARG;;
         i) num=$OPTARG;;
         F) fitnessType=$OPTARG;;
@@ -36,6 +36,10 @@ while getopts hfpc:i:F:n:P:L:T:B:n opt; do
 	esac
 done
 shift $[ OPTIND - 1 ]
+
+if [ "$options" != "" ]; then
+    options="-$options";
+fi
 
 if [ $# -ne 1 ]; then
     usage;

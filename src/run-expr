@@ -7,6 +7,7 @@ usage()
 }
 
 
+fullargs="$*";
 force=0;
 parallel=0;
 count=1;
@@ -84,6 +85,7 @@ for ((i = $num; i < ($num + $count); i++)); do
             run_alps 2>> "$errorlog" > "$outfile" 
             if [ "$KILL_PPID" == "yes" ]; then
                 kill -SIGUSR1 $PPID
+                echo "Finished: run-expr $fullargs";
             fi
         else
             echo "error: invalid parallel value $parallel" >&2;

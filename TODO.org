@@ -531,3 +531,8 @@ significance levels are 0.05 (*), 0.01 (**), and 0.001 (***).
   When the fitness function changes, it's not clear that we check to
   see if the winners would actually beat it.  Everyone in the
   population needs to be reevaluated.
+
+* For running things I'm using:
+$ run-expr-all -P 2 -i 3 -c 98 res2 > run.cmds
+$ run-cmds-parallel -s SIGUSR1 -p 8 < run.cmds | tee run.output
+
