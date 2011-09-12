@@ -47,7 +47,7 @@ void init_population() {
 void init_gene(double *gene) {
   int i;
   for(i = 0; i < GENE_COUNT; i++)
-    gene[i] = rand(); // [0, 1)
+    gene[i] = rand() * .2; // [0, 1)
 }
 
 void mutate(double *gene) {
