@@ -87,7 +87,7 @@ geneToCTRNN[i_] :=
            Ts = Map[10.^Rescale[#,{0, 1},{-2, 2}]&,gene[[n^2 + n + 1;; n^2 + 2n ]]]; (* change this from [-1, 2] -> [-2, 2] *)
            (* gain = Rescale[gene[[n^2 + 2n + 1]], {0, 1}, {1, 7}];*)
            (* not providing gain or inputs *)
-           {W,theta,None, Ts}
+           {W,theta,None,Ts}
           ]
 
 
@@ -238,6 +238,8 @@ noControllerPeriod = periodLayout /.
      f3 -> 0, psi3 -> 0, f4 -> 0, psi4 -> 0,
      f5 -> 0, psi5 -> 0, kys -> 0};
 
+    
+
 beginTournament[] :=
     Module[{ind},
            (* Setup some random state and controllers *)
@@ -321,6 +323,13 @@ makeZeroPeriodValues[] :=
                        f3 -> 0, psi3 -> 0, f4 -> 0, psi4 -> 0,
                        f5 -> 0, psi5 -> 0, kys -> 1};
 
+(* Not even a CTRNN. *)
+makeNoControllerPeriodValues[] :=
+    periodLayout /. {f1 -> 0, psi1 -> 0, f2 -> 0, psi2 -> 0,
+                       f3 -> 0, psi3 -> 0, f4 -> 0, psi4 -> 0,
+                       f5 -> 0, psi5 -> 0, kys -> 0};
+
+
 randomPeriodRules[] :=
     periodGeneToRules[RandomReal[{0,1}, {geneCountGA /. periodGaParams}]]
 
@@ -350,14 +359,20 @@ periodGeneToConstants[i_] :=
     
 
 ctrnnGeneToConstants[i_] := 
-    Module[{gene},
+    Module[{gene, wv},
            gene = getGene[i];
            Assert[Length[gene] == ctrnnParamCount];
+           wv = currentDirection[[task /. gaParams]] currentSpeed /. gaParams;
            joinFlat[geneToCTRNNLinSensor[gene],
                     target //. gaParams, 
                     experimentPoints@@({expName, tmax, phase} //. gaParams),
-                    physcons //. params,
-                    makeZeroPeriodValues[]]]
+                    physcons //. {wvx -> wv[[1]], wvy -> wv[[2]]}~Join~params,
+                    If[enableController /. gaParams,
+                       makeZeroPeriodValues[],
+                       makeNoControllerPeriodValues[]
+                      ]
+                   ]
+          ]
 
 
 keepGoodChance = 0.01;
@@ -385,23 +400,32 @@ fitnessToTargetData[i_, expNameArg_, phaseArg_] :=
     Block[{gaParams = {expName -> expNameArg, phase -> phaseArg}~Join~gaParams},
           fitnessToTargetData[i]]
 
-eval[runResults_] := 
-    Block[{gaParams = 
-           FilterRules[runResults, 
-                       {expName, phase, tmax, lobotomise}]~Join~gaParams},
-          evaluate[bestGene /. runResults]]
+getResults[filename_String, prefixGaParams_:{}] :=
+    getResults[mstrip[filename][[-1]], prefixGaParams]
 
-evalData[runResults_] := 
-    Block[{gaParams = 
-           FilterRules[runResults, 
-                       {expName, phase, tmax, lobotomise}]~Join~gaParams},
-          evaluateData[bestGene /. runResults]]
+getResults[rules_List, prefixGaParams_:{}] := prefixGaParams~Join~rules
+ 
+evalGaParams[runResults_, prefixGaParams_:{}] := 
+    Join[prefixGaParams,
+         FilterRules[getResults[runResults], 
+                     {expName, phase, tmax, lobotomise, task}],
+         gaParams]
 
-evalArgs[runResults_] := 
-    Block[{gaParams = 
-           FilterRules[runResults, 
-                       {expName, phase, tmax, lobotomise}]~Join~gaParams},
-          argsForRun[bestGene /. runResults]]
+eval[runResults__] := 
+    Block[{gaParams = evalGaParams[runResults]},
+          evaluate[bestGene /. getResults[runResults]]]
+
+evalData[runResults__] := 
+    Block[{gaParams = evalGaParams[runResults]},
+          evaluateData[bestGene /. getResults[runResults]]] 
+
+evalArgs[runResults__] := 
+    Block[{gaParams = evalGaParams[runResults]},
+          argsForRun[bestGene /. getResults[runResults]]]
+
+evalAnimate[runResults__] :=
+    animateData[evalData[getResults[runResults]]]
+
 
 readArray[filename_] := 
     Module[{stream, n, genes},
@@ -411,11 +435,9 @@ readArray[filename_] :=
            Close[stream];
            genes]
 
-evalBin[runResults_] := 
-    Block[{gaParams = 
-           FilterRules[runResults, 
-                       {expName, phase, tmax, lobotomise}]~Join~gaParams},
-          evaluate[readArray[bestGeneFilename /. runResults]]]
+evalBin[runResults__] := 
+    Block[{gaParams = evalGaParams[runResults]}, 
+          evaluate[readArray[lookupFile[bestGeneFilename /. getResults[runResults]]]]]
 
 
 (*

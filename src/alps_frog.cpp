@@ -36,6 +36,12 @@ const double  targets[4][2] = {{0., 1.},                  /* north */
                                {0., -1.}};                /* south */
 const double  target_distance = TARGET_DISTANCE;
 
+const int     task_count = 4;
+const double  current_direction[4][2] = {{0.,  0.},   /* none */
+                                         {1.,  0.},   /* east */
+                                         {0., -1.},   /* south */
+                                         {0.,  1.}};  /* current direciton: north */
+const double  current_speed = CURRENT_SPEED;
 
 struct fitness_evaluator
 {
@@ -54,7 +60,7 @@ int run_frog(const vector<double>& genes,
              double time_max,
              double targetx, double targety, 
              const char *expName, 
-             int phase, bool lobotomise, double* result)
+             int phase, bool lobotomise, int task_index, double* result)
 {
   int err;
   double constants[CONSTANTS_COUNT], constants2[CONSTANTS_COUNT], state[STATE_COUNT];//, result[STATE_COUNT];
@@ -76,6 +82,8 @@ int run_frog(const vector<double>& genes,
                         state + TAILSTATE_BEGIN, 
                         state + TAILSTATE_BEGIN + 1);
   err = physics_constants(constants + PHYS_BEGIN);
+  constants[CURRENT_BEGIN] = current_direction[task_index][0] * current_speed;
+  constants[CURRENT_BEGIN + 1] = current_direction[task_index][1] * current_speed;
   err = period_constants(constants + PERIOD_BEGIN);
   
   err = gene_to_ctrnn(constants, constants2);
@@ -83,7 +91,6 @@ int run_frog(const vector<double>& genes,
   if (lobotomise) {
     lobotomise_brains(constants2);
   }
-
 
   // printf(":m: constants -> { %lf", constants2[0]);
   // for (int i = 1; i < CONSTANTS_COUNT; i++)
@@ -120,24 +127,25 @@ bool evaluate_frog(vector<double>& fitness,
                    vector<double>& genes, 
                    //Individual* individ,
                    const char* expName, int phase, 
-                   int target_index, bool lobotomise, int fitness_type)
+                   int task_index, bool lobotomise, int fitness_type)
 {
-  if (target_index < 0) {
-    cerr << "error: target_index < 0" << endl;
+  if (task_index < 0) {
+    cerr << "error: task_index < 0" << endl;
     return false;
   }
-  if (target_index >= targets_count) {
-    cerr << "error: target_index >= targets_count" << endl;
+  if (task_index >= task_count) {
+    cerr << "error: task_index >= task_count" << endl;
     return false;
   }
   double time_max = TIME_MAX;
   double result[STATE_COUNT];
+  int target_index = 0;
   int err = run_frog(genes,
     //((Individ_Real*)individ)->get_genes(), 
                      time_max,
                      targets[target_index][0] * target_distance, 
                      targets[target_index][1] * target_distance,
-                     expName, phase, lobotomise, result);
+                     expName, phase, lobotomise, task_index, result);
 
   double (*fitfunc)(double *, double) = fitness_evals[fitness_type].evaluator;
   fitness[0] = (*fitfunc)(result, time_max);
@@ -164,18 +172,6 @@ void setup_pop_gen(Individual* individ_config, AlpsSState* pop, int run_type)
 
   pop->set_max_evals(MAX_EVALS);
 
-  // if (run_type == /* 1*/) {
-  //   // Configuration for a regular EA/GA:
-  //   Number_Layers = 1;
-  //   layer_def.set_select_type(ALPS_SELECT_TOURN);
-  //   layer_def.set_size(10);
-  //   layer_def.set_elitism(1);
-  //   layer_def.set_tourn_size(2);
-  //   pop->set_recomb_prob(0.5);
-  //   pop->set_rec_rand2_prob(1.0); // 1.0
-  //   //pop->set_print_results_rate(100); // 400
-
-  // } else 
     if (run_type == 0 /* 2 */ ) {
     Number_Layers = 16;
     age_gap = 10; //4
@@ -272,7 +268,7 @@ char *save_genes_for_phase(vector<double>& genes, const char *pop_save_prefix,
   return gene_save_name;
 }
 
-int ea_engine(const char *exp_name, int target_index, bool lobotomise, 
+int ea_engine(const char *exp_name, int task_index, bool lobotomise, 
               const char *pop_save, int fitness_type, int run_type)
 {
   time_t begin = time(NULL);
@@ -299,7 +295,7 @@ int ea_engine(const char *exp_name, int target_index, bool lobotomise,
   printf(":m: (* Preamble *)\n");
   printf(":m: {expName -> %s, phaseCount -> %d, lobotomise -> %s, task -> %d, "
          "tmax -> %.2lf, fitnessType -> %d, runType -> %d, randomSeed -> %ld }\n",
-         exp_name, phase_count, lobotomise ? "True" : "False", target_index + 1, 
+         exp_name, phase_count, lobotomise ? "True" : "False", task_index + 1, 
          TIME_MAX, fitness_type, run_type, random_seed);
   fflush(stdout);
 
@@ -350,7 +346,7 @@ int ea_engine(const char *exp_name, int target_index, bool lobotomise,
                                genes,
                                //individ, 
                                exp_name, phase, 
-                               target_index, 
+                               task_index, 
                                lobotomise,
                                fitness_type);
 
@@ -377,7 +373,7 @@ int ea_engine(const char *exp_name, int target_index, bool lobotomise,
                ":m:  phase   -> %d, evalFailedCount -> %d, evalSuccCount -> %d, fitness -> %lf, "
                "bestGeneFilename -> \"%s\", \n"
                ":m:  bestGene -> { %lf", 
-               exp_name, phase_count, lobotomise ? "True" : "False", target_index + 1, 
+               exp_name, phase_count, lobotomise ? "True" : "False", task_index + 1, 
                TIME_MAX, fitness_type, run_type, random_seed, 
                phase, evaluation_failed_count, evaluation_succ_count, 
                fitness[0], gene_bin, genes[0]);

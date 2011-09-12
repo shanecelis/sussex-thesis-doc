@@ -3,7 +3,7 @@
 
 usage()
 {
-   echo "usage: run-expr-all [-hfp] [-P parallel-code] [-i id] [-n nice] [-c count] [-F fitness-type] <results-name>" >&2;
+   echo "usage: run-expr-all [-hfpn] [-P parallel-code] [-i id] [-n nice] [-c count] [-F fitness-type] [-L|T|B L|T|B-types] <results-name>" >&2;
    exit 2;
 }
 
@@ -14,12 +14,20 @@ count=1;
 fitnessType=0;
 nice=0;
 options="";
-while getopts hfpc:i:F:n:P: opt; do
+ltypes="0 1";
+ttypes="1 2 3 4";
+btypes="An Bn Ap Bp Ao Bo";
+dryrun=0;
+while getopts hfpc:i:F:n:P:L:T:B:n opt; do
 	case $opt in
 	    f) force=1;options="-f ";;
+        L) ltypes="$OPTARG";;
+        T) ttypes="$OPTARG";;
+        B) btypes="$OPTARG";;
         P) parallel=$OPTARG;;
 	    p) parallel=1;;
         h) usage;;
+        n) dryrun=1;;
 	    c) count=$OPTARG;;
         i) num=$OPTARG;;
         F) fitnessType=$OPTARG;;
@@ -34,9 +42,9 @@ if [ $# -ne 1 ]; then
 fi
 
 for ((i = $num; i < ($num + $count); i++)); do 
-    for target in 1; do # 2 3 4; do 
-	    for lobotomise in 1; do # 1; do
-            for exp in An Bn Ap Bp Ao Bo; do
+    for target in $ttypes; do
+	    for lobotomise in $ltypes; do
+            for exp in $btypes; do
                 if [ $parallel -eq 0 ]; then
 		            if ! run-expr $options -F $fitnessType -i $i -c 1 -d "$1" $exp $target $lobotomise; then
                         echo "error: run-expr exited with error code ${PIPESTATUS}" >&2;

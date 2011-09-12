@@ -446,9 +446,11 @@ makeProcessCollisionC[stateLength_] :=
 
 
 plotConfigurationData[data_] := 
-    Module[{time,q1,q2,q3,q4,q5,q6,q7,q8, plotData, plots},
+    Module[{time,q1,q2,q3,q4,q5,q6,q7,q8, plotData, plots, o},
            {time, q1,q2,q3,q4,q5,q6,q7,q8} = Map[data[[All, #]]&, Range[9]];
-           plotData = Map[Transpose[{time, #}]&, {q1 + 3,q2 + 3,q3,q4,q5,q6,q7,q8}];
+           o = 3;
+           o = 0;
+           plotData = Map[Transpose[{time, #}]&, {q1 + o,q2 + o,q3,q4,q5,q6,q7,q8}];
 
            ListPlot[plotData, PlotStyle -> {bodyColour,bodyColour,bodyColour, tailColour,footColour,footColour,footColour,footColour}, (*PlotRange -> {Automatic, 7{-1, 1}},*) Joined -> True, PlotLegend -> {"q1", "q2","q3","q4", "q5","q6","q7","q8"}, LegendPosition->{1.1,-0.4}]
           ]
@@ -476,7 +478,7 @@ animateData[data_, OptionsPattern[preParams -> {}]] :=
            myParams = OptionValue[preParams]~Join~params;
            times = data[[All, 1]];
            timePerFrame = (Max[times] - Min[times])/Length[times];
-           ListAnimate[Map[drawFrog[#[[2;;2 + 8 - 1]],r //. myParams, l //. myParams, fl //. myParams] /. t -> #[[1]] &, data], 1/timePerFrame]]
+           ListAnimate[Map[drawFrog[#[[1;;1 + 8]],r //. myParams, l //. myParams, fl //. myParams] /. t -> #[[1]] &, data], 1/timePerFrame]]
 
 
 Options[animateMorph] =  {preParams -> {}}~Join~Options[drawFrog]

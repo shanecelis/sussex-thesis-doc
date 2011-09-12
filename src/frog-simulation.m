@@ -39,7 +39,7 @@ Options[drawFrog] = {showDistance -> False,
                      showStart    -> False,
                      showTarget   -> None};
 
-drawFrog[{q1_,q2_,q3_,q4_, q5_, q6_, q7_, q8_}, r_, l_, fl_, 
+drawFrog[{t_, q1_,q2_,q3_,q4_, q5_, q6_, q7_, q8_}, r_, l_, fl_, 
          OptionsPattern[]] := 
     Module[{body, tail, limb, foot5, foot6, foot7, foot8, distanceLine, 
             range, target, diskSize},
@@ -88,6 +88,158 @@ drawFrog[{q1_,q2_,q3_,q4_, q5_, q6_, q7_, q8_}, r_, l_, fl_,
                startDisk,
                targetDisk
                     }, PlotRange -> range, ImageSize -> imageSize]]
+
+
+(* Draw a wireframe frog. *)
+Options[drawFrogCheap] = 
+    {showDistance -> False, plotRange -> Automatic, toTarget -> None, 
+     showStart -> False, showTarget -> None, showTime -> False, 
+     showDistanceToTarget -> False, passState -> None, 
+     showMeanDistanceToTarget -> False};
+
+myNumberToString[t_Real] := 
+    ToString[PaddedForm[t, {3, 1}, 
+                        NumberPadding -> {" ", "0"}]]
+
+myNumberToString[t_Real, {a_, b_}] := 
+    ToString[PaddedForm[t, {a, b}, 
+                        NumberPadding -> {" ", "0"}]]
+
+
+
+drawFrogCheap[{t_, q1_, q2_, q3_, q4_, q5_, q6_, q7_, q8_}, r_, l_, fl_, 
+              OptionsPattern[]] :=
+Module[{M3, R, T, O, T1, T4j, T5j, T6j, T7j, T8j, pt, p4j, T4l, T5l, 
+        T6l, T7l, T8l, p5j, p6j, p7j, p8j, oq5, oq6, oq7, oq8,
+        (* options *)
+        state, target, range, distanceLine, targetLine, 
+        startDisk, targetDisk, timeLine, distanceText, meanDistanceText},
+       (* Options code *)
+       target = {0, 0};
+       state = OptionValue[passState];
+       distanceLine = 
+       If[OptionValue[showDistance] === True, 
+          {Black, 
+           Line[{{0, 0}, {q1, q2}}]},
+          {}];
+       
+       timeLine = 
+       If[OptionValue[showTime] === True, 
+          {Black, 
+           Text["t = " <> 
+                ToString[PaddedForm[t, {3, 1}, 
+                                    NumberPadding -> {" ", "0"}]], {.2,-.2}]},
+          {}];
+ 
+       targetLine = If[OptionValue[toTarget] === None,
+                       {}, target = OptionValue[toTarget];
+                       {Black, Line[{{q1, q2}, target}]}];
+       
+       startDisk = 
+       If[OptionValue[showStart] === False, {}, {Point[{0, 0}]}];
+       
+       targetDisk = 
+       If[OptionValue[showTarget] === None, {}, 
+          target = OptionValue[showTarget];
+          {Point[target]}];
+
+       distanceText = 
+       If[OptionValue[showDistanceToTarget] === True, 
+          {Black, 
+           Text["d = " <> myNumberToString[Norm[ {q1, q2} - target], {3,2}], {.2,-.25}]},
+          {}];
+
+       meanDistanceText = 
+       If[OptionValue[showMeanDistanceToTarget] === True, 
+          {Black, 
+           Text["<d> = " <> 
+                myNumberToString[state[[recordBegin]]/(t Norm[target] + 0.000001), {3,2}], 
+                {.2,-.3}]},
+          {}];
+
+
+       
+       range = 
+       If[OptionValue[plotRange] === Automatic, 
+          chooseRange[
+              7 (r) {{-.5, .5}, {-.5, .5}}, {{q1, q2}, {0, 0}, target}, 2 # &],
+          OptionValue[plotRange]];  
+       
+       T = TranslationTransform;
+       R  = RotationTransform;
+       oq5 = Pi/4;
+       oq6 = 3 Pi/4;
+       oq7 = 5 Pi/4;
+       oq8 = 7 Pi/4;
+       T1 = T[{q1, q2}];
+       O = T1[{0, 0}];
+       M3 = R[q3];
+       (*T4j =R[q3] .  T[{0, -r}];*)
+       T4j = R[q3] [{0, -r}]  ;
+       T5j = (R[oq5] . R[q3])[{0, -r}];
+       T6j = (R[oq6] . R[q3] )[{0, -r}];
+       T7j = (R[oq7] . R[q3] )[{0, -r}];
+       T8j = (R[oq8] . R[q3] )[{0, -r}];
+       T4l =  T[(M3 . R[q4])[{0, -l}]];
+       T5l =  T[(M3 . R[q5] . R[oq5])[{0, -fl}]];
+       T6l =  T[(M3 . R[q6] . R[oq6])[{0, -fl}]];
+       T7l =  T[(M3 . R[q7] . R[oq7])[{0, -fl}]];
+       T8l =  T[(M3 . R[q8] . R[oq8])[{0, -fl}]];
+       
+       Graphics[{{Circle[O, r],
+                  Line[{p4j = T1[T4j], T4l[p4j]}],
+                  Line[{p5j = T1[T5j], T5l[p5j]}],
+                  Line[{p6j = T1[T6j], T6l[p6j]}],
+                  Line[{p7j = T1[T7j], T7l[p7j]}],
+                  Line[{p8j = T1[T8j], T8l[p8j]}]
+                 },
+                 distanceLine, targetLine, startDisk, targetDisk, timeLine, distanceText, meanDistanceText
+                }, PlotRange -> range, ImageSize -> imageSize, GridLines -> cmgrid]]
+
+cmgrid[min_, max_] :=
+    Module[{cm1},
+           cm1 = 10 cm //. units;
+    Table[If[Mod[i, 10] == 0, i cm1, {i cm1, Opacity[0.3]}], {i, Ceiling[min /cm1], Floor[max /cm1], 1}]]
+
+
+(* Given some large array of {{t_1, x_1, ...}, {t_2, x_2, ...}, ...}
+values, arbitrarily interpolate for any t value *)
+interpolateData[data_, t_] := 
+ 	Module[{sparse, l , u, p, dt},
+           dt = data[[2, 1]] - data[[1, 1]];
+           l = Floor[t/dt];
+           p = (t - l * dt)/dt;
+           l = l + 1;
+           u = l + 1;
+           sparse = 
+           SparseArray[{l  -> 1 - p, u ->  p}, {Dimensions[data][[1]]}];
+           sparse . data]
+
+Options[animateData] = 
+    Join[{drawFunc -> drawFrogCheap},
+         Options[Animate], 
+         Options[drawFrog], 
+         Options[drawFrogCheap]];
+
+animateData[data_, opts:OptionsPattern[]] := 
+    Module[{r1, lmax1, flmax1, tmax, state},
+           {r1, lmax1, flmax1} = {r, lmax, flmax} //. params;
+           tmax = Max[data[[All,1]]];
+           Animate[
+               Function[{t0},
+                        state =interpolateData[data, t0];
+                        OptionValue[drawFunc][
+                            state[[timeBegin ;; timeBegin  + qstateCount]], 
+                            r1, 
+                            lmax1 state[[tailstateBegin]], 
+                            flmax1 state[[tailstateBegin + 1]], 
+                            passState -> state,
+                            Sequence@@FilterRules[{opts}, 
+                                        Options[OptionValue[drawFunc]]]]][t], 
+               {t, 0, tmax},
+               AnimationRepetitions -> 1, 
+               Evaluate[Sequence@@FilterRules[{opts}, Options[Animate]]]
+                  ]]
 
 
 footTorque[angle_] := radialSpring2[angle] + periodicSwing

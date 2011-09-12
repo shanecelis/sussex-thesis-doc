@@ -523,3 +523,5 @@ XXX Left off trying to find better physics constants again.  :(
 When the likelihood that a result occurred by chance alone is below a
 certain level, one or more asterisks are displayed. Popular
 significance levels are 0.05 (*), 0.01 (**), and 0.001 (***).
+
+* Examine the winner's in the results

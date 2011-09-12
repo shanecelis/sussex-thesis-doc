@@ -1,7 +1,20 @@
+\chapter{Introduction}
+
+Morphological change has been demonstrated to accelerate evolution of
+robust behaviour in one instance. However, it is unclear how or why
+this happens. This project evolves a robot with varying degrees of
+conservation between the earlier and later forms to help answer the
+question, under what conditions does morphological change accelerate
+evolution?  Introduction Bongard showed the evolution of light
+following behaviour was accelerated for robots that grew from a
+leg-less anguilliform to a legged hexapod when compared to evolving a
+hexapod with no morphological change [1]. This project is a critical
+replication of that experiment.
+
+
 \begin{comment}
   mention Minimal Simulation guy
   
-
   conventions bold denotes a vector
   hat means its a unit vector
   
@@ -9,8 +22,8 @@
 
 \chapter{Method}
 
-This experiment uses a two-dimensional, aquatic environment to test
-what kinds of morphological changes may accelerate evolution. The
+This experiment uses a two-dimensional, aquatic-like environment to
+test what kinds of morphological changes may accelerate evolution. The
 morphological forms---inspired by frog metamorphosis---have been
 selected such that the conservation of the infant form to the adult
 form may be varied. Figure~\ref{morphology} shows the two principle
@@ -39,20 +52,21 @@ This experiment uses the following physical model to simulate an
 individual in an two-dimensional aquatic environment.  The aim of the
 simulation is to provide a water-like environment, but it is not
 intended to provide a realistic environment such that a controller
-evolved in simulation could be transferred to a real
-robot.  \begin{comment} However, the same technique could be applied
-  to a real robot.\end{comment}
+evolved in simulation could be easily transferred to a real robot.  It
+is thought, however, that applying the same method with a real robot
+would produce comparable results.
 
-The body is composed of six rigid bodies: one central body, one tail
-segment, four feet segments.  The tail and feet are connected to the
-central body by pinwheel joints.  Eight configuration variables
-$\{q_1, q_2, \ldots, q_8\}$ describe the body as shown in
+The virtual robot is composed of six rigid bodies: one central body,
+one tail segment, and four feet segments.  The tail and feet are
+connected to the central body by pinwheel joints.  Eight configuration
+variables $\{q_1, q_2, \ldots, q_8\}$ describe the body as shown in
 Figure~\ref{confvars}.  The position of the body is denoted by the
-vector $(q_1, q_2)$.  The angle of the central body measured counter-clockwise
-to the $\bf \hat j$ axis denoted by $q_3$.  The angle of the tail and
-four feet are denoted by $q_4, \ldots, q_8$, respectively.  Eight
-corresponding motion variables $\{u_1, u_2, \ldots, u_8\}$ describe
-the generalised speeds of the body $u_i = \frac{d q_i}{d t}$.
+vector $(q_1, q_2)$.  The angle of the central body measured
+counter-clockwise to the $\bf \hat j$ axis denoted by $q_3$.  The
+angle of the tail and four feet are denoted by $q_4, \ldots, q_8$,
+respectively.  Eight corresponding motion variables $\{u_1, u_2,
+\ldots, u_8\}$ describe the generalised speeds of the body $u_i =
+\frac{d q_i}{d t}$.
 
 \begin{figure}  
   \centering
@@ -104,8 +118,6 @@ In addition, a drag force and drag torque is exerted on the central
 body.  The full equations of motion are given in the
 Appendix~\ref{app:physeqns}.
 
-\begin{comment}
-
 \subsection{Collisions}
 
 Interbody collisions are permitted, so limbs may freely move through
@@ -113,9 +125,17 @@ one another.\footnote{This is not thought objectionable because one
   can imagine constructing a robot with limbs arranged on planes such
   that they could pass each other unobstructed.}  However, the limbs
 are constrained to not penetrate the central body.  When the angle of
-a limb reaches $|q| = \frac{\pi}{2}$, an impulse force causes the
-velocity to change directions and slow down.
-\end{comment}
+a limb reaches $|q| = \frac{\pi}{2}$, a torque $T_c(q)$ is applied to
+oppose further motion, shown in Equation~\ref{limb-bounded}.
+
+\begin{eqnarray}
+  T_c(q_{i}) &=& T_{max}~\bound(q_{i}, (\frac{- \pi}{2}, \frac{\pi}{2})) \text{ for } i \in [4,8] \label{limb-bounded} \\
+  \bound(x, (a,b)) &=& \begin{cases}
+    -1 & a \ge x \wedge b > x \\ 
+    1 & a < x \wedge b \le x \\
+    0 & \text{otherwise}
+  \end{cases}
+\end{eqnarray}
 
 
 \section{Controller}
@@ -158,14 +178,13 @@ motor neurons are used with weighted inputs from all sensors.  Each
 neuron exerts a torque on an associated limb.  The torque for each
 limb $T(q_i)$ is given in Equation~\ref{limb-torque}.
 
-% XXX Also there is a boundary condition.
 \begin{eqnarray}
-  T(q_{i + 3}) &=& T_{max}~clip(y_i) \text{ for } i \in [1,5] \label{limb-torque} \\
-  clip(x) &=& \begin{cases}
+  T(q_{i + 3}) &=& T_{max}~\clip(y_i) + T_c(q_{i + 3}) \text{ for } i \in [1,5] \label{limb-torque} \\
+  \clip(x) &=& \begin{cases}
               1 & x > 1 \\
               -1 & x < -1 \\
               x & \text{otherwise} 
-              \end{cases}
+              \end{cases} 
 \end{eqnarray}
 
 \section{Genetic Encoding}
@@ -176,7 +195,7 @@ only one of the CTRNN parameters $\tau_i, w_{ji}, \theta_i, \text{ and
 } n_{ji}$.  The $w_{ji}, \theta_i,$ and $ n_{ji}$ parameters are
 linearly mapped from the domain of the gene $[0,1]$ to the domain of
 each parameter.  The $\tau$ parameter uses a non-linear mapping
-$\tau_i = 10^{-2 + 3 g_k}$.
+$\tau_i = 10^{-2 + 4 g_k}$.
 
 \section{Morphological Change}\label{morph-change}
 
@@ -198,7 +217,7 @@ Appendix~\ref{morph-regiment-values}.
   \includegraphics[scale=1.0]{fig/morph-regiment.pdf} 
   \vspace{-15pt}
   \caption[Variations of morphological
-    change]{\label{morph-regiment}An, Bn have no morphological change;
+    change]{\label{morph-regiment}An, Bn do not change morphology;
     Ap, Bp change morphology over phylogenetic time; Ao, Bo change
     morphology over ontogenetic and phylogenetic time.}
 
@@ -227,11 +246,11 @@ Figure~\ref{ctrnn-figures}.
 \end{figure}
 
 The sensors are altered for the ``lobotomised'' controller.  The tail
-brain does not receive proprioceptive sensors from the feet $\{s_7,
-s_8, \ldots, s_14\}$.  Likewise, the foot brain does not receive
-proprioceptive sensors from the tail $s_5$ and $s_6$.  Otherwise, the
-sensors are the same.\footnote{Note on the implementation: the
-  ``lobotomised'' controller code is the same as the
+brain does not receive proprioceptive sensors from the other limbs
+$\{s_7, s_8, \ldots, s_14\}$.  Likewise, the foot brain does not
+receive proprioceptive sensors from the tail $s_5$ and $s_6$.
+Otherwise, the sensors are the same.\footnote{Note on implementation:
+  the ``lobotomised'' controller code is the same as the
   ``non-lobotomised'' with a specific set of weights $w_{ji}$ and
   sensor coefficients $n_{ji}$ set to zero.}
 

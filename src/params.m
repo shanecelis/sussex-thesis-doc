@@ -6,7 +6,7 @@
 units = {cm      -> 0.01 m,          
          m -> 1, kg -> 1, s -> 1};
 
-imageSize = 100;
+imageSize = 200;
 
 params = Join[
           units,
@@ -110,8 +110,8 @@ params = Join[
      kTc -> -5.79837*10^-6, kFc -> -9.14654, krc -> -0.367788, 
      Tfmax -> 0.00179702},
     {
-          wvx   -> .02 0,
-          wvy   -> .02 0,
+          wvx   -> 0,
+          wvy   -> 0,
           dummy -> None
          }];
 Protect@@keys[params];
@@ -218,6 +218,7 @@ motorCount       = 5;
 sensorCount      = 14;
 
 (* state info *)
+timeCount        = 1
 qstateCount      = 8;
 ustateCount      = 8;
 pstateCount      = qstateCount + ustateCount;
@@ -226,11 +227,12 @@ tailStateCount   = 2;
 recordCount      = 4;
 stateCount       = 1 + pstateCount + nodeCount + tailStateCount + recordCount;
 
-qstateBegin      = 1 + 1;
-ustateBegin      = 1 + qstateCount + 1;
-nodeBegin        = 1 + pstateCount + 1;
-tailstateBegin   = 1 + pstateCount + nodeCount + 1;
-recordBegin      = 1 + pstateCount + nodeCount + tailStateCount + 1;
+timeBegin        = 1;
+qstateBegin      = timeBegin + 1;
+ustateBegin      = timeBegin + qstateCount + 1;
+nodeBegin        = timeBegin + pstateCount + 1;
+tailstateBegin   = timeBegin + pstateCount + nodeCount + 1;
+recordBegin      = timeBegin + pstateCount + nodeCount + tailStateCount + 1;
 
 
 (* constants info *)
@@ -279,6 +281,11 @@ targetGaParams = {
                  };
 
 
+currentDirection = {{0,  0},
+                    {1,  0},
+                    {0, -1},
+                    {0,  1}};
+
 gaParams = Join[
     ctrnnGaParams,
     targetGaParams,
@@ -286,13 +293,15 @@ gaParams = Join[
       (* speedGaParams,*)
     {
     target -> {0, 0.25},
+    currentSpeed -> 0.01, 
+    task -> 1,
     tmax -> 10,
     expName -> Ap, (*Ap,*)
     phase -> 1,
     deltat -> 0.01,
     dataDeltat -> 0.1,
     lobotomise -> False,
-
+    enableController -> True,
     runSimulationGAFunc -> Hold[runSimulationMlink],
     animateFunc -> genericAnimate,
     

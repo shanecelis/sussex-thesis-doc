@@ -46,17 +46,17 @@ int main(int argc, char **argv) {
   
 
   if (argc != 5) {
-    cerr << "usage: alps_frog [-D] [-T run-type] [-F fitness-type] <experiment-name> <target-index> <lobotomise> <population-save> " << endl;
+    cerr << "usage: alps_frog [-D] [-T run-type] [-F fitness-type] <experiment-name> <task-index> <lobotomise> <population-save> " << endl;
     cerr << "experiment names: An, Bn, Ap, Bp, Ao, Bo" << endl;
     return 2;
   }
 
   register_signal_handlers();
   sim_init();
-  int target_index = atoi(argv[2]) - 1;
+  int task_index = atoi(argv[2]) - 1;
   bool lobotomise = (atoi(argv[3]) == 1);
   
-  int err = ea_engine(argv[1], target_index, lobotomise, argv[4], fitness_type, 
+  int err = ea_engine(argv[1], task_index, lobotomise, argv[4], fitness_type, 
                       run_type);
 
   sim_uninit();

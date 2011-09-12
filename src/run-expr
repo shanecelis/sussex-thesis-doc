@@ -3,7 +3,7 @@
 
 usage()
 {
-    echo "usage: run-expr [-Dfp] [-i id] [-n nice] [-c count] [-d results-dir] [-F fitness-type] <experiment-name> <target-index> <lobotomise>" >&2;
+    echo "usage: run-expr [-Dfp] [-i id] [-n nice] [-c count] [-d results-dir] [-F fitness-type] <experiment-name> <task-index> <lobotomise>" >&2;
 }
 
 

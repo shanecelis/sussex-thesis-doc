@@ -32,7 +32,7 @@ EXTRA_LIBS = -lstdc++ -framework Foundation
 LDFLAGS = -L/Applications/Mathematica.app/SystemFiles/Libraries/MacOSX-x86-64 -lWolframRTL_Static_Minimal
 CPPFLAGS += -I $(INCDIR)
 
-MOBJS = util.mo bga.mo ctrnn.mo params.mo frog-ga.mo frog-simulation.mo frog-morph-diff.mo runge-kutta.mo export-c-code.mo experiments.mo
+MOBJS = util.mo bga.mo ctrnn.mo params.mo frog-ga.mo frog-simulation.mo frog-morph-diff.mo runge-kutta.mo export-c-code.mo experiments.mo import-alps.mo
 endif
 
 
@@ -100,7 +100,7 @@ eqns-fixed.c: eqns.c eqns.patch
 ifeq ($(MATHEMATICA),1)
 
 %.mo : %.m
-	mathload $< > $@
+	mathload $< && touch $@
 
 run-simulation-mlinktm.o : run-simulation.h
 run-simulation-mlinktm.c : run-simulation-mlink.tm 

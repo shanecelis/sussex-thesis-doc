@@ -3,6 +3,12 @@
 (* ::Title:: *)
 (*Code*)
 
+System`SetSystemOptions[
+ "CompileOptions" -> "CompileReportExternal" -> True]
+
+System`SetSystemOptions[
+ "CompileOptions" -> "CompileReportFailure" -> True]
+
 
 keys[a_] := a /. Rule[k_, v_] -> k
 
@@ -48,9 +54,26 @@ exec[command_] := ReadList["!"<>command, String]
 (* paste and strip :m: prefixes *)
 
 processMstrip[list_] := Select[list, # =!= Null&]
+
 mstripp[phase_] := resultsList[mstripp[], phase]
 mstripp[] := processMstrip[ReadList["! /Users/shane/sc/thesis/src/mstrip -p"]]
-mstrip[file_] := processMStrip[ReadList["! /Users/shane/sc/thesis/src/mstrip "<>file]]
+mstrip[file_] := processMstrip[ReadList["! /Users/shane/sc/thesis/src/mstrip "<>lookupFile[file]]]
+mstrip[file_, phase_] := resultsList[mstrip[file], phase]
 resultsList[list_, phaseArg_] := First[Select[list, (phase /. #) === phaseArg&]]
+pbmstrip = mstripp;
+
+lookupPath = {".", "../results/" };
+
+fileExists[file_] :=
+    FileType[file] =!= None
+
+getFile::notuniq = "Found this list of files: ``";
+lookupFile[file_] :=
+    Module[{filenames, res},
+           filenames = Map[ToFileName[#, file]&, lookupPath];
+           res = Select[filenames, fileExists];
+           (*If[Length[res] > 1,
+              Message[getFile::notuniq, filenames]];*)
+           First[res]]
 
 (*RunThrough[command, expr]*)
