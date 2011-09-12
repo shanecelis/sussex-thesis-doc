@@ -39,17 +39,32 @@ makeFrogMorphDiffHelper[makeDiffFunc_] :=
                Tq8   -> Tfmax (kys Clip[ys[5][t]] 
                                + Sin[(2 Pi f5) t + 2 Pi psi5]
                                + bc mySimpleBoundary[q8[t], {-Pi/2, Pi/2}]),
-               m     -> 1, s -> 1, kg -> 1
+               m     -> 1, s -> 1, kg -> 1, 
+               r -> (r //. params)
                          };
 
            {peqns,pvars} = eqnsForFrog["params" -> myPreParams];
            target = {tx,ty};
            sensors = { (* 14 sensors (should length of tail be included?) *)
-                       Norm[{u1[#], u2[#]}]/(m/s)&, (* current tranlational speed *)
+                       Norm[{u1[#] - wvx, u2[#] -wvy}]/(m/s)&, (* current tranlational speed *)
                        u3[#]/(1/s)&, (* current rotational speed *)
+                       (* distance sensors for the jc and jf joints 
+                       Norm[target - {q1[#] + 2^(1/2)/2 r (Sin[q3[#]] + Cos[q3[#]]),
+                                      q2[#] + 2^(1/2)/2 r (Sin[q3[#]] - Cos[q3[#]])}],
+                       Norm[target - {q1[#] + 2^(1/2)/2 r (Sin[q3[#]] - Cos[q3[#]]),
+                                      q2[#] + 2^(1/2)/2 r (-Sin[q3[#]] - Cos[q3[#]])}],
+*)
+                       (* sl left distance sensor *)
+                       Norm[target - {q1[#] - r Cos[q3[#]],
+                                      q2[#] - r Sin[q3[#]]}]&,
+                       (* sr right distance sensor *)
+                       Norm[target - {q1[#] + r Cos[q3[#]],
+                                      q2[#] + r Sin[q3[#]]}]&,
+                       (*
                        Norm[target - {q1[#], q2[#]} ]/m&, (* distance to target *)
                        VectorAngle[  target - {q1[#], q2[#]}, 
                                    {-Sin[q3[#]], Cos[q3[#]]}]&, (* angle to target *)
+                       *)
                        q4[#]/(Pi/2)&, (* tail position *)
                        u4[#]/(1/s)&, (* tail speed *)
 
@@ -74,9 +89,15 @@ makeFrogMorphDiffHelper[makeDiffFunc_] :=
            reqns = {r[1]'[t] == Norm[target - {q1[t], q2[t]} ],
                     r[2]'[t] == u1[t], 
                     r[3]'[t] == u2[t],
-                    r[4]'[t] == Total[Map[Abs[#[t]]&, {u4,u5,u6,u7,u8}]]
+                    r[4]'[t] == Total[Map[Abs[#[t]]&, {u4,u5,u6,u7,u8}]],
+                       (* sl left distance sensor *)
+                    r[5]'[t] == Norm[target - {q1[t] - r Cos[q3[t]],
+                                               q2[t] - r Sin[q3[t]]}],
+                       (* sr right distance sensor *)
+                    r[6]'[t] == Norm[target - {q1[t] + r Cos[q3[t]],
+                                               q2[t] + r Sin[q3[t]]}]
                    };
-           rvars = {r[1][t], r[2][t], r[3][t], r[4][t]};
+           rvars = {r[1][t], r[2][t], r[3][t], r[4][t], r[5][t], r[6][t]};
 
            eqns = peqns~Join~ceqns~Join~geqns~Join~reqns /. compilableSubs;
            diff = makeDiffFunc[eqns, 

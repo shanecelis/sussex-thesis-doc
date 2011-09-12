@@ -6,6 +6,7 @@
 #include <cstdio>
 #include <string>
 #include <signal.h>
+#include <assert.h>
 using namespace std;
 
 #include "alps/alps.h"
@@ -17,9 +18,10 @@ using namespace std;
 using namespace alps;
 using namespace alps_random;
 
-#include "alps_frog.h"
+#include "alps_frog.h" 
 
 extern "C" {
+
 #include "run-simulation.h"
 #include <unistd.h>
 }
@@ -46,24 +48,28 @@ const double  current_speed = CURRENT_SPEED;
 struct fitness_evaluator
 {
   bool minimise;
-  double (*evaluator)(double * result, double time_max);
+  double (*evaluator)(double * result);
   double goal_fitness;
 };
 
-double mean_distance_norm(double * result, double time_max);
-double mean_speed(double * result, double time_max);
+double mean_distance_norm(double * result);
+double mean_speed(double * result);
 
 fitness_evaluator fitness_evals[] = {{true,  mean_distance_norm, 0.5},
                                      {false, mean_speed, 10000.0}};
 
-int run_frog(const vector<double>& genes, 
+int run_frog(double* genes, 
              double time_max,
              double targetx, double targety, 
              const char *expName, 
-             int phase, bool lobotomise, int task_index, double* result)
+             int phase, 
+             int lobotomise, 
+             int task_index, 
+             double* result)
 {
   int err;
-  double constants[CONSTANTS_COUNT], constants2[CONSTANTS_COUNT], state[STATE_COUNT];//, result[STATE_COUNT];
+  double constants[CONSTANTS_COUNT], constants2[CONSTANTS_COUNT], 
+    state[STATE_COUNT];
 
   for (int i = 0; i < GENE_COUNT; i++) {
     constants[i] = genes[i];
@@ -81,7 +87,7 @@ int run_frog(const vector<double>& genes,
   experiment_init_state(constants + POINTS_BEGIN, 
                         state + TAILSTATE_BEGIN, 
                         state + TAILSTATE_BEGIN + 1);
-  err = physics_constants(constants + PHYS_BEGIN);
+  err = physics_constants(constants + PHYS_BEGIN); 
   constants[CURRENT_BEGIN] = current_direction[task_index][0] * current_speed;
   constants[CURRENT_BEGIN + 1] = current_direction[task_index][1] * current_speed;
   err = period_constants(constants + PERIOD_BEGIN);
@@ -101,7 +107,7 @@ int run_frog(const vector<double>& genes,
     err = run_simulation(state, STEP_SIZE, constants2, time_max, result, NULL);
 
   if (err) {
-    //printf("ERROR!\n");
+    printf("ERROR! err = %d\n", err);
     evaluation_failed_count++;
     return err;
   } else {
@@ -110,52 +116,60 @@ int run_frog(const vector<double>& genes,
   }
 }
 
-double mean_distance_norm(double *result, double time_max)
+double mean_distance_norm(double *result)
 {
   /* normalised average distance to target */
   double dist = result[RECORD_BEGIN]/result[0];
   return dist/target_distance;
 }
 
-double mean_speed(double *result, double time_max)
+double mean_speed(double *result)
 {
   // XXX assumes the initial time was not zero.
   return result[RECORD_BEGIN + 2]/result[0]; 
 }
 
-bool evaluate_frog(vector<double>& fitness, 
-                   vector<double>& genes, 
+void mean_photosensors(double *result, double *fitness)
+{
+  fitness[0] = result[RECORD_BEGIN + 4]/(result[0] * TARGET_DISTANCE);
+  fitness[1] = result[RECORD_BEGIN + 5]/(result[0] * TARGET_DISTANCE);
+}
+
+
+int evaluate_frog(double* fitness, 
+                   double* genes, 
                    //Individual* individ,
                    const char* expName, int phase, 
-                   int task_index, bool lobotomise, int fitness_type)
+                   int task_index, int lobotomise, int fitness_type) 
 {
   if (task_index < 0) {
     cerr << "error: task_index < 0" << endl;
-    return false;
+    return 1;
   }
   if (task_index >= task_count) {
     cerr << "error: task_index >= task_count" << endl;
-    return false;
+    return 2;
   }
   double time_max = TIME_MAX;
   double result[STATE_COUNT];
   int target_index = 0;
   int err = run_frog(genes,
-    //((Individ_Real*)individ)->get_genes(), 
                      time_max,
                      targets[target_index][0] * target_distance, 
                      targets[target_index][1] * target_distance,
                      expName, phase, lobotomise, task_index, result);
 
-  double (*fitfunc)(double *, double) = fitness_evals[fitness_type].evaluator;
-  fitness[0] = (*fitfunc)(result, time_max);
+  // double (*fitfunc)(double *) = fitness_evals[fitness_type].evaluator;
+  // fitness[0] = (*fitfunc)(result);
+  assert(fitness_type == FITNESS_MEAN_LIGHTSENSOR);
+  mean_photosensors(result, fitness);
 
   if (err || isnan(fitness[0])) {
-    //cerr << "BAD fitness " << fitness[0] << " " << evaluation_failed_count << endl;
-    return false;
+    //cerr << "BAD err = " << err << "fitness " << fitness[0] << " " << evaluation_failed_count << endl;
+    return 3;
   } else {
     //cerr << "fitness " << fitness[0] << " " << evaluation_succ_count << endl;
-    return true;
+    return 0;
   }
 }
 
@@ -254,28 +268,24 @@ int read_array(const char *filename, int *n, double *array) {
   return 0;
 }
 
-
-char *save_genes_for_phase(vector<double>& genes, const char *pop_save_prefix, 
+char *save_genes_for_phase(double *genes, const char *save_prefix, 
                            int phase)
 {
   static char gene_save_name[255];
-  sprintf(gene_save_name, "%s%d-genes.bin", pop_save_prefix, phase);
+  sprintf(gene_save_name, "%s/phase%d-genes.bin", save_prefix, phase);
 
-  double dgenes[GENE_COUNT];
-  for (int i = 0; i < GENE_COUNT; i++) 
-    dgenes[i] = genes[i];
-  write_array(gene_save_name, GENE_COUNT, dgenes);
+  write_array(gene_save_name, GENE_COUNT, genes);
   return gene_save_name;
 }
 
-int ea_engine(const char *exp_name, int task_index, bool lobotomise, 
+int ea_engine(const char *exp_name, int task_index, int lobotomise, 
               const char *pop_save, int fitness_type, int run_type)
 {
   time_t begin = time(NULL);
   pid_t pid = getpid();
   seed_random((long) time(NULL) ^ pid);
   long random_seed = get_random_seed();
-  if (is_random_seed_set()) {
+  if (is_random_seed_set()) { 
     cout << "random-seed-set " << random_seed << endl;
   } else {
     cout << "random-seed-NOT-set " << random_seed << endl;
@@ -340,17 +350,22 @@ int ea_engine(const char *exp_name, int task_index, bool lobotomise,
     }
 
     vector<double> fitness;
-    fitness.resize(1);
+    fitness.resize(FITNESS_COUNT);
     vector<double> genes = ((Individ_Real*)individ)->get_genes();
-    int result = evaluate_frog(fitness, 
-                               genes,
+    double cgenes[GENE_COUNT], cfitness[FITNESS_COUNT];
+    int i;
+    for (i = 0; i < GENE_COUNT; i++)
+      cgenes[i] = genes[i];
+    int err = evaluate_frog(cfitness, 
+                               cgenes,
                                //individ, 
                                exp_name, phase, 
                                task_index, 
                                lobotomise,
                                fitness_type);
-
-    if (result == false) {
+    for (i = 0; i < FITNESS_COUNT; i++)
+      fitness[i] = cfitness[i];
+    if (err) {
       // Error evaluating this individual.
       Population->evaluate_error(index, individ);
     } else {
@@ -364,7 +379,9 @@ int ea_engine(const char *exp_name, int task_index, bool lobotomise,
 
         cout << phase << " " << evaluation_failed_count << " "<< evaluation_succ_count << endl;
         vector<double> genes = ((Individ_Real*)individ)->get_genes();
-        char *gene_bin = save_genes_for_phase(genes, pop_save, phase);
+        for (i = 0; i < GENE_COUNT; i++)
+          cgenes[i] = genes[i];
+        char *gene_bin = save_genes_for_phase(cgenes, pop_save, phase);
 
         printf(":m:\n");
         printf(":m: (* End of phase %d *)\n", phase);

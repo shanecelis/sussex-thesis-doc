@@ -72,11 +72,12 @@ int main(int argc, char **argv) {
   const char *exp_name = argv[2];
   int phase = 1;
   bool lobotomise = false;
-  int target_index = 0;
+  int task_index = 0;
   int fitness_type = 0;
   Individ_Real *individ = new Individ_Real(GENE_COUNT);    
-  vector<double> fitness;
+  double fitness[FITNESS_COUNT];
   vector<double> genes;
+  double cgenes[GENE_COUNT];
   sim_init();
 
   if (has_suffix(argv[1], ".bin")) {
@@ -89,32 +90,26 @@ int main(int argc, char **argv) {
     //   genes[i] = x;
     // }
     // fclose(in);
-    double bgenes[GENE_COUNT];
     int n;
-    genes.resize(GENE_COUNT);	
-    read_array(argv[1], &n, bgenes);
+    read_array(argv[1], &n, cgenes);
     assert(n == GENE_COUNT);
-    for (i = 0; i < GENE_COUNT; i++)
-      genes[i] = bgenes[i];
-
   } else if (has_suffix(argv[1], ".ind")) {
     if (! individ->read(argv[1])) {
       cerr << "error: cannot read .ind file" << endl;
       return 3;
     }
     genes = ((Individ_Real*)individ)->get_genes();
+    for (i = 0; i < GENE_COUNT; i++) cgenes[i] = genes[i];
   } else {
     cerr << "error: cannot determine file type for '" << argv[1] << "'" << endl;
     return 1;
   }
 
-  fitness.resize(1);
-
   if (argc >= 4) {
     phase = atoi(argv[3]);
   }
   if (argc >= 5) {
-    target_index = atoi(argv[4]) - 1;
+    task_index = atoi(argv[4]) - 1;
   }
   if (argc >= 6) {
     lobotomise = (atoi(argv[5]) == 1);
@@ -123,20 +118,27 @@ int main(int argc, char **argv) {
   if (argc >= 7) {
     fitness_type = atoi(argv[6]);
   }
+  err = evaluate_frog(fitness, 
+                      cgenes, 
+                      exp_name,
+                      phase,
+                      task_index, 
+                      lobotomise,
+                      fitness_type);
 
-  if (evaluate_frog(fitness, 
-                    genes,
-                    exp_name,
-                    phase,
-                    target_index, 
-                    lobotomise,
-                    fitness_type)) {
-    cout << "fitness: " << fitness[0] << endl;
+  if (! err) {
+    printf("%-16s: ", argv[1]);
+    //cout << argv[1] << ": ";
+    for (i = 0; i < FITNESS_COUNT; i++)
+      cout << fitness[i] << " " ;
+    cout << endl;
   } else {
-    err = 1;
-    cerr << "err: " << err << endl;
-  
+    cerr << "error: evaluate_frog() (err = " << err << ") on file " << argv[1] << "." << endl;
+    //for (i = 0; i < STATE_COUNT; i++) printf("%f ", results[i]);
+    //printf("\n");
   }
+
+                                      
   sim_uninit();
   return err;
 }

@@ -224,7 +224,7 @@ ustateCount      = 8;
 pstateCount      = qstateCount + ustateCount;
 nodeCount        = 5;
 tailStateCount   = 2;
-recordCount      = 4;
+recordCount      = 6;
 stateCount       = 1 + pstateCount + nodeCount + tailStateCount + recordCount;
 
 timeBegin        = 1;

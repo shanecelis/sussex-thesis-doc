@@ -9,7 +9,7 @@ autorhs           on
 autoz             off
 body              a,b,c,d,e,f
                   % central body (a), tail (b), feet clockwise (c---f)
-point             o,jb,jc,jd,je,jf 
+point             o,jb,jc,jd,je,jf,sr,sl
                   % origin and pin joint points for each body
 newtonian         n
 variables         q1', q2', q3', q4', q5', q6', q7', q8'
@@ -55,6 +55,8 @@ P_ao_jc> = r * unitvec( a1> - a2>)
 P_ao_jd> = r * unitvec( a1> + a2>)
 P_ao_je> = r * unitvec(-a1> + a2>)
 P_ao_jf> = r * unitvec(-a1> - a2>)
+P_ao_sl> = r * (-a1>) 
+P_ao_sr> = r * a1>
 
 % Set the positions of the pin joints with respect to the bodies other than A.
 P_jb_bo> = -l/2  * b2>

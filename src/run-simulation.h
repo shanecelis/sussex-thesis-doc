@@ -13,13 +13,16 @@
 #define MAX_EVALS        60000
 //#define MAX_EVALS        10
 
+#define FITNESS_COUNT    2
+
+
 // state info
 #define TIME_COUNT       1
 #define QSTATE_COUNT     8
 #define USTATE_COUNT     8
 #define NODE_COUNT       5
 #define TAILSTATE_COUNT  2
-#define RECORD_COUNT     4
+#define RECORD_COUNT     6
 #define STATE_COUNT      (TIME_COUNT + QSTATE_COUNT + USTATE_COUNT + NODE_COUNT + TAILSTATE_COUNT + RECORD_COUNT)
 
 #define QSTATE_BEGIN     TIME_COUNT

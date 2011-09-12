@@ -54,7 +54,7 @@ int main(int argc, char **argv) {
   register_signal_handlers();
   sim_init();
   int task_index = atoi(argv[2]) - 1;
-  bool lobotomise = (atoi(argv[3]) == 1);
+  int lobotomise = (atoi(argv[3]) == 1);
   
   int err = ea_engine(argv[1], task_index, lobotomise, argv[4], fitness_type, 
                       run_type);

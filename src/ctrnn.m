@@ -106,7 +106,7 @@ eqnsForCTRNN[ctrnn_List,OptionsPattern[]] :=
            n =nodeCountCTRNN[ctrnn];
            y = Table[ys[i][t], {i, n}];
            dy = Table[ys[i]'[t], {i,n}];
-           Tinv = DiagonalMatrix[Ts^-1];
+           Tinv = DiagonalMatrix[Ts];
            bound = IdentityMatrix[n];
            bound = DiagonalMatrix[Map[1 - Abs[boundaries[#, {-2,2}]]&, y]];
            eqns = MapThread[#1 == #2&, {dy, Tinv . (-y + bound . ( W . sigma[y + theta] + gain Map[#[t]&,input]))

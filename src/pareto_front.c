@@ -34,7 +34,9 @@
   points by minimising.
 
 
-  Created by Yi Cao (y.cao@cranfield.ac.uk).
+  Created by Dr Yi Cao (y.cao@cranfield.ac.uk),
+  http://www.cranfield.ac.uk/soe/profiles/y_cao.html.
+
   Modified by Shane Celis to work on unix and with row major matrices.
 
 */

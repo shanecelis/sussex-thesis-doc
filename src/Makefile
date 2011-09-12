@@ -29,7 +29,7 @@ LIBDIR = ${CADDSDIR}
 MPREP = ${CADDSDIR}/mprep
 EXTRA_LIBS = -lstdc++ -framework Foundation
 
-LDFLAGS = -L/Applications/Mathematica.app/SystemFiles/Libraries/MacOSX-x86-64 -lWolframRTL_Static_Minimal
+#LDFLAGS = -L/Applications/Mathematica.app/SystemFiles/Libraries/MacOSX-x86-64 -lWolframRTL_Static_Minimal
 CPPFLAGS += -I $(INCDIR)
 
 MOBJS = util.mo bga.mo ctrnn.mo params.mo frog-ga.mo frog-simulation.mo frog-morph-diff.mo runge-kutta.mo export-c-code.mo experiments.mo import-alps.mo
@@ -53,7 +53,7 @@ SIM_OBJS = rkqs.o frogRHS-fixed.o run-simulation-rkqs.o myWolframRTL.o
 #SIM_OBJS = runSimulationAdaptive.o run-simulation.o experiments.o 
 OBJS = $(MOBJS) genes_real.o $(SIM_OBJS) alps_frog.o alps_main.o frog_eval.o run-sim-main.o
 
-BINARIES = run-sim-main alps_main frog_eval 
+BINARIES = run-sim-main alps_main frog_eval alps-like
 
 ifeq ($(MATHEMATICA),1)
 	BINARIES += run-simulation-mlink 
@@ -128,4 +128,4 @@ frogRHS-fixed.c: frogRHS.c frogRHS.patch
 
 frog-ga.mo: bga.mo params.mo
 
-alpsish: alpsish.o pareto_front.o
+alps-like: alps-like.o pareto_front.o alps_frog.o $(SIM_OBJS)

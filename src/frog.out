@@ -36,7 +36,7 @@ Press Enter to continue.    (1) % frog.al
    (8) autoz             off
    (9) body              a,b,c,d,e,f
    (10) % central body (a), tail (b), feet clockwise (c---f)
-   (11) point             o,jb,jc,jd,je,jf 
+   (11) point             o,jb,jc,jd,je,jf,sr,sl
    (12) % origin and pin joint points for each body
    (13) newtonian         n
    (14) variables         q1', q2', q3', q4', q5', q6', q7', q8'
@@ -129,253 +129,259 @@ Press Enter to continue.    (1) % frog.al
    (76) P_ao_jf> = r * unitvec(-a1> - a2>)
 -> (77) P_ao_jf> = -0.7071068*r*a1> - 0.7071068*r*a2>
 
-   (78)    (78) % Set the positions of the pin joints with respect to the bodies other than A.
-   (79) P_jb_bo> = -l/2  * b2>
--> (80) P_jb_bo> = -0.5*l*b2>
+   (78) P_ao_sl> = r * (-a1>) 
+-> (79) P_ao_sl> = -r*a1>
 
-   (81) P_jc_co> = -fl/2 * c2>
--> (82) P_jc_co> = -0.5*fl*c2>
+   (80) P_ao_sr> = r * a1>
+-> (81) P_ao_sr> = r*a1>
 
-   (83) P_jd_do> = -fl/2 * d2>
--> (84) P_jd_do> = -0.5*fl*d2>
+   (82)    (82) % Set the positions of the pin joints with respect to the bodies other than A.
+   (83) P_jb_bo> = -l/2  * b2>
+-> (84) P_jb_bo> = -0.5*l*b2>
 
-   (85) P_je_eo> = -fl/2 * e2>
--> (86) P_je_eo> = -0.5*fl*e2>
+   (85) P_jc_co> = -fl/2 * c2>
+-> (86) P_jc_co> = -0.5*fl*c2>
 
-   (87) P_jf_fo> = -fl/2 * f2>
--> (88) P_jf_fo> = -0.5*fl*f2>
+   (87) P_jd_do> = -fl/2 * d2>
+-> (88) P_jd_do> = -0.5*fl*d2>
 
-   (89)    (89) % Set the angular velocities to their respective motion variables.
-   (90) w_a_n> = u3 * a3>
--> (91) w_a_n> = u3*n3>
+   (89) P_je_eo> = -fl/2 * e2>
+-> (90) P_je_eo> = -0.5*fl*e2>
 
-   (92) w_b_a> = u4 * a3>
--> (93) w_b_a> = u4*a3>
+   (91) P_jf_fo> = -fl/2 * f2>
+-> (92) P_jf_fo> = -0.5*fl*f2>
 
-   (94) w_c_a> = u5 * a3>
--> (95) w_c_a> = u5*a3>
+   (93)    (93) % Set the angular velocities to their respective motion variables.
+   (94) w_a_n> = u3 * a3>
+-> (95) w_a_n> = u3*n3>
 
-   (96) w_d_a> = u6 * a3>
--> (97) w_d_a> = u6*a3>
+   (96) w_b_a> = u4 * a3>
+-> (97) w_b_a> = u4*a3>
 
-   (98) w_e_a> = u7 * a3>
--> (99) w_e_a> = u7*a3>
+   (98) w_c_a> = u5 * a3>
+-> (99) w_c_a> = u5*a3>
 
-   (100) w_f_a> = u8 * a3>
--> (101) w_f_a> = u8*a3>
+   (100) w_d_a> = u6 * a3>
+-> (101) w_d_a> = u6*a3>
 
-   (102)    (102) % Fix the pin joints in their respective RFs.
-   (103) v_jb_a> = 0>
--> (104) v_jb_a> = 0>
+   (102) w_e_a> = u7 * a3>
+-> (103) w_e_a> = u7*a3>
 
-   (105) v_jb_b> = 0>
--> (106) v_jb_b> = 0>
+   (104) w_f_a> = u8 * a3>
+-> (105) w_f_a> = u8*a3>
 
-   (107) v_jc_a> = 0>
--> (108) v_jc_a> = 0>
+   (106)    (106) % Fix the pin joints in their respective RFs.
+   (107) v_jb_a> = 0>
+-> (108) v_jb_a> = 0>
 
-   (109) v_jd_a> = 0>
--> (110) v_jd_a> = 0>
+   (109) v_jb_b> = 0>
+-> (110) v_jb_b> = 0>
 
-   (111) v_je_a> = 0>
--> (112) v_je_a> = 0>
+   (111) v_jc_a> = 0>
+-> (112) v_jc_a> = 0>
 
-   (113) v_jf_a> = 0>
--> (114) v_jf_a> = 0>
+   (113) v_jd_a> = 0>
+-> (114) v_jd_a> = 0>
 
-   (115) v_jc_c> = 0>
--> (116) v_jc_c> = 0>
+   (115) v_je_a> = 0>
+-> (116) v_je_a> = 0>
 
-   (117) v_jd_d> = 0>
--> (118) v_jd_d> = 0>
+   (117) v_jf_a> = 0>
+-> (118) v_jf_a> = 0>
 
-   (119) v_je_e> = 0>
--> (120) v_je_e> = 0>
+   (119) v_jc_c> = 0>
+-> (120) v_jc_c> = 0>
 
-   (121) v_jf_f> = 0>
--> (122) v_jf_f> = 0>
+   (121) v_jd_d> = 0>
+-> (122) v_jd_d> = 0>
 
-   (123)    (123) % Use the 2 point thereom to define velocity of each limb with respect to A.
-   (124) v2pts(a,b,jb,bo)
--> (125) V_bO_a> = 0.5*l*u4*b1>
+   (123) v_je_e> = 0>
+-> (124) v_je_e> = 0>
 
-   (126) v2pts(a,c,jc,co)
--> (127) V_cO_a> = 0.5*fl*u5*c1>
+   (125) v_jf_f> = 0>
+-> (126) v_jf_f> = 0>
 
-   (128) v2pts(a,d,jd,do)
--> (129) V_dO_a> = 0.5*fl*u6*d1>
+   (127)    (127) % Use the 2 point thereom to define velocity of each limb with respect to A.
+   (128) v2pts(a,b,jb,bo)
+-> (129) V_bO_a> = 0.5*l*u4*b1>
 
-   (130) v2pts(a,e,je,eo)
--> (131) V_eO_a> = 0.5*fl*u7*e1>
+   (130) v2pts(a,c,jc,co)
+-> (131) V_cO_a> = 0.5*fl*u5*c1>
 
-   (132) v2pts(a,f,jf,fo)
--> (133) V_fO_a> = 0.5*fl*u8*f1>
+   (132) v2pts(a,d,jd,do)
+-> (133) V_dO_a> = 0.5*fl*u6*d1>
 
-   (134)    (134) v_ao_n> = dt(p_o_ao>, n)
--> (135) v_ao_n> = u1*n1> + u2*n2>
+   (134) v2pts(a,e,je,eo)
+-> (135) V_eO_a> = 0.5*fl*u7*e1>
 
-   (136) v2pts(n,a,ao,jb)
--> (137) V_jb_n> = r*u3*a1> + u1*n1> + u2*n2>
+   (136) v2pts(a,f,jf,fo)
+-> (137) V_fO_a> = 0.5*fl*u8*f1>
 
-   (138)    (138) % Define the translational velocities.
-   (139) v_bo_n> = dt(p_o_bo>, n)
--> (140) v_bo_n> = r*u3*a1> + 0.5*l*(u3+u4)*b1> + u1*n1> + u2*n2>
+   (138)    (138) v_ao_n> = dt(p_o_ao>, n)
+-> (139) v_ao_n> = u1*n1> + u2*n2>
 
-   (141) v_co_n> = dt(p_o_co>, n)
--> (142) v_co_n> = 0.7071068*r*u3*a1> + 0.7071068*r*u3*a2> + 0.5*fl*(u3+u5)*c1> + u1*n1> + u2*n2>
+   (140) v2pts(n,a,ao,jb)
+-> (141) V_jb_n> = r*u3*a1> + u1*n1> + u2*n2>
 
-   (143) v_do_n> = dt(p_o_do>, n)
--> (144) v_do_n> = -0.7071068*r*u3*a1> + 0.7071068*r*u3*a2> + 0.5*fl*(u3+u6)*d1> + u1*n1> + u2*n2>
+   (142)    (142) % Define the translational velocities.
+   (143) v_bo_n> = dt(p_o_bo>, n)
+-> (144) v_bo_n> = r*u3*a1> + 0.5*l*(u3+u4)*b1> + u1*n1> + u2*n2>
 
-   (145) v_eo_n> = dt(p_o_eo>, n)
--> (146) v_eo_n> = -0.7071068*r*u3*a1> - 0.7071068*r*u3*a2> + 0.5*fl*(u3+u7)*e1> + u1*n1> + u2*n2>
+   (145) v_co_n> = dt(p_o_co>, n)
+-> (146) v_co_n> = 0.7071068*r*u3*a1> + 0.7071068*r*u3*a2> + 0.5*fl*(u3+u5)*c1> + u1*n1> + u2*n2>
 
-   (147) v_fo_n> = dt(p_o_fo>, n)
--> (148) v_fo_n> = 0.7071068*r*u3*a1> - 0.7071068*r*u3*a2> + 0.5*fl*(u3+u8)*f1> + u1*n1> + u2*n2>
+   (147) v_do_n> = dt(p_o_do>, n)
+-> (148) v_do_n> = -0.7071068*r*u3*a1> + 0.7071068*r*u3*a2> + 0.5*fl*(u3+u6)*d1> + u1*n1> + u2*n2>
 
-   (149)    (149) % Define the translational accelerations.
-   (150) a_ao_n> = dt(v_ao_n>, n)
--> (151) a_ao_n> = u1'*n1> + u2'*n2>
+   (149) v_eo_n> = dt(p_o_eo>, n)
+-> (150) v_eo_n> = -0.7071068*r*u3*a1> - 0.7071068*r*u3*a2> + 0.5*fl*(u3+u7)*e1> + u1*n1> + u2*n2>
 
-   (152) a_bo_n> = dt(v_bo_n>, n)
--> (153) a_bo_n> = r*u3'*a1> + r*u3^2*a2> + 0.5*l*(u3'+u4')*b1> + 0.5*l*(u3+u4)^2*b2> + u1'*n1> + u2'*n2>
+   (151) v_fo_n> = dt(p_o_fo>, n)
+-> (152) v_fo_n> = 0.7071068*r*u3*a1> - 0.7071068*r*u3*a2> + 0.5*fl*(u3+u8)*f1> + u1*n1> + u2*n2>
 
-   (154) a_co_n> = dt(v_co_n>, n)
--> (155) a_co_n> = -0.7071068*r*(u3^2-u3')*a1> + 0.7071068*r*(u3^2+u3')*a2> + 0.5*fl*(u3'+u5')*c1> + 0.5*fl*(u3+u5)^2*c2> + u1'*n1> + u2'*n2>
+   (153)    (153) % Define the translational accelerations.
+   (154) a_ao_n> = dt(v_ao_n>, n)
+-> (155) a_ao_n> = u1'*n1> + u2'*n2>
 
-   (156) a_do_n> = dt(v_do_n>, n)
--> (157) a_do_n> = -0.7071068*r*(u3^2+u3')*a1> - 0.7071068*r*(u3^2-u3')*a2> + 0.5*fl*(u3'+u6')*d1> + 0.5*fl*(u3+u6)^2*d2> + u1'*n1> + u2'*n2>
+   (156) a_bo_n> = dt(v_bo_n>, n)
+-> (157) a_bo_n> = r*u3'*a1> + r*u3^2*a2> + 0.5*l*(u3'+u4')*b1> + 0.5*l*(u3+u4)^2*b2> + u1'*n1> + u2'*n2>
 
-   (158) a_eo_n> = dt(v_eo_n>, n)
--> (159) a_eo_n> = 0.7071068*r*(u3^2-u3')*a1> - 0.7071068*r*(u3^2+u3')*a2> + 0.5*fl*(u3'+u7')*e1> + 0.5*fl*(u3+u7)^2*e2> + u1'*n1> + u2'*n2>
+   (158) a_co_n> = dt(v_co_n>, n)
+-> (159) a_co_n> = -0.7071068*r*(u3^2-u3')*a1> + 0.7071068*r*(u3^2+u3')*a2> + 0.5*fl*(u3'+u5')*c1> + 0.5*fl*(u3+u5)^2*c2> + u1'*n1> + u2'*n2>
 
-   (160) a_fo_n> = dt(v_fo_n>, n)
--> (161) a_fo_n> = 0.7071068*r*(u3^2+u3')*a1> + 0.7071068*r*(u3^2-u3')*a2> + 0.5*fl*(u3'+u8')*f1> + 0.5*fl*(u3+u8)^2*f2> + u1'*n1> + u2'*n2>
+   (160) a_do_n> = dt(v_do_n>, n)
+-> (161) a_do_n> = -0.7071068*r*(u3^2+u3')*a1> - 0.7071068*r*(u3^2-u3')*a2> + 0.5*fl*(u3'+u6')*d1> + 0.5*fl*(u3+u6)^2*d2> + u1'*n1> + u2'*n2>
 
-   (162)    (162) % The units for torque_a> should be newton-meters (m/s)^2 kg.
-   (163) % kTa = -rho/2 * TCdcirc * TAcirc
-   (164) torque_a> = kTa * w_a_n> * mag(w_a_n>)
--> (165) torque_a> = kTa*u3*ABS(u3)*n3>
+   (162) a_eo_n> = dt(v_eo_n>, n)
+-> (163) a_eo_n> = 0.7071068*r*(u3^2-u3')*a1> - 0.7071068*r*(u3^2+u3')*a2> + 0.5*fl*(u3'+u7')*e1> + 0.5*fl*(u3+u7)^2*e2> + u1'*n1> + u2'*n2>
 
-   (166) torque_b> = kTb * w_b_a> * mag(w_b_a>)
--> (167) torque_b> = kTb*u4*ABS(u4)*a3>
+   (164) a_fo_n> = dt(v_fo_n>, n)
+-> (165) a_fo_n> = 0.7071068*r*(u3^2+u3')*a1> + 0.7071068*r*(u3^2-u3')*a2> + 0.5*fl*(u3'+u8')*f1> + 0.5*fl*(u3+u8)^2*f2> + u1'*n1> + u2'*n2>
 
-   (168) torque_c> = kTc * w_c_a> * mag(w_c_a>)
--> (169) torque_c> = kTc*u5*ABS(u5)*a3>
+   (166)    (166) % The units for torque_a> should be newton-meters (m/s)^2 kg.
+   (167) % kTa = -rho/2 * TCdcirc * TAcirc
+   (168) torque_a> = kTa * w_a_n> * mag(w_a_n>)
+-> (169) torque_a> = kTa*u3*ABS(u3)*n3>
 
-   (170) torque_d> = kTc * w_d_a> * mag(w_d_a>)
--> (171) torque_d> = kTc*u6*ABS(u6)*a3>
+   (170) torque_b> = kTb * w_b_a> * mag(w_b_a>)
+-> (171) torque_b> = kTb*u4*ABS(u4)*a3>
 
-   (172) torque_e> = kTc * w_e_a> * mag(w_e_a>)
--> (173) torque_e> = kTc*u7*ABS(u7)*a3>
+   (172) torque_c> = kTc * w_c_a> * mag(w_c_a>)
+-> (173) torque_c> = kTc*u5*ABS(u5)*a3>
 
-   (174) torque_f> = kTc * w_f_a> * mag(w_f_a>)
--> (175) torque_f> = kTc*u8*ABS(u8)*a3>
+   (174) torque_d> = kTc * w_d_a> * mag(w_d_a>)
+-> (175) torque_d> = kTc*u6*ABS(u6)*a3>
 
-   (176) torque(a/b, Tq4 * n3>)
+   (176) torque_e> = kTc * w_e_a> * mag(w_e_a>)
+-> (177) torque_e> = kTc*u7*ABS(u7)*a3>
+
+   (178) torque_f> = kTc * w_f_a> * mag(w_f_a>)
+-> (179) torque_f> = kTc*u8*ABS(u8)*a3>
+
+   (180) torque(a/b, Tq4 * n3>)
 
  TORQUE_b> is being redefined as follows:
 
--> (177) TORQUE_b> = kTb*u4*ABS(u4)*a3> + Tq4*n3>
+-> (181) TORQUE_b> = kTb*u4*ABS(u4)*a3> + Tq4*n3>
 
  TORQUE_a> is being redefined as follows:
 
--> (178) TORQUE_a> = (kTa*u3*ABS(u3)-Tq4)*n3>
+-> (182) TORQUE_a> = (kTa*u3*ABS(u3)-Tq4)*n3>
 
-   (179) torque(a/c, Tq5 * n3>)
+   (183) torque(a/c, Tq5 * n3>)
 
  TORQUE_c> is being redefined as follows:
 
--> (180) TORQUE_c> = kTc*u5*ABS(u5)*a3> + Tq5*n3>
+-> (184) TORQUE_c> = kTc*u5*ABS(u5)*a3> + Tq5*n3>
 
  TORQUE_a> is being redefined as follows:
 
--> (181) TORQUE_a> = (kTa*u3*ABS(u3)-Tq4-Tq5)*n3>
+-> (185) TORQUE_a> = (kTa*u3*ABS(u3)-Tq4-Tq5)*n3>
 
-   (182) torque(a/d, Tq6 * n3>)
+   (186) torque(a/d, Tq6 * n3>)
 
  TORQUE_d> is being redefined as follows:
 
--> (183) TORQUE_d> = kTc*u6*ABS(u6)*a3> + Tq6*n3>
+-> (187) TORQUE_d> = kTc*u6*ABS(u6)*a3> + Tq6*n3>
 
  TORQUE_a> is being redefined as follows:
 
--> (184) TORQUE_a> = (kTa*u3*ABS(u3)-Tq4-Tq5-Tq6)*n3>
+-> (188) TORQUE_a> = (kTa*u3*ABS(u3)-Tq4-Tq5-Tq6)*n3>
 
-   (185) torque(a/e, Tq7 * n3>)
+   (189) torque(a/e, Tq7 * n3>)
 
  TORQUE_e> is being redefined as follows:
 
--> (186) TORQUE_e> = kTc*u7*ABS(u7)*a3> + Tq7*n3>
+-> (190) TORQUE_e> = kTc*u7*ABS(u7)*a3> + Tq7*n3>
 
  TORQUE_a> is being redefined as follows:
 
--> (187) TORQUE_a> = (kTa*u3*ABS(u3)-Tq4-Tq5-Tq6-Tq7)*n3>
+-> (191) TORQUE_a> = (kTa*u3*ABS(u3)-Tq4-Tq5-Tq6-Tq7)*n3>
 
-   (188) torque(a/f, Tq8 * n3>)
+   (192) torque(a/f, Tq8 * n3>)
 
  TORQUE_f> is being redefined as follows:
 
--> (189) TORQUE_f> = kTc*u8*ABS(u8)*a3> + Tq8*n3>
+-> (193) TORQUE_f> = kTc*u8*ABS(u8)*a3> + Tq8*n3>
 
  TORQUE_a> is being redefined as follows:
 
--> (190) TORQUE_a> = (kTa*u3*ABS(u3)-Tq4-Tq5-Tq6-Tq7-Tq8)*n3>
+-> (194) TORQUE_a> = (kTa*u3*ABS(u3)-Tq4-Tq5-Tq6-Tq7-Tq8)*n3>
 
-   (191)    (191) % velocity of the water current
-   (192) wv> = wvx * n1> + wvy * n2>
--> (193) wv> = wvx*n1> + wvy*n2>
+   (195)    (195) % velocity of the water current
+   (196) wv> = wvx * n1> + wvy * n2>
+-> (197) wv> = wvx*n1> + wvy*n2>
 
-   (194)    (194) % Set the drag force for each body.
-   (195) % wikipedia drag force
-   (196) % F_D = \frac{1}{2} \rho v^2 C_d A
-   (197) % kFa = -rho/2 * Cdcirc  * Acirc 
-   (198) force_ao> = kFa * (v_ao_n> - wv>) * mag(v_ao_n> - wv>)
--> (199) force_ao> = -kFa*(wvx-u1)*((wvx-u1)^2+(wvy-u2)^2)^0.5*n1> - kFa*(wvy-u2)*((wvx-u1)^2+(wvy-u2)^2)^0.5*n2>
+   (198)    (198) % Set the drag force for each body.
+   (199) % wikipedia drag force
+   (200) % F_D = \frac{1}{2} \rho v^2 C_d A
+   (201) % kFa = -rho/2 * Cdcirc  * Acirc 
+   (202) force_ao> = kFa * (v_ao_n> - wv>) * mag(v_ao_n> - wv>)
+-> (203) force_ao> = -kFa*(wvx-u1)*((wvx-u1)^2+(wvy-u2)^2)^0.5*n1> - kFa*(wvy-u2)*((wvx-u1)^2+(wvy-u2)^2)^0.5*n2>
 
-   (200) krb = 0 
--> (201) krb = 0
+   (204) krb = 0 
+-> (205) krb = 0
 
-   (202) krc = 0
--> (203) krc = 0
+   (206) krc = 0
+-> (207) krc = 0
 
-   (204) %wv> = 0>
-   (205) % kFb = -rho/2 * Cdplate * ld 
-   (206) force_bo> = kFb * l * (v_bo_n> - wv>) * abs(dot(b1>, (v_bo_n> - wv>)) + krb * SIGN(u4) * mag(v_bo_n>))
--> (207) force_bo> = kFb*l*r*u3*ABS(0.5*l*(u3+u4)+r*COS(oq4+q4)*u3-SIN(oq4+q3+q4)*(wvy-u2)-COS(oq4+q3+q4)*(wvx-u1))*a1> + 0.5*kFb*l^2*(u3+u4)*ABS(0.5*l*(u3+u4)+r*COS(oq4+q4)*u3-SIN(oq4+q3+q4)*(wvy-u2)-COS(oq4+q3+q4)*(wvx-u1))*b1> - kFb*l*(wvx-u1)*ABS(0.5*l*(u3+u4)+r*COS(oq4+q4)*u3-SIN(oq4+q3+q4)*(wvy-u2)-COS(oq4+q3+q4)*(wvx-u1))*n1> - kFb*l*(wvy-u2)*ABS(0.5*l*(u3+u4)+r*COS(oq4+q4)*u3-SIN(oq4+q3+q4)*(wvy-u2)-COS(oq4+q3+q4)*(wvx-u1))*n2>
+   (208) %wv> = 0>
+   (209) % kFb = -rho/2 * Cdplate * ld 
+   (210) force_bo> = kFb * l * (v_bo_n> - wv>) * abs(dot(b1>, (v_bo_n> - wv>)) + krb * SIGN(u4) * mag(v_bo_n>))
+-> (211) force_bo> = kFb*l*r*u3*ABS(0.5*l*(u3+u4)+r*COS(oq4+q4)*u3-SIN(oq4+q3+q4)*(wvy-u2)-COS(oq4+q3+q4)*(wvx-u1))*a1> + 0.5*kFb*l^2*(u3+u4)*ABS(0.5*l*(u3+u4)+r*COS(oq4+q4)*u3-SIN(oq4+q3+q4)*(wvy-u2)-COS(oq4+q3+q4)*(wvx-u1))*b1> - kFb*l*(wvx-u1)*ABS(0.5*l*(u3+u4)+r*COS(oq4+q4)*u3-SIN(oq4+q3+q4)*(wvy-u2)-COS(oq4+q3+q4)*(wvx-u1))*n1> - kFb*l*(wvy-u2)*ABS(0.5*l*(u3+u4)+r*COS(oq4+q4)*u3-SIN(oq4+q3+q4)*(wvy-u2)-COS(oq4+q3+q4)*(wvx-u1))*n2>
 
-   (208) %force_bo> = kFb * l * (v_bo_n> - wv>) * abs(dot(b1>, (v_bo_n> - wv>)) + krb * mag(v_bo_n>)) 
-   (209) % kFc = -rho/2 * Cdplate * fld
-   (210) force_co> = kFc * fl * (v_co_n> - wv>) * abs(dot(c1>, (v_co_n> - wv>)) + krc * mag(v_co_n>))
--> (211) force_co> = 0.7071068*fl*kFc*r*u3*ABS(0.5*fl*(u3+u5)+0.7071068*r*SIN(oq5+q5)*u3+0.7071068*r*COS(oq5+q5)*u3-SIN(oq5+q3+q5)*(wvy-u2)-COS(oq5+q3+q5)*(wvx-u1))*a1> + 0.7071068*fl*kFc*r*u3*ABS(0.5*fl*(u3+u5)+0.7071068*r*SIN(oq5+q5)*u3+0.7071068*r*COS(oq5+q5)*u3-SIN(oq5+q3+q5)*(wvy-u2)-COS(oq5+q3+q5)*(wvx-u1))*a2> + 0.5*kFc*fl^2*(u3+u5)*ABS(0.5*fl*(u3+u5)+0.7071068*r*SIN(oq5+q5)*u3+0.7071068*r*COS(oq5+q5)*u3-SIN(oq5+q3+q5)*(wvy-u2)-COS(oq5+q3+q5)*(wvx-u1))*c1> - fl*kFc*(wvx-u1)*ABS(0.5*fl*(u3+u5)+0.7071068*r*SIN(oq5+q5)*u3+0.7071068*r*COS(oq5+q5)*u3-SIN(oq5+q3+q5)*(wvy-u2)-COS(oq5+q3+q5)*(wvx-u1))*n1> - fl*kFc*(wvy-u2)*ABS(0.5*fl*(u3+u5)+0.7071068*r*SIN(oq5+q5)*u3+0.7071068*r*COS(oq5+q5)*u3-SIN(oq5+q3+q5)*(wvy-u2)-COS(oq5+q3+q5)*(wvx-u1))*n2>
+   (212) %force_bo> = kFb * l * (v_bo_n> - wv>) * abs(dot(b1>, (v_bo_n> - wv>)) + krb * mag(v_bo_n>)) 
+   (213) % kFc = -rho/2 * Cdplate * fld
+   (214) force_co> = kFc * fl * (v_co_n> - wv>) * abs(dot(c1>, (v_co_n> - wv>)) + krc * mag(v_co_n>))
+-> (215) force_co> = 0.7071068*fl*kFc*r*u3*ABS(0.5*fl*(u3+u5)+0.7071068*r*SIN(oq5+q5)*u3+0.7071068*r*COS(oq5+q5)*u3-SIN(oq5+q3+q5)*(wvy-u2)-COS(oq5+q3+q5)*(wvx-u1))*a1> + 0.7071068*fl*kFc*r*u3*ABS(0.5*fl*(u3+u5)+0.7071068*r*SIN(oq5+q5)*u3+0.7071068*r*COS(oq5+q5)*u3-SIN(oq5+q3+q5)*(wvy-u2)-COS(oq5+q3+q5)*(wvx-u1))*a2> + 0.5*kFc*fl^2*(u3+u5)*ABS(0.5*fl*(u3+u5)+0.7071068*r*SIN(oq5+q5)*u3+0.7071068*r*COS(oq5+q5)*u3-SIN(oq5+q3+q5)*(wvy-u2)-COS(oq5+q3+q5)*(wvx-u1))*c1> - fl*kFc*(wvx-u1)*ABS(0.5*fl*(u3+u5)+0.7071068*r*SIN(oq5+q5)*u3+0.7071068*r*COS(oq5+q5)*u3-SIN(oq5+q3+q5)*(wvy-u2)-COS(oq5+q3+q5)*(wvx-u1))*n1> - fl*kFc*(wvy-u2)*ABS(0.5*fl*(u3+u5)+0.7071068*r*SIN(oq5+q5)*u3+0.7071068*r*COS(oq5+q5)*u3-SIN(oq5+q3+q5)*(wvy-u2)-COS(oq5+q3+q5)*(wvx-u1))*n2>
 
-   (212) force_do> = kFc * fl * (v_do_n> - wv>) * abs(dot(d1>, (v_do_n> - wv>)) + krc * mag(v_do_n>))
--> (213) force_do> = -0.7071068*fl*kFc*r*u3*ABS(0.5*fl*(u3+u6)+0.7071068*r*SIN(oq6+q6)*u3-0.7071068*r*COS(oq6+q6)*u3-SIN(oq6+q3+q6)*(wvy-u2)-COS(oq6+q3+q6)*(wvx-u1))*a1> + 0.7071068*fl*kFc*r*u3*ABS(0.5*fl*(u3+u6)+0.7071068*r*SIN(oq6+q6)*u3-0.7071068*r*COS(oq6+q6)*u3-SIN(oq6+q3+q6)*(wvy-u2)-COS(oq6+q3+q6)*(wvx-u1))*a2> + 0.5*kFc*fl^2*(u3+u6)*ABS(0.5*fl*(u3+u6)+0.7071068*r*SIN(oq6+q6)*u3-0.7071068*r*COS(oq6+q6)*u3-SIN(oq6+q3+q6)*(wvy-u2)-COS(oq6+q3+q6)*(wvx-u1))*d1> - fl*kFc*(wvx-u1)*ABS(0.5*fl*(u3+u6)+0.7071068*r*SIN(oq6+q6)*u3-0.7071068*r*COS(oq6+q6)*u3-SIN(oq6+q3+q6)*(wvy-u2)-COS(oq6+q3+q6)*(wvx-u1))*n1> - fl*kFc*(wvy-u2)*ABS(0.5*fl*(u3+u6)+0.7071068*r*SIN(oq6+q6)*u3-0.7071068*r*COS(oq6+q6)*u3-SIN(oq6+q3+q6)*(wvy-u2)-COS(oq6+q3+q6)*(wvx-u1))*n2>
+   (216) force_do> = kFc * fl * (v_do_n> - wv>) * abs(dot(d1>, (v_do_n> - wv>)) + krc * mag(v_do_n>))
+-> (217) force_do> = -0.7071068*fl*kFc*r*u3*ABS(0.5*fl*(u3+u6)+0.7071068*r*SIN(oq6+q6)*u3-0.7071068*r*COS(oq6+q6)*u3-SIN(oq6+q3+q6)*(wvy-u2)-COS(oq6+q3+q6)*(wvx-u1))*a1> + 0.7071068*fl*kFc*r*u3*ABS(0.5*fl*(u3+u6)+0.7071068*r*SIN(oq6+q6)*u3-0.7071068*r*COS(oq6+q6)*u3-SIN(oq6+q3+q6)*(wvy-u2)-COS(oq6+q3+q6)*(wvx-u1))*a2> + 0.5*kFc*fl^2*(u3+u6)*ABS(0.5*fl*(u3+u6)+0.7071068*r*SIN(oq6+q6)*u3-0.7071068*r*COS(oq6+q6)*u3-SIN(oq6+q3+q6)*(wvy-u2)-COS(oq6+q3+q6)*(wvx-u1))*d1> - fl*kFc*(wvx-u1)*ABS(0.5*fl*(u3+u6)+0.7071068*r*SIN(oq6+q6)*u3-0.7071068*r*COS(oq6+q6)*u3-SIN(oq6+q3+q6)*(wvy-u2)-COS(oq6+q3+q6)*(wvx-u1))*n1> - fl*kFc*(wvy-u2)*ABS(0.5*fl*(u3+u6)+0.7071068*r*SIN(oq6+q6)*u3-0.7071068*r*COS(oq6+q6)*u3-SIN(oq6+q3+q6)*(wvy-u2)-COS(oq6+q3+q6)*(wvx-u1))*n2>
 
-   (214) force_eo> = kFc * fl * (v_eo_n> - wv>) * abs(dot(e1>, (v_eo_n> - wv>)) + krc * mag(v_eo_n>))
--> (215) force_eo> = -0.7071068*fl*kFc*r*u3*ABS(0.5*fl*(u3+u7)-0.7071068*r*SIN(oq7+q7)*u3-0.7071068*r*COS(oq7+q7)*u3-SIN(oq7+q3+q7)*(wvy-u2)-COS(oq7+q3+q7)*(wvx-u1))*a1> - 0.7071068*fl*kFc*r*u3*ABS(0.5*fl*(u3+u7)-0.7071068*r*SIN(oq7+q7)*u3-0.7071068*r*COS(oq7+q7)*u3-SIN(oq7+q3+q7)*(wvy-u2)-COS(oq7+q3+q7)*(wvx-u1))*a2> + 0.5*kFc*fl^2*(u3+u7)*ABS(0.5*fl*(u3+u7)-0.7071068*r*SIN(oq7+q7)*u3-0.7071068*r*COS(oq7+q7)*u3-SIN(oq7+q3+q7)*(wvy-u2)-COS(oq7+q3+q7)*(wvx-u1))*e1> - fl*kFc*(wvx-u1)*ABS(0.5*fl*(u3+u7)-0.7071068*r*SIN(oq7+q7)*u3-0.7071068*r*COS(oq7+q7)*u3-SIN(oq7+q3+q7)*(wvy-u2)-COS(oq7+q3+q7)*(wvx-u1))*n1> - fl*kFc*(wvy-u2)*ABS(0.5*fl*(u3+u7)-0.7071068*r*SIN(oq7+q7)*u3-0.7071068*r*COS(oq7+q7)*u3-SIN(oq7+q3+q7)*(wvy-u2)-COS(oq7+q3+q7)*(wvx-u1))*n2>
+   (218) force_eo> = kFc * fl * (v_eo_n> - wv>) * abs(dot(e1>, (v_eo_n> - wv>)) + krc * mag(v_eo_n>))
+-> (219) force_eo> = -0.7071068*fl*kFc*r*u3*ABS(0.5*fl*(u3+u7)-0.7071068*r*SIN(oq7+q7)*u3-0.7071068*r*COS(oq7+q7)*u3-SIN(oq7+q3+q7)*(wvy-u2)-COS(oq7+q3+q7)*(wvx-u1))*a1> - 0.7071068*fl*kFc*r*u3*ABS(0.5*fl*(u3+u7)-0.7071068*r*SIN(oq7+q7)*u3-0.7071068*r*COS(oq7+q7)*u3-SIN(oq7+q3+q7)*(wvy-u2)-COS(oq7+q3+q7)*(wvx-u1))*a2> + 0.5*kFc*fl^2*(u3+u7)*ABS(0.5*fl*(u3+u7)-0.7071068*r*SIN(oq7+q7)*u3-0.7071068*r*COS(oq7+q7)*u3-SIN(oq7+q3+q7)*(wvy-u2)-COS(oq7+q3+q7)*(wvx-u1))*e1> - fl*kFc*(wvx-u1)*ABS(0.5*fl*(u3+u7)-0.7071068*r*SIN(oq7+q7)*u3-0.7071068*r*COS(oq7+q7)*u3-SIN(oq7+q3+q7)*(wvy-u2)-COS(oq7+q3+q7)*(wvx-u1))*n1> - fl*kFc*(wvy-u2)*ABS(0.5*fl*(u3+u7)-0.7071068*r*SIN(oq7+q7)*u3-0.7071068*r*COS(oq7+q7)*u3-SIN(oq7+q3+q7)*(wvy-u2)-COS(oq7+q3+q7)*(wvx-u1))*n2>
 
-   (216) force_fo> = kFc * fl * (v_fo_n> - wv>) * abs(dot(f1>, (v_fo_n> - wv>)) + krc * mag(v_fo_n>))
--> (217) force_fo> = 0.7071068*fl*kFc*r*u3*ABS(0.5*fl*(u3+u8)+0.7071068*r*COS(oq8+q8)*u3-0.7071068*r*SIN(oq8+q8)*u3-SIN(oq8+q3+q8)*(wvy-u2)-COS(oq8+q3+q8)*(wvx-u1))*a1> - 0.7071068*fl*kFc*r*u3*ABS(0.5*fl*(u3+u8)+0.7071068*r*COS(oq8+q8)*u3-0.7071068*r*SIN(oq8+q8)*u3-SIN(oq8+q3+q8)*(wvy-u2)-COS(oq8+q3+q8)*(wvx-u1))*a2> + 0.5*kFc*fl^2*(u3+u8)*ABS(0.5*fl*(u3+u8)+0.7071068*r*COS(oq8+q8)*u3-0.7071068*r*SIN(oq8+q8)*u3-SIN(oq8+q3+q8)*(wvy-u2)-COS(oq8+q3+q8)*(wvx-u1))*f1> - fl*kFc*(wvx-u1)*ABS(0.5*fl*(u3+u8)+0.7071068*r*COS(oq8+q8)*u3-0.7071068*r*SIN(oq8+q8)*u3-SIN(oq8+q3+q8)*(wvy-u2)-COS(oq8+q3+q8)*(wvx-u1))*n1> - fl*kFc*(wvy-u2)*ABS(0.5*fl*(u3+u8)+0.7071068*r*COS(oq8+q8)*u3-0.7071068*r*SIN(oq8+q8)*u3-SIN(oq8+q3+q8)*(wvy-u2)-COS(oq8+q3+q8)*(wvx-u1))*n2>
+   (220) force_fo> = kFc * fl * (v_fo_n> - wv>) * abs(dot(f1>, (v_fo_n> - wv>)) + krc * mag(v_fo_n>))
+-> (221) force_fo> = 0.7071068*fl*kFc*r*u3*ABS(0.5*fl*(u3+u8)+0.7071068*r*COS(oq8+q8)*u3-0.7071068*r*SIN(oq8+q8)*u3-SIN(oq8+q3+q8)*(wvy-u2)-COS(oq8+q3+q8)*(wvx-u1))*a1> - 0.7071068*fl*kFc*r*u3*ABS(0.5*fl*(u3+u8)+0.7071068*r*COS(oq8+q8)*u3-0.7071068*r*SIN(oq8+q8)*u3-SIN(oq8+q3+q8)*(wvy-u2)-COS(oq8+q3+q8)*(wvx-u1))*a2> + 0.5*kFc*fl^2*(u3+u8)*ABS(0.5*fl*(u3+u8)+0.7071068*r*COS(oq8+q8)*u3-0.7071068*r*SIN(oq8+q8)*u3-SIN(oq8+q3+q8)*(wvy-u2)-COS(oq8+q3+q8)*(wvx-u1))*f1> - fl*kFc*(wvx-u1)*ABS(0.5*fl*(u3+u8)+0.7071068*r*COS(oq8+q8)*u3-0.7071068*r*SIN(oq8+q8)*u3-SIN(oq8+q3+q8)*(wvy-u2)-COS(oq8+q3+q8)*(wvx-u1))*n1> - fl*kFc*(wvy-u2)*ABS(0.5*fl*(u3+u8)+0.7071068*r*COS(oq8+q8)*u3-0.7071068*r*SIN(oq8+q8)*u3-SIN(oq8+q3+q8)*(wvy-u2)-COS(oq8+q3+q8)*(wvx-u1))*n2>
 
-   (218) i_b_bo>> = inertia(bo, b)
--> (219) i_b_bo>> = -0.25*mb*l^2*1>> + Ib*a3>*a3> + 0.25*mb*l^2*b2>*b2>
+   (222) i_b_bo>> = inertia(bo, b)
+-> (223) i_b_bo>> = -0.25*mb*l^2*1>> + Ib*a3>*a3> + 0.25*mb*l^2*b2>*b2>
 
-   (220) i_c_co>> = inertia(co, c)
--> (221) i_c_co>> = -0.25*mc*fl^2*1>> + Ic*a3>*a3> + 0.25*mc*fl^2*c2>*c2>
+   (224) i_c_co>> = inertia(co, c)
+-> (225) i_c_co>> = -0.25*mc*fl^2*1>> + Ic*a3>*a3> + 0.25*mc*fl^2*c2>*c2>
 
-   (222) i_d_do>> = inertia(do, d)
--> (223) i_d_do>> = -0.25*mc*fl^2*1>> + Ic*a3>*a3> + 0.25*mc*fl^2*d2>*d2>
+   (226) i_d_do>> = inertia(do, d)
+-> (227) i_d_do>> = -0.25*mc*fl^2*1>> + Ic*a3>*a3> + 0.25*mc*fl^2*d2>*d2>
 
-   (224) i_e_eo>> = inertia(eo, e)
--> (225) i_e_eo>> = -0.25*mc*fl^2*1>> + Ic*a3>*a3> + 0.25*mc*fl^2*e2>*e2>
+   (228) i_e_eo>> = inertia(eo, e)
+-> (229) i_e_eo>> = -0.25*mc*fl^2*1>> + Ic*a3>*a3> + 0.25*mc*fl^2*e2>*e2>
 
-   (226) i_f_fo>> = inertia(fo, f)
--> (227) i_f_fo>> = -0.25*mc*fl^2*1>> + Ic*a3>*a3> + 0.25*mc*fl^2*f2>*f2>
+   (230) i_f_fo>> = inertia(fo, f)
+-> (231) i_f_fo>> = -0.25*mc*fl^2*1>> + Ic*a3>*a3> + 0.25*mc*fl^2*f2>*f2>
 
-   (228) %eqns = fr() + frstar()
-   (229) %eqns
-   (230) fr() + frstar()
+   (232) %eqns = fr() + frstar()
+   (233) %eqns
+   (234) fr() + frstar()
  Result[1] = 0.5*fl*mc*SIN(oq5+q3+q5)*(u3+u5)^2 + 0.5*fl*mc*SIN(oq6+q3+q6)*(u3+u6)^2 + 0.5*fl*mc*SIN(oq7+q3+q7)*(u3+u7)^2 + 0.5*fl*mc*SIN(oq8+q3+q8)*(u3+u8)^2 + 0.5*mb*(2*r*SIN(q3)*u3^2+l*SIN(oq4+q3+q4)*(u3+u4)^2) - kFa*(wvx-u1)*((wvx-u1)^2+(wvy-u2)^2)^0.5 - 0.5*kFb*l*(2*wvx-2*u1-2*r*COS(q3)*u3-l*COS(oq4+q3+q4)*(u3+u4))*ABS(0.5*l*(u3+u4)+r*COS(oq4+q4)*u3-SIN(oq4+q3+q4)*(wvy-u2)-COS(oq4+q3+q4)*(wvx-u1)) - 0.5*fl*kFc*(2*wvx-2*u1-1.414214*r*SIN(q3)*u3-1.414214*r*COS(q3)*u3-fl*COS(oq8+q3+q8)*(u3+u8))*ABS(0.5*fl*(u3+u8)+0.7071068*r*COS(oq8+q8)*u3-0.7071068*r*SIN(oq8+q8)*u3-SIN(oq8+q3+q8)*(wvy-u2)-COS(oq8+q3+q8)*(wvx-u1)) - 0.5*fl*kFc*(2*wvx+1.414214*r*SIN(q3)*u3-2*u1-1.414214*r*COS(q3)*u3-fl*COS(oq5+q3+q5)*(u3+u5))*ABS(0.5*fl*(u3+u5)+0.7071068*r*SIN(oq5+q5)*u3+0.7071068*r*COS(oq5+q5)*u3-SIN(oq5+q3+q5)*(wvy-u2)-COS(oq5+q3+q5)*(wvx-u1)) - 0.5*fl*kFc*(2*wvx+1.414214*r*SIN(q3)*u3+1.414214*r*COS(q3)*u3-2*u1-fl*COS(oq6+q3+q6)*(u3+u6))*ABS(0.5*fl*(u3+u6)+0.7071068*r*SIN(oq6+q6)*u3-0.7071068*r*COS(oq6+q6)*u3-SIN(oq6+q3+q6)*(wvy-u2)-COS(oq6+q3+q6)*(wvx-u1)) - 0.5*fl*kFc*(2*wvx+1.414214*r*COS(q3)*u3-2*u1-1.414214*r*SIN(q3)*u3-fl*COS(oq7+q3+q7)*(u3+u7))*ABS(0.5*fl*(u3+u7)-0.7071068*r*SIN(oq7+q7)*u3-0.7071068*r*COS(oq7+q7)*u3-SIN(oq7+q3+q7)*(wvy-u2)-COS(oq7+q3+q7)*(wvx-u1)) - (ma+mb+4*mc)*u1' - 0.5*fl*mc*COS(oq5+q3+q5)*u5' - 0.5*fl*mc*COS(oq6+q3+q6)*u6' - 0.5*fl*mc*COS(oq7+q3+q7)*u7' - 0.5*fl*mc*COS(oq8+q3+q8)*u8' - 0.5*l*mb*COS(oq4+q3+q4)*u4' - 0.5*(fl*mc*COS(oq5+q3+q5)+fl*mc*COS(oq6+q3+q6)+fl*mc*COS(oq7+q3+q7)+fl*mc*COS(oq8+q3+q8)+mb*(2*r*COS(q3)+l*COS(oq4+q3+q4)))*u3'
  Result[2] = -0.5*fl*mc*COS(oq5+q3+q5)*(u3+u5)^2 - 0.5*fl*mc*COS(oq6+q3+q6)*(u3+u6)^2 - 0.5*fl*mc*COS(oq7+q3+q7)*(u3+u7)^2 - 0.5*fl*mc*COS(oq8+q3+q8)*(u3+u8)^2 - kFa*(wvy-u2)*((wvx-u1)^2+(wvy-u2)^2)^0.5 - 0.5*mb*(2*r*COS(q3)*u3^2+l*COS(oq4+q3+q4)*(u3+u4)^2) - 0.5*kFb*l*(2*wvy-2*u2-2*r*SIN(q3)*u3-l*SIN(oq4+q3+q4)*(u3+u4))*ABS(0.5*l*(u3+u4)+r*COS(oq4+q4)*u3-SIN(oq4+q3+q4)*(wvy-u2)-COS(oq4+q3+q4)*(wvx-u1)) - 0.5*fl*kFc*(2*wvy-2*u2-1.414214*r*SIN(q3)*u3-1.414214*r*COS(q3)*u3-fl*SIN(oq5+q3+q5)*(u3+u5))*ABS(0.5*fl*(u3+u5)+0.7071068*r*SIN(oq5+q5)*u3+0.7071068*r*COS(oq5+q5)*u3-SIN(oq5+q3+q5)*(wvy-u2)-COS(oq5+q3+q5)*(wvx-u1)) - 0.5*fl*kFc*(2*wvy+1.414214*r*SIN(q3)*u3-2*u2-1.414214*r*COS(q3)*u3-fl*SIN(oq6+q3+q6)*(u3+u6))*ABS(0.5*fl*(u3+u6)+0.7071068*r*SIN(oq6+q6)*u3-0.7071068*r*COS(oq6+q6)*u3-SIN(oq6+q3+q6)*(wvy-u2)-COS(oq6+q3+q6)*(wvx-u1)) - 0.5*fl*kFc*(2*wvy+1.414214*r*SIN(q3)*u3+1.414214*r*COS(q3)*u3-2*u2-fl*SIN(oq7+q3+q7)*(u3+u7))*ABS(0.5*fl*(u3+u7)-0.7071068*r*SIN(oq7+q7)*u3-0.7071068*r*COS(oq7+q7)*u3-SIN(oq7+q3+q7)*(wvy-u2)-COS(oq7+q3+q7)*(wvx-u1)) - 0.5*fl*kFc*(2*wvy+1.414214*r*COS(q3)*u3-2*u2-1.414214*r*SIN(q3)*u3-fl*SIN(oq8+q3+q8)*(u3+u8))*ABS(0.5*fl*(u3+u8)+0.7071068*r*COS(oq8+q8)*u3-0.7071068*r*SIN(oq8+q8)*u3-SIN(oq8+q3+q8)*(wvy-u2)-COS(oq8+q3+q8)*(wvx-u1)) - (ma+mb+4*mc)*u2' - 0.5*fl*mc*SIN(oq5+q3+q5)*u5' - 0.5*fl*mc*SIN(oq6+q3+q6)*u6' - 0.5*fl*mc*SIN(oq7+q3+q7)*u7' - 0.5*fl*mc*SIN(oq8+q3+q8)*u8' - 0.5*l*mb*SIN(oq4+q3+q4)*u4' - 0.5*(fl*mc*SIN(oq5+q3+q5)+fl*mc*SIN(oq6+q3+q6)+fl*mc*SIN(oq7+q3+q7)+fl*mc*SIN(oq8+q3+q8)+mb*(2*r*SIN(q3)+l*SIN(oq4+q3+q4)))*u3'
  Result[3] = kTa*u3*ABS(u3) + kTb*u4*ABS(u4) + kTc*u5*ABS(u5) + kTc*u6*ABS(u6) + kTc*u7*ABS(u7) + kTc*u8*ABS(u8) + 0.25*kFb*l*ABS(0.5*l*(u3+u4)+r*COS(oq4+q4)*u3-SIN(oq4+q3+q4)*(wvy-u2)-COS(oq4+q3+q4)*(wvx-u1))*(4*r^2*u3+l^2*(u3+u4)+2*l*r*COS(oq4+q4)*u4+4*l*r*COS(oq4+q4)*u3-4*r*SIN(q3)*(wvy-u2)-4*r*COS(q3)*(wvx-u1)-2*l*SIN(oq4+q3+q4)*(wvy-u2)-2*l*COS(oq4+q3+q4)*(wvx-u1)) + 0.25*fl*kFc*ABS(0.5*fl*(u3+u5)+0.7071068*r*SIN(oq5+q5)*u3+0.7071068*r*COS(oq5+q5)*u3-SIN(oq5+q3+q5)*(wvy-u2)-COS(oq5+q3+q5)*(wvx-u1))*(4*r^2*u3+fl^2*(u3+u5)+1.414214*fl*r*SIN(oq5+q5)*u5+1.414214*fl*r*COS(oq5+q5)*u5+2.828427*fl*r*SIN(oq5+q5)*u3+2.828427*fl*r*COS(oq5+q5)*u3+2.828427*r*SIN(q3)*(wvx-u1)-2.828427*r*SIN(q3)*(wvy-u2)-2.828427*r*COS(q3)*(wvx-u1)-2.828427*r*COS(q3)*(wvy-u2)-2*fl*SIN(oq5+q3+q5)*(wvy-u2)-2*fl*COS(oq5+q3+q5)*(wvx-u1)) + 0.25*fl*kFc*ABS(0.5*fl*(u3+u6)+0.7071068*r*SIN(oq6+q6)*u3-0.7071068*r*COS(oq6+q6)*u3-SIN(oq6+q3+q6)*(wvy-u2)-COS(oq6+q3+q6)*(wvx-u1))*(4*r^2*u3+fl^2*(u3+u6)+1.414214*fl*r*SIN(oq6+q6)*u6+2.828427*fl*r*SIN(oq6+q6)*u3+2.828427*r*SIN(q3)*(wvx-u1)+2.828427*r*SIN(q3)*(wvy-u2)+2.828427*r*COS(q3)*(wvx-u1)-2.828427*fl*r*COS(oq6+q6)*u3-1.414214*fl*r*COS(oq6+q6)*u6-2.828427*r*COS(q3)*(wvy-u2)-2*fl*SIN(oq6+q3+q6)*(wvy-u2)-2*fl*COS(oq6+q3+q6)*(wvx-u1)) + 0.25*fl*kFc*ABS(0.5*fl*(u3+u7)-0.7071068*r*SIN(oq7+q7)*u3-0.7071068*r*COS(oq7+q7)*u3-SIN(oq7+q3+q7)*(wvy-u2)-COS(oq7+q3+q7)*(wvx-u1))*(4*r^2*u3+fl^2*(u3+u7)+2.828427*r*SIN(q3)*(wvy-u2)+2.828427*r*COS(q3)*(wvx-u1)+2.828427*r*COS(q3)*(wvy-u2)-2.828427*fl*r*SIN(oq7+q7)*u3-2.828427*fl*r*COS(oq7+q7)*u3-1.414214*fl*r*SIN(oq7+q7)*u7-1.414214*fl*r*COS(oq7+q7)*u7-2.828427*r*SIN(q3)*(wvx-u1)-2*fl*SIN(oq7+q3+q7)*(wvy-u2)-2*fl*COS(oq7+q3+q7)*(wvx-u1)) + 0.25*fl*kFc*ABS(0.5*fl*(u3+u8)+0.7071068*r*COS(oq8+q8)*u3-0.7071068*r*SIN(oq8+q8)*u3-SIN(oq8+q3+q8)*(wvy-u2)-COS(oq8+q3+q8)*(wvx-u1))*(4*r^2*u3+fl^2*(u3+u8)+1.414214*fl*r*COS(oq8+q8)*u8+2.828427*fl*r*COS(oq8+q8)*u3+2.828427*r*COS(q3)*(wvy-u2)-2.828427*fl*r*SIN(oq8+q8)*u3-1.414214*fl*r*SIN(oq8+q8)*u8-2.828427*r*SIN(q3)*(wvx-u1)-2.828427*r*SIN(q3)*(wvy-u2)-2.828427*r*COS(q3)*(wvx-u1)-2*fl*SIN(oq8+q3+q8)*(wvy-u2)-2*fl*COS(oq8+q3+q8)*(wvx-u1)) + 0.3535534*r*(fl*mc*(SIN(oq6+q6)*u3^2+COS(oq6+q6)*u3^2-SIN(oq6+q6)*(u3+u6)^2-COS(oq6+q6)*(u3+u6)^2)+fl*mc*(COS(oq5+q5)*u3^2+SIN(oq5+q5)*(u3+u5)^2-SIN(oq5+q5)*u3^2-COS(oq5+q5)*(u3+u5)^2)-1.414214*l*mb*SIN(oq4+q4)*(u3^2-(u3+u4)^2)-fl*mc*(SIN(oq8+q8)*u3^2+COS(oq8+q8)*u3^2-SIN(oq8+q8)*(u3+u8)^2-COS(oq8+q8)*(u3+u8)^2)-fl*mc*(COS(oq7+q7)*u3^2+SIN(oq7+q7)*(u3+u7)^2-SIN(oq7+q7)*u3^2-COS(oq7+q7)*(u3+u7)^2)) + 0.7071068*(fl*mc*r*(SIN(oq7+q7)+COS(oq7+q7))+fl*mc*r*(SIN(oq8+q8)-COS(oq8+q8))-5.656854*Ic-1.414214*Ia-1.414214*Ib-1.414214*mb*r*(r+l*COS(oq4+q4))-fl*mc*r*(SIN(oq6+q6)-COS(oq6+q6))-mc*r*(5.656854*r+fl*SIN(oq5+q5)+fl*COS(oq5+q5)))*u3' - 0.5*(2*Ib+l*mb*r*COS(oq4+q4))*u4' - 0.3535534*(2.828427*Ic+fl*mc*r*(SIN(oq5+q5)+COS(oq5+q5)))*u5' - 0.3535534*(2.828427*Ic-fl*mc*r*(SIN(oq7+q7)+COS(oq7+q7)))*u7' - 0.3535534*(2.828427*Ic+fl*mc*r*(SIN(oq6+q6)-COS(oq6+q6)))*u6' - 0.3535534*(2.828427*Ic-fl*mc*r*(SIN(oq8+q8)-COS(oq8+q8)))*u8' - 0.5*(fl*mc*SIN(oq5+q3+q5)+fl*mc*SIN(oq6+q3+q6)+fl*mc*SIN(oq7+q3+q7)+fl*mc*SIN(oq8+q3+q8)+mb*(2*r*SIN(q3)+l*SIN(oq4+q3+q4)))*u2' - 0.5*(fl*mc*COS(oq5+q3+q5)+fl*mc*COS(oq6+q3+q6)+fl*mc*COS(oq7+q3+q7)+fl*mc*COS(oq8+q3+q8)+mb*(2*r*COS(q3)+l*COS(oq4+q3+q4)))*u1'
@@ -384,4 +390,4 @@ Press Enter to continue.    (1) % frog.al
  Result[6] = Tq6 + kTc*u6*ABS(u6) + 0.3535534*fl*mc*r*(SIN(oq6+q6)+COS(oq6+q6))*u3^2 + 0.25*kFc*fl^2*(fl*(u3+u6)+1.414214*r*SIN(oq6+q6)*u3-1.414214*r*COS(oq6+q6)*u3-2*SIN(oq6+q3+q6)*(wvy-u2)-2*COS(oq6+q3+q6)*(wvx-u1))*ABS(0.5*fl*(u3+u6)+0.7071068*r*SIN(oq6+q6)*u3-0.7071068*r*COS(oq6+q6)*u3-SIN(oq6+q3+q6)*(wvy-u2)-COS(oq6+q3+q6)*(wvx-u1)) - Ic*u6' - 0.5*fl*mc*SIN(oq6+q3+q6)*u2' - 0.5*fl*mc*COS(oq6+q3+q6)*u1' - 0.3535534*(2.828427*Ic+fl*mc*r*(SIN(oq6+q6)-COS(oq6+q6)))*u3'
  Result[7] = Tq7 + kTc*u7*ABS(u7) + 0.3535534*fl*mc*r*(SIN(oq7+q7)-COS(oq7+q7))*u3^2 + 0.25*kFc*fl^2*(fl*(u3+u7)-1.414214*r*SIN(oq7+q7)*u3-1.414214*r*COS(oq7+q7)*u3-2*SIN(oq7+q3+q7)*(wvy-u2)-2*COS(oq7+q3+q7)*(wvx-u1))*ABS(0.5*fl*(u3+u7)-0.7071068*r*SIN(oq7+q7)*u3-0.7071068*r*COS(oq7+q7)*u3-SIN(oq7+q3+q7)*(wvy-u2)-COS(oq7+q3+q7)*(wvx-u1)) - Ic*u7' - 0.5*fl*mc*SIN(oq7+q3+q7)*u2' - 0.5*fl*mc*COS(oq7+q3+q7)*u1' - 0.3535534*(2.828427*Ic-fl*mc*r*(SIN(oq7+q7)+COS(oq7+q7)))*u3'
  Result[8] = Tq8 + kTc*u8*ABS(u8) + 0.25*kFc*fl^2*(fl*(u3+u8)+1.414214*r*COS(oq8+q8)*u3-1.414214*r*SIN(oq8+q8)*u3-2*SIN(oq8+q3+q8)*(wvy-u2)-2*COS(oq8+q3+q8)*(wvx-u1))*ABS(0.5*fl*(u3+u8)+0.7071068*r*COS(oq8+q8)*u3-0.7071068*r*SIN(oq8+q8)*u3-SIN(oq8+q3+q8)*(wvy-u2)-COS(oq8+q3+q8)*(wvx-u1)) - 0.3535534*fl*mc*r*(SIN(oq8+q8)+COS(oq8+q8))*u3^2 - Ic*u8' - 0.5*fl*mc*SIN(oq8+q3+q8)*u2' - 0.5*fl*mc*COS(oq8+q3+q8)*u1' - 0.3535534*(2.828427*Ic-fl*mc*r*(SIN(oq8+q8)-COS(oq8+q8)))*u3'
-   (230) quit
+   (234) quit

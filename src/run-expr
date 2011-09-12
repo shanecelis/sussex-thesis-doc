@@ -40,14 +40,14 @@ fi
 
 function echo_alps()
 {
-   echo "$@" "alps_main -T $runType -F $fitnessType $expName $targetIndex $lobotomise $dir/pop-phase ";
+   echo "$@" "alps_main -T $runType -F $fitnessType $expName $targetIndex $lobotomise $dir ";
 }
 function run_alps()
 {
     if [ $nice -eq 0 ]; then
-        alps_main -T "$runType" -F "$fitnessType" "$expName" "$targetIndex" "$lobotomise" "$dir/pop-phase"
+        alps_main -T "$runType" -F "$fitnessType" "$expName" "$targetIndex" "$lobotomise" "$dir"
     else
-        nice -n $nice alps_main -T "$runType" -F "$fitnessType" "$expName" "$targetIndex" "$lobotomise" "$dir/pop-phase"
+        nice -n $nice alps_main -T "$runType" -F "$fitnessType" "$expName" "$targetIndex" "$lobotomise" "$dir"
     fi
 }
     

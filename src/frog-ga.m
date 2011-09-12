@@ -83,8 +83,8 @@ geneToCTRNN[i_] :=
            gene = getGene[i];
            n = nodeCount;
            W = Partition[Map[Rescale[#, {0, 1}, 4{-1, 1}]&,gene[[1;;n^2]]],n];
-           theta = Map[Rescale[#, {0, 1},2{-1,1}]&,gene[[n^2 + 1;;n^2 + n]]];
-           Ts = Map[10.^Rescale[#,{0, 1},{-2, 2}]&,gene[[n^2 + n + 1;; n^2 + 2n ]]]; (* change this from [-1, 2] -> [-2, 2] *)
+           theta = Map[Rescale[#,{0, 1},2{-1,1}]&,gene[[n^2 + 1;;n^2 + n]]];
+           Ts = Map[10.^Rescale[#,{0, 1},{-3, 0}]&,gene[[n^2 + n + 1;; n^2 + 2n ]]]; (* change this from [-1, 2] -> [-2, 2] *)
            (* gain = Rescale[gene[[n^2 + 2n + 1]], {0, 1}, {1, 7}];*)
            (* not providing gain or inputs *)
            {W,theta,None,Ts}
