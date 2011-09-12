@@ -10,7 +10,7 @@
 #include "alps.h"
 #include "pareto_front.h"
 
-#define rand                 drand48
+#define rand           drand48
 
 #define MUT_PROB       0.05     // mutation probability
 #define MAX_OPT_STEPS 10000    // max optimisation steps
@@ -21,9 +21,9 @@
 #define MAX_LAYER      (LAYER_COUNT - 1)
 
 #define LAYER_OF_INDIV(i)    ((i) / POP_PER_LAYER)
+
 /* INDEX = Index of individual */
 /* LINDEX = Layer Index (layer, index of individual within layer) */
-
 #define FITNESS_INDEX(i)      ((i) * FITNESS_COUNT)
 #define LAYER_BEGINS(l)       (POP_PER_LAYER * (l))
 #define INDIV_LINDEX(l, li)   (LAYER_BEGINS(l) + (li))
@@ -37,6 +37,7 @@ int    pareto_front[POP];
 int    t;                       /* optimisation step or time */
 int    max_age[LAYER_COUNT] = {1,3,5,6,9,
                                29,30,31,60,80};
+int    goal_indiv;
 
 void init_population() {
   int i;
@@ -47,14 +48,16 @@ void init_population() {
 void init_gene(double *gene) {
   int i;
   for(i = 0; i < GENE_COUNT; i++)
-    gene[i] = rand() * .2; // [0, 1)
+    //gene[i] = rand(); // [0, 1)
+    gene[i] = rand() + 0.5; // [0, 1)
 }
 
 void mutate(double *gene) {
   int i;
   for(i = 0; i < GENE_COUNT; i++)
     if (rand() < MUT_PROB)
-      gene[i] = rand();
+      //gene[i] = rand();
+      gene[i] += rand() * 2. - 1. ;
 }
 
 void copy(double *src, double *dest) {
@@ -109,16 +112,29 @@ int try_dislodge(double *attempter, double *fitness, int into_layer)
   return -2;
 }
 
+void print_fitness(double *fitness) {
+  int i;
+  for (i = 0; i < FITNESS_COUNT; i++)
+    printf("%f ", fitness[i]);
+  printf("\n");
+}
+
 int is_goal_fitness(double *fitness) {
   int i;
   for (i = 0; i < FITNESS_COUNT; i++) {
-    if (fitness[i] > 0.5)
+    //if (!(fitness[i] < 0.5))
+    if (!(fitness[i] < -5.0))
       return 0;
   }
   return 1;
 }
 
-void run_alps(int phase_count)
+void start_phase(int phase) {
+  printf("Starting phase %d (at %d steps)!\n", phase, t);
+  print_fitness(fitness_matrix + FITNESS_INDEX(goal_indiv));
+}
+
+int run_alps(int phase_count)
 {
   int i,j,k,p;
   double temp_fitness[FITNESS_COUNT];
@@ -128,42 +144,48 @@ void run_alps(int phase_count)
   t = 0;
   
   for (p = 0; p < phase_count; p++) {
+    start_phase(p + 1);
     for (i = 0; i < POP; i++) {
       // Evaluate every gene.
-      evaluate(gene[i], fitness_matrix + FITNESS_COUNT * i);
+      evaluate(gene[i], fitness_matrix + FITNESS_INDEX(i));
       age[i] = t/POP;
     }
     int met_goal = 0;
     for (j = 0; j < POP; j++) {
-      if (is_goal_fitness(fitness_matrix + FITNESS_COUNT * j)) 
+      if (is_goal_fitness(fitness_matrix + FITNESS_INDEX(j))) {
         met_goal = 1;
+        goal_indiv = j;
+      }
     }
-    if (met_goal)
+    if (met_goal) 
       continue;
-
-    // Evaluate the pareto front for each layer.
-    for (k = 0; k < LAYER_COUNT; k++) 
-      pareto_front_rowmajor(pareto_front, 
-                            fitness_matrix + k * FITNESS_COUNT * POP_PER_LAYER,
-                            POP_PER_LAYER,
-                            FITNESS_COUNT);
     
     for (;t<MAX_OPT_STEPS;t++) { 
+      // Evaluate the pareto front for each layer.
+      for (k = 0; k < LAYER_COUNT; k++) 
+        pareto_front_rowmajor(pareto_front, 
+                              fitness_matrix + k * FITNESS_COUNT * POP_PER_LAYER,
+                              POP_PER_LAYER,
+                              FITNESS_COUNT);
+
       // Grab a non-dominated individual.
-      int a = POP*rand();
-      if (! pareto_front[a])
-        continue; /* Keep looking for non-dominated genomes. */
+      int a;
+      do { a = POP*rand(); } while (! pareto_front[a]);
       copy(gene[a], temp_gene);
       mutate(temp_gene);
       evaluate(temp_gene, temp_fitness);
       k = LAYER_OF_INDIV(a);
-      try_dislodge(temp_gene, temp_fitness, k);
+      int new_i = try_dislodge(temp_gene, temp_fitness, k);
       if (is_goal_fitness(temp_fitness)) {
-        printf("met goal!\n");
+        goal_indiv = new_i;
         break;                  /* Goto next phase */
       }
     }
   }
+  if (t == MAX_OPT_STEPS) 
+    return ALPS_FAIL;
+  else
+    return ALPS_SUCC;
 }
 
 int main(int argc, char **argv) { 
@@ -172,6 +194,13 @@ int main(int argc, char **argv) {
   } else {
     //srand48(time(0));          //Use different random seed for each run
   }
-  run_alps(2);
+  int ec;
+  printf("Starting\n");
+  ec = run_alps(4);
+  printf("Finished with ec = %d\n", ec);
+  if (ec == ALPS_SUCC)
+    printf("It worked!\n");
+  else
+    printf("It failed!\n");
   return 0;
 }
