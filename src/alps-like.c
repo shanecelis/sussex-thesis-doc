@@ -135,12 +135,15 @@ int try_dislodge(double *attempter, double *fitness, int age, int into_layer)
 {
   int i, k = into_layer;
   if (k > MAX_LAYER) {
-    // Sorry. No layer above to dislodge oneself into.
+    // Sorry. No layer above to dislodge oneself to.
     return -1;
   }
+  // start_search helps distribute the dislodge search evenly.
+  int start_search = rand() * POP_PER_LAYER;
   for (i = 0; i < POP_PER_LAYER; i++) {
-    int pi = INDIV_LINDEX(k, i);
-    double *fitness_b = fitness_matrix + FITNESS_LINDEX(k, i);
+    int li = (start_search + i) % POP_PER_LAYER;
+    int pi = INDIV_LINDEX(k, li);
+    double *fitness_b = fitness_matrix + FITNESS_LINDEX(k, li);
     if (is_dominated(fitness, fitness_b)
         || ages[pi] > max_age[k]) {
       // New genome dominates current one, or the current one is too old.

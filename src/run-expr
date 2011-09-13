@@ -43,15 +43,15 @@ fi
 function echo_alps()
 {
 
-    echo "$@" "$alps_main -f -T $runType -F $fitnessType $expName $targetIndex $lobotomise $dir ";
+    echo "$@" "$alps_main -f -T $runType -F $fitnessType -d $dir $expName $targetIndex $lobotomise ";
 }
 
 function run_alps()
 {
     if true || [ $nice -eq 0 ]; then
-        $alps_main -f -T "$runType" -F "$fitnessType" "$expName" "$targetIndex" "$lobotomise" "$dir";
+        alps-like -f -T "$runType" -F "$fitnessType" -d "$dir" "$expName" "$targetIndex" "$lobotomise";
     else
-        nice -n $nice $alps_main -f -T "$runType" -F "$fitnessType" "$expName" "$targetIndex" "$lobotomise" "$dir";
+        nice -n $nice alps-like -f -T "$runType" -F "$fitnessType" -d "$dir" "$expName" "$targetIndex" "$lobotomise";
     fi
 }
     
@@ -87,7 +87,7 @@ for ((i = $num; i < ($num + $count); i++)); do
             echo -n "Running: "
             echo_alps -n 
             echo "2>> $errorlog > $outfile"
-            run_alps 2>> "$errorlog" > "$outfile" 
+            run_alps -q 2>> "$errorlog" > "$outfile" 
             if [ "$KILL_PPID" == "yes" ]; then
                 kill -SIGUSR1 $PPID
                 echo "Finished: run-expr $fullargs";

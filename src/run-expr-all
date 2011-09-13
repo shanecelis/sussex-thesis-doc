@@ -4,7 +4,7 @@
 usage()
 {
 
-   echo "usage: run-expr-all [-hfpD] [-P parallel-code] [-i id] [-n nice] [-c count] [-F fitness-type] <results-name>" >&2;
+   echo "usage: run-expr-all [-hfpD] [-P parallel-code] [-i id] [-n nice] [-c count] [-FLB types] <results-name>" >&2;
    exit 2;
 }
 
@@ -12,11 +12,11 @@ parallel=0;
 force=0;
 num=1;
 count=1;
-fitnessType=0;
+fitnessType=2;
 nice=0;
 options="";
 ltypes="0 1";
-ttypes="1 2 3 4";
+ttypes="1 2 3";
 btypes="An Bn Ap Bp Ao Bo";
 dryrun=0;
 while getopts hfpc:i:F:n:P:L:T:B: opt; do
