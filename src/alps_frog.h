@@ -4,6 +4,7 @@
 
 #define       STANDARD_RUN  0
 #define       DEBUG_RUN     1
+#define       EASY_RUN      2
 
 #define       FITNESS_MEAN_DISTANCE    0
 #define       FITNESS_MEAN_SPEED       1

@@ -1,7 +1,7 @@
 #!/bin/bash
 # run-expr
 
-usage()
+function usage()
 {
     echo "usage: run-expr [-Dfp] [-i id] [-n nice] [-c count] [-d results-dir] [-F fitness-type] <experiment-name> <task-index> <lobotomise>" >&2;
 }
@@ -14,8 +14,10 @@ count=1;
 num=1;
 nice=0;
 resultsDir=".";
-fitnessType=0;
+fitnessType=2;
 runType=0; # STANDARD_RUN
+alps_main="alps-like";
+#alps_main="alps_main";
 while getopts phfc:i:d:F:n:P:D opt; do
 	case $opt in
 	    f) force=1;;
@@ -40,20 +42,23 @@ fi
 
 function echo_alps()
 {
-   echo "$@" "alps_main -T $runType -F $fitnessType $expName $targetIndex $lobotomise $dir ";
+
+    echo "$@" "$alps_main -f -T $runType -F $fitnessType $expName $targetIndex $lobotomise $dir ";
 }
+
 function run_alps()
 {
-    if [ $nice -eq 0 ]; then
-        alps_main -T "$runType" -F "$fitnessType" "$expName" "$targetIndex" "$lobotomise" "$dir"
+    if true || [ $nice -eq 0 ]; then
+        $alps_main -f -T "$runType" -F "$fitnessType" "$expName" "$targetIndex" "$lobotomise" "$dir";
     else
-        nice -n $nice alps_main -T "$runType" -F "$fitnessType" "$expName" "$targetIndex" "$lobotomise" "$dir"
+        nice -n $nice $alps_main -f -T "$runType" -F "$fitnessType" "$expName" "$targetIndex" "$lobotomise" "$dir";
     fi
 }
     
 expName="$1";
 targetIndex="$2";
 lobotomise="$3";
+
 for ((i = $num; i < ($num + $count); i++)); do 
     dir="$resultsDir/$expName-t$targetIndex-l$lobotomise/r$i";
     errorlog="$resultsDir/error.log";
@@ -66,9 +71,9 @@ for ((i = $num; i < ($num + $count); i++)); do
     else
 
         if [ $parallel -eq 0 ]; then
-            echo -n "Teeing: "
-            echo_alps -n
-            echo "2>> $errorlog | tee $outfile"
+            echo -n "Teeing: ";
+            echo_alps -n;
+            echo "2>> $errorlog | tee $outfile";
             if ! run_alps  2>> "$errorlog" | tee "$outfile"; then
                 echo "error: alps_main failed with exit code ${PIPESTATUS}" >&2;
                 exit 1;

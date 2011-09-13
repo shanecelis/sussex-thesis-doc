@@ -19,17 +19,16 @@
 
 #define rand           drand48
 
-#define MUT_PROB       0.01     // mutation probability
+#define MUT_PROB       0.05     // mutation probability
 #define MAX_OPT_STEPS  100000   // max optimisation steps
-#define LAYER_COUNT    20
+#define LAYER_COUNT    15
 #define POP_PER_LAYER  10
 #define POP            (LAYER_COUNT * POP_PER_LAYER)
 #define MAX_LAYER      (LAYER_COUNT - 1)
 #define BAD_FITNESS    666.0
 #define RESET_FREQ     (POP * 2)
 #define DISPLAY_FREQ   300
-#define MAX_SECONDS    (30 * 60)
-// 30 minutes maximum.
+#define MAX_SECONDS    (20 * 60) // 20 minutes maximum.
 
 #define LAYER_OF_INDIV(i)    ((i) / POP_PER_LAYER)
 
@@ -42,12 +41,12 @@
 
 
 double genes[POP][GENE_COUNT];   // Genotypes of the population.
-double age[POP];
+int    ages[POP];
 double fitness_matrix[POP * FITNESS_COUNT];
 int    pareto_front[POP];
 int    t;                       /* optimisation step or time */
 int    max_age[LAYER_COUNT] = {1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 
-                               377, 610, 987, 1597, 2584, 4181, 6765, 10946}; 
+                               377, 610, 987, /*1597, 2584, 4181, 6765, 10946*/}; 
 
 int    goal_indiv;
 int    phase;
@@ -60,6 +59,9 @@ FILE  *mfile;
 FILE  *table;
 FILE  *script;
 double goal_fitness = 0.5;
+int    quiet;
+double mut_prob = MUT_PROB;
+int    reset_freq = RESET_FREQ;
 
 //    experiment parameters
 char  *exp_name;
@@ -71,11 +73,14 @@ char  *save_prefix;
 
 
 int mprintf(int add_prefix, const char *fmt, ...);
+long elapsed_seconds();
 
 void init_population() {
   int i;
-  for (i = 0; i < POP; i++)
+  for (i = 0; i < POP; i++) {
     init_gene(genes[i]);
+    ages[i] = i/POP; // or zero
+  }
 }
 
 void init_gene(double *gene) {
@@ -88,9 +93,8 @@ void init_gene(double *gene) {
 void mutate(double *gene) {
   int i;
   for(i = 0; i < GENE_COUNT; i++)
-    if (rand() < MUT_PROB)
+    if (rand() < mut_prob)
       gene[i] = rand();
-      //gene[i] += rand() * 2. - 1. ;
 }
 
 void copy(double *src, double *dest) {
@@ -127,7 +131,7 @@ int is_dominated(double *fitness_a, double *fitness_b)
   Returns i >= 0 where i is the index of the gene that it dislodged
   itself to.  i < 0 indicates it did not dislodge any gene.
  */
-int try_dislodge(double *attempter, double *fitness, int into_layer)
+int try_dislodge(double *attempter, double *fitness, int age, int into_layer)
 {
   int i, k = into_layer;
   if (k > MAX_LAYER) {
@@ -135,18 +139,20 @@ int try_dislodge(double *attempter, double *fitness, int into_layer)
     return -1;
   }
   for (i = 0; i < POP_PER_LAYER; i++) {
+    int pi = INDIV_LINDEX(k, i);
     double *fitness_b = fitness_matrix + FITNESS_LINDEX(k, i);
     if (is_dominated(fitness, fitness_b)
-        || age[INDIV_LINDEX(k, i)] > max_age[k]) {
+        || ages[pi] > max_age[k]) {
       // New genome dominates current one, or the current one is too old.
-      try_dislodge(genes[INDIV_LINDEX(k, i)],
+      try_dislodge(genes[pi],
                    fitness_b,
+                   ages[pi],
                    k + 1);
             
-      copy(attempter, genes[INDIV_LINDEX(k, i)]);
+      copy(attempter, genes[pi]);
       memcpy(fitness_b, fitness, sizeof(double) * FITNESS_COUNT);
-      age[INDIV_LINDEX(k, i)] = t/POP;
-      return INDIV_LINDEX(k, i);
+      ages[pi] = age;
+      return pi;
     }
   }
   return -2;
@@ -170,8 +176,8 @@ int is_goal_fitness(double *fitness) {
 }
 
 void start_phase(int phase) {
-  printf("Starting phase %d (at %d steps)!\n", phase, t);
-  fprintf(table, "%d %d %d\n", phase, eval_fail_count, eval_succ_count);
+  if (! quiet)
+    printf("alps-like: Starting phase %d on step %d.\n", phase, t);
 }
 
 void add_to_script(char *filename, int phase, double *fitness) {
@@ -184,24 +190,24 @@ void add_to_script(char *filename, int phase, double *fitness) {
   for (i = 0; i < FITNESS_COUNT; i++)
     fprintf(script, "%f ", fitness[i]);
   fprintf(script, "; echo\n");
-
-
 }
 
 
-char *save_gene_for_phase_and_front(double *gene, double *fitness, 
-                                     const char *save_prefix, 
+char *save_gene_for_phase_and_front(int pi /* population index */, const char *save_prefix, 
                                      int phase, int front_index)
 {
   static char gene_save_name[255];
+  double *gene = genes[pi];
+  double *fitness = fitness_matrix + FITNESS_INDEX(pi);
   sprintf(gene_save_name, "p%d-f%dgene.bin", phase, front_index);
   add_to_script(gene_save_name, phase, fitness);
   sprintf(gene_save_name, "%s/p%d-f%dgene.bin", save_prefix, phase, front_index);
   mprintf(1, "individOnFront[{phase -> %d, frontIndex -> %d}] -> \n", phase, front_index + 1);
 
   assert(FITNESS_COUNT == 2);
-  mprintf(1, "\t{fitness -> {%lf, %lf}, geneFilename -> \"%s\" ",
-          fitness[0], fitness[1], gene_save_name);
+  mprintf(1, "\t{fitness -> {%lf, %lf}, age -> %d, layer -> %d, meetsGoal -> %s, geneFilename -> \"%s\"",
+          fitness[0], fitness[1], ages[pi], LAYER_OF_INDIV(pi), is_goal_fitness(fitness) ? "True" : "False",
+          gene_save_name);
 
 #ifdef PRINT_GENE_CHAR
   mprintf(1, ", gene -> { %lf" , gene[0]);
@@ -217,18 +223,20 @@ char *save_gene_for_phase_and_front(double *gene, double *fitness,
 }
 
 void end_phase(int phase) {
-  int i, fi, full_front[POP];
+  int i, fi, full_front[POP], age_max;
+
+  fprintf(table, "%d %d %d\n", phase, eval_fail_count, eval_succ_count);
 
   pareto_front_rowmajor(full_front, fitness_matrix, POP, FITNESS_COUNT);
-  mprintf(1, "phaseEnd -> {phase -> %d, evalFailedCount -> %d, evalSuccCount -> %d }\n", phase, eval_fail_count, eval_succ_count);
+  age_max = 0;
   for (i = fi = 0; i < POP; i++) {
+    age_max = fmax(age_max, ages[i]);
     if (full_front[i] 
         /*&& is_goal_fitness(fitness_matrix + FITNESS_INDEX(i))*/) {
-      save_gene_for_phase_and_front(genes[i], 
-                                     fitness_matrix + FITNESS_INDEX(i), 
-                                     save_prefix, phase, ++fi);
+      save_gene_for_phase_and_front(i, save_prefix, phase, ++fi);
     }
   }
+  mprintf(1, "phaseEnd -> {phase -> %d, ageMax -> %d, evalFailedCount -> %d, evalSuccCount -> %d, OptStepsCount -> %d, seconds -> %d }\n", phase, age_max, eval_fail_count, eval_succ_count, t, elapsed_seconds());
 }
 
 
@@ -242,15 +250,17 @@ int mprintf(int add_prefix, const char *fmt, ...)
     va_end(ap);
   } 
 
-  char buf[512];
-  if (add_prefix) {
-    sprintf(buf, ":m: %s", fmt);
-  } else {
-    sprintf(buf, "%s", fmt);
+  if (! quiet) {
+    char buf[512];
+    if (add_prefix) {
+      sprintf(buf, ":m: %s", fmt);
+    } else {
+      sprintf(buf, "%s", fmt);
+    }
+    va_start(ap, fmt);
+    vprintf(buf, ap);
+    va_end(ap);
   }
-  va_start(ap, fmt);
-  len += vprintf(buf, ap);
-  va_end(ap);
   return len;
 }
 
@@ -274,6 +284,10 @@ int run_alps(int *steps)
 
   mprintf(1, "preamble -> {expName -> %s, phaseCount -> %d, lobotomise -> %s, task -> %d, \n", exp_name, phase_count, lobotomise ? "True" : "False", task_index + 1);
   mprintf(1, "\ttmax -> %.2lf, fitnessType -> %d, runType -> %d, randomSeed -> %ld }\n", TIME_MAX, fitness_type, run_type, random_seed);
+
+  mprintf(1, "alpsParams -> { layerCount -> %d, popPerLayer -> %d, "
+          "popCount -> %d, mutProbability -> %.3f, maxSeconds -> %d }\n",
+          LAYER_COUNT, POP_PER_LAYER, POP, mut_prob, MAX_SECONDS);
   fflush(stdout);
 
   for (p = 0, phase = 1; p < phase_count; p++, phase = p + 1) {
@@ -282,16 +296,12 @@ int run_alps(int *steps)
     for (i = 0; i < POP; i++) {
       // Evaluate every gene.
       evaluate(genes[i], fitness_matrix + FITNESS_INDEX(i));
-      age[i] = t/POP;
     }
     int met_goal = 0;
     for (j = 0; j < POP; j++) {
       if (is_goal_fitness(fitness_matrix + FITNESS_INDEX(j))) {
         met_goal = 1;
         goal_indiv = j;
-        /* handle_goal_indiv(genes[goal_indiv],  */
-        /*                   fitness_matrix + FITNESS_INDEX(goal_indiv), */
-        /*                   phase); */
       }
     }
     if (met_goal) 
@@ -308,8 +318,6 @@ int run_alps(int *steps)
 
       // Grab a non-dominated individual.
       int a;
-      //do { a = POP*rand(); } while (! pareto_front[a]);
-
       // O(n) single pass to count and grab a random individual
       // that's on the pareto front.
       pareto_count=0;
@@ -320,30 +328,41 @@ int run_alps(int *steps)
 
       if (t % DISPLAY_FREQ == 0) {
         int n = FITNESS_INDEX(a);
-        printf("t = %d, a = %d, k = %d, N(pareto) = %d, f(a) = {%f, %f}, efc = %d, epc = %d, es = %ld\n", t, a, k, pareto_count, fitness_matrix[n],
-               fitness_matrix[n + 1], eval_fail_count, eval_succ_count, elapsed_seconds());
-        //print_expr();
+        if (! quiet)
+        printf("t = %5d, pi = %3d, a = %2d, k = %2d, N(PF) = %2d, f(a) = {%f, %f}, "
+               "efail = %3d, esucc = %5d, secs = %4ld\n", t, a, ages[a], k, 
+               pareto_count, fitness_matrix[n], fitness_matrix[n + 1], 
+               eval_fail_count, eval_succ_count, elapsed_seconds());
+
+        fflush(stdout);
       }
 
-      if (t % RESET_FREQ == 0) {
+      if (t % reset_freq == 0) {
         // Reset the bottom layer.
         for (i = 0; i < POP_PER_LAYER; i++) {
-          // Try to dislogde in the layer above.
-          try_dislodge(genes[i], fitness_matrix + FITNESS_LINDEX(0, i), 1);
+          // Try to dislogde in the layer above if it's in the pareto front.
+          if (pareto_front[i])
+            try_dislodge(genes[i], fitness_matrix + FITNESS_LINDEX(0, i), ages[i], 1);
 
           init_gene(genes[i]);
+          ages[i] = 0;
         }
+        for (i = 0; i < POP_PER_LAYER; i++)
+          evaluate(genes[i], fitness_matrix + FITNESS_INDEX(i));
+        pareto_front_rowmajor(pareto_front, fitness_matrix, POP_PER_LAYER,
+                              FITNESS_COUNT);
       }
 
       copy(genes[a], temp_gene);
       mutate(temp_gene);
+      int age = t/POP;
       evaluate(temp_gene, temp_fitness);
-      int new_i = try_dislodge(temp_gene, temp_fitness, k);
+      int new_i = try_dislodge(temp_gene, temp_fitness, age, k);
       if (is_goal_fitness(temp_fitness)) {
+        if (new_i < 0) {
+          printf("warning: goal individual not able to dislodge anyone in layer %d and up.\n", k);
+        }
         goal_indiv = new_i;
-        /* handle_goal_indiv(genes[goal_indiv],  */
-        /*                   fitness_matrix + FITNESS_INDEX(goal_indiv), */
-        /*                   phase); */
         break;                  /* Goto next phase */
       }
     }
@@ -351,7 +370,7 @@ int run_alps(int *steps)
   end_phase(phase - 1);
   if (steps)
     *steps = t;
-  if (t == MAX_OPT_STEPS) 
+  if (t == MAX_OPT_STEPS || elapsed_seconds() > MAX_SECONDS) 
     return ALPS_FAIL;
   else
     return ALPS_SUCC;
@@ -359,35 +378,38 @@ int run_alps(int *steps)
 
 int main(int argc, char **argv) { 
 
-  // Which random number generator am I going to use?
-  //srand48(atoi(argv[1]));
   int c;
-int  argco = argc;
-char **argvo = argv;
+  int argco = argc;
+  char **argvo = argv;
   fitness_type = FITNESS_MEAN_LIGHTSENSOR;
   int run_type = STANDARD_RUN;
   pid_t pid = getpid();
   random_seed = (long) time(NULL) ^ pid;
+  save_prefix = ".";
 
+  quiet = 0;
   int force = 0;
-  while ((c = getopt (argc, argv, "DT:F:s:f")) != -1)
+  while ((c = getopt (argc, argv, "DT:F:s:fqM:d:R:")) != -1) 
     switch (c)
     {
     case 'D':
-      run_type = DEBUG_RUN;
-      break;
+      run_type = DEBUG_RUN;        break;
     case 'T':
-      run_type = atoi(optarg);
-      break;
+      run_type = atoi(optarg);     break;
     case 'F':
-      fitness_type = atoi(optarg);
-      break;
+      fitness_type = atoi(optarg); break;
     case 's':
-      random_seed = atol(optarg);
-      break;
+      random_seed = atol(optarg);  break;
     case 'f':
-      force = 1;
-      break;
+      force = 1;                   break;
+    case 'q':
+      quiet = 1;                   break;
+    case 'M':
+      mut_prob = atof(optarg);     break;
+    case 'd':
+      save_prefix = optarg;        break;
+    case 'R':
+      reset_freq = atoi(optarg);   break;
     case '?':
       break;
     default:
@@ -397,14 +419,19 @@ char **argvo = argv;
   argc -= (optind - 1);
   argv += (optind - 1);
   srand48(random_seed);
+
+  if (! quiet)
+    printf("alps-like: Started!\n");
   
   if (run_type == DEBUG_RUN) {
     goal_fitness = 0.9;
+  } else if (run_type == EASY_RUN) {
+    goal_fitness = 0.8;
   }
   
 
-  if (argc != 5) {
-    fprintf(stderr, "usage: alps-like [-fD] [-T run-type] [-F fitness-type] <experiment-name> <task-index> <lobotomise> <save-dir> \n");
+  if (argc != 4) {
+    fprintf(stderr, "usage: alps-like [-fDq] [-M mutP] [-R resetF] [-T run-type] [-F fitness-type] [-d save-dir] <experiment-name> <task-index> <lobotomise> \n");
     fprintf(stderr, "experiment names: An, Bn, Ap, Bp, Ao, Bo\n");
     return 2;
   }
@@ -414,15 +441,13 @@ char **argvo = argv;
   exp_name = argv[1];
   task_index = atoi(argv[2]) - 1;
   lobotomise = (atoi(argv[3]) == 1);
-  save_prefix = argv[4];
 
-  if (mkdir(save_prefix, 0777)) {
-    perror(save_prefix);
-    if (force) {
-      fprintf(stderr, "warning: ignoring that directory exists due to -f.\n");
-    }  else {
-      return 4;
-    }
+  //if (mkdir(save_prefix, 0777)) {
+  char cmd[255];
+  sprintf(cmd, "mkdir -p %s", save_prefix);
+  if (system(cmd)) {
+    fprintf(stderr, "error: cannot create directory '%s'.\n", save_prefix);
+    return 4;
   }
 
   char filename[255];
@@ -445,6 +470,8 @@ char **argvo = argv;
   fprintf(run_again, "\n");
   fclose(run_again);
 
+  mprintf(1, "directory -> \"%s\"\n", save_prefix);
+
   int err;
   err = experiment_phase_count(exp_name, &phase_count);
   if (err) {
@@ -463,12 +490,33 @@ char **argvo = argv;
 
   int steps;
   err = run_alps(&steps);
-    /*ea_engine(argv[1], task_index, lobotomise, argv[4], fitness_type, run_type);*/
-  if (err)
-    fprintf(stderr, "error: alps-like did not find an adequate solution.\n");
 
+  if (err) {
+    fprintf(stderr, "error: alps-like did not find an adequate solution.\n");
+  }
+  mprintf(1, "{ success -> %s, exitCode -> %d }\n", err == 0 ? "True" : "False", 
+          err);
+  
+  sprintf(filename, "%s/FAILURE", save_prefix);
+  if (err) {
+    FILE* fail = fopen(filename, "w");
+    fprintf(fail, "%d\n", steps);
+    fprintf(fail, "%d\n", err);
+    fclose(fail);
+  } else {
+    unlink(filename);
+  }
+  sprintf(filename, "%s/SUCCESS", save_prefix);
+  if (err) {
+    unlink(filename);
+  } else {
+    FILE* suc = fopen(filename, "w");
+    fprintf(suc, "%d\n", steps);
+    fclose(suc);
+  }
 finish:
-  printf("alps-like: Finished.  Files at %s\n", save_prefix);
+  if (! quiet)
+    printf("alps-like: Finished.  Logs: \n\n\t%s\n", save_prefix);
   sim_uninit();
 
   if (mfile) fclose(mfile);

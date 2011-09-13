@@ -46,7 +46,7 @@ startjob() {
 }
 
 startjobs() {
-
+    sleep 1;
     jc=$(jobcount);
     neededJobs=$(($parallel - $jc));
     if [ $neededJobs -lt 0 ]; then
