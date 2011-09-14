@@ -23,7 +23,7 @@
   
   static MTensor* T2_13 = &T2_13B;
   
-+ static mreal *P0, *P1, *P2, *P3; // XXX Mathematica is not creating this line--BAD!
++ static mreal *P0, *P1, *P2, *P3, *P4; // XXX Mathematica is not creating this line--BAD!
 + 
   static mbool initialize = 1;
   

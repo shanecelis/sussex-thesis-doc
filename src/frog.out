@@ -129,7 +129,7 @@ Press Enter to continue.    (1) % frog.al
    (76) P_ao_jf> = r * unitvec(-a1> - a2>)
 -> (77) P_ao_jf> = -0.7071068*r*a1> - 0.7071068*r*a2>
 
-   (78) P_ao_sl> = r * (-a1>) 
+   (78) P_ao_sl> = r * (-a1>)
 -> (79) P_ao_sl> = -r*a1>
 
    (80) P_ao_sr> = r * a1>

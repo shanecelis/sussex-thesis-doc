@@ -55,7 +55,7 @@ P_ao_jc> = r * unitvec( a1> - a2>)
 P_ao_jd> = r * unitvec( a1> + a2>)
 P_ao_je> = r * unitvec(-a1> + a2>)
 P_ao_jf> = r * unitvec(-a1> - a2>)
-P_ao_sl> = r * (-a1>) 
+P_ao_sl> = r * (-a1>)
 P_ao_sr> = r * a1>
 
 % Set the positions of the pin joints with respect to the bodies other than A.

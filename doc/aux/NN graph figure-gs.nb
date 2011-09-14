@@ -1,0 +1,3782 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 8.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       157,          7]
+NotebookDataLength[    182107,       3773]
+NotebookOptionsPosition[    178478,       3646]
+NotebookOutlinePosition[    178856,       3663]
+CellTagsIndexPosition[    178813,       3660]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[
+ RowBox[{"SetDirectory", "[", "\"\</Users/shane/School/sussex/thesis\>\"", 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.518607034040348*^9, 3.51860703861598*^9}}],
+
+Cell[BoxData["\<\"/Users/shane/School/sussex/thesis\"\>"], "Output",
+ CellChangeTimes->{3.518607039571044*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Graph", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"1", "\[DirectedEdge]", "2"}], ",", 
+     RowBox[{"2", "\[DirectedEdge]", "3"}], ",", 
+     RowBox[{"3", "\[DirectedEdge]", "1"}]}], "}"}], ",", 
+   RowBox[{"VertexShapeFunction", "\[Rule]", "\"\<Diamond\>\""}], ",", 
+   RowBox[{"VertexSize", "\[Rule]", "Medium"}]}], "]"}]], "Input"],
+
+Cell[BoxData[
+ GraphicsBox[
+  NamespaceBox["NetworkGraphics",
+   DynamicModuleBox[{Typeset`graph = HoldComplete[
+     Graph[{1, 2, 3}, {{{1, 2}, {2, 3}, {3, 1}}, Null}, {
+      VertexShapeFunction -> {"Diamond"}, VertexSize -> {Medium}}]], 
+    Typeset`boxes, Typeset`boxes$s2d = GraphicsGroupBox[{{
+       Directive[
+        Hue[0.6, 0.2, 0.8], 
+        EdgeForm[
+         Directive[
+          GrayLevel[0], 
+          Opacity[0.7]]]], 
+       TagBox[
+        PolygonBox[{{0.8660254037844388, 0.3882349999999999}, {
+         0.9777904037844388, 0.49999999999999983`}, {0.8660254037844388, 
+         0.6117649999999998}, {0.7542604037844388, 0.49999999999999983`}, {
+         0.8660254037844388, 0.3882349999999999}}], "DynamicName", BoxID -> 
+        "VertexID$1"], 
+       TagBox[
+        PolygonBox[{{3.885780586188048*^-16, 0.888235}, {0.11176500000000036`,
+          1.}, {3.885780586188048*^-16, 1.111765}, {-0.11176499999999959`, 
+         1.}, {3.885780586188048*^-16, 0.888235}}], "DynamicName", BoxID -> 
+        "VertexID$2"], 
+       TagBox[
+        PolygonBox[{{0., -0.11176499999999998`}, {0.11176499999999998`, 0.}, {
+         0., 0.11176499999999998`}, {-0.11176499999999998`, 0.}, {
+         0., -0.11176499999999998`}}], "DynamicName", BoxID -> 
+        "VertexID$3"]}, {
+       Directive[
+        Opacity[0.7], 
+        Hue[0.6, 0.7, 0.5]], 
+       Arrowheads[{{0.041582132564841494`, 0.7}}], {
+        Arrowheads[0.041582132564841494`], 
+        ArrowBox[{
+          DynamicLocation["VertexID$1", Automatic, Center], 
+          DynamicLocation["VertexID$2", Automatic, Center]}]}, {
+        Arrowheads[0.041582132564841494`], 
+        ArrowBox[{
+          DynamicLocation["VertexID$2", Automatic, Center], 
+          DynamicLocation["VertexID$3", Automatic, Center]}]}, {
+        Arrowheads[0.041582132564841494`], 
+        ArrowBox[{
+          DynamicLocation["VertexID$3", Automatic, Center], 
+          DynamicLocation["VertexID$1", Automatic, Center]}]}}}], 
+    Typeset`data}, 
+    TagBox[
+     DynamicBox[GraphComputation`NetworkGraphicsBox[
+      2, Typeset`graph, Typeset`boxes], {
+      CachedValue :> Typeset`boxes, SingleEvaluation -> True, 
+       SynchronousUpdating -> False, TrackedSymbols :> {}},
+      ImageSizeCache->{{3.760693309010094, 
+       355.2393066909899}, {-199.2393066909899, 194.2393066909899}}],
+     MouseAppearanceTag["NetworkGraphics"]],
+    AllowKernelInitialization->False,
+    UnsavedVariables:>{Typeset`data}]],
+  DefaultBaseStyle->{
+   "NetworkGraphics", FrontEnd`GraphicsHighlightColor -> Hue[0.8, 1., 0.6]},
+  FrameTicks->None]], "Output",
+ CellChangeTimes->{3.518598711638959*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Rotate", "[", 
+  RowBox[{
+   RowBox[{"CompleteGraph", "[", 
+    RowBox[{"5", ",", "  ", 
+     RowBox[{"VertexShapeFunction", " ", "\[Rule]", " ", "\"\<Square\>\""}], 
+     ",", " ", 
+     RowBox[{"VertexSize", " ", "\[Rule]", " ", "Medium"}]}], "]"}], ",", " ",
+    "Pi"}], "]"}]], "Input",
+ CellChangeTimes->{{3.5185987551781054`*^9, 3.5185988566386023`*^9}}],
+
+Cell[BoxData[
+ RotationBox[
+  GraphicsBox[
+   NamespaceBox["NetworkGraphics",
+    DynamicModuleBox[{Typeset`graph = HoldComplete[
+      Graph[{1, 2, 3, 4, 5}, {Null, 
+        SparseArray[
+        Automatic, {5, 5}, 0, {
+         1, {{0, 4, 8, 12, 16, 20}, {{2}, {3}, {4}, {5}, {1}, {3}, {4}, {5}, {
+           1}, {2}, {4}, {5}, {1}, {2}, {3}, {5}, {1}, {2}, {3}, {4}}}, 
+          Pattern}]}, {
+       VertexShapeFunction -> {"Square"}, VertexSize -> {Medium}, 
+        VertexCoordinates -> {{0.9510565162951535, 0.30901699437494745`}, {
+         0.5877852522924732, -0.8090169943749473}, {-0.587785252292473, \
+-0.8090169943749475}, {-0.9510565162951536, 
+         0.30901699437494723`}, {-2.4492935982947064`*^-16, 1.}}}]], 
+     Typeset`boxes, Typeset`boxes$s2d = GraphicsGroupBox[{{
+        Directive[
+         Hue[0.6, 0.2, 0.8], 
+         EdgeForm[
+          Directive[
+           GrayLevel[0], 
+           Opacity[0.7]]]], 
+        TagBox[
+         RectangleBox[{0.8473297001519494, 0.20529017823174334`}, {
+          1.0547833324383575`, 0.41274381051815157`}], "DynamicName", BoxID -> 
+         "VertexID$1"], 
+        TagBox[
+         RectangleBox[{0.48405843614926913`, -0.9127438105181515}, {
+          0.6915120684356774, -0.7052901782317432}], "DynamicName", BoxID -> 
+         "VertexID$2"], 
+        TagBox[
+         RectangleBox[{-0.6915120684356771, -0.9127438105181516}, \
+{-0.4840584361492689, -0.7052901782317433}], "DynamicName", BoxID -> 
+         "VertexID$3"], 
+        TagBox[
+         RectangleBox[{-1.0547833324383578`, 
+          0.20529017823174311`}, {-0.8473297001519495, 0.41274381051815134`}],
+          "DynamicName", BoxID -> "VertexID$4"], 
+        TagBox[
+         RectangleBox[{-0.10372681614320435`, 0.8962731838567959}, {
+          0.10372681614320385`, 1.1037268161432041`}], "DynamicName", BoxID -> 
+         "VertexID$5"]}, {
+        Directive[
+         Opacity[0.7], 
+         Hue[0.6, 0.7, 0.5]], 
+        LineBox[{{
+           DynamicLocation["VertexID$1", Automatic, Center], 
+           DynamicLocation["VertexID$2", Automatic, Center]}, {
+           DynamicLocation["VertexID$1", Automatic, Center], 
+           DynamicLocation["VertexID$3", Automatic, Center]}, {
+           DynamicLocation["VertexID$1", Automatic, Center], 
+           DynamicLocation["VertexID$4", Automatic, Center]}, {
+           DynamicLocation["VertexID$1", Automatic, Center], 
+           DynamicLocation["VertexID$5", Automatic, Center]}, {
+           DynamicLocation["VertexID$2", Automatic, Center], 
+           DynamicLocation["VertexID$3", Automatic, Center]}, {
+           DynamicLocation["VertexID$2", Automatic, Center], 
+           DynamicLocation["VertexID$4", Automatic, Center]}, {
+           DynamicLocation["VertexID$2", Automatic, Center], 
+           DynamicLocation["VertexID$5", Automatic, Center]}, {
+           DynamicLocation["VertexID$3", Automatic, Center], 
+           DynamicLocation["VertexID$4", Automatic, Center]}, {
+           DynamicLocation["VertexID$3", Automatic, Center], 
+           DynamicLocation["VertexID$5", Automatic, Center]}, {
+           DynamicLocation["VertexID$4", Automatic, Center], 
+           DynamicLocation["VertexID$5", Automatic, Center]}}]}}], 
+     Typeset`data}, 
+     TagBox[
+      DynamicBox[GraphComputation`NetworkGraphicsBox[
+       2, Typeset`graph, Typeset`boxes], {
+       CachedValue :> Typeset`boxes, SingleEvaluation -> True, 
+        SynchronousUpdating -> False, TrackedSymbols :> {}},
+       ImageSizeCache->{{6.680000000000007, 
+        352.31999999999994`}, {-167.60719999999998`, 162.8236960903036}}],
+      MouseAppearanceTag["NetworkGraphics"]],
+     AllowKernelInitialization->False,
+     UnsavedVariables:>{Typeset`data}]],
+   DefaultBaseStyle->{
+    "NetworkGraphics", FrontEnd`GraphicsHighlightColor -> Hue[0.8, 1., 0.6]},
+   FrameTicks->None],
+  BoxRotation->3.141592653589793]], "Output",
+ CellChangeTimes->{{3.518598760918673*^9, 3.518598857556408*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"graph", " ", "=", " ", 
+  RowBox[{"fullyConnectedGraph", " ", "=", " ", 
+   RowBox[{"Table", "[", 
+    RowBox[{"1", ",", 
+     RowBox[{"{", "5", "}"}], ",", 
+     RowBox[{"{", "5", "}"}]}], "]"}]}]}]], "Input",
+ CellChangeTimes->{{3.5185990134383307`*^9, 3.518599014060423*^9}, {
+  3.51859924385437*^9, 3.518599245044742*^9}, {3.518599917582782*^9, 
+  3.5185999210929527`*^9}, {3.524971824405719*^9, 3.524971825123975*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"1", ",", "1", ",", "1", ",", "1", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "1", ",", "1", ",", "1", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "1", ",", "1", ",", "1", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "1", ",", "1", ",", "1", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "1", ",", "1", ",", "1", ",", "1"}], "}"}]}], 
+  "}"}]], "Output",
+ CellChangeTimes->{
+  3.518599014662939*^9, 3.518599122335876*^9, 3.5185992454122458`*^9, 
+   3.518599921737577*^9, {3.5249718191379833`*^9, 3.5249718256140003`*^9}, 
+   3.524972254673476*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"AdjacencyGraph", "[", 
+  RowBox[{
+   RowBox[{"0", " ", 
+    RowBox[{"IdentityMatrix", "[", "2", "]"}]}], " ", "+", " ", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"0", ",", "1"}], "}"}], ",", " ", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", " ", "0"}], "}"}]}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.5186000887208242`*^9, 3.518600141365075*^9}}],
+
+Cell[BoxData[
+ GraphicsBox[
+  NamespaceBox["NetworkGraphics",
+   DynamicModuleBox[{Typeset`graph = HoldComplete[
+     Graph[{1, 2}, {
+       SparseArray[Automatic, {2, 2}, 0, {1, {{0, 1, 1}, {{2}}}, Pattern}], 
+       Null}]], Typeset`boxes, Typeset`boxes$s2d = GraphicsGroupBox[{{
+       Directive[
+        Hue[0.6, 0.2, 0.8], 
+        EdgeForm[
+         Directive[
+          GrayLevel[0], 
+          Opacity[0.7]]]], 
+       TagBox[
+        DiskBox[{1., 0.}, 0.0139455782312925], "DynamicName", BoxID -> 
+        "VertexID$1"], 
+       TagBox[
+        DiskBox[{0., 1.2246467991473532`*^-16}, 0.0139455782312925], 
+        "DynamicName", BoxID -> "VertexID$2"]}, {
+       Directive[
+        Opacity[0.7], 
+        Hue[0.6, 0.7, 0.5]], 
+       Arrowheads[{{0.041582132564841494`, 0.7}}], {
+        Arrowheads[0.041582132564841494`], 
+        ArrowBox[{
+          DynamicLocation["VertexID$1", Automatic, Center], 
+          DynamicLocation["VertexID$2", Automatic, Center]}]}}}], 
+    Typeset`data}, 
+    TagBox[
+     DynamicBox[GraphComputation`NetworkGraphicsBox[
+      2, Typeset`graph, Typeset`boxes], {
+      CachedValue :> Typeset`boxes, SingleEvaluation -> True, 
+       SynchronousUpdating -> False, TrackedSymbols :> {}},
+      ImageSizeCache->{{6.18, 352.82000000000005`}, {-8.107200000000002, 
+       3.2443817339510534`}}],
+     MouseAppearanceTag["NetworkGraphics"]],
+    AllowKernelInitialization->False,
+    UnsavedVariables:>{Typeset`data}]],
+  DefaultBaseStyle->{
+   "NetworkGraphics", FrontEnd`GraphicsHighlightColor -> Hue[0.8, 1., 0.6]},
+  FrameTicks->None]], "Output",
+ CellChangeTimes->{{3.518600097468617*^9, 3.518600141640757*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"isolatedNodeGraph", " ", "//", " ", "MatrixForm"}]], "Input",
+ CellChangeTimes->{{3.5185999279984922`*^9, 3.518599941765779*^9}, {
+  3.518599978724719*^9, 3.51859998150095*^9}}],
+
+Cell[BoxData[
+ TagBox[
+  RowBox[{"(", "\[NoBreak]", GridBox[{
+     {"1", "1", "1", "0", "1"},
+     {"1", "1", "1", "0", "1"},
+     {"1", "1", "1", "0", "1"},
+     {"0", "0", "0", "1", "0"},
+     {"1", "1", "1", "0", "1"}
+    },
+    GridBoxAlignment->{
+     "Columns" -> {{Center}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, 
+      "RowsIndexed" -> {}},
+    GridBoxSpacings->{"Columns" -> {
+        Offset[0.27999999999999997`], {
+         Offset[0.7]}, 
+        Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+        Offset[0.2], {
+         Offset[0.4]}, 
+        Offset[0.2]}, "RowsIndexed" -> {}}], "\[NoBreak]", ")"}],
+  Function[BoxForm`e$, 
+   MatrixForm[BoxForm`e$]]]], "Output",
+ CellChangeTimes->{
+  3.5185999424137793`*^9, {3.518599982199771*^9, 3.518599989937626*^9}, 
+   3.518600077310239*^9, 3.524972104024788*^9, 3.524972323228201*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"isolatedNodeGraph", " ", "=", " ", "fullyConnectedGraph"}], 
+  ";"}]], "Input",
+ CellChangeTimes->{{3.5185999437261963`*^9, 3.518599964628455*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"isolatedNodeGraph", "[", 
+   RowBox[{"[", 
+    RowBox[{"4", ",", "All"}], "]"}], "]"}], " ", "=", " ", "0"}]], "Input",
+ CellChangeTimes->{{3.5185999558808813`*^9, 3.518599986740608*^9}}],
+
+Cell[BoxData["0"], "Output",
+ CellChangeTimes->{3.524972095860495*^9, 3.524972318869233*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"isolatedNodeGraph", "[", 
+   RowBox[{"[", 
+    RowBox[{"All", ",", "4"}], "]"}], "]"}], " ", "=", " ", "0"}]], "Input",
+ CellChangeTimes->{{3.5185999558808813`*^9, 3.518599997212709*^9}}],
+
+Cell[BoxData["0"], "Output",
+ CellChangeTimes->{{3.518599975836947*^9, 3.5185999871618023`*^9}, 
+   3.5249720983735647`*^9, 3.5249723205306273`*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"isolatedNodeGraph", "[", 
+    RowBox[{"[", 
+     RowBox[{"4", ",", "4"}], "]"}], "]"}], " ", "=", " ", "1"}], 
+  ";"}]], "Input",
+ CellChangeTimes->{{3.518599999916122*^9, 3.5186000069409122`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"graph", "[", 
+    RowBox[{"[", 
+     RowBox[{"2", ",", "1"}], "]"}], "]"}], " ", "=", " ", "2"}], 
+  ";"}]], "Input",
+ CellChangeTimes->{{3.518599015563508*^9, 3.5185990210862293`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"graph", " ", "//", " ", "MatrixForm"}]], "Input",
+ CellChangeTimes->{{3.518599068816025*^9, 3.5185990715240307`*^9}}],
+
+Cell[BoxData[
+ TagBox[
+  RowBox[{"(", "\[NoBreak]", GridBox[{
+     {"1", "1", "1"},
+     {"2", "1", "1"},
+     {"1", "1", "1"}
+    },
+    GridBoxAlignment->{
+     "Columns" -> {{Center}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, 
+      "RowsIndexed" -> {}},
+    GridBoxSpacings->{"Columns" -> {
+        Offset[0.27999999999999997`], {
+         Offset[0.7]}, 
+        Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+        Offset[0.2], {
+         Offset[0.4]}, 
+        Offset[0.2]}, "RowsIndexed" -> {}}], "\[NoBreak]", ")"}],
+  Function[BoxForm`e$, 
+   MatrixForm[BoxForm`e$]]]], "Output",
+ CellChangeTimes->{3.51859907215839*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Permutations", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+    "1", ",", "2", ",", "3", ",", "4", ",", "5", ",", " ", "1", ",", "2", ",",
+      "3", ",", "4", ",", "5"}], "}"}], ",", 
+   RowBox[{"{", "2", "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.518599399576541*^9, 3.518599422164876*^9}, {
+  3.518599765806658*^9, 3.518599784125473*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"1", ",", "2"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "3"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "4"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "5"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"2", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"2", ",", "3"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"2", ",", "4"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"2", ",", "5"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"2", ",", "2"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"3", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"3", ",", "2"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"3", ",", "4"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"3", ",", "5"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"3", ",", "3"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"4", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"4", ",", "2"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"4", ",", "3"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"4", ",", "5"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"4", ",", "4"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"5", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"5", ",", "2"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"5", ",", "3"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"5", ",", "4"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"5", ",", "5"}], "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{{3.518599406401472*^9, 3.518599422556333*^9}, 
+   3.518599785161306*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"edgeStyle", " ", "=", " ", 
+   RowBox[{"Map", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"If", " ", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"#1", "[", 
+          RowBox[{"[", "1", "]"}], "]"}], " ", "===", " ", "4"}], ",", 
+        "\[IndentingNewLine]", 
+        RowBox[{"#1", " ", "\[Rule]", " ", "tailStyle"}], ",", 
+        "\[IndentingNewLine]", 
+        RowBox[{"#1", " ", "\[Rule]", " ", "footStyle"}]}], "]"}], "&"}], ",",
+      " ", 
+     RowBox[{"EdgeList", "[", "fcag", "]"}]}], "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.5185994425515003`*^9, 3.5185995493022327`*^9}, {
+  3.5185996640644836`*^9, 3.51859966605379*^9}, {3.51859979098298*^9, 
+  3.518599791799005*^9}, {3.518599841974669*^9, 3.518599850206862*^9}, {
+  3.51860547824247*^9, 3.518605498232965*^9}, {3.518605534305443*^9, 
+  3.518605534385357*^9}, {3.5186067279615602`*^9, 3.5186067356333714`*^9}, {
+  3.5249717397282867`*^9, 3.524971753173471*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"red", " ", "=", " ", 
+   RowBox[{"Lighter", "[", "Red", "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"blue", " ", "=", " ", 
+   RowBox[{"Nest", "[", 
+    RowBox[{"Lighter", ",", " ", "Blue", ",", " ", "1"}], "]"}]}], 
+  ";"}]}], "Input",
+ CellChangeTimes->{{3.5185998132696733`*^9, 3.5185998821327553`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData["graph"], "Input",
+ CellChangeTimes->{{3.524971915561096*^9, 3.524971915910222*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"1", ",", "1", ",", "1", ",", "1", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "1", ",", "1", ",", "1", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "1", ",", "1", ",", "1", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "1", ",", "1", ",", "1", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "1", ",", "1", ",", "1", ",", "1"}], "}"}]}], 
+  "}"}]], "Output",
+ CellChangeTimes->{3.524971916276989*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"AdjacencyGraph", "[", "graph", "]"}]], "Input",
+ CellChangeTimes->{{3.524971998171856*^9, 3.5249720014907713`*^9}}],
+
+Cell[BoxData[
+ GraphicsBox[
+  NamespaceBox["NetworkGraphics",
+   DynamicModuleBox[{Typeset`graph = HoldComplete[
+     Graph[{1, 2, 3, 4, 5}, {
+      Null, SparseArray[
+       Automatic, {5, 5}, 0, {
+        1, {{0, 5, 9, 12, 14, 15}, {{1}, {2}, {3}, {4}, {5}, {2}, {3}, {4}, {
+          5}, {3}, {4}, {5}, {4}, {5}, {5}}}, {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+         1, 1, 1, 1, 1}}]}]], Typeset`boxes, Typeset`boxes$s2d = 
+    GraphicsGroupBox[{{
+       Directive[
+        Hue[0.6, 0.2, 0.8], 
+        EdgeForm[
+         Directive[
+          GrayLevel[0], 
+          Opacity[0.7]]]], 
+       TagBox[
+        DiskBox[{1.0045619424903385`, 0.03373012923587082}, 
+         0.01579102969795726], "DynamicName", BoxID -> "VertexID$1"], 
+       TagBox[
+        DiskBox[{0., 0.6969072046679561}, 0.01579102969795726], "DynamicName",
+         BoxID -> "VertexID$2"], 
+       TagBox[
+        DiskBox[{0.26129995346176826`, 0.}, 0.01579102969795726], 
+        "DynamicName", BoxID -> "VertexID$3"], 
+       TagBox[
+        DiskBox[{0.581193752107737, 1.159154330812695}, 0.01579102969795726], 
+        "DynamicName", BoxID -> "VertexID$4"], 
+       TagBox[
+        DiskBox[{1.2021335570857812`, 0.7498225073128196}, 
+         0.01579102969795726], "DynamicName", BoxID -> "VertexID$5"]}, {
+       Directive[
+        Opacity[0.7], 
+        Hue[0.6, 0.7, 0.5]], 
+       LineBox[{{
+          DynamicLocation["VertexID$1", Automatic, Center], {
+          1.0076696774813316`, 0.03613093624569452}, {1.069262488072591, 
+          0.07104395178774295}, {1.138173363352383, 0.08728846590614617}, {
+          1.2088748666889353`, 0.08356148365215568}, {1.275695932697036, 
+          0.06016195142796166}, {1.3332767512374637`, 0.01896677808223582}, {
+          1.3769986852025693`, -0.036719714544980395`}, {
+          1.4033547377877205`, -0.10243083584798979`}, {
+          1.410230853556288, -0.17289580588777137`}, {
+          1.397075489750628, -0.24246253194204814`}, {
+          1.3649438562996297`, -0.30555097068117654`}, {
+          1.3164132759706304`, -0.35710071116258557`}, {
+          1.2553764537449927`, -0.3929768773926327}, {
+          1.1867292375667047`, -0.41030179244989745`}, {
+          1.115977915606283, -0.4076858009317885}, {
+          1.0487975492696748`, -0.3853387351367186}, {
+          0.9905767686724777, -0.3450530841251849}, {
+          0.9459855431641843, -0.29006021569264556`}, {
+          0.918600596626612, -0.2247711838886406}, {
+          0.9106185135035999, -0.15442291226959234`}, {
+          0.9226795477241954, -0.08465813301601993}, {
+          0.9538162670493318, -0.021072775578652586`}, {1.0015311521499886`, 
+          0.03123289056375636}, 
+          DynamicLocation["VertexID$1", Automatic, Center]}, {
+          DynamicLocation["VertexID$1", Automatic, Center], 
+          DynamicLocation["VertexID$2", Automatic, Center]}, {
+          DynamicLocation["VertexID$1", Automatic, Center], 
+          DynamicLocation["VertexID$3", Automatic, Center]}, {
+          DynamicLocation["VertexID$1", Automatic, Center], 
+          DynamicLocation["VertexID$4", Automatic, Center]}, {
+          DynamicLocation["VertexID$1", Automatic, Center], 
+          DynamicLocation["VertexID$5", Automatic, Center]}, {
+          DynamicLocation[
+          "VertexID$2", Automatic, Center], {-0.0011071375389789528`, 
+          0.6931394284614362}, {-0.030485277104386532`, 
+          0.6287226768633106}, {-0.07674520293013123, 
+          0.5751259210531332}, {-0.13617634237359152`, 
+          0.5366482309557383}, {-0.2040116415279058, 
+          0.5163759553206779}, {-0.27480993721018876`, 
+          0.5159351614196224}, {-0.3428924001872835, 
+          0.5353612059411331}, {-0.4027980419241731, 
+          0.5730958989817634}, {-0.4497217480286536, 
+          0.6261124886136844}, {-0.4798997031237272, 
+          0.690158440843774}, {-0.49091129168554193`, 
+          0.7600965412478061}, {-0.4818732589630377, 
+          0.8303169580458153}, {-0.45351055806335006`, 
+          0.8951872144693417}, {-0.4080982004602478, 
+          0.9495039775145298}, {-0.3492787741767585, 
+          0.9889104244802275}, {-0.28177026676098926`, 
+          1.0102457097437108`}, {-0.21098762897842024`, 
+          1.0117985005605343`}, {-0.14260843412041257`, 
+          0.993444245431279}, {-0.08211747199662509, 
+          0.956655164549614}, {-0.03436680635717887, 
+          0.9043821609840162}, {-0.00318658414731815, 0.8408181246606133}, {
+          0.008922185877374839, 0.7710616148621128}, {0.0009882425229528202, 
+          0.700707897734814}, 
+          DynamicLocation["VertexID$2", Automatic, Center]}, {
+          DynamicLocation["VertexID$2", Automatic, Center], 
+          DynamicLocation["VertexID$3", Automatic, Center]}, {
+          DynamicLocation["VertexID$2", Automatic, Center], 
+          DynamicLocation["VertexID$4", Automatic, Center]}, {
+          DynamicLocation["VertexID$2", Automatic, Center], 
+          DynamicLocation["VertexID$5", Automatic, Center]}, {
+          DynamicLocation["VertexID$3", Automatic, Center], {
+          0.26454316391031674`, -0.002214379610429973}, {
+          0.3167712361820946, -0.05001418544208597}, {
+          0.35350341072222324`, -0.11053971992401833`}, {
+          0.37179334899860017`, -0.17893614620943465`}, {
+          0.3701739897612957, -0.2497172923320471}, {
+          0.3487752240548212, -0.31720570464860315`}, {
+          0.3093134764777679, -0.3759880442493284}, {
+          0.2549540283913948, -0.421349298360243}, {
+          0.19005712632305477`, -0.44965097804011966`}, {
+          0.11982824056063282`, -0.4586229664116428}, {
+          0.049900527179939536`, -0.44754560787642916`}, \
+{-0.014117015196569771`, -0.41730743268608583`}, {-0.06708945093832511, \
+-0.3703338867016098}, {-0.10476778769681275`, -0.3103927830257177}, \
+{-0.12412979395955348`, -0.2422920805017962}, {-0.12362241642042171`, \
+-0.17149423068414393`}, {-0.10328635253369511`, -0.10367802704249915`}, \
+{-0.0647527861149495, -0.044283101082260884`}, {-0.011112547830767455`, 
+          0.0019263980232933353`}, {0.05333180460462737, 
+          0.03124394242852474}, {0.12341110053542738`, 0.04131793134123388}, {
+          0.19350418269314734`, 0.03134031617521302}, {0.25798878799696845`, 
+          0.002111415245132864}, 
+          DynamicLocation["VertexID$3", Automatic, Center]}, {
+          DynamicLocation["VertexID$3", Automatic, Center], 
+          DynamicLocation["VertexID$4", Automatic, Center]}, {
+          DynamicLocation["VertexID$3", Automatic, Center], 
+          DynamicLocation["VertexID$5", Automatic, Center]}, {
+          DynamicLocation["VertexID$4", Automatic, Center], {
+          0.577268312048817, 1.1590411432847276`}, {0.5069222563277416, 
+          1.1670427315806486`}, {0.44164082006316363`, 1.1944457797688321`}, {
+          0.38666031756278085`, 1.239052251447003}, {0.34639081098760904`, 
+          1.297284199816968}, {0.324062373165533, 1.3644707597467318`}, {
+          0.3214659989815676, 1.4352228043240223`}, {0.33880994720061686`, 
+          1.5038652141807938`}, {0.37470303574385383`, 1.5648920866682268`}, {
+          0.4262662303277082, 1.6134083719245984`}, {0.48936357578636913`, 
+          1.6455225115960963`}, {0.5589339467569708, 1.6586585861156364`}, {
+          0.6293970075460897, 1.651762932774652}, {0.6951008185750849, 
+          1.6253886614664976`}, {0.7507751862721269, 1.5816512889767764`}, {
+          0.7919543925889403, 1.5240590504555367`}, {0.8153353964229604, 
+          1.4572314990228856`}, {0.8190427751133217, 1.38652896502292}, {
+          0.8027791546867907, 1.317622596511789}, {0.767849062635521, 
+          1.2560394686271168`}, {0.7170542899623327, 1.2067192492455163`}, {
+          0.654469155648611, 1.1736179813890806`}, {0.5851136998927361, 
+          1.1593907635421186`}, 
+          DynamicLocation["VertexID$4", Automatic, Center]}, {
+          DynamicLocation["VertexID$4", Automatic, Center], 
+          DynamicLocation["VertexID$5", Automatic, Center]}, {
+          DynamicLocation["VertexID$5", Automatic, Center], {
+          1.2008103314403087`, 0.7535199341158578}, {1.1866343262867314`, 
+          0.8228858756769425}, {1.192474441868944, 0.8934442629938055}, {
+          1.2178622344373666`, 0.9595355102151495}, {1.2607613140307223`, 
+          1.0158583469762092`}, {1.3177306861318054`, 1.0578950406280463`}, {
+          1.384200758597691, 1.0822737698227767`}, {1.4548398749667133`, 
+          1.0870390829681824`}, {1.5239819739986278`, 1.071808747704932}, {
+          1.586081072284648, 1.0378044102928716`}, {1.6361561152485182`, 
+          0.9877536056745979}, {1.670190514424452, 0.9256709781246685}, {
+          1.6854543235741866`, 0.8565362610788128}, {1.6807232114511366`, 
+          0.7858948458265035}, {1.6563766671033189`, 0.7194129780045941}, {
+          1.6143675605318593`, 0.6624232601965736}, {1.558065500286763, 
+          0.6194969165026647}, {1.491986552503882, 0.5940771283312939}, {
+          1.421431000993009, 0.5882028520553102}, {1.3520582041415197`, 
+          0.602345271500796}, {1.2894326499494366`, 0.6353700036405808}, {
+          1.238577620749496, 0.6846280890260614}, {1.2035722687824486`, 
+          0.7461684684889243}, 
+          DynamicLocation["VertexID$5", Automatic, Center]}}]}}], 
+    Typeset`data}, 
+    TagBox[
+     DynamicBox[GraphComputation`NetworkGraphicsBox[
+      2, Typeset`graph, Typeset`boxes], {
+      CachedValue :> Typeset`boxes, SingleEvaluation -> True, 
+       SynchronousUpdating -> False, TrackedSymbols :> {}},
+      ImageSizeCache->{{3.760693309010094, 
+       355.2393066909899}, {-173.2393066909899, 169.2393066909899}}],
+     MouseAppearanceTag["NetworkGraphics"]],
+    AllowKernelInitialization->False,
+    UnsavedVariables:>{Typeset`data}]],
+  DefaultBaseStyle->{
+   "NetworkGraphics", FrontEnd`GraphicsHighlightColor -> Hue[0.8, 1., 0.6]},
+  FrameTicks->None]], "Output",
+ CellChangeTimes->{3.524972001893744*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"fcag", " ", "=", " ", 
+  RowBox[{"AdjacencyGraph", "[", 
+   RowBox[{"graph", ",", "\[IndentingNewLine]", 
+    RowBox[{"VertexShapeFunction", " ", "\[Rule]", " ", "\"\<Diamond\>\""}], 
+    ",", " ", 
+    RowBox[{"VertexSize", " ", "\[Rule]", " ", "Medium"}], " ", ",", 
+    RowBox[{"DirectedEdges", " ", "\[Rule]", " ", "True"}], " ", ",", " ", 
+    RowBox[{"VertexStyle", " ", "\[Rule]", " ", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"4", " ", "\[Rule]", " ", "tailColour"}], "}"}], "~", "Join", 
+      "~", 
+      RowBox[{"Map", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"#", " ", "\[Rule]", " ", "footColour"}], "&"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"1", ",", "2", ",", "3", ",", "5"}], "}"}]}], "]"}]}]}], 
+    "\[IndentingNewLine]", ",", " ", 
+    RowBox[{"EdgeStyle", " ", "\[Rule]", " ", "edgeStyle"}], " ", ",", " ", 
+    RowBox[{"EdgeShapeFunction", " ", "\[Rule]", " ", "ef1"}]}], 
+   "]"}]}]], "Input",
+ CellChangeTimes->CompressedData["
+1:eJxTTMoPSmViYGAQBmIQXZfy6KGh+SvHJx+nPwbRelPuvAXRry6qvwPRsxa0
+fwPRcyeyfwfRdi1n/4DoIIZrDEZAuvv+bC4Q3fZYWABEH1nyWQRELzJmFAfR
+oYvbDEC0zl8GQxBdcD7PDETv0vsMplWs59uD6BtRE11B9HuBGcEg+lP1VzD9
+pfredBCdeFFqPog+8+PkNRD9zqfyOohOXX6OzxRIr3kQzg+i2QzNFED0j7vT
+DED0KbsCVxA9L2mdO4jetfD+IhCddMZzMYh+8Fl2eaTzK8eSrffB9DGLvTtA
+dPzbz2Ca9cDnPSC6Qo79AIgGAH2GkZ8=
+  "]],
+
+Cell[BoxData[
+ GraphicsBox[
+  NamespaceBox["NetworkGraphics",
+   DynamicModuleBox[{Typeset`graph = HoldComplete[
+     Graph[{1, 2, 3, 4, 5}, {
+      SparseArray[
+       Automatic, {5, 5}, 0, {
+        1, {{0, 5, 10, 15, 20, 25}, {{1}, {2}, {3}, {4}, {5}, {1}, {2}, {3}, {
+          4}, {5}, {1}, {2}, {3}, {4}, {5}, {1}, {2}, {3}, {4}, {5}, {1}, {
+          2}, {3}, {4}, {5}}}, {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+         1, 1, 1, 1, 1, 1, 1, 1, 1, 1}}], Null}, {
+      EdgeShapeFunction -> {$CellContext`ef1}, 
+       EdgeStyle -> {DirectedEdge[3, 1] -> {
+           Thickness[Large], 
+           GrayLevel[0.5]}, DirectedEdge[4, 5] -> {
+           Thickness[Large], 
+           Dashing[{Small, Small}], 
+           RGBColor[
+            Rational[1, 3], 
+            Rational[1, 3], 
+            Rational[1, 3]]}, DirectedEdge[3, 2] -> {
+           Thickness[Large], 
+           GrayLevel[0.5]}, DirectedEdge[5, 5] -> {
+           Thickness[Large], 
+           GrayLevel[0.5]}, DirectedEdge[4, 4] -> {
+           Thickness[Large], 
+           Dashing[{Small, Small}], 
+           RGBColor[
+            Rational[1, 3], 
+            Rational[1, 3], 
+            Rational[1, 3]]}, DirectedEdge[2, 5] -> {
+           Thickness[Large], 
+           GrayLevel[0.5]}, DirectedEdge[2, 4] -> {
+           Thickness[Large], 
+           GrayLevel[0.5]}, DirectedEdge[2, 3] -> {
+           Thickness[Large], 
+           GrayLevel[0.5]}, DirectedEdge[4, 3] -> {
+           Thickness[Large], 
+           Dashing[{Small, Small}], 
+           RGBColor[
+            Rational[1, 3], 
+            Rational[1, 3], 
+            Rational[1, 3]]}, DirectedEdge[1, 5] -> {
+           Thickness[Large], 
+           GrayLevel[0.5]}, DirectedEdge[5, 3] -> {
+           Thickness[Large], 
+           GrayLevel[0.5]}, DirectedEdge[3, 3] -> {
+           Thickness[Large], 
+           GrayLevel[0.5]}, DirectedEdge[3, 4] -> {
+           Thickness[Large], 
+           GrayLevel[0.5]}, DirectedEdge[2, 2] -> {
+           Thickness[Large], 
+           GrayLevel[0.5]}, DirectedEdge[2, 1] -> {
+           Thickness[Large], 
+           GrayLevel[0.5]}, DirectedEdge[1, 1] -> {
+           Thickness[Large], 
+           GrayLevel[0.5]}, DirectedEdge[1, 4] -> {
+           Thickness[Large], 
+           GrayLevel[0.5]}, DirectedEdge[1, 3] -> {
+           Thickness[Large], 
+           GrayLevel[0.5]}, DirectedEdge[4, 1] -> {
+           Thickness[Large], 
+           Dashing[{Small, Small}], 
+           RGBColor[
+            Rational[1, 3], 
+            Rational[1, 3], 
+            Rational[1, 3]]}, DirectedEdge[1, 2] -> {
+           Thickness[Large], 
+           GrayLevel[0.5]}, DirectedEdge[5, 2] -> {
+           Thickness[Large], 
+           GrayLevel[0.5]}, DirectedEdge[4, 2] -> {
+           Thickness[Large], 
+           Dashing[{Small, Small}], 
+           RGBColor[
+            Rational[1, 3], 
+            Rational[1, 3], 
+            Rational[1, 3]]}, DirectedEdge[5, 4] -> {
+           Thickness[Large], 
+           GrayLevel[0.5]}, DirectedEdge[5, 1] -> {
+           Thickness[Large], 
+           GrayLevel[0.5]}, DirectedEdge[3, 5] -> {
+           Thickness[Large], 
+           GrayLevel[0.5]}}, VertexShapeFunction -> {"Diamond"}, 
+       VertexSize -> {Medium}, 
+       VertexStyle -> {
+        1 -> GrayLevel[0.5], 5 -> GrayLevel[0.5], 2 -> GrayLevel[0.5], 4 -> 
+         RGBColor[
+           Rational[1, 3], 
+           Rational[1, 3], 
+           Rational[1, 3]], 3 -> GrayLevel[0.5]}}]], Typeset`boxes, 
+    Typeset`boxes$s2d = GraphicsGroupBox[{{
+       Directive[
+        Hue[0.6, 0.2, 0.8], 
+        EdgeForm[
+         Directive[
+          GrayLevel[0], 
+          Opacity[0.7]]]], 
+       TagBox[
+        StyleBox[
+         PolygonBox[{{1.0045619424903385`, -0.0492668474627949}, {
+          1.0875589191890043`, 0.03373012923587082}, {1.0045619424903385`, 
+          0.11672710593453654`}, {0.9215649657916728, 0.03373012923587082}, {
+          1.0045619424903385`, -0.0492668474627949}}], 
+         GrayLevel[0.5], StripOnInput -> False], "DynamicName", BoxID -> 
+        "VertexID$1"], 
+       TagBox[
+        StyleBox[
+         PolygonBox[{{0., 0.6139102279692904}, {0.08299697669866572, 
+          0.6969072046679561}, {0., 
+          0.7799041813666218}, {-0.08299697669866572, 0.6969072046679561}, {
+          0., 0.6139102279692904}}], 
+         GrayLevel[0.5], StripOnInput -> False], "DynamicName", BoxID -> 
+        "VertexID$2"], 
+       TagBox[
+        StyleBox[
+         PolygonBox[{{0.26129995346176826`, -0.08299697669866572}, {
+          0.344296930160434, 0.}, {0.26129995346176826`, 
+          0.08299697669866572}, {0.17830297676310253`, 0.}, {
+          0.26129995346176826`, -0.08299697669866572}}], 
+         GrayLevel[0.5], StripOnInput -> False], "DynamicName", BoxID -> 
+        "VertexID$3"], 
+       TagBox[
+        StyleBox[
+         PolygonBox[{{0.581193752107737, 1.0761573541140292`}, {
+          0.6641907288064027, 1.159154330812695}, {0.581193752107737, 
+          1.2421513075113608`}, {0.4981967754090713, 1.159154330812695}, {
+          0.581193752107737, 1.0761573541140292`}}], 
+         RGBColor[
+          Rational[1, 3], 
+          Rational[1, 3], 
+          Rational[1, 3]], StripOnInput -> False], "DynamicName", BoxID -> 
+        "VertexID$4"], 
+       TagBox[
+        StyleBox[
+         PolygonBox[{{1.2021335570857812`, 0.666825530614154}, {
+          1.285130533784447, 0.7498225073128196}, {1.2021335570857812`, 
+          0.8328194840114853}, {1.1191365803871154`, 0.7498225073128196}, {
+          1.2021335570857812`, 0.666825530614154}}], 
+         GrayLevel[0.5], StripOnInput -> False], "DynamicName", BoxID -> 
+        "VertexID$5"]}, {
+       Directive[
+        Opacity[0.7], 
+        Hue[0.6, 0.7, 0.5]], {
+        StyleBox[
+         ArrowBox[CompressedData["
+1:eJwBoQFe/iFib1JlAgAAABkAAAACAAAA9tUci68S8D9QdOpTE0WhP0FAXz1q
+H/A/HCYZC8F/oj8qyJH7shvxP+jHgbnvL7I/0G3MRfU18j9giWJyiVi2P1cq
+FiyNV/M/YMJ9D0lktT8NL2kjQGn0Pzx6sRuMza4/A1CxABpV9T8AdkvuBmyT
+P9JH+cUvCPY/mKQtKu3Mor81wvcYJHT2P/StEULoOLq/ylk9Ok6Q9j9Gp/Mj
+cyHGv6RaKNRrWvY/WCWZIgMJz7+07Xpez9b1P6CMlagljtO/eQYFXgcQ9T/e
+lfTwvNrWvxwN0J4FFvQ/ZhMffYgm2b9s5QjM1/zyP9L/A3NiQtq/T2WpqAvb
+8T8T64Ivhhfav63PY/Dfx/A/YNRSzGOp2L9RBTQNzrLvPxzn7IdZFda/gSBM
+eYNF7j/QURG5WJDSv8sdExQtZe0/10TxWU3FzL+/KdRvySPtP5e5+UYhxMO/
+UDtFQpeG7T/V66TIJ6y1v3DUK7Gphe4/ePjIBxqUlb/ojIaHRQbwPyCfH86D
++58/9tUci68S8D9QdOpTE0WhPwF9yVw=
+          "], 0.1], {
+          Thickness[Large], 
+          GrayLevel[0.5]}, StripOnInput -> False]}, 
+       StyleBox[
+        ArrowBox[{{1.0045619424903385`, 0.03373012923587082}, {
+         0.8739516599565967, 0.06663743234500663}, {0.8411302652029049, 
+         0.07575147329993936}, {0.8087850090064708, 0.08643295717124244}, {
+         0.7769907000600211, 0.09865717963009724}, {0.7458208728155319, 
+         0.11239586827401638`}, {0.7153476174124198, 0.12761724801576635`}, {
+         0.6856414129461659, 0.1442861145733635}, {0.6567709644629909, 
+         0.16236391589117294`}, {0.25494618746685555`, 0.427634746064007}, {
+         0.22697826706144725`, 0.4470796714766334}, {0.19997755944525458`, 
+         0.4678467484093829}, {0.17400651234251885`, 0.48988794639164657`}, {
+         0.14912519206004832`, 0.5131522881426392}, {0.1253911445647799, 
+         0.5375859674725765}, {0.10285926239042703`, 0.5631324737266014}, {
+         0.08158165768103631, 0.5897327224836483}, {0., 0.6969072046679561}}, 
+         0.1], {
+         Thickness[Large], 
+         GrayLevel[0.5]}, StripOnInput -> False], 
+       StyleBox[
+        ArrowBox[{{1.0045619424903385`, 0.03373012923587082}, {
+         0.9273097814105995, 0.002693101966739442}, {
+         0.907589783956706, -0.004684043835859908}, {
+         0.8875379134907933, -0.011104563331401918`}, {
+         0.8672005463410367, -0.016553607026434825`}, {
+         0.8466247191374981, -0.021018572274284164`}, {
+         0.8258580200249591, -0.02448913242268208}, {
+         0.8049484786001994, -0.026957260697434537`}, {
+         0.7839444548282783, -0.02841724876689039}, {
+         0.4866396592168504, -0.0419093004612387}, {
+         0.46558973158330647`, -0.042357771638621644`}, {
+         0.4445425847409584, -0.0417936886916927}, {
+         0.42354689691116076`, -0.04021835624167952}, {
+         0.40265122729993447`, -0.03763541774592499}, {
+         0.38190390378935807`, -0.034050847071233126`}, {
+         0.36135291116396917`, -0.02947293467740225}, {
+         0.3410457801306884, -0.023912268442899398`}, {0.26129995346176826`, 
+         0.}}, 0.1], {
+         Thickness[Large], 
+         GrayLevel[0.5]}, StripOnInput -> False], 
+       StyleBox[
+        ArrowBox[{{1.0045619424903385`, 0.03373012923587082}, {
+         0.9182470070336775, 0.1369410786638959}, {0.8970520985082111, 
+         0.16356025308256242`}, {0.8771614929509054, 0.1911676507269975}, {
+         0.8586211937135426, 0.21969942070930534`}, {0.8414740811350594, 
+         0.24908957423655156`}, {0.8257598133671253, 0.2792701372308357}, {
+         0.8115147346520537, 0.3101713075409662}, {0.79877179126518, 
+         0.3417216163821364}, {0.6294245151121397, 0.7918912970128659}, {
+         0.6182131791630829, 0.8240177742609499}, {0.6085593804321163, 
+         0.8566461172191249}, {0.600485446399305, 0.8897008624664882}, {
+         0.5940100506051048, 0.9231055603912223}, {0.5891481694618623, 
+         0.9567829520046365}, {0.5859110476160972, 0.9906551476271519}, {
+         0.5843061719416812, 1.0246438070329589`}, {0.581193752107737, 
+         1.159154330812695}}, 0.1], {
+         Thickness[Large], 
+         GrayLevel[0.5]}, StripOnInput -> False], 
+       StyleBox[
+        ArrowBox[{{1.0045619424903385`, 0.03373012923587082}, {
+         0.9989579791266052, 0.1166628536955652}, {0.9980454851433576, 
+         0.13766437570281723`}, {0.9981437546455814, 0.1586854821198327}, {
+         0.9992525603537976, 0.17967755495202303`}, {1.0013693378021378`, 
+         0.20059204335419903`}, {1.0044891912694873`, 0.2213805759198426}, {
+         1.0086049051023993`, 0.24199507255536917`}, {1.013706960403585, 
+         0.26238785568063666`}, {1.0927356062417621`, 0.548824806911416}, {
+         1.0988122028855725`, 0.5689487117292935}, {1.1058492868095382`, 
+         0.5887571953092553}, {1.1138305825188617`, 0.608204444232712}, {
+         1.1227376307286745`, 0.6272454805511121}, {1.1325498310570046`, 
+         0.6458362658117532}, {1.1432444896697118`, 0.6639338029107125}, {
+         1.154796871767198, 0.6814962355373231}, {1.2021335570857812`, 
+         0.7498225073128196}}, 0.1], {
+         Thickness[Large], 
+         GrayLevel[0.5]}, StripOnInput -> False], 
+       StyleBox[
+        ArrowBox[{{0., 0.6969072046679561}, {0.13061028253374204`, 
+         0.6639999015588204}, {0.16343167728743382`, 0.6548858606038876}, {
+         0.19577693348386788`, 0.6442043767325847}, {0.2275712424303176, 
+         0.6319801542737298}, {0.2587410696748068, 0.6182414656298106}, {
+         0.289214325077919, 0.6030200858880607}, {0.3189205295441728, 
+         0.5863512193304635}, {0.34779097802734793`, 0.5682734180126541}, {
+         0.7496157550234832, 0.30300258783982015`}, {0.7775836754288914, 
+         0.2835576624271937}, {0.8045843830450841, 0.2627905854944442}, {
+         0.8305554301478199, 0.2407493875121806}, {0.8554367504302904, 
+         0.217485045761188}, {0.8791707979255587, 0.19305136643125076`}, {
+         0.9017026800999117, 0.1675048601772257}, {0.9229802848093024, 
+         0.14090461142017885`}, {1.0045619424903385`, 0.03373012923587082}}, 
+         0.1], {
+         Thickness[Large], 
+         GrayLevel[0.5]}, StripOnInput -> False], {
+        StyleBox[
+         ArrowBox[CompressedData["
+1:eJxTTMoPSmViYGCQBGIQDQNaK3vCBHyf2Tc8y3y4Wjlof+tryb1Ges/sM/5s
+COgwn7/f1PQNS73cE3uXrVtvTFq6ef9KzQOVeemP7Osf1X6xzDu4X01D96WF
+zkP7f2f0NvDKntp/KUHwnlrbA/t1+62za6Zd3D/j9ZKSrqYH9io1Zt8/fby6
+fynfo0trFR/ayznZFhQev7mfS+2z6dmwR/ZGAay7bE/c2V9+4RifLOcT+7JN
+E+3Wbru3vy6/X/246DP7uk0HDcWz7+/nPen3e2vQC3sbbpYPTNfv7Re+33zv
+y8RX9i2lF1UD2e7uj9ezWxG/9I29hYLSK3e5W/sNJKO1wpLe2aeuEYyZGnVt
+v7xsVaX60vdA+/Q02jgu7S9KOJL+XfOD/foQzeYljKf3C556MD/Y4IO9gma4
+wz+HQ/v5bwtM8z713p7hzvIJy1i37s/xWOn1es47e4nafavaZizcPz15wu1N
+H97YH5gbHXZAKmv/5yWZmb+fv7I/cDGr5bRrk72DSGJG55oX9g3qziF/DQLs
+P9hI/TDKeWaPHv4AeMLDFg==
+          "], 0.1], {
+          Thickness[Large], 
+          GrayLevel[0.5]}, StripOnInput -> False]}, 
+       StyleBox[
+        ArrowBox[{{0., 0.6969072046679561}, {0.053358121454002816`, 
+         0.632962874289689}, {0.06645951875380102, 0.6164716875321569}, {
+         0.07875290448432237, 0.5993696841653118}, {0.09020984628101547, 
+         0.5816964180114242}, {0.1008038463219662, 0.5634927641196557}, {
+         0.11051040261253936`, 0.5448008242295078}, {0.11930706565403348`, 
+         0.5256638293971582}, {0.12717349036528747`, 0.5061260400098929}, {
+         0.23169347174999474`, 0.22736315814271063`}, {0.23861146452185925`, 
+         0.20746976155270128`}, {0.24456502529570381`, 
+         0.18726676756688068`}, {0.24954038456864197`, 
+         0.16680090203463033`}, {0.25352603523988615`, 
+         0.14611949877939218`}, {0.25651275922457817`, 
+         0.12527039012414676`}, {0.2584936487735422, 0.10430179626395264`}, {
+         0.25946412244965206`, 0.08326221374140855}, {0.26129995346176826`, 
+         0.}}, 0.1], {
+         Thickness[Large], 
+         GrayLevel[0.5]}, StripOnInput -> False], 
+       StyleBox[
+        ArrowBox[{{0., 0.6969072046679561}, {0.044295347077081104`, 
+         0.7672108509868455}, {0.05592183330530642, 0.7847159844505792}, {
+         0.06837648394443474, 0.8016418982237113}, {0.08163049365352154, 
+         0.8179494457471643}, {0.09565320831952762, 0.8336009106304914}, {
+         0.1104121959547058, 0.8485600938830257}, {0.125873321705888, 
+         0.862792397635559}, {0.14200082680218956`, 0.8762649051589196}, {
+         0.3744783276452842, 1.0611637556168152`}, {0.3912349121016358, 
+         1.073845307452273}, {0.40858182098686197`, 1.0857065734776983`}, {
+         0.4264789340567863, 1.096720120742798}, {0.44488485854505655`, 
+         1.1068604769165393`}, {0.4637570248970825, 1.1161041892000163`}, {
+         0.48305178522567044`, 1.1244298785685067`}, {0.502724514260645, 
+         1.1318182892172668`}, {0.581193752107737, 1.159154330812695}}, 0.1], {
+         Thickness[Large], 
+         GrayLevel[0.5]}, StripOnInput -> False], 
+       StyleBox[
+        ArrowBox[{{0., 0.6969072046679561}, {0.1250063191700086, 
+         0.7469326260185148}, {0.15691521994045254`, 0.7588201070708341}, {
+         0.18935874563911062`, 0.7691597296165467}, {0.2222618602937765, 
+         0.7779275799898822}, {0.2555484649866059, 0.7851033797481389}, {
+         0.2891415738570677, 0.7906705325720327}, {0.32296349215623327`, 
+         0.794616162649962}, {0.35693599594059433`, 0.7969311444574201}, {
+         0.8377894187749065, 0.8180972655153654}, {0.8718339358241252, 
+         0.8187762449206164}, {0.9058717273642836, 0.8178176515678288}, {
+         0.939824070176343, 0.8152237025090219}, {0.9736124386686263, 
+         0.8110003970764292}, {1.0071586864922246`, 0.8051575030071333}, {
+         1.0403852272792848`, 0.7977085338520674}, {1.0732152140861617`, 
+         0.7886707177216311}, {1.2021335570857812`, 0.7498225073128196}}, 
+         0.1], {
+         Thickness[Large], 
+         GrayLevel[0.5]}, StripOnInput -> False], 
+       StyleBox[
+        ArrowBox[{{0.26129995346176826`, 0.}, {0.33855211454150747`, 
+         0.03103702726913138}, {0.358272111995401, 0.03841417307173073}, {
+         0.37832398246131366`, 0.04483469256727274}, {0.3986613496110703, 
+         0.050283736262305645`}, {0.4192371768146088, 
+         0.054748701510154985`}, {0.44000387592714785`, 0.0582192616585529}, {
+         0.4609134173519076, 0.06068738993330536}, {0.4819174411238286, 
+         0.06214737800276121}, {0.7792222367352566, 0.07563942969710952}, {
+         0.8002721643688006, 0.07608790087449246}, {0.8213193112111485, 
+         0.07552381792756352}, {0.8423149990409462, 0.07394848547755034}, {
+         0.8632106686521724, 0.07136554698179581}, {0.883957992162749, 
+         0.06778097630710395}, {0.9045089847881378, 0.06320306391327307}, {
+         0.9248161158214185, 0.05764239767877022}, {1.0045619424903385`, 
+         0.03373012923587082}}, 0.1], {
+         Thickness[Large], 
+         GrayLevel[0.5]}, StripOnInput -> False], 
+       StyleBox[
+        ArrowBox[{{0.26129995346176826`, 0.}, {0.2079418320077655, 
+         0.06394433037826716}, {0.19484043470796736`, 0.0804355171357993}, {
+         0.1825470489774459, 0.09753752050264433}, {0.1710901071807529, 
+         0.11521078665653198`}, {0.1604961071398021, 0.13341444054830057`}, {
+         0.1507895508492289, 0.15210638043844835`}, {0.1419928878077349, 
+         0.171243375270798}, {0.1341264630964808, 0.1907811646580633}, {
+         0.029606481711773547`, 0.4695440465252455}, {0.022688488939909046`, 
+         0.48943744311525483`}, {0.016734928166064478`, 0.5096404371010754}, {
+         0.011759568893126349`, 0.5301063026333258}, {0.0077739182218821146`, 
+         0.550787705888564}, {0.004787194237190151, 0.5716368145438094}, {
+         0.002806304688226069, 0.5926054084040034}, {0.001835831012116207, 
+         0.6136449909265476}, {0., 0.6969072046679561}}, 0.1], {
+         Thickness[Large], 
+         GrayLevel[0.5]}, StripOnInput -> False], {
+        StyleBox[
+         ArrowBox[CompressedData["
+1:eJwBoQFe/iFib1JlAgAAABkAAAACAAAAriKkcCO50D8AAAAAAAAAAOoCWHNG
+7tA/wEo/AOQjYr8yzO3c+kXUPyijnpV1m6m/0OMExcyf1j+Aj/vBVEy8v3Fv
+tFR2y9c/lFkFMGHnxr/UsfY+7rDXP4Tp53m89s+/KB0+UVVS1j8zgeQnGU3U
+v/HHa8DKy9M/NDlvKDAQ2L/yKnuzKlHQPyiWKQxj99q/BvL2uspTyD+Y/VLl
+FMfcvwJbWEYQrb4/SK57JBRa3b/g/ZTYj4ypP5INU1WWpNy/kPOwtGHpjL/q
+7PA7KrXav8DLrzXGLLG/lvn+5oyz179QA9XND9K6v+ahALF53dO/1veDXfjG
+v7+94epIbQPPvzYFlPu3pb+/pNse4IXzxb9uXkFy+XC6vzcadqekirq/fkew
+eqOTsL8I2tNNRqymv5AqEewswoa/AHyVIOaPXz9+ITppTk6rP0jotntp/p8/
+2VXDsN6Xvz+QrLK3nyelPxY0J7y+xMg/WKUJgtYLoD9EoMtn44LQP4DJom31
+S2E/riKkcCO50D8AAAAAAAAAAMd31Y0=
+          "], 0.1], {
+          Thickness[Large], 
+          GrayLevel[0.5]}, StripOnInput -> False]}, 
+       StyleBox[
+        ArrowBox[{{0.26129995346176826`, 0.}, {0.25223717908484655`, 
+         0.13424797669715643`}, {0.2507622680132735, 0.1682442969184223}, {
+         0.25092353292188063`, 0.20227221405839946`}, {0.2527206008342743, 
+         0.23625302773574017`}, {0.2561493154593296, 0.27010814651083576`}, {
+         0.2612017468039346, 0.30375926965351774`}, {0.26786620951362283`, 
+         0.33712856823840076`}, {0.2761272898986703, 0.3701388651490267}, {
+         0.4040848093570576, 0.8338005974741045}, {0.4139234010415447, 
+         0.8663755458995717}, {0.42531674915292617`, 0.8984398059108174}, {
+         0.4382385029499125, 0.9299192187081675}, {0.45265877676693844`, 
+         0.9607409781371471}, {0.46854421913427236`, 0.9908337990758695}, {
+         0.48585808991389634`, 1.020128082304554}, {0.5045603452727612, 
+         1.048556075475858}, {0.581193752107737, 1.159154330812695}}, 0.1], {
+         Thickness[Large], 
+         GrayLevel[0.5]}, StripOnInput -> False], 
+       StyleBox[
+        ArrowBox[{{0.26129995346176826`, 0.}, {0.332948151177774, 
+         0.11396975172882573`}, {0.3517556546484198, 0.14234841953867716`}, {
+         0.3719057946165565, 0.16979004545123466`}, {0.39335196747452933`, 
+         0.19623116197845786`}, {0.41604457212640783`, 
+         0.22161061562848317`}, {0.43993112470629664`, 
+         0.24586970834252464`}, {0.464956379963968, 0.2689523332528037}, {
+         0.49106245903707507`, 0.2908051044475271}, {0.86739590048668, 
+         0.5907341073726547}, {0.8945224247640342, 0.6113064833679152}, {
+         0.9226066555303483, 0.6305508840009479}, {0.9515836390694694, 
+         0.6484228004743915}, {0.9813863568905086, 0.6648808982970369}, {
+         1.0119458807294146`, 0.6798871128829864}, {1.0431915319675107`, 
+         0.6934067375881148}, {1.075051045098278, 0.7054085039802225}, {
+         1.2021335570857812`, 0.7498225073128196}}, 0.1], {
+         Thickness[Large], 
+         GrayLevel[0.5]}, StripOnInput -> False], 
+       StyleBox[
+        ArrowBox[{{0.581193752107737, 1.159154330812695}, {0.6675086875643981,
+          1.0559433813846701`}, {0.6887035960898645, 1.0293242069660036`}, {
+         0.7085942016471701, 1.0017168093215685`}, {0.7271345008845331, 
+         0.9731850393392607}, {0.7442816134630164, 0.9437948858120145}, {
+         0.7599958812309503, 0.9136143228177304}, {0.774240959946022, 
+         0.8827131525075999}, {0.7869839033328955, 0.8511628436664297}, {
+         0.9563311794859359, 0.4009931630357002}, {0.9675425154349928, 
+         0.3688666857876161}, {0.9771963141659592, 0.3362383428294414}, {
+         0.9852702481987707, 0.303183597582078}, {0.9917456439929708, 
+         0.2697788996573439}, {0.9966075251362133, 0.23610150804392965`}, {
+         0.9998446469819783, 0.20222931242141423`}, {1.0014495226563944`, 
+         0.1682406530156073}, {1.0045619424903385`, 0.03373012923587082}}, 
+         0.1], {
+         Thickness[Large], 
+         Dashing[{Small, Small}], 
+         RGBColor[
+          Rational[1, 3], 
+          Rational[1, 3], 
+          Rational[1, 3]]}, StripOnInput -> False], 
+       StyleBox[
+        ArrowBox[{{0.581193752107737, 1.159154330812695}, {0.536898405030656, 
+         1.088850684493806}, {0.5252719188024307, 1.0713455510300722`}, {
+         0.5128172681633023, 1.05441963725694}, {0.4995632584542156, 
+         1.0381120897334868`}, {0.48554054378820954`, 1.02246062485016}, {
+         0.4707815561530313, 1.0075014415976258`}, {0.4553204304018491, 
+         0.9932691378450924}, {0.43919292530554754`, 0.9797966303217316}, {
+         0.20671542446245286`, 0.7948977798638361}, {0.1899588400061013, 
+         0.7822162280283784}, {0.1726119311208752, 0.7703549620029533}, {
+         0.15471481805095086`, 0.7593414147378534}, {0.13630889356268056`, 
+         0.749201058564112}, {0.11743672721065462`, 0.739957346280635}, {
+         0.0981419668820667, 0.7316316569121446}, {0.07846923784709209, 
+         0.7242432462633845}, {0., 0.6969072046679561}}, 0.1], {
+         Thickness[Large], 
+         Dashing[{Small, Small}], 
+         RGBColor[
+          Rational[1, 3], 
+          Rational[1, 3], 
+          Rational[1, 3]]}, StripOnInput -> False], 
+       StyleBox[
+        ArrowBox[{{0.581193752107737, 1.159154330812695}, {0.5902565264846589,
+          1.0249063541155388`}, {0.5917314375562319, 0.9909100338942729}, {
+         0.5915701726476248, 0.9568821167542958}, {0.5897731047352311, 
+         0.9229013030769551}, {0.5863443901101758, 0.8890461843018594}, {
+         0.5812919587655707, 0.8553950611591774}, {0.5746274960558826, 
+         0.8220257625742945}, {0.5663664156708351, 0.7890154656636684}, {
+         0.4384088962124477, 0.32535373333859074`}, {0.4285703045279606, 
+         0.29277878491312365`}, {0.4171769564165791, 0.26071452490187785`}, {
+         0.4042552026195929, 0.22923511210452768`}, {0.38983492880256676`, 
+         0.19841335267554816`}, {0.37394948643523285`, 
+         0.16832053173682576`}, {0.3566356156556089, 0.13902624850814121`}, {
+         0.33793336029674426`, 0.11059825533683712`}, {0.26129995346176826`, 
+         0.}}, 0.1], {
+         Thickness[Large], 
+         Dashing[{Small, Small}], 
+         RGBColor[
+          Rational[1, 3], 
+          Rational[1, 3], 
+          Rational[1, 3]]}, StripOnInput -> False], {
+        StyleBox[
+         ArrowBox[CompressedData["
+1:eJwBoQFe/iFib1JlAgAAABkAAAACAAAAAie+oyOZ4j92t11p5YvyP4+JKGX7
+eOI/jQXSuW6L8j+JWREGtTjgPzfG0v80rPI/gP6v29dD3D/WPI8tcxzzP6f1
+peoKv9g/MQAgdCjT8z+h6DRdRCvWP3FNvROtwfQ/FQynG3C91D8nXpdK39T1
+PyC3GSDmktQ/qbjwL6z29j8PULLqD6/VPwr6h/jUD/g/WNUOcSL71z/QJeBI
+zAn5P7RjqSfyR9s/3CMITIXQ+T/myXaau1HfPzYxwmkPVPo/rUC+ccni4T9G
+iumV3Yn6PwaLczEFJOQ/4DEQ+J5t+j9+fWYSRD7mP+yahIqXAfo/qvz1rlkG
+6D/TTf2UcU75Pzb6Ar2wV+k/yxEuvoti+D/IDN1BOhfqP9ER8PnRUPc/qGCk
+MZk16j/Grvv+OC/2PxBK6ehdsOk/3tGHbvsU9T8KFYkyOJLoP6fRg9e8GPQ/
+8geb1hvy5j8hae/XuE7zP28MeExp8eQ/qQQBpiPH8j81Y69dQLniP3gqS1Td
+jPI/Aie+oyOZ4j92t11p5YvyP+wyz60=
+          "], 0.1], {
+          Thickness[Large], 
+          Dashing[{Small, Small}], 
+          RGBColor[
+           Rational[1, 3], 
+           Rational[1, 3], 
+           Rational[1, 3]]}, StripOnInput -> False]}, 
+       StyleBox[
+        ArrowBox[{{0.581193752107737, 1.159154330812695}, {0.6619047242006647,
+          1.1388761058443644`}, {0.6821871387428833, 1.13325845343295}, {
+         0.702176013802413, 1.1266721622055305`}, {0.7218251187479922, 
+         1.1191324650554129`}, {0.7410890087748154, 1.1106567999303425`}, {
+         0.759923130010099, 1.101264769501702}, {0.7782839225580824, 
+         1.090978095827098}, {0.796128921246142, 1.0798205701111954`}, {
+         1.0445048432373594`, 0.9160878407112454}, {1.0617927758302264`, 
+         0.9040852682810386}, {1.0784836584851587`, 0.8912654089028258}, {
+         1.0945388882272937`, 0.877657912578919}, {1.1099213322313068`, 
+         0.8632942509725849}, {1.124595413702879, 0.848207644619812}, {
+         1.1385271941613513`, 0.8324329860962558}, {1.1516844519332536`, 
+         0.8160067593170595}, {1.2021335570857812`, 0.7498225073128196}}, 
+         0.1], {
+         Thickness[Large], 
+         Dashing[{Small, Small}], 
+         RGBColor[
+          Rational[1, 3], 
+          Rational[1, 3], 
+          Rational[1, 3]]}, StripOnInput -> False], 
+       StyleBox[
+        ArrowBox[{{1.2021335570857812`, 0.7498225073128196}, {
+         1.2077375204495149`, 0.6668897828531253}, {1.2086500144327625`, 
+         0.6458882608458733}, {1.2085517449305387`, 0.6248671544288578}, {
+         1.2074429392223225`, 0.6038750815966674}, {1.2053261617739823`, 
+         0.5829605931944913}, {1.2022063083066326`, 0.5621720606288478}, {
+         1.198090594473721, 0.5415575639933212}, {1.192988539172535, 
+         0.5211647808680537}, {1.113959893334358, 0.2347278296372745}, {
+         1.1078832966905476`, 0.21460392481939705`}, {1.100846212766582, 
+         0.1947954412394352}, {1.0928649170572582`, 0.1753481923159785}, {
+         1.0839578688474456`, 0.15630715599757855`}, {1.0741456685191157`, 
+         0.1377163707369372}, {1.0634510099064083`, 0.11961883363797805`}, {
+         1.0518986278089222`, 0.10205640101136745`}, {1.0045619424903385`, 
+         0.03373012923587082}}, 0.1], {
+         Thickness[Large], 
+         GrayLevel[0.5]}, StripOnInput -> False], 
+       StyleBox[
+        ArrowBox[{{1.2021335570857812`, 0.7498225073128196}, {
+         1.0771272379157726`, 0.6997970859622609}, {1.0452183371453287`, 
+         0.6879096049099417}, {1.0127748114466708`, 0.6775699823642292}, {
+         0.9798716967920048, 0.6688021319908936}, {0.9465850920991754, 
+         0.6616263322326369}, {0.9129919832287136, 0.6560591794087431}, {
+         0.879170064929548, 0.6521135493308138}, {0.845197561145187, 
+         0.6497985675233557}, {0.3643441383108748, 0.6286324464654105}, {
+         0.33029962126165624`, 0.6279534670601595}, {0.29626182972149784`, 
+         0.6289120604129472}, {0.2623094869094384, 0.6315060094717541}, {
+         0.22852111841715508`, 0.6357293149043466}, {0.19497487059355678`, 
+         0.6415722089736428}, {0.16174832980649667`, 0.6490211781287085}, {
+         0.12891834299961974`, 0.6580589942591449}, {0., 0.6969072046679561}},
+          0.1], {
+         Thickness[Large], 
+         GrayLevel[0.5]}, StripOnInput -> False], 
+       StyleBox[
+        ArrowBox[{{1.2021335570857812`, 0.7498225073128196}, {
+         1.1304853593697755`, 0.6358527555839939}, {1.1116778558991298`, 
+         0.6074740877741425}, {1.091527715930993, 0.5800324618615851}, {
+         1.0700815430730202`, 0.5535913453343619}, {1.0473889384211417`, 
+         0.5282118916843365}, {1.0235023858412529`, 0.503952798970295}, {
+         0.9984771305835816, 0.4808701740600161}, {0.9723710515104744, 
+         0.4590174028652926}, {0.5960376100608696, 0.159088399940165}, {
+         0.5689110857835155, 0.1385160239449047}, {0.5408268550172016, 
+         0.11927162331187169`}, {0.5118498714780804, 0.10139970683842825`}, {
+         0.48204715365704126`, 0.08494160901578285}, {0.4514876298181349, 
+         0.06993539442983332}, {0.42024197858003887`, 0.05641576972470508}, {
+         0.3883824654492718, 0.04441400333259726}, {0.26129995346176826`, 
+         0.}}, 0.1], {
+         Thickness[Large], 
+         GrayLevel[0.5]}, StripOnInput -> False], 
+       StyleBox[
+        ArrowBox[{{1.2021335570857812`, 0.7498225073128196}, {
+         1.1214225849928539`, 0.7701007322811503}, {1.1011401704506352`, 
+         0.7757183846925648}, {1.0811512953911053`, 0.7823046759199845}, {
+         1.0615021904455262`, 0.7898443730701019}, {1.042238300418703, 
+         0.7983200381951723}, {1.0234041791834194`, 0.8077120686238128}, {
+         1.005043386635436, 0.8179987422984168}, {0.9871983879473765, 
+         0.8291562680143194}, {0.7388224659561591, 0.9928889974142694}, {
+         0.7215345333632921, 1.0048915698444763`}, {0.7048436507083597, 
+         1.017711429222689}, {0.6887884209662247, 1.0313189255465958`}, {
+         0.6734059769622117, 1.0456825871529296`}, {0.6587318954906393, 
+         1.0607691935057026`}, {0.6448001150321672, 1.0765438520292592`}, {
+         0.6316428572602647, 1.0929700788084553`}, {0.581193752107737, 
+         1.159154330812695}}, 0.1], {
+         Thickness[Large], 
+         GrayLevel[0.5]}, StripOnInput -> False], {
+        StyleBox[
+         ArrowBox[CompressedData["
+1:eJwBoQFe/iFib1JlAgAAABkAAAACAAAApbiRZfA78z8z01bFi/7nP8DC4+SE
+NvM/hCw91tUc6D9rZntGdPzyP+Xti8IUVeo/mEmSFGAU8z9UbktsGJfsP1QS
+PxxdfPM/FDF30IO07j/aLj0OFCz0P2Aamq70QPA/q/KdxWwV9T+dkaFZI+3w
+P1do1LGvJfY/v1HrTP5Q8T9VYT4tBkf3P6An7ReDZPE/NUgg7Dpi+D+yWe/t
+ICbxP1lG5IuWYPk/oqMdzNia8D/hSOIIsi36P34cHHOtm+8/061YsBm5+j9n
+2zy+GJ/tP2py6vOe9/o/5n2lu75o6z+6+KwFPuT6P/VunfIMJuk/Sw/x0YSA
++j9bIJtdbgXnP3pSQxRz1Pk/be3UQ5Iy5T/THgwX1u34P9lBizLr0uM/IjeR
+Si3f9z8Mga8JrgLjP3qR7G4uvvY/PLqfyY7S4j+bOJHIB6L1P4rgP5dpRuM/
+0tZeIYSh9D+93E9581TkP0LTasQ20fM/8kaJKnno5T+ysMz+1EHzPzvsLrKc
+4Oc/pbiRZfA78z8z01bFi/7nP8YS1Ps=
+          "], 0.1], {
+          Thickness[Large], 
+          GrayLevel[0.5]}, StripOnInput -> False]}}}], Typeset`data}, 
+    TagBox[
+     DynamicBox[GraphComputation`NetworkGraphicsBox[
+      2, Typeset`graph, Typeset`boxes], {
+      CachedValue :> Typeset`boxes, SingleEvaluation -> True, 
+       SynchronousUpdating -> False, TrackedSymbols :> {}},
+      ImageSizeCache->{{3.7606933090100982`, 
+       354.2393066909899}, {-173.2393066909899, 169.2393066909899}}],
+     MouseAppearanceTag["NetworkGraphics"]],
+    AllowKernelInitialization->False,
+    UnsavedVariables:>{Typeset`data}]],
+  DefaultBaseStyle->{
+   "NetworkGraphics", FrontEnd`GraphicsHighlightColor -> Hue[0.8, 1., 0.6]},
+  FrameTicks->None]], "Output",
+ CellChangeTimes->{
+  3.518599383894793*^9, 3.5185995606177263`*^9, 3.5185996080911493`*^9, {
+   3.518599667963519*^9, 3.518599725170829*^9}, 3.5185997932151527`*^9, {
+   3.5185998523170567`*^9, 3.518599885290682*^9}, {3.518600388836293*^9, 
+   3.518600410161667*^9}, 3.518600441347529*^9, 3.518600892502553*^9, 
+   3.518605331638843*^9, 3.5186053667428923`*^9, 3.518605435414834*^9, 
+   3.518605537223872*^9, {3.51860557323563*^9, 3.5186056528237467`*^9}, {
+   3.5186056881526012`*^9, 3.5186057011497602`*^9}, {3.518605868731848*^9, 
+   3.518605885891478*^9}, 3.518606618700184*^9, 3.518606737374745*^9, 
+   3.518607718290675*^9, 3.518607755359321*^9, 3.524971854580802*^9, 
+   3.524971977377082*^9, {3.524972026593832*^9, 3.524972032892312*^9}, {
+   3.5249722630022984`*^9, 3.524972290522954*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Rotate", "[", 
+  RowBox[{"fcag", ",", " ", "Pi"}], "]"}]], "Input",
+ CellChangeTimes->{{3.518606963534706*^9, 3.518606969231474*^9}}],
+
+Cell[BoxData[
+ RotationBox[
+  GraphicsBox[
+   NamespaceBox["NetworkGraphics",
+    DynamicModuleBox[{Typeset`graph = HoldComplete[
+      Graph[{1, 2, 3, 4, 5}, {
+       SparseArray[
+        Automatic, {5, 5}, 0, {
+         1, {{0, 5, 10, 15, 20, 25}, {{1}, {2}, {3}, {4}, {5}, {1}, {2}, {
+           3}, {4}, {5}, {1}, {2}, {3}, {4}, {5}, {1}, {2}, {3}, {4}, {5}, {
+           1}, {2}, {3}, {4}, {5}}}, {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+          1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}}], Null}, {
+       EdgeShapeFunction -> {$CellContext`ef1}, 
+        EdgeStyle -> {DirectedEdge[3, 1] -> {
+            Thickness[Large], 
+            GrayLevel[0.5]}, DirectedEdge[4, 5] -> {
+            Thickness[Large], 
+            Dashing[{Small, Small}], 
+            RGBColor[
+             Rational[1, 3], 
+             Rational[1, 3], 
+             Rational[1, 3]]}, DirectedEdge[3, 2] -> {
+            Thickness[Large], 
+            GrayLevel[0.5]}, DirectedEdge[5, 5] -> {
+            Thickness[Large], 
+            GrayLevel[0.5]}, DirectedEdge[4, 4] -> {
+            Thickness[Large], 
+            Dashing[{Small, Small}], 
+            RGBColor[
+             Rational[1, 3], 
+             Rational[1, 3], 
+             Rational[1, 3]]}, DirectedEdge[2, 5] -> {
+            Thickness[Large], 
+            GrayLevel[0.5]}, DirectedEdge[2, 4] -> {
+            Thickness[Large], 
+            GrayLevel[0.5]}, DirectedEdge[2, 3] -> {
+            Thickness[Large], 
+            GrayLevel[0.5]}, DirectedEdge[4, 3] -> {
+            Thickness[Large], 
+            Dashing[{Small, Small}], 
+            RGBColor[
+             Rational[1, 3], 
+             Rational[1, 3], 
+             Rational[1, 3]]}, DirectedEdge[1, 5] -> {
+            Thickness[Large], 
+            GrayLevel[0.5]}, DirectedEdge[5, 3] -> {
+            Thickness[Large], 
+            GrayLevel[0.5]}, DirectedEdge[3, 3] -> {
+            Thickness[Large], 
+            GrayLevel[0.5]}, DirectedEdge[3, 4] -> {
+            Thickness[Large], 
+            GrayLevel[0.5]}, DirectedEdge[2, 2] -> {
+            Thickness[Large], 
+            GrayLevel[0.5]}, DirectedEdge[2, 1] -> {
+            Thickness[Large], 
+            GrayLevel[0.5]}, DirectedEdge[1, 1] -> {
+            Thickness[Large], 
+            GrayLevel[0.5]}, DirectedEdge[1, 4] -> {
+            Thickness[Large], 
+            GrayLevel[0.5]}, DirectedEdge[1, 3] -> {
+            Thickness[Large], 
+            GrayLevel[0.5]}, DirectedEdge[4, 1] -> {
+            Thickness[Large], 
+            Dashing[{Small, Small}], 
+            RGBColor[
+             Rational[1, 3], 
+             Rational[1, 3], 
+             Rational[1, 3]]}, DirectedEdge[1, 2] -> {
+            Thickness[Large], 
+            GrayLevel[0.5]}, DirectedEdge[5, 2] -> {
+            Thickness[Large], 
+            GrayLevel[0.5]}, DirectedEdge[4, 2] -> {
+            Thickness[Large], 
+            Dashing[{Small, Small}], 
+            RGBColor[
+             Rational[1, 3], 
+             Rational[1, 3], 
+             Rational[1, 3]]}, DirectedEdge[5, 4] -> {
+            Thickness[Large], 
+            GrayLevel[0.5]}, DirectedEdge[5, 1] -> {
+            Thickness[Large], 
+            GrayLevel[0.5]}, DirectedEdge[3, 5] -> {
+            Thickness[Large], 
+            GrayLevel[0.5]}}, VertexShapeFunction -> {"Diamond"}, 
+        VertexSize -> {Medium}, 
+        VertexStyle -> {
+         1 -> GrayLevel[0.5], 5 -> GrayLevel[0.5], 2 -> GrayLevel[0.5], 4 -> 
+          RGBColor[
+            Rational[1, 3], 
+            Rational[1, 3], 
+            Rational[1, 3]], 3 -> GrayLevel[0.5]}}]], Typeset`boxes, 
+     Typeset`boxes$s2d = GraphicsGroupBox[{{
+        Directive[
+         Hue[0.6, 0.2, 0.8], 
+         EdgeForm[
+          Directive[
+           GrayLevel[0], 
+           Opacity[0.7]]]], 
+        TagBox[
+         StyleBox[
+          
+          PolygonBox[{{1.0045619424903385`, -0.0492668474627949}, {
+           1.0875589191890043`, 0.03373012923587082}, {1.0045619424903385`, 
+           0.11672710593453654`}, {0.9215649657916728, 0.03373012923587082}, {
+           1.0045619424903385`, -0.0492668474627949}}], 
+          GrayLevel[0.5], StripOnInput -> False], "DynamicName", BoxID -> 
+         "VertexID$1"], 
+        TagBox[
+         StyleBox[
+          
+          PolygonBox[{{0., 0.6139102279692904}, {0.08299697669866572, 
+           0.6969072046679561}, {0., 
+           0.7799041813666218}, {-0.08299697669866572, 0.6969072046679561}, {
+           0., 0.6139102279692904}}], 
+          GrayLevel[0.5], StripOnInput -> False], "DynamicName", BoxID -> 
+         "VertexID$2"], 
+        TagBox[
+         StyleBox[
+          
+          PolygonBox[{{0.26129995346176826`, -0.08299697669866572}, {
+           0.344296930160434, 0.}, {0.26129995346176826`, 
+           0.08299697669866572}, {0.17830297676310253`, 0.}, {
+           0.26129995346176826`, -0.08299697669866572}}], 
+          GrayLevel[0.5], StripOnInput -> False], "DynamicName", BoxID -> 
+         "VertexID$3"], 
+        TagBox[
+         StyleBox[
+          
+          PolygonBox[{{0.581193752107737, 1.0761573541140292`}, {
+           0.6641907288064027, 1.159154330812695}, {0.581193752107737, 
+           1.2421513075113608`}, {0.4981967754090713, 1.159154330812695}, {
+           0.581193752107737, 1.0761573541140292`}}], 
+          RGBColor[
+           Rational[1, 3], 
+           Rational[1, 3], 
+           Rational[1, 3]], StripOnInput -> False], "DynamicName", BoxID -> 
+         "VertexID$4"], 
+        TagBox[
+         StyleBox[
+          
+          PolygonBox[{{1.2021335570857812`, 0.666825530614154}, {
+           1.285130533784447, 0.7498225073128196}, {1.2021335570857812`, 
+           0.8328194840114853}, {1.1191365803871154`, 0.7498225073128196}, {
+           1.2021335570857812`, 0.666825530614154}}], 
+          GrayLevel[0.5], StripOnInput -> False], "DynamicName", BoxID -> 
+         "VertexID$5"]}, {
+        Directive[
+         Opacity[0.7], 
+         Hue[0.6, 0.7, 0.5]], {
+         StyleBox[
+          ArrowBox[CompressedData["
+1:eJwBoQFe/iFib1JlAgAAABkAAAACAAAA9tUci68S8D9QdOpTE0WhP0FAXz1q
+H/A/HCYZC8F/oj8qyJH7shvxP+jHgbnvL7I/0G3MRfU18j9giWJyiVi2P1cq
+FiyNV/M/YMJ9D0lktT8NL2kjQGn0Pzx6sRuMza4/A1CxABpV9T8AdkvuBmyT
+P9JH+cUvCPY/mKQtKu3Mor81wvcYJHT2P/StEULoOLq/ylk9Ok6Q9j9Gp/Mj
+cyHGv6RaKNRrWvY/WCWZIgMJz7+07Xpez9b1P6CMlagljtO/eQYFXgcQ9T/e
+lfTwvNrWvxwN0J4FFvQ/ZhMffYgm2b9s5QjM1/zyP9L/A3NiQtq/T2WpqAvb
+8T8T64Ivhhfav63PY/Dfx/A/YNRSzGOp2L9RBTQNzrLvPxzn7IdZFda/gSBM
+eYNF7j/QURG5WJDSv8sdExQtZe0/10TxWU3FzL+/KdRvySPtP5e5+UYhxMO/
+UDtFQpeG7T/V66TIJ6y1v3DUK7Gphe4/ePjIBxqUlb/ojIaHRQbwPyCfH86D
++58/9tUci68S8D9QdOpTE0WhPwF9yVw=
+           "], 0.1], {
+           Thickness[Large], 
+           GrayLevel[0.5]}, StripOnInput -> False]}, 
+        StyleBox[
+         ArrowBox[{{1.0045619424903385`, 0.03373012923587082}, {
+          0.8739516599565967, 0.06663743234500663}, {0.8411302652029049, 
+          0.07575147329993936}, {0.8087850090064708, 0.08643295717124244}, {
+          0.7769907000600211, 0.09865717963009724}, {0.7458208728155319, 
+          0.11239586827401638`}, {0.7153476174124198, 0.12761724801576635`}, {
+          0.6856414129461659, 0.1442861145733635}, {0.6567709644629909, 
+          0.16236391589117294`}, {0.25494618746685555`, 0.427634746064007}, {
+          0.22697826706144725`, 0.4470796714766334}, {0.19997755944525458`, 
+          0.4678467484093829}, {0.17400651234251885`, 0.48988794639164657`}, {
+          0.14912519206004832`, 0.5131522881426392}, {0.1253911445647799, 
+          0.5375859674725765}, {0.10285926239042703`, 0.5631324737266014}, {
+          0.08158165768103631, 0.5897327224836483}, {0., 0.6969072046679561}},
+           0.1], {
+          Thickness[Large], 
+          GrayLevel[0.5]}, StripOnInput -> False], 
+        StyleBox[
+         ArrowBox[{{1.0045619424903385`, 0.03373012923587082}, {
+          0.9273097814105995, 0.002693101966739442}, {
+          0.907589783956706, -0.004684043835859908}, {
+          0.8875379134907933, -0.011104563331401918`}, {
+          0.8672005463410367, -0.016553607026434825`}, {
+          0.8466247191374981, -0.021018572274284164`}, {
+          0.8258580200249591, -0.02448913242268208}, {
+          0.8049484786001994, -0.026957260697434537`}, {
+          0.7839444548282783, -0.02841724876689039}, {
+          0.4866396592168504, -0.0419093004612387}, {
+          0.46558973158330647`, -0.042357771638621644`}, {
+          0.4445425847409584, -0.0417936886916927}, {
+          0.42354689691116076`, -0.04021835624167952}, {
+          0.40265122729993447`, -0.03763541774592499}, {
+          0.38190390378935807`, -0.034050847071233126`}, {
+          0.36135291116396917`, -0.02947293467740225}, {
+          0.3410457801306884, -0.023912268442899398`}, {0.26129995346176826`, 
+          0.}}, 0.1], {
+          Thickness[Large], 
+          GrayLevel[0.5]}, StripOnInput -> False], 
+        StyleBox[
+         ArrowBox[{{1.0045619424903385`, 0.03373012923587082}, {
+          0.9182470070336775, 0.1369410786638959}, {0.8970520985082111, 
+          0.16356025308256242`}, {0.8771614929509054, 0.1911676507269975}, {
+          0.8586211937135426, 0.21969942070930534`}, {0.8414740811350594, 
+          0.24908957423655156`}, {0.8257598133671253, 0.2792701372308357}, {
+          0.8115147346520537, 0.3101713075409662}, {0.79877179126518, 
+          0.3417216163821364}, {0.6294245151121397, 0.7918912970128659}, {
+          0.6182131791630829, 0.8240177742609499}, {0.6085593804321163, 
+          0.8566461172191249}, {0.600485446399305, 0.8897008624664882}, {
+          0.5940100506051048, 0.9231055603912223}, {0.5891481694618623, 
+          0.9567829520046365}, {0.5859110476160972, 0.9906551476271519}, {
+          0.5843061719416812, 1.0246438070329589`}, {0.581193752107737, 
+          1.159154330812695}}, 0.1], {
+          Thickness[Large], 
+          GrayLevel[0.5]}, StripOnInput -> False], 
+        StyleBox[
+         ArrowBox[{{1.0045619424903385`, 0.03373012923587082}, {
+          0.9989579791266052, 0.1166628536955652}, {0.9980454851433576, 
+          0.13766437570281723`}, {0.9981437546455814, 0.1586854821198327}, {
+          0.9992525603537976, 0.17967755495202303`}, {1.0013693378021378`, 
+          0.20059204335419903`}, {1.0044891912694873`, 0.2213805759198426}, {
+          1.0086049051023993`, 0.24199507255536917`}, {1.013706960403585, 
+          0.26238785568063666`}, {1.0927356062417621`, 0.548824806911416}, {
+          1.0988122028855725`, 0.5689487117292935}, {1.1058492868095382`, 
+          0.5887571953092553}, {1.1138305825188617`, 0.608204444232712}, {
+          1.1227376307286745`, 0.6272454805511121}, {1.1325498310570046`, 
+          0.6458362658117532}, {1.1432444896697118`, 0.6639338029107125}, {
+          1.154796871767198, 0.6814962355373231}, {1.2021335570857812`, 
+          0.7498225073128196}}, 0.1], {
+          Thickness[Large], 
+          GrayLevel[0.5]}, StripOnInput -> False], 
+        StyleBox[
+         ArrowBox[{{0., 0.6969072046679561}, {0.13061028253374204`, 
+          0.6639999015588204}, {0.16343167728743382`, 0.6548858606038876}, {
+          0.19577693348386788`, 0.6442043767325847}, {0.2275712424303176, 
+          0.6319801542737298}, {0.2587410696748068, 0.6182414656298106}, {
+          0.289214325077919, 0.6030200858880607}, {0.3189205295441728, 
+          0.5863512193304635}, {0.34779097802734793`, 0.5682734180126541}, {
+          0.7496157550234832, 0.30300258783982015`}, {0.7775836754288914, 
+          0.2835576624271937}, {0.8045843830450841, 0.2627905854944442}, {
+          0.8305554301478199, 0.2407493875121806}, {0.8554367504302904, 
+          0.217485045761188}, {0.8791707979255587, 0.19305136643125076`}, {
+          0.9017026800999117, 0.1675048601772257}, {0.9229802848093024, 
+          0.14090461142017885`}, {1.0045619424903385`, 0.03373012923587082}}, 
+          0.1], {
+          Thickness[Large], 
+          GrayLevel[0.5]}, StripOnInput -> False], {
+         StyleBox[
+          ArrowBox[CompressedData["
+1:eJxTTMoPSmViYGCQBGIQDQNaK3vCBHyf2Tc8y3y4Wjlof+tryb1Ges/sM/5s
+COgwn7/f1PQNS73cE3uXrVtvTFq6ef9KzQOVeemP7Osf1X6xzDu4X01D96WF
+zkP7f2f0NvDKntp/KUHwnlrbA/t1+62za6Zd3D/j9ZKSrqYH9io1Zt8/fby6
+fynfo0trFR/ayznZFhQev7mfS+2z6dmwR/ZGAay7bE/c2V9+4RifLOcT+7JN
+E+3Wbru3vy6/X/246DP7uk0HDcWz7+/nPen3e2vQC3sbbpYPTNfv7Re+33zv
+y8RX9i2lF1UD2e7uj9ezWxG/9I29hYLSK3e5W/sNJKO1wpLe2aeuEYyZGnVt
+v7xsVaX60vdA+/Q02jgu7S9KOJL+XfOD/foQzeYljKf3C556MD/Y4IO9gma4
+wz+HQ/v5bwtM8z713p7hzvIJy1i37s/xWOn1es47e4nafavaZizcPz15wu1N
+H97YH5gbHXZAKmv/5yWZmb+fv7I/cDGr5bRrk72DSGJG55oX9g3qziF/DQLs
+P9hI/TDKeWaPHv4AeMLDFg==
+           "], 0.1], {
+           Thickness[Large], 
+           GrayLevel[0.5]}, StripOnInput -> False]}, 
+        StyleBox[
+         ArrowBox[{{0., 0.6969072046679561}, {0.053358121454002816`, 
+          0.632962874289689}, {0.06645951875380102, 0.6164716875321569}, {
+          0.07875290448432237, 0.5993696841653118}, {0.09020984628101547, 
+          0.5816964180114242}, {0.1008038463219662, 0.5634927641196557}, {
+          0.11051040261253936`, 0.5448008242295078}, {0.11930706565403348`, 
+          0.5256638293971582}, {0.12717349036528747`, 0.5061260400098929}, {
+          0.23169347174999474`, 0.22736315814271063`}, {0.23861146452185925`, 
+          0.20746976155270128`}, {0.24456502529570381`, 
+          0.18726676756688068`}, {0.24954038456864197`, 
+          0.16680090203463033`}, {0.25352603523988615`, 
+          0.14611949877939218`}, {0.25651275922457817`, 
+          0.12527039012414676`}, {0.2584936487735422, 0.10430179626395264`}, {
+          0.25946412244965206`, 0.08326221374140855}, {0.26129995346176826`, 
+          0.}}, 0.1], {
+          Thickness[Large], 
+          GrayLevel[0.5]}, StripOnInput -> False], 
+        StyleBox[
+         ArrowBox[{{0., 0.6969072046679561}, {0.044295347077081104`, 
+          0.7672108509868455}, {0.05592183330530642, 0.7847159844505792}, {
+          0.06837648394443474, 0.8016418982237113}, {0.08163049365352154, 
+          0.8179494457471643}, {0.09565320831952762, 0.8336009106304914}, {
+          0.1104121959547058, 0.8485600938830257}, {0.125873321705888, 
+          0.862792397635559}, {0.14200082680218956`, 0.8762649051589196}, {
+          0.3744783276452842, 1.0611637556168152`}, {0.3912349121016358, 
+          1.073845307452273}, {0.40858182098686197`, 1.0857065734776983`}, {
+          0.4264789340567863, 1.096720120742798}, {0.44488485854505655`, 
+          1.1068604769165393`}, {0.4637570248970825, 1.1161041892000163`}, {
+          0.48305178522567044`, 1.1244298785685067`}, {0.502724514260645, 
+          1.1318182892172668`}, {0.581193752107737, 1.159154330812695}}, 
+          0.1], {
+          Thickness[Large], 
+          GrayLevel[0.5]}, StripOnInput -> False], 
+        StyleBox[
+         ArrowBox[{{0., 0.6969072046679561}, {0.1250063191700086, 
+          0.7469326260185148}, {0.15691521994045254`, 0.7588201070708341}, {
+          0.18935874563911062`, 0.7691597296165467}, {0.2222618602937765, 
+          0.7779275799898822}, {0.2555484649866059, 0.7851033797481389}, {
+          0.2891415738570677, 0.7906705325720327}, {0.32296349215623327`, 
+          0.794616162649962}, {0.35693599594059433`, 0.7969311444574201}, {
+          0.8377894187749065, 0.8180972655153654}, {0.8718339358241252, 
+          0.8187762449206164}, {0.9058717273642836, 0.8178176515678288}, {
+          0.939824070176343, 0.8152237025090219}, {0.9736124386686263, 
+          0.8110003970764292}, {1.0071586864922246`, 0.8051575030071333}, {
+          1.0403852272792848`, 0.7977085338520674}, {1.0732152140861617`, 
+          0.7886707177216311}, {1.2021335570857812`, 0.7498225073128196}}, 
+          0.1], {
+          Thickness[Large], 
+          GrayLevel[0.5]}, StripOnInput -> False], 
+        StyleBox[
+         ArrowBox[{{0.26129995346176826`, 0.}, {0.33855211454150747`, 
+          0.03103702726913138}, {0.358272111995401, 0.03841417307173073}, {
+          0.37832398246131366`, 0.04483469256727274}, {0.3986613496110703, 
+          0.050283736262305645`}, {0.4192371768146088, 
+          0.054748701510154985`}, {0.44000387592714785`, 
+          0.0582192616585529}, {0.4609134173519076, 0.06068738993330536}, {
+          0.4819174411238286, 0.06214737800276121}, {0.7792222367352566, 
+          0.07563942969710952}, {0.8002721643688006, 0.07608790087449246}, {
+          0.8213193112111485, 0.07552381792756352}, {0.8423149990409462, 
+          0.07394848547755034}, {0.8632106686521724, 0.07136554698179581}, {
+          0.883957992162749, 0.06778097630710395}, {0.9045089847881378, 
+          0.06320306391327307}, {0.9248161158214185, 0.05764239767877022}, {
+          1.0045619424903385`, 0.03373012923587082}}, 0.1], {
+          Thickness[Large], 
+          GrayLevel[0.5]}, StripOnInput -> False], 
+        StyleBox[
+         ArrowBox[{{0.26129995346176826`, 0.}, {0.2079418320077655, 
+          0.06394433037826716}, {0.19484043470796736`, 0.0804355171357993}, {
+          0.1825470489774459, 0.09753752050264433}, {0.1710901071807529, 
+          0.11521078665653198`}, {0.1604961071398021, 0.13341444054830057`}, {
+          0.1507895508492289, 0.15210638043844835`}, {0.1419928878077349, 
+          0.171243375270798}, {0.1341264630964808, 0.1907811646580633}, {
+          0.029606481711773547`, 0.4695440465252455}, {0.022688488939909046`, 
+          0.48943744311525483`}, {0.016734928166064478`, 
+          0.5096404371010754}, {0.011759568893126349`, 0.5301063026333258}, {
+          0.0077739182218821146`, 0.550787705888564}, {0.004787194237190151, 
+          0.5716368145438094}, {0.002806304688226069, 0.5926054084040034}, {
+          0.001835831012116207, 0.6136449909265476}, {0., 
+          0.6969072046679561}}, 0.1], {
+          Thickness[Large], 
+          GrayLevel[0.5]}, StripOnInput -> False], {
+         StyleBox[
+          ArrowBox[CompressedData["
+1:eJwBoQFe/iFib1JlAgAAABkAAAACAAAAriKkcCO50D8AAAAAAAAAAOoCWHNG
+7tA/wEo/AOQjYr8yzO3c+kXUPyijnpV1m6m/0OMExcyf1j+Aj/vBVEy8v3Fv
+tFR2y9c/lFkFMGHnxr/UsfY+7rDXP4Tp53m89s+/KB0+UVVS1j8zgeQnGU3U
+v/HHa8DKy9M/NDlvKDAQ2L/yKnuzKlHQPyiWKQxj99q/BvL2uspTyD+Y/VLl
+FMfcvwJbWEYQrb4/SK57JBRa3b/g/ZTYj4ypP5INU1WWpNy/kPOwtGHpjL/q
+7PA7KrXav8DLrzXGLLG/lvn+5oyz179QA9XND9K6v+ahALF53dO/1veDXfjG
+v7+94epIbQPPvzYFlPu3pb+/pNse4IXzxb9uXkFy+XC6vzcadqekirq/fkew
+eqOTsL8I2tNNRqymv5AqEewswoa/AHyVIOaPXz9+ITppTk6rP0jotntp/p8/
+2VXDsN6Xvz+QrLK3nyelPxY0J7y+xMg/WKUJgtYLoD9EoMtn44LQP4DJom31
+S2E/riKkcCO50D8AAAAAAAAAAMd31Y0=
+           "], 0.1], {
+           Thickness[Large], 
+           GrayLevel[0.5]}, StripOnInput -> False]}, 
+        StyleBox[
+         ArrowBox[{{0.26129995346176826`, 0.}, {0.25223717908484655`, 
+          0.13424797669715643`}, {0.2507622680132735, 0.1682442969184223}, {
+          0.25092353292188063`, 0.20227221405839946`}, {0.2527206008342743, 
+          0.23625302773574017`}, {0.2561493154593296, 0.27010814651083576`}, {
+          0.2612017468039346, 0.30375926965351774`}, {0.26786620951362283`, 
+          0.33712856823840076`}, {0.2761272898986703, 0.3701388651490267}, {
+          0.4040848093570576, 0.8338005974741045}, {0.4139234010415447, 
+          0.8663755458995717}, {0.42531674915292617`, 0.8984398059108174}, {
+          0.4382385029499125, 0.9299192187081675}, {0.45265877676693844`, 
+          0.9607409781371471}, {0.46854421913427236`, 0.9908337990758695}, {
+          0.48585808991389634`, 1.020128082304554}, {0.5045603452727612, 
+          1.048556075475858}, {0.581193752107737, 1.159154330812695}}, 0.1], {
+         
+          Thickness[Large], 
+          GrayLevel[0.5]}, StripOnInput -> False], 
+        StyleBox[
+         ArrowBox[{{0.26129995346176826`, 0.}, {0.332948151177774, 
+          0.11396975172882573`}, {0.3517556546484198, 0.14234841953867716`}, {
+          0.3719057946165565, 0.16979004545123466`}, {0.39335196747452933`, 
+          0.19623116197845786`}, {0.41604457212640783`, 
+          0.22161061562848317`}, {0.43993112470629664`, 
+          0.24586970834252464`}, {0.464956379963968, 0.2689523332528037}, {
+          0.49106245903707507`, 0.2908051044475271}, {0.86739590048668, 
+          0.5907341073726547}, {0.8945224247640342, 0.6113064833679152}, {
+          0.9226066555303483, 0.6305508840009479}, {0.9515836390694694, 
+          0.6484228004743915}, {0.9813863568905086, 0.6648808982970369}, {
+          1.0119458807294146`, 0.6798871128829864}, {1.0431915319675107`, 
+          0.6934067375881148}, {1.075051045098278, 0.7054085039802225}, {
+          1.2021335570857812`, 0.7498225073128196}}, 0.1], {
+          Thickness[Large], 
+          GrayLevel[0.5]}, StripOnInput -> False], 
+        StyleBox[
+         ArrowBox[{{0.581193752107737, 1.159154330812695}, {
+          0.6675086875643981, 1.0559433813846701`}, {0.6887035960898645, 
+          1.0293242069660036`}, {0.7085942016471701, 1.0017168093215685`}, {
+          0.7271345008845331, 0.9731850393392607}, {0.7442816134630164, 
+          0.9437948858120145}, {0.7599958812309503, 0.9136143228177304}, {
+          0.774240959946022, 0.8827131525075999}, {0.7869839033328955, 
+          0.8511628436664297}, {0.9563311794859359, 0.4009931630357002}, {
+          0.9675425154349928, 0.3688666857876161}, {0.9771963141659592, 
+          0.3362383428294414}, {0.9852702481987707, 0.303183597582078}, {
+          0.9917456439929708, 0.2697788996573439}, {0.9966075251362133, 
+          0.23610150804392965`}, {0.9998446469819783, 0.20222931242141423`}, {
+          1.0014495226563944`, 0.1682406530156073}, {1.0045619424903385`, 
+          0.03373012923587082}}, 0.1], {
+          Thickness[Large], 
+          Dashing[{Small, Small}], 
+          RGBColor[
+           Rational[1, 3], 
+           Rational[1, 3], 
+           Rational[1, 3]]}, StripOnInput -> False], 
+        StyleBox[
+         ArrowBox[{{0.581193752107737, 1.159154330812695}, {0.536898405030656,
+           1.088850684493806}, {0.5252719188024307, 1.0713455510300722`}, {
+          0.5128172681633023, 1.05441963725694}, {0.4995632584542156, 
+          1.0381120897334868`}, {0.48554054378820954`, 1.02246062485016}, {
+          0.4707815561530313, 1.0075014415976258`}, {0.4553204304018491, 
+          0.9932691378450924}, {0.43919292530554754`, 0.9797966303217316}, {
+          0.20671542446245286`, 0.7948977798638361}, {0.1899588400061013, 
+          0.7822162280283784}, {0.1726119311208752, 0.7703549620029533}, {
+          0.15471481805095086`, 0.7593414147378534}, {0.13630889356268056`, 
+          0.749201058564112}, {0.11743672721065462`, 0.739957346280635}, {
+          0.0981419668820667, 0.7316316569121446}, {0.07846923784709209, 
+          0.7242432462633845}, {0., 0.6969072046679561}}, 0.1], {
+          Thickness[Large], 
+          Dashing[{Small, Small}], 
+          RGBColor[
+           Rational[1, 3], 
+           Rational[1, 3], 
+           Rational[1, 3]]}, StripOnInput -> False], 
+        StyleBox[
+         ArrowBox[{{0.581193752107737, 1.159154330812695}, {
+          0.5902565264846589, 1.0249063541155388`}, {0.5917314375562319, 
+          0.9909100338942729}, {0.5915701726476248, 0.9568821167542958}, {
+          0.5897731047352311, 0.9229013030769551}, {0.5863443901101758, 
+          0.8890461843018594}, {0.5812919587655707, 0.8553950611591774}, {
+          0.5746274960558826, 0.8220257625742945}, {0.5663664156708351, 
+          0.7890154656636684}, {0.4384088962124477, 0.32535373333859074`}, {
+          0.4285703045279606, 0.29277878491312365`}, {0.4171769564165791, 
+          0.26071452490187785`}, {0.4042552026195929, 0.22923511210452768`}, {
+          0.38983492880256676`, 0.19841335267554816`}, {0.37394948643523285`, 
+          0.16832053173682576`}, {0.3566356156556089, 0.13902624850814121`}, {
+          0.33793336029674426`, 0.11059825533683712`}, {0.26129995346176826`, 
+          0.}}, 0.1], {
+          Thickness[Large], 
+          Dashing[{Small, Small}], 
+          RGBColor[
+           Rational[1, 3], 
+           Rational[1, 3], 
+           Rational[1, 3]]}, StripOnInput -> False], {
+         StyleBox[
+          ArrowBox[CompressedData["
+1:eJwBoQFe/iFib1JlAgAAABkAAAACAAAAAie+oyOZ4j92t11p5YvyP4+JKGX7
+eOI/jQXSuW6L8j+JWREGtTjgPzfG0v80rPI/gP6v29dD3D/WPI8tcxzzP6f1
+peoKv9g/MQAgdCjT8z+h6DRdRCvWP3FNvROtwfQ/FQynG3C91D8nXpdK39T1
+PyC3GSDmktQ/qbjwL6z29j8PULLqD6/VPwr6h/jUD/g/WNUOcSL71z/QJeBI
+zAn5P7RjqSfyR9s/3CMITIXQ+T/myXaau1HfPzYxwmkPVPo/rUC+ccni4T9G
+iumV3Yn6PwaLczEFJOQ/4DEQ+J5t+j9+fWYSRD7mP+yahIqXAfo/qvz1rlkG
+6D/TTf2UcU75Pzb6Ar2wV+k/yxEuvoti+D/IDN1BOhfqP9ER8PnRUPc/qGCk
+MZk16j/Grvv+OC/2PxBK6ehdsOk/3tGHbvsU9T8KFYkyOJLoP6fRg9e8GPQ/
+8geb1hvy5j8hae/XuE7zP28MeExp8eQ/qQQBpiPH8j81Y69dQLniP3gqS1Td
+jPI/Aie+oyOZ4j92t11p5YvyP+wyz60=
+           "], 0.1], {
+           Thickness[Large], 
+           Dashing[{Small, Small}], 
+           RGBColor[
+            Rational[1, 3], 
+            Rational[1, 3], 
+            Rational[1, 3]]}, StripOnInput -> False]}, 
+        StyleBox[
+         ArrowBox[{{0.581193752107737, 1.159154330812695}, {
+          0.6619047242006647, 1.1388761058443644`}, {0.6821871387428833, 
+          1.13325845343295}, {0.702176013802413, 1.1266721622055305`}, {
+          0.7218251187479922, 1.1191324650554129`}, {0.7410890087748154, 
+          1.1106567999303425`}, {0.759923130010099, 1.101264769501702}, {
+          0.7782839225580824, 1.090978095827098}, {0.796128921246142, 
+          1.0798205701111954`}, {1.0445048432373594`, 0.9160878407112454}, {
+          1.0617927758302264`, 0.9040852682810386}, {1.0784836584851587`, 
+          0.8912654089028258}, {1.0945388882272937`, 0.877657912578919}, {
+          1.1099213322313068`, 0.8632942509725849}, {1.124595413702879, 
+          0.848207644619812}, {1.1385271941613513`, 0.8324329860962558}, {
+          1.1516844519332536`, 0.8160067593170595}, {1.2021335570857812`, 
+          0.7498225073128196}}, 0.1], {
+          Thickness[Large], 
+          Dashing[{Small, Small}], 
+          RGBColor[
+           Rational[1, 3], 
+           Rational[1, 3], 
+           Rational[1, 3]]}, StripOnInput -> False], 
+        StyleBox[
+         ArrowBox[{{1.2021335570857812`, 0.7498225073128196}, {
+          1.2077375204495149`, 0.6668897828531253}, {1.2086500144327625`, 
+          0.6458882608458733}, {1.2085517449305387`, 0.6248671544288578}, {
+          1.2074429392223225`, 0.6038750815966674}, {1.2053261617739823`, 
+          0.5829605931944913}, {1.2022063083066326`, 0.5621720606288478}, {
+          1.198090594473721, 0.5415575639933212}, {1.192988539172535, 
+          0.5211647808680537}, {1.113959893334358, 0.2347278296372745}, {
+          1.1078832966905476`, 0.21460392481939705`}, {1.100846212766582, 
+          0.1947954412394352}, {1.0928649170572582`, 0.1753481923159785}, {
+          1.0839578688474456`, 0.15630715599757855`}, {1.0741456685191157`, 
+          0.1377163707369372}, {1.0634510099064083`, 0.11961883363797805`}, {
+          1.0518986278089222`, 0.10205640101136745`}, {1.0045619424903385`, 
+          0.03373012923587082}}, 0.1], {
+          Thickness[Large], 
+          GrayLevel[0.5]}, StripOnInput -> False], 
+        StyleBox[
+         ArrowBox[{{1.2021335570857812`, 0.7498225073128196}, {
+          1.0771272379157726`, 0.6997970859622609}, {1.0452183371453287`, 
+          0.6879096049099417}, {1.0127748114466708`, 0.6775699823642292}, {
+          0.9798716967920048, 0.6688021319908936}, {0.9465850920991754, 
+          0.6616263322326369}, {0.9129919832287136, 0.6560591794087431}, {
+          0.879170064929548, 0.6521135493308138}, {0.845197561145187, 
+          0.6497985675233557}, {0.3643441383108748, 0.6286324464654105}, {
+          0.33029962126165624`, 0.6279534670601595}, {0.29626182972149784`, 
+          0.6289120604129472}, {0.2623094869094384, 0.6315060094717541}, {
+          0.22852111841715508`, 0.6357293149043466}, {0.19497487059355678`, 
+          0.6415722089736428}, {0.16174832980649667`, 0.6490211781287085}, {
+          0.12891834299961974`, 0.6580589942591449}, {0., 
+          0.6969072046679561}}, 0.1], {
+          Thickness[Large], 
+          GrayLevel[0.5]}, StripOnInput -> False], 
+        StyleBox[
+         ArrowBox[{{1.2021335570857812`, 0.7498225073128196}, {
+          1.1304853593697755`, 0.6358527555839939}, {1.1116778558991298`, 
+          0.6074740877741425}, {1.091527715930993, 0.5800324618615851}, {
+          1.0700815430730202`, 0.5535913453343619}, {1.0473889384211417`, 
+          0.5282118916843365}, {1.0235023858412529`, 0.503952798970295}, {
+          0.9984771305835816, 0.4808701740600161}, {0.9723710515104744, 
+          0.4590174028652926}, {0.5960376100608696, 0.159088399940165}, {
+          0.5689110857835155, 0.1385160239449047}, {0.5408268550172016, 
+          0.11927162331187169`}, {0.5118498714780804, 0.10139970683842825`}, {
+          0.48204715365704126`, 0.08494160901578285}, {0.4514876298181349, 
+          0.06993539442983332}, {0.42024197858003887`, 0.05641576972470508}, {
+          0.3883824654492718, 0.04441400333259726}, {0.26129995346176826`, 
+          0.}}, 0.1], {
+          Thickness[Large], 
+          GrayLevel[0.5]}, StripOnInput -> False], 
+        StyleBox[
+         ArrowBox[{{1.2021335570857812`, 0.7498225073128196}, {
+          1.1214225849928539`, 0.7701007322811503}, {1.1011401704506352`, 
+          0.7757183846925648}, {1.0811512953911053`, 0.7823046759199845}, {
+          1.0615021904455262`, 0.7898443730701019}, {1.042238300418703, 
+          0.7983200381951723}, {1.0234041791834194`, 0.8077120686238128}, {
+          1.005043386635436, 0.8179987422984168}, {0.9871983879473765, 
+          0.8291562680143194}, {0.7388224659561591, 0.9928889974142694}, {
+          0.7215345333632921, 1.0048915698444763`}, {0.7048436507083597, 
+          1.017711429222689}, {0.6887884209662247, 1.0313189255465958`}, {
+          0.6734059769622117, 1.0456825871529296`}, {0.6587318954906393, 
+          1.0607691935057026`}, {0.6448001150321672, 1.0765438520292592`}, {
+          0.6316428572602647, 1.0929700788084553`}, {0.581193752107737, 
+          1.159154330812695}}, 0.1], {
+          Thickness[Large], 
+          GrayLevel[0.5]}, StripOnInput -> False], {
+         StyleBox[
+          ArrowBox[CompressedData["
+1:eJwBoQFe/iFib1JlAgAAABkAAAACAAAApbiRZfA78z8z01bFi/7nP8DC4+SE
+NvM/hCw91tUc6D9rZntGdPzyP+Xti8IUVeo/mEmSFGAU8z9UbktsGJfsP1QS
+PxxdfPM/FDF30IO07j/aLj0OFCz0P2Aamq70QPA/q/KdxWwV9T+dkaFZI+3w
+P1do1LGvJfY/v1HrTP5Q8T9VYT4tBkf3P6An7ReDZPE/NUgg7Dpi+D+yWe/t
+ICbxP1lG5IuWYPk/oqMdzNia8D/hSOIIsi36P34cHHOtm+8/061YsBm5+j9n
+2zy+GJ/tP2py6vOe9/o/5n2lu75o6z+6+KwFPuT6P/VunfIMJuk/Sw/x0YSA
++j9bIJtdbgXnP3pSQxRz1Pk/be3UQ5Iy5T/THgwX1u34P9lBizLr0uM/IjeR
+Si3f9z8Mga8JrgLjP3qR7G4uvvY/PLqfyY7S4j+bOJHIB6L1P4rgP5dpRuM/
+0tZeIYSh9D+93E9581TkP0LTasQ20fM/8kaJKnno5T+ysMz+1EHzPzvsLrKc
+4Oc/pbiRZfA78z8z01bFi/7nP8YS1Ps=
+           "], 0.1], {
+           Thickness[Large], 
+           GrayLevel[0.5]}, StripOnInput -> False]}}}], Typeset`data}, 
+     TagBox[
+      DynamicBox[GraphComputation`NetworkGraphicsBox[
+       2, Typeset`graph, Typeset`boxes], {
+       CachedValue :> Typeset`boxes, SingleEvaluation -> True, 
+        SynchronousUpdating -> False, TrackedSymbols :> {}},
+       ImageSizeCache->{{3.7606933090100982`, 
+        354.2393066909899}, {-173.2393066909899, 169.2393066909899}}],
+      MouseAppearanceTag["NetworkGraphics"]],
+     AllowKernelInitialization->False,
+     UnsavedVariables:>{Typeset`data}]],
+   DefaultBaseStyle->{
+    "NetworkGraphics", FrontEnd`GraphicsHighlightColor -> Hue[0.8, 1., 0.6]},
+   FrameTicks->None],
+  BoxRotation->3.141592653589793]], "Output",
+ CellChangeTimes->{3.518606969691256*^9, 3.5186077578737497`*^9, 
+  3.51860786056528*^9, 3.524972038855823*^9, 3.524972300299021*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Export", "[", 
+  RowBox[{"\"\<../doc/aux/fcag-gs.pdf\>\"", ",", " ", "%10"}], "]"}]], "Input",\
+
+ CellChangeTimes->{{3.518606974310936*^9, 3.518606987775979*^9}, {
+  3.5249720480936327`*^9, 3.5249720557001657`*^9}, {3.524972503475882*^9, 
+  3.524972504259516*^9}}],
+
+Cell[BoxData["\<\"../doc/aux/fcag-gs.pdf\"\>"], "Output",
+ CellChangeTimes->{3.518606990171026*^9, 3.524972066639175*^9, 
+  3.5249725050219383`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"fcag2", " ", "=", " ", 
+  RowBox[{"CompleteGraph", "[", 
+   RowBox[{"5", ",", 
+    RowBox[{"VertexShapeFunction", " ", "\[Rule]", " ", "\"\<Diamond\>\""}], 
+    ",", " ", 
+    RowBox[{"VertexSize", " ", "\[Rule]", " ", "Medium"}], " ", ",", 
+    RowBox[{"DirectedEdges", " ", "\[Rule]", " ", "True"}]}], " ", 
+   RowBox[{"(*", 
+    RowBox[{",", " ", 
+     RowBox[{"VertexStyle", " ", "\[Rule]", " ", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"4", " ", "\[Rule]", " ", "red"}], "}"}], "~", "Join", "~", 
+       RowBox[{"Map", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"#", " ", "\[Rule]", " ", "blue"}], "&"}], ",", " ", 
+         RowBox[{"{", 
+          RowBox[{"1", ",", "2", ",", "3", ",", "5"}], "}"}]}], "]"}]}]}]}], 
+    "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{",", " ", 
+     RowBox[{"EdgeStyle", " ", "\[Rule]", " ", "edgeStyle"}]}], "*)"}], 
+   "]"}]}]], "Input",
+ CellChangeTimes->{{3.518598927074767*^9, 3.5185989407482777`*^9}, {
+  3.5185990228930883`*^9, 3.5185990252443743`*^9}, {3.5185990922383547`*^9, 
+  3.518599096236525*^9}, {3.518599142422393*^9, 3.518599174687539*^9}, {
+  3.518599252871038*^9, 3.518599296621524*^9}, {3.518599335613863*^9, 
+  3.518599352037553*^9}, {3.518599556207438*^9, 3.518599560030905*^9}, {
+  3.518599603462822*^9, 3.518599607599454*^9}, {3.5185996769759693`*^9, 
+  3.5185997245423393`*^9}, {3.518599836752067*^9, 3.51859983967138*^9}, {
+  3.518600382952631*^9, 3.518600440838059*^9}, {3.5186008863116207`*^9, 
+  3.518600891790641*^9}, {3.518605430457934*^9, 3.518605434746176*^9}, {
+  3.5186055696934843`*^9, 3.518605700714596*^9}, {3.518605773505574*^9, 
+  3.518605800002384*^9}, {3.518605856620634*^9, 3.518605862553582*^9}}],
+
+Cell[BoxData[
+ GraphicsBox[
+  NamespaceBox["NetworkGraphics",
+   DynamicModuleBox[{Typeset`graph = HoldComplete[
+     Graph[{1, 2, 3, 4, 5}, {
+       SparseArray[
+       Automatic, {5, 5}, 0, {
+        1, {{0, 4, 8, 12, 16, 20}, {{2}, {3}, {4}, {5}, {1}, {3}, {4}, {5}, {
+          1}, {2}, {4}, {5}, {1}, {2}, {3}, {5}, {1}, {2}, {3}, {4}}}, 
+         Pattern}], Null}, {
+      VertexShapeFunction -> {"Diamond"}, VertexSize -> {Medium}, 
+       VertexCoordinates -> {{0.9510565162951535, 0.30901699437494745`}, {
+        0.5877852522924732, -0.8090169943749473}, {-0.587785252292473, \
+-0.8090169943749475}, {-0.9510565162951536, 
+        0.30901699437494723`}, {-2.4492935982947064`*^-16, 1.}}}]], 
+    Typeset`boxes, Typeset`boxes$s2d = GraphicsGroupBox[{{
+       Directive[
+        Hue[0.6, 0.2, 0.8], 
+        EdgeForm[
+         Directive[
+          GrayLevel[0], 
+          Opacity[0.7]]]], 
+       TagBox[
+        PolygonBox[{{0.9510565162951535, 0.17762935693001095`}, {
+         1.08244415374009, 0.30901699437494745`}, {0.9510565162951535, 
+         0.440404631819884}, {0.819668878850217, 0.30901699437494745`}, {
+         0.9510565162951535, 0.17762935693001095`}}], "DynamicName", BoxID -> 
+        "VertexID$1"], 
+       TagBox[
+        PolygonBox[{{0.5877852522924732, -0.9404046318198839}, {
+         0.7191728897374098, -0.8090169943749473}, {
+         0.5877852522924732, -0.6776293569300108}, {
+         0.4563976148475367, -0.8090169943749473}, {
+         0.5877852522924732, -0.9404046318198839}}], "DynamicName", BoxID -> 
+        "VertexID$2"], 
+       TagBox[
+        PolygonBox[{{-0.587785252292473, -0.940404631819884}, \
+{-0.4563976148475365, -0.8090169943749475}, {-0.587785252292473, \
+-0.6776293569300109}, {-0.7191728897374096, -0.8090169943749475}, \
+{-0.587785252292473, -0.940404631819884}}], "DynamicName", BoxID -> 
+        "VertexID$3"], 
+       TagBox[
+        PolygonBox[{{-0.9510565162951536, 
+         0.17762935693001072`}, {-0.8196688788502171, 
+         0.30901699437494723`}, {-0.9510565162951536, 
+         0.44040463181988376`}, {-1.0824441537400902`, 
+         0.30901699437494723`}, {-0.9510565162951536, 0.17762935693001072`}}],
+         "DynamicName", BoxID -> "VertexID$4"], 
+       TagBox[
+        PolygonBox[{{-2.4492935982947064`*^-16, 0.8686123625550635}, {
+         0.13138763744493626`, 1.}, {-2.4492935982947064`*^-16, 
+         1.1313876374449365`}, {-0.13138763744493676`, 
+         1.}, {-2.4492935982947064`*^-16, 0.8686123625550635}}], 
+        "DynamicName", BoxID -> "VertexID$5"]}, {
+       Directive[
+        Opacity[0.7], 
+        Hue[0.6, 0.7, 0.5]], 
+       Arrowheads[{{0.0344466828980642, 0.7}}], {
+        Arrowheads[0.0344466828980642], 
+        ArrowBox[{
+          DynamicLocation["VertexID$1", Automatic, Center], {
+          0.9540180042183692, 0.17750846207854284`}, {0.9539670181841615, 
+          0.14424184399310858`}, {0.9523167032492881, 0.1110161470247445}, {
+          0.949070876291937, 0.07790821616549629}, {0.9442370443193189, 
+          0.04499462403582566}, {0.9378263871053252, 0.012351493786070256`}, {
+          0.9298537313337447, -0.019945676962552755`}, {
+          0.9203375163068421, -0.051822190730208995`}, {
+          0.7750290107057701, -0.4990357862301667}, {
+          0.7639912456975343, -0.5304179184400849}, {
+          0.751457459050232, -0.5612330879300899}, {
+          0.7374566391319967, -0.5914100248196248}, {
+          0.7220211672920075, -0.6208789353440185}, {
+          0.7051867429683198, -0.6495716632747653}, {
+          0.6869923011215602, -0.6774218475524807}, {
+          0.6674799221854457, -0.7043650757679581}, 
+          DynamicLocation["VertexID$2", Automatic, Center]}]}, {
+        Arrowheads[0.0344466828980642], 
+        ArrowBox[{
+          DynamicLocation["VertexID$1", Automatic, Center], {
+          0.8298611077263716, 0.13405354830634353`}, {0.7981559322358635, 
+          0.09055547048720247}, {0.7643961263298324, 0.048632011278412324`}, {
+          0.7286597702971223, 0.008380132013620867}, {
+          0.691029515827408, -0.030107072033809246`}, {
+          0.6515923948528767, -0.06674058696323082}, {
+          0.6104396182592012, -0.10143568611966791`}, {
+          0.5676663649313578, -0.1341121260511554}, {-0.047870342503692376`, \
+-0.5813257215511131}, {-0.09216514581286905, -0.6119079275972001}, \
+{-0.13787905328226646`, -0.6403251686793908}, {-0.18490633696103942`, \
+-0.6665117208892595}, {-0.2331382312981246, -0.6904070194958938}, \
+{-0.28246318469717147`, -0.7119557990210974}, {-0.3327671175150887, \
+-0.7311082210583866}, {-0.38393368590750343`, -0.7478199895401572}, 
+          DynamicLocation["VertexID$3", Automatic, Center]}]}, {
+        Arrowheads[0.0344466828980642], 
+        ArrowBox[{
+          DynamicLocation["VertexID$1", Automatic, Center], {
+          0.7501664378333989, 0.23870546691333305`}, {0.6989488834067764, 
+          0.22215061730966945`}, {0.6469946356539856, 0.20807734237859465`}, {
+          0.5944238552975878, 0.19651819104455015`}, {0.5413581289878845, 
+          0.18749989752151386`}, {0.4879201880951179, 0.18104331948162722`}, {
+          0.4342336248541401, 0.17716338981519497`}, {0.3804226065180608, 
+          0.17586908209362573`}, {-0.3804226065180616, 
+          0.17586908209362573`}, {-0.43423362485414085`, 
+          0.17716338981519497`}, {-0.48792018809511867`, 
+          0.18104331948162722`}, {-0.5413581289878854, 
+          0.18749989752151386`}, {-0.5944238552975886, 
+          0.19651819104455037`}, {-0.6469946356539864, 
+          0.20807734237859488`}, {-0.6989488834067771, 
+          0.22215061730966967`}, {-0.7501664378333998, 0.23870546691333328`}, 
+          
+          DynamicLocation["VertexID$4", Automatic, Center]}]}, {
+        Arrowheads[0.0344466828980642], 
+        ArrowBox[{
+          DynamicLocation["VertexID$1", Automatic, Center], {
+          0.8250693196093364, 0.3468388233725397}, {0.793446641255128, 
+          0.3571672643063931}, {0.7623571010058638, 0.3690041120923204}, {
+          0.7318726033117482, 0.38232199025497404`}, {0.702063653269636, 
+          0.39709009696520203`}, {0.6729991935575712, 0.41327427627907465`}, {
+          0.6447464449829158, 0.43083709713436835`}, {0.6173707510128534, 
+          0.44973793992180267`}, {0.23694814449479218`, 0.7261311421718235}, {
+          0.21051282012877537`, 0.7463262926808272}, {0.18507900546245287`, 
+          0.767769043202553}, {0.16070552428175106`, 0.7904098005563123}, {
+          0.13744874801416013`, 0.8141962007895768}, {0.11536246535187777`, 
+          0.8390732302862749}, {0.0944977578483513, 0.864983353003277}, {
+          0.07490288177593712, 0.8918666435407941}, 
+          DynamicLocation["VertexID$5", Automatic, Center]}]}, {
+        Arrowheads[0.0344466828980642], 
+        ArrowBox[{
+          DynamicLocation["VertexID$2", Automatic, Center], {
+          0.5848237643692578, -0.6775084620785429}, {
+          0.5848747504034655, -0.6442418439931086}, {
+          0.586525065338339, -0.6110161470247445}, {
+          0.5897708922956901, -0.5779082161654963}, {
+          0.5946047242683081, -0.5449946240358257}, {
+          0.6010153814823018, -0.5123514937860703}, {
+          0.6089880372538822, -0.48005432303744733`}, {
+          0.6185042522807848, -0.448177809269791}, {
+          0.7638127578818569, -0.0009642137698333275}, {0.7748505228900927, 
+          0.03041791844008493}, {0.7873843095373951, 0.06123308793008983}, {
+          0.8013851294556305, 0.09141002481962471}, {0.8168206012956195, 
+          0.1208789353440185}, {0.8336550256193072, 0.14957166327476532`}, {
+          0.8518494674660667, 0.17742184755248067`}, {0.8713618464021812, 
+          0.20436507576795815`}, 
+          DynamicLocation["VertexID$1", Automatic, Center]}]}, {
+        Arrowheads[0.0344466828980642], 
+        ArrowBox[{
+          DynamicLocation["VertexID$2", Automatic, Center], {
+          0.46362835580047573`, -0.8524719081471466}, {
+          0.43197416634417535`, -0.8627033678808534}, {
+          0.39986467537301784`, -0.8714011301212795}, {
+          0.36737414629765863`, -0.8785450785268228}, {
+          0.3345777238005625, -0.8841186904445822}, {
+          0.3015512600400248, -0.8881090751242484}, {
+          0.2683711392179298, -0.8905070035320626}, {
+          0.235114100916989, -0.8913069296958938}, {-0.2351141009169892, \
+-0.8913069296958938}, {-0.26837113921793, -0.8905070035320626}, \
+{-0.30155126004002497`, -0.8881090751242484}, {-0.33457772380056267`, \
+-0.8841186904445822}, {-0.3673741462976588, -0.8785450785268226}, \
+{-0.399864675373018, -0.8714011301212794}, {-0.43197416634417546`, \
+-0.8627033678808533}, {-0.4636283558004759, -0.8524719081471465}, 
+          DynamicLocation["VertexID$3", Automatic, Center]}]}, {
+        Arrowheads[0.0344466828980642], 
+        ArrowBox[{
+          DynamicLocation["VertexID$2", Automatic, Center], {
+          0.3839336859075031, -0.7478199895401569}, {
+          0.33276711751508825`, -0.7311082210583864}, {
+          0.282463184697171, -0.711955799021097}, {
+          0.23313823129812417`, -0.6904070194958936}, {
+          0.1849063369610392, -0.666511720889259}, {
+          0.13787905328226602`, -0.6403251686793904}, {
+          0.09216514581286872, -0.6119079275971997}, {
+          0.04787034250369204, -0.5813257215511126}, {-0.5676663649313584, \
+-0.13411212605115508`}, {-0.6104396182592018, -0.10143568611966758`}, \
+{-0.6515923948528772, -0.06674058696323049}, {-0.6910295158274086, \
+-0.030107072033808913`}, {-0.7286597702971227, 
+          0.008380132013621311}, {-0.764396126329833, 
+          0.04863201127841266}, {-0.7981559322358638, 
+          0.0905554704872028}, {-0.829861107726372, 0.13405354830634397`}, 
+          DynamicLocation["VertexID$4", Automatic, Center]}]}, {
+        Arrowheads[0.0344466828980642], 
+        ArrowBox[{
+          DynamicLocation["VertexID$2", Automatic, Center], {
+          0.4588365676834405, -0.6396866330809506}, {
+          0.4272648753634398, -0.5960915740616629}, {
+          0.39782565004904935`, -0.5510290293073716}, {
+          0.3705869793122847, -0.5046032202854698}, {
+          0.34561186124279053`, -0.456921521445571}, {
+          0.32295805874471917`, -0.4080942118819431}, {
+          0.30267796594164453`, -0.35823422027802637`}, {
+          0.28481848699848444`, -0.3074568637229358}, {0.04970438608149541, 
+          0.41614993402704287`}, {0.034306826723714545`, 
+          0.46772721674596457`}, {0.02140679870469442, 0.5199851367576955}, {
+          0.01103413744222781, 0.5728028310009895}, {0.0032128330146259376`, 
+          0.6260581417586477}, {-0.002039025323968602, 
+          0.6796278991860929}, {-0.004709290980735359, 
+          0.7333882061808104}, {-0.004791788117035178, 0.7872147249338048}, 
+          DynamicLocation["VertexID$5", Automatic, Center]}]}, {
+        Arrowheads[0.0344466828980642], 
+        ArrowBox[{
+          DynamicLocation[
+          "VertexID$3", Automatic, 
+           Center], {-0.46658984372369106`, -0.6340535483063434}, \
+{-0.43488466823318295`, -0.5905554704872025}, {-0.401124862327152, \
+-0.5486320112784123}, {-0.36538850629444175`, -0.508380132013621}, \
+{-0.3277582518247275, -0.46989292796619087`}, {-0.2883211308501962, \
+-0.4332594130367692}, {-0.24716835425652067`, -0.3985643138803321}, \
+{-0.2043951009286773, -0.3658878739488447}, {0.41114160650637277`, 
+          0.08132572155111295}, {0.45543640981554956`, 
+          0.11190792759720003`}, {0.5011503172849467, 0.14032516867939082`}, {
+          0.5481776009637198, 0.16651172088925947`}, {0.5964094953008051, 
+          0.19040701949589367`}, {0.6457344486998517, 0.2119557990210973}, {
+          0.696038381517769, 0.23110822105838646`}, {0.7472049499101839, 
+          0.24781998954015716`}, 
+          DynamicLocation["VertexID$1", Automatic, Center]}]}, {
+        Arrowheads[0.0344466828980642], 
+        ArrowBox[{
+          DynamicLocation[
+          "VertexID$3", Automatic, 
+           Center], {-0.4636283558004755, -0.7655620806027483}, \
+{-0.4319741663441751, -0.7553306208690415}, {-0.3998646753730176, \
+-0.7466328586286154}, {-0.3673741462976584, -0.7394889102230721}, \
+{-0.3345777238005623, -0.7339152983053127}, {-0.3015512600400246, \
+-0.7299249136256465}, {-0.2683711392179296, -0.7275269852178323}, \
+{-0.23511410091698878`, -0.7267270590540011}, {
+          0.23511410091698942`, -0.7267270590540011}, {
+          0.2683711392179302, -0.7275269852178323}, {
+          0.3015512600400252, -0.7299249136256465}, {
+          0.3345777238005629, -0.7339152983053127}, {
+          0.367374146297659, -0.7394889102230723}, {
+          0.39986467537301823`, -0.7466328586286155}, {
+          0.4319741663441757, -0.7553306208690416}, {
+          0.4636283558004761, -0.7655620806027484}, 
+          DynamicLocation["VertexID$2", Automatic, Center]}]}, {
+        Arrowheads[0.0344466828980642], 
+        ArrowBox[{
+          DynamicLocation[
+          "VertexID$3", Automatic, 
+           Center], {-0.6674799221854457, -0.7043650757679578}, \
+{-0.6869923011215602, -0.6774218475524805}, {-0.7051867429683198, \
+-0.6495716632747651}, {-0.7220211672920075, -0.6208789353440183}, \
+{-0.7374566391319965, -0.5914100248196243}, {-0.7514574590502319, \
+-0.5612330879300895}, {-0.7639912456975342, -0.5304179184400846}, \
+{-0.77502901070577, -0.4990357862301664}, {-0.9203375163068422, \
+-0.0518221907302088}, {-0.9298537313337449, -0.019945676962552533`}, \
+{-0.9378263871053254, 0.01235149378607045}, {-0.9442370443193191, 
+          0.04499462403582585}, {-0.949070876291937, 
+          0.07790821616549651}, {-0.9523167032492881, 
+          0.11101614702474469`}, {-0.9539670181841614, 
+          0.14424184399310877`}, {-0.9540180042183692, 0.17750846207854304`}, 
+          
+          DynamicLocation["VertexID$4", Automatic, Center]}]}, {
+        Arrowheads[0.0344466828980642], 
+        ArrowBox[{
+          DynamicLocation[
+          "VertexID$3", Automatic, 
+           Center], {-0.5925770404095082, -0.5962317193087514}, \
+{-0.5924945432732085, -0.5424052005557569}, {-0.5898242776164415, \
+-0.4886448935610396}, {-0.5845724192778471, -0.43507513613359444`}, \
+{-0.5767511148502451, -0.38181982537593634`}, {-0.5663784535877785, \
+-0.3290021311326423}, {-0.5534784255687584, -0.2767442111209114}, \
+{-0.5380808662109775, -0.2251669284019896}, {-0.3029667652939887, 
+          0.49843986934798895`}, {-0.2851072863508287, 
+          0.5492172259030795}, {-0.26482719354775397`, 
+          0.5990772175069963}, {-0.24217339104968272`, 
+          0.6479045270706242}, {-0.21719827298018846`, 
+          0.6955862259105229}, {-0.1899596022434238, 
+          0.7420120349324246}, {-0.1605203769290332, 
+          0.787074579686716}, {-0.12894868460903253`, 0.8306696387060037}, 
+          DynamicLocation["VertexID$5", Automatic, Center]}]}, {
+        Arrowheads[0.0344466828980642], 
+        ArrowBox[{
+          DynamicLocation[
+          "VertexID$4", Automatic, Center], {-0.7501664378333991, 
+          0.3793285218365616}, {-0.6989488834067765, 
+          0.39588337144022523`}, {-0.6469946356539859, 
+          0.4099566463713}, {-0.5944238552975879, 
+          0.42151579770534453`}, {-0.5413581289878847, 
+          0.4305340912283808}, {-0.48792018809511806`, 
+          0.43699066926826746`}, {-0.43423362485414024`, 
+          0.4408705989346997}, {-0.380422606518061, 0.44216490665626895`}, {
+          0.3804226065180614, 0.44216490665626895`}, {0.4342336248541407, 
+          0.4408705989346997}, {0.4879201880951185, 0.43699066926826746`}, {
+          0.5413581289878852, 0.4305340912283808}, {0.5944238552975885, 
+          0.4215157977053443}, {0.6469946356539863, 0.4099566463712998}, {
+          0.6989488834067769, 0.395883371440225}, {0.7501664378333995, 
+          0.3793285218365614}, 
+          DynamicLocation["VertexID$1", Automatic, Center]}]}, {
+        Arrowheads[0.0344466828980642], 
+        ArrowBox[{
+          DynamicLocation[
+          "VertexID$4", Automatic, Center], {-0.7472049499101836, 
+          0.24781998954015672`}, {-0.6960383815177688, 
+          0.23110822105838613`}, {-0.6457344486998516, 
+          0.21195579902109685`}, {-0.5964094953008048, 
+          0.19040701949589334`}, {-0.5481776009637197, 
+          0.1665117208892588}, {-0.5011503172849465, 
+          0.14032516867939016`}, {-0.4554364098155491, 
+          0.11190792759719936`}, {-0.41114160650637255`, 
+          0.0813257215511124}, {0.2043951009286779, -0.36588787394884514`}, {
+          0.24716835425652134`, -0.39856431388033253`}, {
+          0.2883211308501968, -0.43325941303676985`}, {
+          0.32775825182472806`, -0.4698929279661913}, {
+          0.3653885062944423, -0.5083801320136215}, {
+          0.4011248623271525, -0.5486320112784129}, {
+          0.4348846682331834, -0.590555470487203}, {
+          0.46658984372369156`, -0.6340535483063443}, 
+          DynamicLocation["VertexID$2", Automatic, Center]}]}, {
+        Arrowheads[0.0344466828980642], 
+        ArrowBox[{
+          DynamicLocation[
+          "VertexID$4", Automatic, Center], {-0.8713618464021812, 
+          0.2043650757679576}, {-0.8518494674660667, 
+          0.17742184755248017`}, {-0.8336550256193069, 
+          0.14957166327476482`}, {-0.8168206012956195, 
+          0.12087893534401797`}, {-0.8013851294556303, 
+          0.09141002481962415}, {-0.787384309537395, 
+          0.0612330879300893}, {-0.7748505228900928, 
+          0.030417918440084374`}, {-0.763812757881857, \
+-0.0009642137698338549}, {-0.6185042522807844, -0.44817780926979134`}, \
+{-0.6089880372538818, -0.48005432303744766`}, {-0.6010153814823013, \
+-0.5123514937860706}, {-0.5946047242683076, -0.5449946240358261}, \
+{-0.5897708922956897, -0.5779082161654967}, {-0.5865250653383386, \
+-0.6110161470247449}, {-0.5848747504034651, -0.644241843993109}, \
+{-0.5848237643692573, -0.6775084620785432}, 
+          DynamicLocation["VertexID$3", Automatic, Center]}]}, {
+        Arrowheads[0.0344466828980642], 
+        ArrowBox[{
+          DynamicLocation[
+          "VertexID$4", Automatic, Center], {-0.8761536345192162, 
+          0.4171503508341535}, {-0.8565587584468022, 
+          0.4440336413716706}, {-0.8356940509432755, 
+          0.46994376408867283`}, {-0.8136077682809932, 
+          0.494820793585371}, {-0.7903509920134022, 
+          0.5186071938186354}, {-0.7659775108327005, 
+          0.5412479511723945}, {-0.7405436961663779, 
+          0.5626907016941205}, {-0.7141083718003611, 
+          0.582885852203124}, {-0.3336857652823, 
+          0.859279054453145}, {-0.30631007131223753`, 
+          0.8781798972405794}, {-0.27805732273758227`, 
+          0.8957427180958731}, {-0.24899286302551732`, 
+          0.9119268974097456}, {-0.21918391298340512`, 
+          0.9266950041199736}, {-0.18869941528928952`, 
+          0.9400128822826272}, {-0.15760987504002538`, 
+          0.9518497300685547}, {-0.12598719668581693`, 0.9621781710024081}, 
+          DynamicLocation["VertexID$5", Automatic, Center]}]}, {
+        Arrowheads[0.0344466828980642], 
+        ArrowBox[{
+          DynamicLocation["VertexID$5", Automatic, Center], {
+          0.12598719668581687`, 0.962178171002408}, {0.15760987504002527`, 
+          0.9518497300685544}, {0.18869941528928943`, 0.9400128822826272}, {
+          0.21918391298340506`, 0.9266950041199736}, {0.2489928630255172, 
+          0.9119268974097456}, {0.2780573227375821, 0.895742718095873}, {
+          0.3063100713122374, 0.8781798972405793}, {0.33368576528229993`, 
+          0.859279054453145}, {0.7141083718003611, 0.5828858522031242}, {
+          0.7405436961663779, 0.5626907016941206}, {0.7659775108327005, 
+          0.5412479511723947}, {0.7903509920134022, 0.5186071938186354}, {
+          0.8136077682809932, 0.494820793585371}, {0.8356940509432755, 
+          0.46994376408867267`}, {0.856558758446802, 0.4440336413716706}, {
+          0.8761536345192162, 0.4171503508341535}, 
+          DynamicLocation["VertexID$1", Automatic, Center]}]}, {
+        Arrowheads[0.0344466828980642], 
+        ArrowBox[{
+          DynamicLocation["VertexID$5", Automatic, Center], {
+          0.12894868460903253`, 0.8306696387060033}, {0.1605203769290331, 
+          0.7870745796867156}, {0.1899596022434238, 0.7420120349324242}, {
+          0.21719827298018846`, 0.6955862259105224}, {0.2421733910496825, 
+          0.6479045270706236}, {0.26482719354775375`, 0.5990772175069958}, {
+          0.2851072863508285, 0.549217225903079}, {0.3029667652939886, 
+          0.49843986934798845`}, {0.5380808662109777, -0.2251669284019901}, {
+          0.5534784255687586, -0.2767442111209118}, {
+          0.5663784535877787, -0.3290021311326427}, {
+          0.5767511148502453, -0.38181982537593673`}, {
+          0.5845724192778471, -0.435075136133595}, {
+          0.5898242776164416, -0.4886448935610401}, {
+          0.5924945432732085, -0.5424052005557576}, {
+          0.5925770404095083, -0.5962317193087521}, 
+          DynamicLocation["VertexID$2", Automatic, Center]}]}, {
+        Arrowheads[0.0344466828980642], 
+        ArrowBox[{
+          DynamicLocation["VertexID$5", Automatic, Center], {
+          0.004791788117034845, 0.787214724933804}, {0.004709290980735137, 
+          0.7333882061808095}, {0.0020390253239681577`, 
+          0.679627899186092}, {-0.0032128330146263817`, 
+          0.626058141758647}, {-0.011034137442228253`, 
+          0.5728028310009889}, {-0.021406798704694863`, 
+          0.5199851367576949}, {-0.03430682672371499, 
+          0.46772721674596396`}, {-0.049704386081495855`, 
+          0.41614993402704215`}, {-0.28481848699848467`, \
+-0.30745686372293635`}, {-0.30267796594164476`, -0.3582342202780269}, \
+{-0.3229580587447194, -0.40809421188194367`}, {-0.34561186124279075`, \
+-0.4569215214455716}, {-0.3705869793122849, -0.5046032202854702}, \
+{-0.3978256500490496, -0.5510290293073721}, {-0.42726487536344027`, \
+-0.5960915740616634}, {-0.4588365676834407, -0.6396866330809512}, 
+          DynamicLocation["VertexID$3", Automatic, Center]}]}, {
+        Arrowheads[0.0344466828980642], 
+        ArrowBox[{
+          DynamicLocation[
+          "VertexID$5", Automatic, Center], {-0.07490288177593785, 
+          0.8918666435407938}, {-0.09449775784835196, 
+          0.8649833530032767}, {-0.1153624653518785, 
+          0.8390732302862747}, {-0.1374487480141608, 
+          0.8141962007895764}, {-0.16070552428175183`, 
+          0.790409800556312}, {-0.1850790054624536, 
+          0.7677690432025528}, {-0.21051282012877615`, 
+          0.746326292680827}, {-0.23694814449479296`, 
+          0.7261311421718233}, {-0.617370751012854, 
+          0.4497379399218022}, {-0.6447464449829166, 
+          0.4308370971343679}, {-0.6729991935575718, 
+          0.4132742762790742}, {-0.7020636532696367, 
+          0.3970900969652016}, {-0.7318726033117489, 
+          0.3823219902549736}, {-0.7623571010058645, 
+          0.36900411209232}, {-0.7934466412551286, 
+          0.3571672643063927}, {-0.825069319609337, 0.34683882337253924`}, 
+          DynamicLocation["VertexID$4", Automatic, Center]}]}}}], 
+    Typeset`data}, 
+    TagBox[
+     DynamicBox[GraphComputation`NetworkGraphicsBox[
+      2, Typeset`graph, Typeset`boxes], {
+      CachedValue :> Typeset`boxes, SingleEvaluation -> True, 
+       SynchronousUpdating -> False, TrackedSymbols :> {}},
+      ImageSizeCache->{{3.760693309010094, 
+       354.2393066909899}, {-171.2393066909899, 165.2393066909899}}],
+     MouseAppearanceTag["NetworkGraphics"]],
+    AllowKernelInitialization->False,
+    UnsavedVariables:>{Typeset`data}]],
+  DefaultBaseStyle->{
+   "NetworkGraphics", FrontEnd`GraphicsHighlightColor -> Hue[0.8, 1., 0.6]},
+  FrameTicks->None]], "Output",
+ CellChangeTimes->{{3.518605783078083*^9, 3.518605800446012*^9}, 
+   3.5186058632061462`*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"fcag2", " ", "=", " ", 
+  RowBox[{"CompleteGraph", "[", 
+   RowBox[{"5", ",", 
+    RowBox[{"VertexShapeFunction", " ", "\[Rule]", " ", "\"\<Diamond\>\""}], 
+    ",", " ", 
+    RowBox[{"VertexSize", " ", "\[Rule]", " ", "Medium"}], " ", ",", 
+    RowBox[{"DirectedEdges", " ", "\[Rule]", " ", "True"}]}], " ", 
+   RowBox[{"(*", 
+    RowBox[{",", " ", 
+     RowBox[{"VertexStyle", " ", "\[Rule]", " ", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"4", " ", "\[Rule]", " ", "red"}], "}"}], "~", "Join", "~", 
+       RowBox[{"Map", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"#", " ", "\[Rule]", " ", "blue"}], "&"}], ",", " ", 
+         RowBox[{"{", 
+          RowBox[{"1", ",", "2", ",", "3", ",", "5"}], "}"}]}], "]"}]}]}]}], 
+    "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{",", " ", 
+     RowBox[{"EdgeStyle", " ", "\[Rule]", " ", "edgeStyle"}]}], "*)"}], 
+   "]"}]}]], "Input",
+ CellChangeTimes->{{3.518598927074767*^9, 3.5185989407482777`*^9}, {
+   3.5185990228930883`*^9, 3.5185990252443743`*^9}, {3.5185990922383547`*^9, 
+   3.518599096236525*^9}, {3.518599142422393*^9, 3.518599174687539*^9}, {
+   3.518599252871038*^9, 3.518599296621524*^9}, {3.518599335613863*^9, 
+   3.518599352037553*^9}, {3.518599556207438*^9, 3.518599560030905*^9}, {
+   3.518599603462822*^9, 3.518599607599454*^9}, {3.5185996769759693`*^9, 
+   3.5185997245423393`*^9}, {3.518599836752067*^9, 3.51859983967138*^9}, {
+   3.518600382952631*^9, 3.518600440838059*^9}, {3.5186008863116207`*^9, 
+   3.518600891790641*^9}, {3.518605430457934*^9, 3.518605434746176*^9}, {
+   3.5186055696934843`*^9, 3.518605700714596*^9}, {3.518605773505574*^9, 
+   3.518605800002384*^9}, {3.518605856620634*^9, 3.518605862553582*^9}, 
+   3.524972352806567*^9}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"EdgeList", "[", "fcag", "]"}]], "Input",
+ CellChangeTimes->{{3.5186054414270973`*^9, 3.51860546754417*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"EdgeList", "::", "graph"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"A graph object is expected at position \
+\[NoBreak]\\!\\(1\\)\[NoBreak] in \
+\[NoBreak]\\!\\(EdgeList[fcag]\\)\[NoBreak]. \\!\\(\\*ButtonBox[\\\"\
+\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:ref/EdgeList\\\", ButtonNote -> \
+\\\"EdgeList::graph\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.5249721863731327`*^9}],
+
+Cell[BoxData[
+ RowBox[{"EdgeList", "[", "fcag", "]"}]], "Output",
+ CellChangeTimes->{{3.5186054448862143`*^9, 3.5186054679165688`*^9}, 
+   3.5249721863989277`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"vCoords", " ", "=", " ", 
+  RowBox[{"VertexCoordinates", " ", "/.", " ", 
+   RowBox[{"AbsoluteOptions", "[", 
+    RowBox[{"fcag", ",", " ", "VertexCoordinates"}], "]"}]}]}]], "Input",
+ CellChangeTimes->{{3.518600319959119*^9, 3.518600331948557*^9}, {
+   3.518600393372933*^9, 3.518600414980205*^9}, {3.5186004493023567`*^9, 
+   3.5186004528125553`*^9}, {3.51860063474905*^9, 3.518600639572631*^9}, 
+   3.524972427596293*^9}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"1.0045619424903385`", ",", "0.03373012923587082`"}], "}"}], ",", 
+   
+   RowBox[{"{", 
+    RowBox[{"0.`", ",", "0.6969072046679561`"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0.26129995346176826`", ",", "0.`"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0.581193752107737`", ",", "1.159154330812695`"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1.2021335570857812`", ",", "0.7498225073128196`"}], "}"}]}], 
+  "}"}]], "Output",
+ CellChangeTimes->{
+  3.518600332621916*^9, {3.518600394373184*^9, 3.518600453266054*^9}, 
+   3.518600639956662*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"vCoords", " ", "=", " ", 
+  RowBox[{"VertexCoordinates", " ", "/.", " ", 
+   RowBox[{"AbsoluteOptions", "[", 
+    RowBox[{"fcag", ",", " ", "VertexCoordinates"}], "]"}]}]}]], "Input",
+ CellChangeTimes->{{3.518600319959119*^9, 3.518600331948557*^9}, {
+  3.518600393372933*^9, 3.518600414980205*^9}, {3.5186004493023567`*^9, 
+  3.5186004528125553`*^9}, {3.51860063474905*^9, 3.518600639572631*^9}, {
+  3.524972427596293*^9, 3.524972430690444*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"1.0045619424903385`", ",", "0.03373012923587082`"}], "}"}], ",", 
+   
+   RowBox[{"{", 
+    RowBox[{"0.`", ",", "0.6969072046679561`"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0.26129995346176826`", ",", "0.`"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0.581193752107737`", ",", "1.159154330812695`"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1.2021335570857812`", ",", "0.7498225073128196`"}], "}"}]}], 
+  "}"}]], "Output",
+ CellChangeTimes->{3.524972431849626*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"edgeStyleIsolated", " ", "=", " ", 
+   RowBox[{"Map", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"If", " ", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"#1", "[", 
+          RowBox[{"[", "1", "]"}], "]"}], " ", "===", " ", "4"}], ",", 
+        "\[IndentingNewLine]", 
+        RowBox[{"#1", " ", "\[Rule]", " ", "tailStyle"}], ",", 
+        "\[IndentingNewLine]", 
+        RowBox[{"#1", " ", "\[Rule]", " ", "footStyle"}]}], "]"}], "&"}], ",",
+      " ", 
+     RowBox[{"EdgeList", "[", "pcag", "]"}]}], "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.5185994425515003`*^9, 3.5185995493022327`*^9}, {
+   3.5185996640644836`*^9, 3.51859966605379*^9}, {3.51859979098298*^9, 
+   3.518599791799005*^9}, {3.518599841974669*^9, 3.518599850206862*^9}, {
+   3.51860547824247*^9, 3.518605498232965*^9}, {3.518605534305443*^9, 
+   3.518605534385357*^9}, {3.51860593836397*^9, 3.518605943513137*^9}, 
+   3.51860602397867*^9, {3.518606703181016*^9, 3.518606717802464*^9}, {
+   3.5249721302139187`*^9, 3.524972136676579*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"pcag", " ", "=", " ", 
+   RowBox[{"AdjacencyGraph", "[", 
+    RowBox[{"isolatedNodeGraph", ",", " ", 
+     RowBox[{"DirectedEdges", " ", "\[Rule]", " ", "True"}]}], "]"}]}], 
+  ";"}]], "Input",
+ CellChangeTimes->{{3.5186059864332523`*^9, 3.518605998519611*^9}, 
+   3.5186060802109213`*^9, {3.518606177769397*^9, 3.5186061852015057`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"ef1", "[", 
+   RowBox[{"el_", ",", " ", "edge_"}], "]"}], " ", ":=", " ", 
+  RowBox[{"Arrow", "[", 
+   RowBox[{"el", ",", " ", "0.1"}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.5186077387755213`*^9, 3.5186077501999407`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"ef2", "[", 
+   RowBox[{"el_", ",", "edge_"}], "]"}], ":=", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", "arrow", "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"arrow", " ", "=", "  ", 
+      RowBox[{"Arrow", "[", 
+       RowBox[{"el", ",", "0.1"}], "]"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"edge", "[", 
+          RowBox[{"[", "1", "]"}], "]"}], " ", "===", " ", "4"}], " ", "&&", 
+        " ", 
+        RowBox[{
+         RowBox[{"edge", "[", 
+          RowBox[{"[", "2", "]"}], "]"}], " ", "===", "4"}]}], ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{"Rotate", "[", 
+        RowBox[{"arrow", ",", " ", 
+         RowBox[{
+          RowBox[{"-", "Pi"}], "/", "2"}], ",", " ", 
+         RowBox[{"el", "[", 
+          RowBox[{"[", "1", "]"}], "]"}]}], "]"}], ",", "\[IndentingNewLine]",
+        "arrow"}], "]"}]}]}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.518606749435152*^9, 3.518606758585565*^9}, {
+  3.518606815577896*^9, 3.5186069014542007`*^9}, {3.518607730988249*^9, 
+  3.5186077310768023`*^9}},
+ CellID->101838956],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"pcag2", " ", "=", " ", 
+  RowBox[{"AdjacencyGraph", "[", 
+   RowBox[{"isolatedNodeGraph", ",", 
+    RowBox[{"VertexCoordinates", " ", "\[Rule]", " ", "vCoords"}], ",", 
+    RowBox[{"VertexShapeFunction", " ", "\[Rule]", " ", "\"\<Diamond\>\""}], 
+    ",", " ", 
+    RowBox[{"VertexSize", " ", "\[Rule]", " ", "Medium"}], ",", "  ", 
+    RowBox[{"DirectedEdges", " ", "\[Rule]", " ", "True"}], " ", ",", " ", 
+    RowBox[{"VertexStyle", " ", "\[Rule]", 
+     RowBox[{"Map", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"If", "[", 
+         RowBox[{
+          RowBox[{"#", "===", " ", "4"}], ",", " ", 
+          RowBox[{"#", " ", "\[Rule]", " ", "tailColour"}], ",", " ", 
+          RowBox[{"#", "\[Rule]", " ", "footColour"}]}], "]"}], "&"}], ",", 
+       " ", 
+       RowBox[{"Range", "[", "5", "]"}]}], "]"}]}], ",", "   ", 
+    RowBox[{"EdgeStyle", " ", "\[Rule]", " ", "edgeStyleIsolated"}], ",", " ", 
+    RowBox[{"VertexLabels", " ", "\[Rule]", " ", "None"}], " ", ",", " ", 
+    RowBox[{"EdgeShapeFunction", " ", "\[Rule]", " ", "ef2"}]}], " ", 
+   "]"}]}]], "Input",
+ CellChangeTimes->{{3.518598927074767*^9, 3.5185989407482777`*^9}, {
+   3.5185990228930883`*^9, 3.5185990252443743`*^9}, {3.5185990922383547`*^9, 
+   3.518599096236525*^9}, {3.518599142422393*^9, 3.518599174687539*^9}, {
+   3.518599252871038*^9, 3.518599296621524*^9}, {3.518599335613863*^9, 
+   3.518599352037553*^9}, {3.518599556207438*^9, 3.518599560030905*^9}, {
+   3.518599603462822*^9, 3.518599607599454*^9}, {3.5185996769759693`*^9, 
+   3.5185997245423393`*^9}, {3.518599836752067*^9, 3.51859983967138*^9}, {
+   3.518600010995287*^9, 3.518600016662305*^9}, {3.518600200120903*^9, 
+   3.518600215959292*^9}, {3.518600459642539*^9, 3.51860048666224*^9}, {
+   3.5186005498297586`*^9, 3.518600657783627*^9}, {3.518600693816866*^9, 
+   3.51860069639858*^9}, 3.518600777681628*^9, {3.51860089628121*^9, 
+   3.5186008991106033`*^9}, {3.5186058916444263`*^9, 3.51860589235397*^9}, {
+   3.518605927771428*^9, 3.518605964137526*^9}, 3.518606048811955*^9, {
+   3.518606094695962*^9, 3.518606157873588*^9}, {3.5186062575559597`*^9, 
+   3.518606261785983*^9}, {3.5186063743754168`*^9, 3.5186063776343307`*^9}, {
+   3.518606459715242*^9, 3.518606487874654*^9}, {3.518606551172093*^9, 
+   3.518606601250614*^9}, {3.518606660035369*^9, 3.518606675676875*^9}, {
+   3.518606918964402*^9, 3.518606950195218*^9}, {3.518607735180599*^9, 
+   3.518607735242639*^9}, {3.524972148161455*^9, 3.5249721587340393`*^9}, {
+   3.5249723994950657`*^9, 3.524972412970002*^9}}],
+
+Cell[BoxData[
+ GraphicsBox[
+  NamespaceBox["NetworkGraphics",
+   DynamicModuleBox[{Typeset`graph = HoldComplete[
+     Graph[{1, 2, 3, 4, 5}, {
+      SparseArray[
+       Automatic, {5, 5}, 0, {
+        1, {{0, 4, 8, 12, 13, 17}, {{1}, {2}, {3}, {5}, {1}, {2}, {3}, {5}, {
+          1}, {2}, {3}, {5}, {4}, {1}, {2}, {3}, {5}}}, {1, 1, 1, 1, 1, 1, 1, 
+         1, 1, 1, 1, 1, 1, 1, 1, 1, 1}}], Null}, {
+      EdgeShapeFunction -> {$CellContext`ef2}, 
+       EdgeStyle -> {DirectedEdge[3, 1] -> {
+           Thickness[Large], 
+           GrayLevel[0.5]}, DirectedEdge[3, 2] -> {
+           Thickness[Large], 
+           GrayLevel[0.5]}, DirectedEdge[5, 5] -> {
+           Thickness[Large], 
+           GrayLevel[0.5]}, DirectedEdge[4, 4] -> {
+           Thickness[Large], 
+           Dashing[{Small, Small}], 
+           RGBColor[
+            Rational[1, 3], 
+            Rational[1, 3], 
+            Rational[1, 3]]}, DirectedEdge[2, 5] -> {
+           Thickness[Large], 
+           GrayLevel[0.5]}, DirectedEdge[2, 3] -> {
+           Thickness[Large], 
+           GrayLevel[0.5]}, DirectedEdge[1, 5] -> {
+           Thickness[Large], 
+           GrayLevel[0.5]}, DirectedEdge[5, 3] -> {
+           Thickness[Large], 
+           GrayLevel[0.5]}, DirectedEdge[3, 3] -> {
+           Thickness[Large], 
+           GrayLevel[0.5]}, DirectedEdge[2, 2] -> {
+           Thickness[Large], 
+           GrayLevel[0.5]}, DirectedEdge[2, 1] -> {
+           Thickness[Large], 
+           GrayLevel[0.5]}, DirectedEdge[1, 1] -> {
+           Thickness[Large], 
+           GrayLevel[0.5]}, DirectedEdge[1, 3] -> {
+           Thickness[Large], 
+           GrayLevel[0.5]}, DirectedEdge[1, 2] -> {
+           Thickness[Large], 
+           GrayLevel[0.5]}, DirectedEdge[5, 2] -> {
+           Thickness[Large], 
+           GrayLevel[0.5]}, DirectedEdge[5, 1] -> {
+           Thickness[Large], 
+           GrayLevel[0.5]}, DirectedEdge[3, 5] -> {
+           Thickness[Large], 
+           GrayLevel[0.5]}}, VertexLabels -> {None}, 
+       VertexShapeFunction -> {"Diamond"}, VertexSize -> {Medium}, 
+       VertexStyle -> {
+        1 -> GrayLevel[0.5], 5 -> GrayLevel[0.5], 2 -> GrayLevel[0.5], 4 -> 
+         RGBColor[
+           Rational[1, 3], 
+           Rational[1, 3], 
+           Rational[1, 3]], 3 -> GrayLevel[0.5]}, 
+       VertexCoordinates -> {{1.0045619424903385`, 0.03373012923587082}, {0., 
+        0.6969072046679561}, {0.26129995346176826`, 0.}, {0.581193752107737, 
+        1.159154330812695}, {1.2021335570857812`, 0.7498225073128196}}}]], 
+    Typeset`boxes, Typeset`boxes$s2d = GraphicsGroupBox[{{
+       Directive[
+        Hue[0.6, 0.2, 0.8], 
+        EdgeForm[
+         Directive[
+          GrayLevel[0], 
+          Opacity[0.7]]]], 
+       TagBox[
+        StyleBox[
+         PolygonBox[{{1.0045619424903385`, -0.0492668474627949}, {
+          1.0875589191890043`, 0.03373012923587082}, {1.0045619424903385`, 
+          0.11672710593453654`}, {0.9215649657916728, 0.03373012923587082}, {
+          1.0045619424903385`, -0.0492668474627949}}], 
+         GrayLevel[0.5], StripOnInput -> False], "DynamicName", BoxID -> 
+        "VertexID$1"], 
+       TagBox[
+        StyleBox[
+         PolygonBox[{{0., 0.6139102279692904}, {0.08299697669866572, 
+          0.6969072046679561}, {0., 
+          0.7799041813666218}, {-0.08299697669866572, 0.6969072046679561}, {
+          0., 0.6139102279692904}}], 
+         GrayLevel[0.5], StripOnInput -> False], "DynamicName", BoxID -> 
+        "VertexID$2"], 
+       TagBox[
+        StyleBox[
+         PolygonBox[{{0.26129995346176826`, -0.08299697669866572}, {
+          0.344296930160434, 0.}, {0.26129995346176826`, 
+          0.08299697669866572}, {0.17830297676310253`, 0.}, {
+          0.26129995346176826`, -0.08299697669866572}}], 
+         GrayLevel[0.5], StripOnInput -> False], "DynamicName", BoxID -> 
+        "VertexID$3"], 
+       TagBox[
+        StyleBox[
+         PolygonBox[{{0.581193752107737, 1.0761573541140292`}, {
+          0.6641907288064027, 1.159154330812695}, {0.581193752107737, 
+          1.2421513075113608`}, {0.4981967754090713, 1.159154330812695}, {
+          0.581193752107737, 1.0761573541140292`}}], 
+         RGBColor[
+          Rational[1, 3], 
+          Rational[1, 3], 
+          Rational[1, 3]], StripOnInput -> False], "DynamicName", BoxID -> 
+        "VertexID$4"], 
+       TagBox[
+        StyleBox[
+         PolygonBox[{{1.2021335570857812`, 0.666825530614154}, {
+          1.285130533784447, 0.7498225073128196}, {1.2021335570857812`, 
+          0.8328194840114853}, {1.1191365803871154`, 0.7498225073128196}, {
+          1.2021335570857812`, 0.666825530614154}}], 
+         GrayLevel[0.5], StripOnInput -> False], "DynamicName", BoxID -> 
+        "VertexID$5"]}, {
+       Directive[
+        Opacity[0.7], 
+        Hue[0.6, 0.7, 0.5]], {
+        StyleBox[
+         ArrowBox[CompressedData["
+1:eJwBoQFe/iFib1JlAgAAABkAAAACAAAA9tUci68S8D9QdOpTE0WhPzXoyzlr
+H/A/FCY+a9l/oj/O69eCxxvxP849SyatMLI/widUqh828j/QO25WmVm2P57i
+UP/NV/M/6vj5B0ZltT8VECcqlmn0P0Dx63iYzq4/0VtpTIJV9T+4h+Uk22qT
+P+/q/PClCPY/zEJxcrjPor9Qtb2gonT2P1IN7HubO7q/dL6F8M6Q9j9G98Wc
+fyPGv8DS5l3oWvY/H5GjL8ALz79emli2Qdf1P+QBbkDUj9O/u5ECUGoQ9T/Y
+ETn1rNzWv+wMHTNVFvQ/RFt+CaYo2b+As36YEf3yPyYQOfyVRNq/4E1gAi/b
+8T8InMlmthnav+dzaPntx/A/aJMTp3er2L9q4VItxbLvP0KL8EE6F9a/SJic
+TV5F7j+SWf6n85HSvwxeuof2ZO0/7ME0f93HzL9Yr8zSjSPtP3OgLNz+xcO/
+Rr2LTGOG7T9fCDfJgK61vwx0lH2Jhe4/EFOy3XKYlb+Z11mRRAbwP8j4ixhR
++58/9tUci68S8D9QdOpTE0WhP2fY11M=
+          "], 0.1], {
+          Thickness[Large], 
+          GrayLevel[0.5]}, StripOnInput -> False]}, 
+       StyleBox[
+        ArrowBox[{{1.0045619424903385`, 0.03373012923587082}, {
+         0.8739516599565967, 0.06663743234500663}, {0.8411302652029049, 
+         0.07575147329993936}, {0.8087850090064708, 0.08643295717124244}, {
+         0.7769907000600211, 0.09865717963009724}, {0.7458208728155319, 
+         0.11239586827401638`}, {0.7153476174124198, 0.12761724801576635`}, {
+         0.6856414129461659, 0.1442861145733635}, {0.6567709644629909, 
+         0.16236391589117294`}, {0.25494618746685555`, 0.427634746064007}, {
+         0.22697826706144725`, 0.4470796714766334}, {0.19997755944525458`, 
+         0.4678467484093829}, {0.17400651234251885`, 0.48988794639164657`}, {
+         0.14912519206004832`, 0.5131522881426392}, {0.1253911445647799, 
+         0.5375859674725765}, {0.10285926239042703`, 0.5631324737266014}, {
+         0.08158165768103631, 0.5897327224836483}, {0., 0.6969072046679561}}, 
+         0.1], {
+         Thickness[Large], 
+         GrayLevel[0.5]}, StripOnInput -> False], 
+       StyleBox[
+        ArrowBox[{{1.0045619424903385`, 0.03373012923587082}, {
+         0.9273097814105995, 0.002693101966739442}, {
+         0.907589783956706, -0.004684043835859908}, {
+         0.8875379134907933, -0.011104563331401918`}, {
+         0.8672005463410367, -0.016553607026434825`}, {
+         0.8466247191374981, -0.021018572274284164`}, {
+         0.8258580200249591, -0.02448913242268208}, {
+         0.8049484786001994, -0.026957260697434537`}, {
+         0.7839444548282783, -0.02841724876689039}, {
+         0.4866396592168504, -0.0419093004612387}, {
+         0.46558973158330647`, -0.042357771638621644`}, {
+         0.4445425847409584, -0.0417936886916927}, {
+         0.42354689691116076`, -0.04021835624167952}, {
+         0.40265122729993447`, -0.03763541774592499}, {
+         0.38190390378935807`, -0.034050847071233126`}, {
+         0.36135291116396917`, -0.02947293467740225}, {
+         0.3410457801306884, -0.023912268442899398`}, {0.26129995346176826`, 
+         0.}}, 0.1], {
+         Thickness[Large], 
+         GrayLevel[0.5]}, StripOnInput -> False], 
+       StyleBox[
+        ArrowBox[{{1.0045619424903385`, 0.03373012923587082}, {
+         0.9989579791266052, 0.1166628536955652}, {0.9980454851433576, 
+         0.13766437570281723`}, {0.9981437546455814, 0.1586854821198327}, {
+         0.9992525603537976, 0.17967755495202303`}, {1.0013693378021378`, 
+         0.20059204335419903`}, {1.0044891912694873`, 0.2213805759198426}, {
+         1.0086049051023993`, 0.24199507255536917`}, {1.013706960403585, 
+         0.26238785568063666`}, {1.0927356062417621`, 0.548824806911416}, {
+         1.0988122028855725`, 0.5689487117292935}, {1.1058492868095382`, 
+         0.5887571953092553}, {1.1138305825188617`, 0.608204444232712}, {
+         1.1227376307286745`, 0.6272454805511121}, {1.1325498310570046`, 
+         0.6458362658117532}, {1.1432444896697118`, 0.6639338029107125}, {
+         1.154796871767198, 0.6814962355373231}, {1.2021335570857812`, 
+         0.7498225073128196}}, 0.1], {
+         Thickness[Large], 
+         GrayLevel[0.5]}, StripOnInput -> False], 
+       StyleBox[
+        ArrowBox[{{0., 0.6969072046679561}, {0.13061028253374204`, 
+         0.6639999015588204}, {0.16343167728743382`, 0.6548858606038876}, {
+         0.19577693348386788`, 0.6442043767325847}, {0.2275712424303176, 
+         0.6319801542737298}, {0.2587410696748068, 0.6182414656298106}, {
+         0.289214325077919, 0.6030200858880607}, {0.3189205295441728, 
+         0.5863512193304635}, {0.34779097802734793`, 0.5682734180126541}, {
+         0.7496157550234832, 0.30300258783982015`}, {0.7775836754288914, 
+         0.2835576624271937}, {0.8045843830450841, 0.2627905854944442}, {
+         0.8305554301478199, 0.2407493875121806}, {0.8554367504302904, 
+         0.217485045761188}, {0.8791707979255587, 0.19305136643125076`}, {
+         0.9017026800999117, 0.1675048601772257}, {0.9229802848093024, 
+         0.14090461142017885`}, {1.0045619424903385`, 0.03373012923587082}}, 
+         0.1], {
+         Thickness[Large], 
+         GrayLevel[0.5]}, StripOnInput -> False], {
+        StyleBox[
+         ArrowBox[CompressedData["
+1:eJxTTMoPSmViYGCQBGIQDQNaK3vCBHyf2Tso1qW+0UzaLzfh9Pt6o2f2ezxU
+NiQvWrk/WSn06om2J/aVi9itFgXt2X/8TM0PuajH9ptWzz0/9/Wx/WvSTEwX
+HHlkv16CJ3Hx7/P7jWU3eXtdemS/IeeLzFL/K/sP+l9eytL02P6AWwPrNKEb
++xkObbmx7egT+7+rvrum/7y1X+NZlEhW8zP7Rz2NR5tP3NkvM0HSK276C/sP
++4vfH426u19t2XfXF9de2Z+6rFxVtOTO/kL33zfuCr+1j5h+0Edzy639UyaK
+n/VUeG/vVDzbcOfG6/tnpK07w5v5wb7igEv2u1uX9zOdUp3kzPzR3jZfrtr6
+77n9ER8fLk0P+mjf6X05bfGbo/uvLVH7qBDw0X49p+Dj/Jpd+7+c9DWc9+eD
+fUIDp8ynCcv2tzWwWkyK+2DvYCrE9NU30V5tDve+ENb39hznnm7+J7TAfiZ/
+WL7I1zf2Ry7Pm9NvutTe92/P+kPbXtmrJLpOVxBeYM993HhRQcUL+wPPjD6w
+BiXav6hjK9TPeGaPHv4A5rLKjQ==
+          "], 0.1], {
+          Thickness[Large], 
+          GrayLevel[0.5]}, StripOnInput -> False]}, 
+       StyleBox[
+        ArrowBox[{{0., 0.6969072046679561}, {0.053358121454002816`, 
+         0.632962874289689}, {0.06645951875380102, 0.6164716875321569}, {
+         0.07875290448432237, 0.5993696841653118}, {0.09020984628101547, 
+         0.5816964180114242}, {0.1008038463219662, 0.5634927641196557}, {
+         0.11051040261253936`, 0.5448008242295078}, {0.11930706565403348`, 
+         0.5256638293971582}, {0.12717349036528747`, 0.5061260400098929}, {
+         0.23169347174999474`, 0.22736315814271063`}, {0.23861146452185925`, 
+         0.20746976155270128`}, {0.24456502529570381`, 
+         0.18726676756688068`}, {0.24954038456864197`, 
+         0.16680090203463033`}, {0.25352603523988615`, 
+         0.14611949877939218`}, {0.25651275922457817`, 
+         0.12527039012414676`}, {0.2584936487735422, 0.10430179626395264`}, {
+         0.25946412244965206`, 0.08326221374140855}, {0.26129995346176826`, 
+         0.}}, 0.1], {
+         Thickness[Large], 
+         GrayLevel[0.5]}, StripOnInput -> False], 
+       StyleBox[
+        ArrowBox[{{0., 0.6969072046679561}, {0.1250063191700086, 
+         0.7469326260185148}, {0.15691521994045254`, 0.7588201070708341}, {
+         0.18935874563911062`, 0.7691597296165467}, {0.2222618602937765, 
+         0.7779275799898822}, {0.2555484649866059, 0.7851033797481389}, {
+         0.2891415738570677, 0.7906705325720327}, {0.32296349215623327`, 
+         0.794616162649962}, {0.35693599594059433`, 0.7969311444574201}, {
+         0.8377894187749065, 0.8180972655153654}, {0.8718339358241252, 
+         0.8187762449206164}, {0.9058717273642836, 0.8178176515678288}, {
+         0.939824070176343, 0.8152237025090219}, {0.9736124386686263, 
+         0.8110003970764292}, {1.0071586864922246`, 0.8051575030071333}, {
+         1.0403852272792848`, 0.7977085338520674}, {1.0732152140861617`, 
+         0.7886707177216311}, {1.2021335570857812`, 0.7498225073128196}}, 
+         0.1], {
+         Thickness[Large], 
+         GrayLevel[0.5]}, StripOnInput -> False], 
+       StyleBox[
+        ArrowBox[{{0.26129995346176826`, 0.}, {0.33855211454150747`, 
+         0.03103702726913138}, {0.358272111995401, 0.03841417307173073}, {
+         0.37832398246131366`, 0.04483469256727274}, {0.3986613496110703, 
+         0.050283736262305645`}, {0.4192371768146088, 
+         0.054748701510154985`}, {0.44000387592714785`, 0.0582192616585529}, {
+         0.4609134173519076, 0.06068738993330536}, {0.4819174411238286, 
+         0.06214737800276121}, {0.7792222367352566, 0.07563942969710952}, {
+         0.8002721643688006, 0.07608790087449246}, {0.8213193112111485, 
+         0.07552381792756352}, {0.8423149990409462, 0.07394848547755034}, {
+         0.8632106686521724, 0.07136554698179581}, {0.883957992162749, 
+         0.06778097630710395}, {0.9045089847881378, 0.06320306391327307}, {
+         0.9248161158214185, 0.05764239767877022}, {1.0045619424903385`, 
+         0.03373012923587082}}, 0.1], {
+         Thickness[Large], 
+         GrayLevel[0.5]}, StripOnInput -> False], 
+       StyleBox[
+        ArrowBox[{{0.26129995346176826`, 0.}, {0.2079418320077655, 
+         0.06394433037826716}, {0.19484043470796736`, 0.0804355171357993}, {
+         0.1825470489774459, 0.09753752050264433}, {0.1710901071807529, 
+         0.11521078665653198`}, {0.1604961071398021, 0.13341444054830057`}, {
+         0.1507895508492289, 0.15210638043844835`}, {0.1419928878077349, 
+         0.171243375270798}, {0.1341264630964808, 0.1907811646580633}, {
+         0.029606481711773547`, 0.4695440465252455}, {0.022688488939909046`, 
+         0.48943744311525483`}, {0.016734928166064478`, 0.5096404371010754}, {
+         0.011759568893126349`, 0.5301063026333258}, {0.0077739182218821146`, 
+         0.550787705888564}, {0.004787194237190151, 0.5716368145438094}, {
+         0.002806304688226069, 0.5926054084040034}, {0.001835831012116207, 
+         0.6136449909265476}, {0., 0.6969072046679561}}, 0.1], {
+         Thickness[Large], 
+         GrayLevel[0.5]}, StripOnInput -> False], {
+        StyleBox[
+         ArrowBox[CompressedData["
+1:eJxTTMoPSmViYGCQBGIQvU5pSYHyzgv2DFBQsopvote7C/YOxbN3eqsm7X/G
+UuLs6HbF3sfvbGLh3JX7lZoOn3RccM3e2W/Jq1a/PfsnLL7Yz3Tmun3CM5kE
+9ZfH9n9I+JxdsRHIvxQebPbz/P57O8+FHgm6Zh/3rmr3ar8r+6NmvlvPfuay
+Pc9U3zBeoRv7/xZvXqoUeMG+j+/y6cqft/bfeDHvqWjwCXsfC/UJ/ifv7F/j
+uU7MadU+e8mt3kZRMXf3nymVqtNtWWnv4i8fcm7Znf0OfqtYhEV797flZNyy
+3n5r/6w73l6exhv3b1l57XnS1uv7+Z590gi6uWu/f4rofOb7l/cnHYhhnntu
+//4cxyrPK6zn9zdkcPFFrd2/38O+Wsfy69H9fB+lPUwqdu331N/2a1PPrv0c
+66dukpq1YX/Lxlsv2dct23/APMY85W3b/gbdPUwRk+Lt2Tjdn/K5rbY/smrd
+t0KGBfYN96I3Kk3db7/DYZOFs+ZSe6dLG5cJHTlh/0Y1eqsI7wJ7p0cMJveb
+LtgfuM6S6+ObaI8e/gC608Rh
+          "], 0.1], {
+          Thickness[Large], 
+          GrayLevel[0.5]}, StripOnInput -> False]}, 
+       StyleBox[
+        ArrowBox[{{0.26129995346176826`, 0.}, {0.332948151177774, 
+         0.11396975172882573`}, {0.3517556546484198, 0.14234841953867716`}, {
+         0.3719057946165565, 0.16979004545123466`}, {0.39335196747452933`, 
+         0.19623116197845786`}, {0.41604457212640783`, 
+         0.22161061562848317`}, {0.43993112470629664`, 
+         0.24586970834252464`}, {0.464956379963968, 0.2689523332528037}, {
+         0.49106245903707507`, 0.2908051044475271}, {0.86739590048668, 
+         0.5907341073726547}, {0.8945224247640342, 0.6113064833679152}, {
+         0.9226066555303483, 0.6305508840009479}, {0.9515836390694694, 
+         0.6484228004743915}, {0.9813863568905086, 0.6648808982970369}, {
+         1.0119458807294146`, 0.6798871128829864}, {1.0431915319675107`, 
+         0.6934067375881148}, {1.075051045098278, 0.7054085039802225}, {
+         1.2021335570857812`, 0.7498225073128196}}, 0.1], {
+         Thickness[Large], 
+         GrayLevel[0.5]}, StripOnInput -> False], {
+        StyleBox[
+         GeometricTransformationBox[
+          ArrowBox[CompressedData["
+1:eJxTTMoPSmViYGCQBGIQzaS+b7HyzEf2ZdtjM592f7LP7Gu0XTTjkf2BP9bX
+z1V/sv8hlFxSbvvIfmmnnXJI7Ef7w99VngW6PrT3OHowWS78g/20qMniRh33
+7e3Oi27M/vPO/vFJfr20jbftdwXK8jGeeGt/+M/rVyKh1+0PfZJ7t1Pzrf1e
+XeGnJ85cstd5WJDpoffWPmaS1QT112fsuV+lv/e7+tZ+ImtvlV7gUXspv3nH
+0wXf2z/b8nJ31fl99ruNZMTmpHyw36b+/EpRwHb7EFbRsj05H+0zHJJuGu3f
+Anf/Dqj8jMxlMXyrP9s/geo3tJm/R2/zF/t+qPn33d+8E+v/ah8Ftf9ZJXu0
+su43uPvC/jHNW9bwzf4Q1P3dX1ffftv0zf4R1H/8x9Z4nzL+Zj8V6n+/doNf
+U2Z+tT8EDZ8lK3/mrTnwBR5+bk9r1pft+gwPX52i+t+/Z3+yRw9/ACor0qQ=
+
+           "], 0.1], {{{0, 1}, {-1, 0}}, {-0.577960578704958, 
+           1.740348082920432}}], {
+          Thickness[Large], 
+          Dashing[{Small, Small}], 
+          RGBColor[
+           Rational[1, 3], 
+           Rational[1, 3], 
+           Rational[1, 3]]}, StripOnInput -> False]}, 
+       StyleBox[
+        ArrowBox[{{1.2021335570857812`, 0.7498225073128196}, {
+         1.2077375204495149`, 0.6668897828531253}, {1.2086500144327625`, 
+         0.6458882608458733}, {1.2085517449305387`, 0.6248671544288578}, {
+         1.2074429392223225`, 0.6038750815966674}, {1.2053261617739823`, 
+         0.5829605931944913}, {1.2022063083066326`, 0.5621720606288478}, {
+         1.198090594473721, 0.5415575639933212}, {1.192988539172535, 
+         0.5211647808680537}, {1.113959893334358, 0.2347278296372745}, {
+         1.1078832966905476`, 0.21460392481939705`}, {1.100846212766582, 
+         0.1947954412394352}, {1.0928649170572582`, 0.1753481923159785}, {
+         1.0839578688474456`, 0.15630715599757855`}, {1.0741456685191157`, 
+         0.1377163707369372}, {1.0634510099064083`, 0.11961883363797805`}, {
+         1.0518986278089222`, 0.10205640101136745`}, {1.0045619424903385`, 
+         0.03373012923587082}}, 0.1], {
+         Thickness[Large], 
+         GrayLevel[0.5]}, StripOnInput -> False], 
+       StyleBox[
+        ArrowBox[{{1.2021335570857812`, 0.7498225073128196}, {
+         1.0771272379157726`, 0.6997970859622609}, {1.0452183371453287`, 
+         0.6879096049099417}, {1.0127748114466708`, 0.6775699823642292}, {
+         0.9798716967920048, 0.6688021319908936}, {0.9465850920991754, 
+         0.6616263322326369}, {0.9129919832287136, 0.6560591794087431}, {
+         0.879170064929548, 0.6521135493308138}, {0.845197561145187, 
+         0.6497985675233557}, {0.3643441383108748, 0.6286324464654105}, {
+         0.33029962126165624`, 0.6279534670601595}, {0.29626182972149784`, 
+         0.6289120604129472}, {0.2623094869094384, 0.6315060094717541}, {
+         0.22852111841715508`, 0.6357293149043466}, {0.19497487059355678`, 
+         0.6415722089736428}, {0.16174832980649667`, 0.6490211781287085}, {
+         0.12891834299961974`, 0.6580589942591449}, {0., 0.6969072046679561}},
+          0.1], {
+         Thickness[Large], 
+         GrayLevel[0.5]}, StripOnInput -> False], 
+       StyleBox[
+        ArrowBox[{{1.2021335570857812`, 0.7498225073128196}, {
+         1.1304853593697755`, 0.6358527555839939}, {1.1116778558991298`, 
+         0.6074740877741425}, {1.091527715930993, 0.5800324618615851}, {
+         1.0700815430730202`, 0.5535913453343619}, {1.0473889384211417`, 
+         0.5282118916843365}, {1.0235023858412529`, 0.503952798970295}, {
+         0.9984771305835816, 0.4808701740600161}, {0.9723710515104744, 
+         0.4590174028652926}, {0.5960376100608696, 0.159088399940165}, {
+         0.5689110857835155, 0.1385160239449047}, {0.5408268550172016, 
+         0.11927162331187169`}, {0.5118498714780804, 0.10139970683842825`}, {
+         0.48204715365704126`, 0.08494160901578285}, {0.4514876298181349, 
+         0.06993539442983332}, {0.42024197858003887`, 0.05641576972470508}, {
+         0.3883824654492718, 0.04441400333259726}, {0.26129995346176826`, 
+         0.}}, 0.1], {
+         Thickness[Large], 
+         GrayLevel[0.5]}, StripOnInput -> False], {
+        StyleBox[
+         ArrowBox[CompressedData["
+1:eJwBoQFe/iFib1JlAgAAABkAAAACAAAApbiRZfA78z8z01bFi/7nPxbGtmwc
+MvM/9CF8jwYY6D+aZ69bPKPyP9lE0u3wEOo/Bexmxt5g8j9GCFxjuEXsP9tY
+525WcPI/xyjZsg+J7j9o1x25ZdDyP6yhdE0/VvA/AvivJFh58z/1UI4GDkLx
+P1g4jYSgXfQ/qWGL6wn18T8a52ND72r1P2h6erXXYPI/V93/YqqL9j/Xeja8
+0XzyP6NMzA2pqPc/K83hhblG8j+g9S8mD6v4P8eqQdvlwvE/UrmPriJ++T/O
+mMWu6fvwP1PjH2P1EPo/4h7F+7oB8D8dDS5iwFf6P2AB9xDW0O0/14QNANZM
++j/jIE6pFI3rPyja7WAW8fk/3At+hLJm6T+QlU9+3Uv5P6R+F0XViec/u0RE
+CWxq+D+VST3nvBzmP8N1g0jXXvc/vv/nUrI85T/silTGlT72P1hzkgWu++Q/
+QQALl8Yg9T+qSzwP517lPzUh+ZFWHPQ/M6gW/Gde5j+mFPyRKUbzPyC1y0Gy
+5ec/pbiRZfA78z8z01bFi/7nP3SR1GY=
+          "], 0.1], {
+          Thickness[Large], 
+          GrayLevel[0.5]}, StripOnInput -> False]}}}], Typeset`data}, 
+    TagBox[
+     DynamicBox[GraphComputation`NetworkGraphicsBox[
+      2, Typeset`graph, Typeset`boxes], {
+      CachedValue :> Typeset`boxes, SingleEvaluation -> True, 
+       SynchronousUpdating -> False, TrackedSymbols :> {}},
+      ImageSizeCache->{{3.7606933090100982`, 
+       355.2393066909899}, {-179.8861418373922, 174.2393066909899}}],
+     MouseAppearanceTag["NetworkGraphics"]],
+    AllowKernelInitialization->False,
+    UnsavedVariables:>{Typeset`data}]],
+  DefaultBaseStyle->{
+   "NetworkGraphics", FrontEnd`GraphicsHighlightColor -> Hue[0.8, 1., 0.6]},
+  FrameTicks->None]], "Output",
+ CellChangeTimes->{
+  3.518606382144719*^9, {3.518606472115405*^9, 3.518606488414486*^9}, {
+   3.518606577166456*^9, 3.5186066017340517`*^9}, {3.518606666906444*^9, 
+   3.518606676089836*^9}, 3.518606719931938*^9, 3.5186067600063267`*^9, 
+   3.518606817055018*^9, {3.518606885345641*^9, 3.518606919892159*^9}, 
+   3.518606950699202*^9, 3.5186077357003717`*^9, 3.52497240398558*^9, 
+   3.5249724353119583`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Rotate", "[", 
+  RowBox[{"pcag2", ",", " ", "Pi"}], "]"}]], "Input",
+ CellChangeTimes->{{3.518606952326042*^9, 3.518606956271399*^9}}],
+
+Cell[BoxData[
+ RotationBox[
+  GraphicsBox[
+   NamespaceBox["NetworkGraphics",
+    DynamicModuleBox[{Typeset`graph = HoldComplete[
+      Graph[{1, 2, 3, 4, 5}, {
+       SparseArray[
+        Automatic, {5, 5}, 0, {
+         1, {{0, 4, 8, 12, 13, 17}, {{1}, {2}, {3}, {5}, {1}, {2}, {3}, {5}, {
+           1}, {2}, {3}, {5}, {4}, {1}, {2}, {3}, {5}}}, {1, 1, 1, 1, 1, 1, 1,
+           1, 1, 1, 1, 1, 1, 1, 1, 1, 1}}], Null}, {
+       EdgeShapeFunction -> {$CellContext`ef2}, 
+        EdgeStyle -> {DirectedEdge[3, 1] -> {
+            Thickness[Large], 
+            GrayLevel[0.5]}, DirectedEdge[3, 2] -> {
+            Thickness[Large], 
+            GrayLevel[0.5]}, DirectedEdge[5, 5] -> {
+            Thickness[Large], 
+            GrayLevel[0.5]}, DirectedEdge[4, 4] -> {
+            Thickness[Large], 
+            Dashing[{Small, Small}], 
+            RGBColor[
+             Rational[1, 3], 
+             Rational[1, 3], 
+             Rational[1, 3]]}, DirectedEdge[2, 5] -> {
+            Thickness[Large], 
+            GrayLevel[0.5]}, DirectedEdge[2, 3] -> {
+            Thickness[Large], 
+            GrayLevel[0.5]}, DirectedEdge[1, 5] -> {
+            Thickness[Large], 
+            GrayLevel[0.5]}, DirectedEdge[5, 3] -> {
+            Thickness[Large], 
+            GrayLevel[0.5]}, DirectedEdge[3, 3] -> {
+            Thickness[Large], 
+            GrayLevel[0.5]}, DirectedEdge[2, 2] -> {
+            Thickness[Large], 
+            GrayLevel[0.5]}, DirectedEdge[2, 1] -> {
+            Thickness[Large], 
+            GrayLevel[0.5]}, DirectedEdge[1, 1] -> {
+            Thickness[Large], 
+            GrayLevel[0.5]}, DirectedEdge[1, 3] -> {
+            Thickness[Large], 
+            GrayLevel[0.5]}, DirectedEdge[1, 2] -> {
+            Thickness[Large], 
+            GrayLevel[0.5]}, DirectedEdge[5, 2] -> {
+            Thickness[Large], 
+            GrayLevel[0.5]}, DirectedEdge[5, 1] -> {
+            Thickness[Large], 
+            GrayLevel[0.5]}, DirectedEdge[3, 5] -> {
+            Thickness[Large], 
+            GrayLevel[0.5]}}, VertexLabels -> {None}, 
+        VertexShapeFunction -> {"Diamond"}, VertexSize -> {Medium}, 
+        VertexStyle -> {
+         1 -> GrayLevel[0.5], 5 -> GrayLevel[0.5], 2 -> GrayLevel[0.5], 4 -> 
+          RGBColor[
+            Rational[1, 3], 
+            Rational[1, 3], 
+            Rational[1, 3]], 3 -> GrayLevel[0.5]}, 
+        VertexCoordinates -> {{1.0045619424903385`, 0.03373012923587082}, {0.,
+          0.6969072046679561}, {0.26129995346176826`, 0.}, {0.581193752107737,
+          1.159154330812695}, {1.2021335570857812`, 0.7498225073128196}}}]], 
+     Typeset`boxes, Typeset`boxes$s2d = GraphicsGroupBox[{{
+        Directive[
+         Hue[0.6, 0.2, 0.8], 
+         EdgeForm[
+          Directive[
+           GrayLevel[0], 
+           Opacity[0.7]]]], 
+        TagBox[
+         StyleBox[
+          
+          PolygonBox[{{1.0045619424903385`, -0.0492668474627949}, {
+           1.0875589191890043`, 0.03373012923587082}, {1.0045619424903385`, 
+           0.11672710593453654`}, {0.9215649657916728, 0.03373012923587082}, {
+           1.0045619424903385`, -0.0492668474627949}}], 
+          GrayLevel[0.5], StripOnInput -> False], "DynamicName", BoxID -> 
+         "VertexID$1"], 
+        TagBox[
+         StyleBox[
+          
+          PolygonBox[{{0., 0.6139102279692904}, {0.08299697669866572, 
+           0.6969072046679561}, {0., 
+           0.7799041813666218}, {-0.08299697669866572, 0.6969072046679561}, {
+           0., 0.6139102279692904}}], 
+          GrayLevel[0.5], StripOnInput -> False], "DynamicName", BoxID -> 
+         "VertexID$2"], 
+        TagBox[
+         StyleBox[
+          
+          PolygonBox[{{0.26129995346176826`, -0.08299697669866572}, {
+           0.344296930160434, 0.}, {0.26129995346176826`, 
+           0.08299697669866572}, {0.17830297676310253`, 0.}, {
+           0.26129995346176826`, -0.08299697669866572}}], 
+          GrayLevel[0.5], StripOnInput -> False], "DynamicName", BoxID -> 
+         "VertexID$3"], 
+        TagBox[
+         StyleBox[
+          
+          PolygonBox[{{0.581193752107737, 1.0761573541140292`}, {
+           0.6641907288064027, 1.159154330812695}, {0.581193752107737, 
+           1.2421513075113608`}, {0.4981967754090713, 1.159154330812695}, {
+           0.581193752107737, 1.0761573541140292`}}], 
+          RGBColor[
+           Rational[1, 3], 
+           Rational[1, 3], 
+           Rational[1, 3]], StripOnInput -> False], "DynamicName", BoxID -> 
+         "VertexID$4"], 
+        TagBox[
+         StyleBox[
+          
+          PolygonBox[{{1.2021335570857812`, 0.666825530614154}, {
+           1.285130533784447, 0.7498225073128196}, {1.2021335570857812`, 
+           0.8328194840114853}, {1.1191365803871154`, 0.7498225073128196}, {
+           1.2021335570857812`, 0.666825530614154}}], 
+          GrayLevel[0.5], StripOnInput -> False], "DynamicName", BoxID -> 
+         "VertexID$5"]}, {
+        Directive[
+         Opacity[0.7], 
+         Hue[0.6, 0.7, 0.5]], {
+         StyleBox[
+          ArrowBox[CompressedData["
+1:eJwBoQFe/iFib1JlAgAAABkAAAACAAAA9tUci68S8D9QdOpTE0WhPzXoyzlr
+H/A/FCY+a9l/oj/O69eCxxvxP849SyatMLI/widUqh828j/QO25WmVm2P57i
+UP/NV/M/6vj5B0ZltT8VECcqlmn0P0Dx63iYzq4/0VtpTIJV9T+4h+Uk22qT
+P+/q/PClCPY/zEJxcrjPor9Qtb2gonT2P1IN7HubO7q/dL6F8M6Q9j9G98Wc
+fyPGv8DS5l3oWvY/H5GjL8ALz79emli2Qdf1P+QBbkDUj9O/u5ECUGoQ9T/Y
+ETn1rNzWv+wMHTNVFvQ/RFt+CaYo2b+As36YEf3yPyYQOfyVRNq/4E1gAi/b
+8T8InMlmthnav+dzaPntx/A/aJMTp3er2L9q4VItxbLvP0KL8EE6F9a/SJic
+TV5F7j+SWf6n85HSvwxeuof2ZO0/7ME0f93HzL9Yr8zSjSPtP3OgLNz+xcO/
+Rr2LTGOG7T9fCDfJgK61vwx0lH2Jhe4/EFOy3XKYlb+Z11mRRAbwP8j4ixhR
++58/9tUci68S8D9QdOpTE0WhP2fY11M=
+           "], 0.1], {
+           Thickness[Large], 
+           GrayLevel[0.5]}, StripOnInput -> False]}, 
+        StyleBox[
+         ArrowBox[{{1.0045619424903385`, 0.03373012923587082}, {
+          0.8739516599565967, 0.06663743234500663}, {0.8411302652029049, 
+          0.07575147329993936}, {0.8087850090064708, 0.08643295717124244}, {
+          0.7769907000600211, 0.09865717963009724}, {0.7458208728155319, 
+          0.11239586827401638`}, {0.7153476174124198, 0.12761724801576635`}, {
+          0.6856414129461659, 0.1442861145733635}, {0.6567709644629909, 
+          0.16236391589117294`}, {0.25494618746685555`, 0.427634746064007}, {
+          0.22697826706144725`, 0.4470796714766334}, {0.19997755944525458`, 
+          0.4678467484093829}, {0.17400651234251885`, 0.48988794639164657`}, {
+          0.14912519206004832`, 0.5131522881426392}, {0.1253911445647799, 
+          0.5375859674725765}, {0.10285926239042703`, 0.5631324737266014}, {
+          0.08158165768103631, 0.5897327224836483}, {0., 0.6969072046679561}},
+           0.1], {
+          Thickness[Large], 
+          GrayLevel[0.5]}, StripOnInput -> False], 
+        StyleBox[
+         ArrowBox[{{1.0045619424903385`, 0.03373012923587082}, {
+          0.9273097814105995, 0.002693101966739442}, {
+          0.907589783956706, -0.004684043835859908}, {
+          0.8875379134907933, -0.011104563331401918`}, {
+          0.8672005463410367, -0.016553607026434825`}, {
+          0.8466247191374981, -0.021018572274284164`}, {
+          0.8258580200249591, -0.02448913242268208}, {
+          0.8049484786001994, -0.026957260697434537`}, {
+          0.7839444548282783, -0.02841724876689039}, {
+          0.4866396592168504, -0.0419093004612387}, {
+          0.46558973158330647`, -0.042357771638621644`}, {
+          0.4445425847409584, -0.0417936886916927}, {
+          0.42354689691116076`, -0.04021835624167952}, {
+          0.40265122729993447`, -0.03763541774592499}, {
+          0.38190390378935807`, -0.034050847071233126`}, {
+          0.36135291116396917`, -0.02947293467740225}, {
+          0.3410457801306884, -0.023912268442899398`}, {0.26129995346176826`, 
+          0.}}, 0.1], {
+          Thickness[Large], 
+          GrayLevel[0.5]}, StripOnInput -> False], 
+        StyleBox[
+         ArrowBox[{{1.0045619424903385`, 0.03373012923587082}, {
+          0.9989579791266052, 0.1166628536955652}, {0.9980454851433576, 
+          0.13766437570281723`}, {0.9981437546455814, 0.1586854821198327}, {
+          0.9992525603537976, 0.17967755495202303`}, {1.0013693378021378`, 
+          0.20059204335419903`}, {1.0044891912694873`, 0.2213805759198426}, {
+          1.0086049051023993`, 0.24199507255536917`}, {1.013706960403585, 
+          0.26238785568063666`}, {1.0927356062417621`, 0.548824806911416}, {
+          1.0988122028855725`, 0.5689487117292935}, {1.1058492868095382`, 
+          0.5887571953092553}, {1.1138305825188617`, 0.608204444232712}, {
+          1.1227376307286745`, 0.6272454805511121}, {1.1325498310570046`, 
+          0.6458362658117532}, {1.1432444896697118`, 0.6639338029107125}, {
+          1.154796871767198, 0.6814962355373231}, {1.2021335570857812`, 
+          0.7498225073128196}}, 0.1], {
+          Thickness[Large], 
+          GrayLevel[0.5]}, StripOnInput -> False], 
+        StyleBox[
+         ArrowBox[{{0., 0.6969072046679561}, {0.13061028253374204`, 
+          0.6639999015588204}, {0.16343167728743382`, 0.6548858606038876}, {
+          0.19577693348386788`, 0.6442043767325847}, {0.2275712424303176, 
+          0.6319801542737298}, {0.2587410696748068, 0.6182414656298106}, {
+          0.289214325077919, 0.6030200858880607}, {0.3189205295441728, 
+          0.5863512193304635}, {0.34779097802734793`, 0.5682734180126541}, {
+          0.7496157550234832, 0.30300258783982015`}, {0.7775836754288914, 
+          0.2835576624271937}, {0.8045843830450841, 0.2627905854944442}, {
+          0.8305554301478199, 0.2407493875121806}, {0.8554367504302904, 
+          0.217485045761188}, {0.8791707979255587, 0.19305136643125076`}, {
+          0.9017026800999117, 0.1675048601772257}, {0.9229802848093024, 
+          0.14090461142017885`}, {1.0045619424903385`, 0.03373012923587082}}, 
+          0.1], {
+          Thickness[Large], 
+          GrayLevel[0.5]}, StripOnInput -> False], {
+         StyleBox[
+          ArrowBox[CompressedData["
+1:eJxTTMoPSmViYGCQBGIQDQNaK3vCBHyf2Tso1qW+0UzaLzfh9Pt6o2f2ezxU
+NiQvWrk/WSn06om2J/aVi9itFgXt2X/8TM0PuajH9ptWzz0/9/Wx/WvSTEwX
+HHlkv16CJ3Hx7/P7jWU3eXtdemS/IeeLzFL/K/sP+l9eytL02P6AWwPrNKEb
++xkObbmx7egT+7+rvrum/7y1X+NZlEhW8zP7Rz2NR5tP3NkvM0HSK276C/sP
++4vfH426u19t2XfXF9de2Z+6rFxVtOTO/kL33zfuCr+1j5h+0Edzy639UyaK
+n/VUeG/vVDzbcOfG6/tnpK07w5v5wb7igEv2u1uX9zOdUp3kzPzR3jZfrtr6
+77n9ER8fLk0P+mjf6X05bfGbo/uvLVH7qBDw0X49p+Dj/Jpd+7+c9DWc9+eD
+fUIDp8ynCcv2tzWwWkyK+2DvYCrE9NU30V5tDve+ENb39hznnm7+J7TAfiZ/
+WL7I1zf2Ry7Pm9NvutTe92/P+kPbXtmrJLpOVxBeYM993HhRQcUL+wPPjD6w
+BiXav6hjK9TPeGaPHv4A5rLKjQ==
+           "], 0.1], {
+           Thickness[Large], 
+           GrayLevel[0.5]}, StripOnInput -> False]}, 
+        StyleBox[
+         ArrowBox[{{0., 0.6969072046679561}, {0.053358121454002816`, 
+          0.632962874289689}, {0.06645951875380102, 0.6164716875321569}, {
+          0.07875290448432237, 0.5993696841653118}, {0.09020984628101547, 
+          0.5816964180114242}, {0.1008038463219662, 0.5634927641196557}, {
+          0.11051040261253936`, 0.5448008242295078}, {0.11930706565403348`, 
+          0.5256638293971582}, {0.12717349036528747`, 0.5061260400098929}, {
+          0.23169347174999474`, 0.22736315814271063`}, {0.23861146452185925`, 
+          0.20746976155270128`}, {0.24456502529570381`, 
+          0.18726676756688068`}, {0.24954038456864197`, 
+          0.16680090203463033`}, {0.25352603523988615`, 
+          0.14611949877939218`}, {0.25651275922457817`, 
+          0.12527039012414676`}, {0.2584936487735422, 0.10430179626395264`}, {
+          0.25946412244965206`, 0.08326221374140855}, {0.26129995346176826`, 
+          0.}}, 0.1], {
+          Thickness[Large], 
+          GrayLevel[0.5]}, StripOnInput -> False], 
+        StyleBox[
+         ArrowBox[{{0., 0.6969072046679561}, {0.1250063191700086, 
+          0.7469326260185148}, {0.15691521994045254`, 0.7588201070708341}, {
+          0.18935874563911062`, 0.7691597296165467}, {0.2222618602937765, 
+          0.7779275799898822}, {0.2555484649866059, 0.7851033797481389}, {
+          0.2891415738570677, 0.7906705325720327}, {0.32296349215623327`, 
+          0.794616162649962}, {0.35693599594059433`, 0.7969311444574201}, {
+          0.8377894187749065, 0.8180972655153654}, {0.8718339358241252, 
+          0.8187762449206164}, {0.9058717273642836, 0.8178176515678288}, {
+          0.939824070176343, 0.8152237025090219}, {0.9736124386686263, 
+          0.8110003970764292}, {1.0071586864922246`, 0.8051575030071333}, {
+          1.0403852272792848`, 0.7977085338520674}, {1.0732152140861617`, 
+          0.7886707177216311}, {1.2021335570857812`, 0.7498225073128196}}, 
+          0.1], {
+          Thickness[Large], 
+          GrayLevel[0.5]}, StripOnInput -> False], 
+        StyleBox[
+         ArrowBox[{{0.26129995346176826`, 0.}, {0.33855211454150747`, 
+          0.03103702726913138}, {0.358272111995401, 0.03841417307173073}, {
+          0.37832398246131366`, 0.04483469256727274}, {0.3986613496110703, 
+          0.050283736262305645`}, {0.4192371768146088, 
+          0.054748701510154985`}, {0.44000387592714785`, 
+          0.0582192616585529}, {0.4609134173519076, 0.06068738993330536}, {
+          0.4819174411238286, 0.06214737800276121}, {0.7792222367352566, 
+          0.07563942969710952}, {0.8002721643688006, 0.07608790087449246}, {
+          0.8213193112111485, 0.07552381792756352}, {0.8423149990409462, 
+          0.07394848547755034}, {0.8632106686521724, 0.07136554698179581}, {
+          0.883957992162749, 0.06778097630710395}, {0.9045089847881378, 
+          0.06320306391327307}, {0.9248161158214185, 0.05764239767877022}, {
+          1.0045619424903385`, 0.03373012923587082}}, 0.1], {
+          Thickness[Large], 
+          GrayLevel[0.5]}, StripOnInput -> False], 
+        StyleBox[
+         ArrowBox[{{0.26129995346176826`, 0.}, {0.2079418320077655, 
+          0.06394433037826716}, {0.19484043470796736`, 0.0804355171357993}, {
+          0.1825470489774459, 0.09753752050264433}, {0.1710901071807529, 
+          0.11521078665653198`}, {0.1604961071398021, 0.13341444054830057`}, {
+          0.1507895508492289, 0.15210638043844835`}, {0.1419928878077349, 
+          0.171243375270798}, {0.1341264630964808, 0.1907811646580633}, {
+          0.029606481711773547`, 0.4695440465252455}, {0.022688488939909046`, 
+          0.48943744311525483`}, {0.016734928166064478`, 
+          0.5096404371010754}, {0.011759568893126349`, 0.5301063026333258}, {
+          0.0077739182218821146`, 0.550787705888564}, {0.004787194237190151, 
+          0.5716368145438094}, {0.002806304688226069, 0.5926054084040034}, {
+          0.001835831012116207, 0.6136449909265476}, {0., 
+          0.6969072046679561}}, 0.1], {
+          Thickness[Large], 
+          GrayLevel[0.5]}, StripOnInput -> False], {
+         StyleBox[
+          ArrowBox[CompressedData["
+1:eJxTTMoPSmViYGCQBGIQvU5pSYHyzgv2DFBQsopvote7C/YOxbN3eqsm7X/G
+UuLs6HbF3sfvbGLh3JX7lZoOn3RccM3e2W/Jq1a/PfsnLL7Yz3Tmun3CM5kE
+9ZfH9n9I+JxdsRHIvxQebPbz/P57O8+FHgm6Zh/3rmr3ar8r+6NmvlvPfuay
+Pc9U3zBeoRv7/xZvXqoUeMG+j+/y6cqft/bfeDHvqWjwCXsfC/UJ/ifv7F/j
+uU7MadU+e8mt3kZRMXf3nymVqtNtWWnv4i8fcm7Znf0OfqtYhEV797flZNyy
+3n5r/6w73l6exhv3b1l57XnS1uv7+Z590gi6uWu/f4rofOb7l/cnHYhhnntu
+//4cxyrPK6zn9zdkcPFFrd2/38O+Wsfy69H9fB+lPUwqdu331N/2a1PPrv0c
+66dukpq1YX/Lxlsv2dct23/APMY85W3b/gbdPUwRk+Lt2Tjdn/K5rbY/smrd
+t0KGBfYN96I3Kk3db7/DYZOFs+ZSe6dLG5cJHTlh/0Y1eqsI7wJ7p0cMJveb
+LtgfuM6S6+ObaI8e/gC608Rh
+           "], 0.1], {
+           Thickness[Large], 
+           GrayLevel[0.5]}, StripOnInput -> False]}, 
+        StyleBox[
+         ArrowBox[{{0.26129995346176826`, 0.}, {0.332948151177774, 
+          0.11396975172882573`}, {0.3517556546484198, 0.14234841953867716`}, {
+          0.3719057946165565, 0.16979004545123466`}, {0.39335196747452933`, 
+          0.19623116197845786`}, {0.41604457212640783`, 
+          0.22161061562848317`}, {0.43993112470629664`, 
+          0.24586970834252464`}, {0.464956379963968, 0.2689523332528037}, {
+          0.49106245903707507`, 0.2908051044475271}, {0.86739590048668, 
+          0.5907341073726547}, {0.8945224247640342, 0.6113064833679152}, {
+          0.9226066555303483, 0.6305508840009479}, {0.9515836390694694, 
+          0.6484228004743915}, {0.9813863568905086, 0.6648808982970369}, {
+          1.0119458807294146`, 0.6798871128829864}, {1.0431915319675107`, 
+          0.6934067375881148}, {1.075051045098278, 0.7054085039802225}, {
+          1.2021335570857812`, 0.7498225073128196}}, 0.1], {
+          Thickness[Large], 
+          GrayLevel[0.5]}, StripOnInput -> False], {
+         StyleBox[
+          GeometricTransformationBox[
+           ArrowBox[CompressedData["
+1:eJxTTMoPSmViYGCQBGIQzaS+b7HyzEf2ZdtjM592f7LP7Gu0XTTjkf2BP9bX
+z1V/sv8hlFxSbvvIfmmnnXJI7Ef7w99VngW6PrT3OHowWS78g/20qMniRh33
+7e3Oi27M/vPO/vFJfr20jbftdwXK8jGeeGt/+M/rVyKh1+0PfZJ7t1Pzrf1e
+XeGnJ85cstd5WJDpoffWPmaS1QT112fsuV+lv/e7+tZ+ImtvlV7gUXspv3nH
+0wXf2z/b8nJ31fl99ruNZMTmpHyw36b+/EpRwHb7EFbRsj05H+0zHJJuGu3f
+Anf/Dqj8jMxlMXyrP9s/geo3tJm/R2/zF/t+qPn33d+8E+v/ah8Ftf9ZJXu0
+su43uPvC/jHNW9bwzf4Q1P3dX1ffftv0zf4R1H/8x9Z4nzL+Zj8V6n+/doNf
+U2Z+tT8EDZ8lK3/mrTnwBR5+bk9r1pft+gwPX52i+t+/Z3+yRw9/ACor0qQ=
+
+            "], 0.1], {{{0, 1}, {-1, 0}}, {-0.577960578704958, 
+            1.740348082920432}}], {
+           Thickness[Large], 
+           Dashing[{Small, Small}], 
+           RGBColor[
+            Rational[1, 3], 
+            Rational[1, 3], 
+            Rational[1, 3]]}, StripOnInput -> False]}, 
+        StyleBox[
+         ArrowBox[{{1.2021335570857812`, 0.7498225073128196}, {
+          1.2077375204495149`, 0.6668897828531253}, {1.2086500144327625`, 
+          0.6458882608458733}, {1.2085517449305387`, 0.6248671544288578}, {
+          1.2074429392223225`, 0.6038750815966674}, {1.2053261617739823`, 
+          0.5829605931944913}, {1.2022063083066326`, 0.5621720606288478}, {
+          1.198090594473721, 0.5415575639933212}, {1.192988539172535, 
+          0.5211647808680537}, {1.113959893334358, 0.2347278296372745}, {
+          1.1078832966905476`, 0.21460392481939705`}, {1.100846212766582, 
+          0.1947954412394352}, {1.0928649170572582`, 0.1753481923159785}, {
+          1.0839578688474456`, 0.15630715599757855`}, {1.0741456685191157`, 
+          0.1377163707369372}, {1.0634510099064083`, 0.11961883363797805`}, {
+          1.0518986278089222`, 0.10205640101136745`}, {1.0045619424903385`, 
+          0.03373012923587082}}, 0.1], {
+          Thickness[Large], 
+          GrayLevel[0.5]}, StripOnInput -> False], 
+        StyleBox[
+         ArrowBox[{{1.2021335570857812`, 0.7498225073128196}, {
+          1.0771272379157726`, 0.6997970859622609}, {1.0452183371453287`, 
+          0.6879096049099417}, {1.0127748114466708`, 0.6775699823642292}, {
+          0.9798716967920048, 0.6688021319908936}, {0.9465850920991754, 
+          0.6616263322326369}, {0.9129919832287136, 0.6560591794087431}, {
+          0.879170064929548, 0.6521135493308138}, {0.845197561145187, 
+          0.6497985675233557}, {0.3643441383108748, 0.6286324464654105}, {
+          0.33029962126165624`, 0.6279534670601595}, {0.29626182972149784`, 
+          0.6289120604129472}, {0.2623094869094384, 0.6315060094717541}, {
+          0.22852111841715508`, 0.6357293149043466}, {0.19497487059355678`, 
+          0.6415722089736428}, {0.16174832980649667`, 0.6490211781287085}, {
+          0.12891834299961974`, 0.6580589942591449}, {0., 
+          0.6969072046679561}}, 0.1], {
+          Thickness[Large], 
+          GrayLevel[0.5]}, StripOnInput -> False], 
+        StyleBox[
+         ArrowBox[{{1.2021335570857812`, 0.7498225073128196}, {
+          1.1304853593697755`, 0.6358527555839939}, {1.1116778558991298`, 
+          0.6074740877741425}, {1.091527715930993, 0.5800324618615851}, {
+          1.0700815430730202`, 0.5535913453343619}, {1.0473889384211417`, 
+          0.5282118916843365}, {1.0235023858412529`, 0.503952798970295}, {
+          0.9984771305835816, 0.4808701740600161}, {0.9723710515104744, 
+          0.4590174028652926}, {0.5960376100608696, 0.159088399940165}, {
+          0.5689110857835155, 0.1385160239449047}, {0.5408268550172016, 
+          0.11927162331187169`}, {0.5118498714780804, 0.10139970683842825`}, {
+          0.48204715365704126`, 0.08494160901578285}, {0.4514876298181349, 
+          0.06993539442983332}, {0.42024197858003887`, 0.05641576972470508}, {
+          0.3883824654492718, 0.04441400333259726}, {0.26129995346176826`, 
+          0.}}, 0.1], {
+          Thickness[Large], 
+          GrayLevel[0.5]}, StripOnInput -> False], {
+         StyleBox[
+          ArrowBox[CompressedData["
+1:eJwBoQFe/iFib1JlAgAAABkAAAACAAAApbiRZfA78z8z01bFi/7nPxbGtmwc
+MvM/9CF8jwYY6D+aZ69bPKPyP9lE0u3wEOo/Bexmxt5g8j9GCFxjuEXsP9tY
+525WcPI/xyjZsg+J7j9o1x25ZdDyP6yhdE0/VvA/AvivJFh58z/1UI4GDkLx
+P1g4jYSgXfQ/qWGL6wn18T8a52ND72r1P2h6erXXYPI/V93/YqqL9j/Xeja8
+0XzyP6NMzA2pqPc/K83hhblG8j+g9S8mD6v4P8eqQdvlwvE/UrmPriJ++T/O
+mMWu6fvwP1PjH2P1EPo/4h7F+7oB8D8dDS5iwFf6P2AB9xDW0O0/14QNANZM
++j/jIE6pFI3rPyja7WAW8fk/3At+hLJm6T+QlU9+3Uv5P6R+F0XViec/u0RE
+CWxq+D+VST3nvBzmP8N1g0jXXvc/vv/nUrI85T/silTGlT72P1hzkgWu++Q/
+QQALl8Yg9T+qSzwP517lPzUh+ZFWHPQ/M6gW/Gde5j+mFPyRKUbzPyC1y0Gy
+5ec/pbiRZfA78z8z01bFi/7nP3SR1GY=
+           "], 0.1], {
+           Thickness[Large], 
+           GrayLevel[0.5]}, StripOnInput -> False]}}}], Typeset`data}, 
+     TagBox[
+      DynamicBox[GraphComputation`NetworkGraphicsBox[
+       2, Typeset`graph, Typeset`boxes], {
+       CachedValue :> Typeset`boxes, SingleEvaluation -> True, 
+        SynchronousUpdating -> False, TrackedSymbols :> {}},
+       ImageSizeCache->{{3.7606933090100982`, 
+        355.2393066909899}, {-179.8861418373922, 174.2393066909899}}],
+      MouseAppearanceTag["NetworkGraphics"]],
+     AllowKernelInitialization->False,
+     UnsavedVariables:>{Typeset`data}]],
+   DefaultBaseStyle->{
+    "NetworkGraphics", FrontEnd`GraphicsHighlightColor -> Hue[0.8, 1., 0.6]},
+   FrameTicks->None],
+  BoxRotation->3.141592653589793]], "Output",
+ CellChangeTimes->{
+  3.5186069567087793`*^9, {3.518607827338296*^9, 3.518607845066832*^9}, 
+   3.524972439423758*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Export", "[", 
+  RowBox[{"\"\<../doc/aux/pcag-gs.pdf\>\"", ",", " ", "%"}], "]"}]], "Input",
+ CellChangeTimes->{{3.524972463126656*^9, 3.524972469646544*^9}}],
+
+Cell[BoxData["\<\"../doc/aux/pcag-gs.pdf\"\>"], "Output",
+ CellChangeTimes->{3.524972470642256*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Export", "[", 
+  RowBox[{"\"\<pcag.pdf\>\"", ",", " ", "%200"}], "]"}]], "Input",
+ CellChangeTimes->{{3.5186070476581993`*^9, 3.518607058055436*^9}}],
+
+Cell[BoxData["\<\"pcag.pdf\"\>"], "Output",
+ CellChangeTimes->{3.518607058731412*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"{", 
+   RowBox[{"4", " ", "\[Rule]", " ", "red"}], "}"}], "~", "Join", "~", 
+  RowBox[{"Map", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"#", " ", "\[Rule]", " ", "blue"}], "&"}], ",", " ", 
+    RowBox[{"{", 
+     RowBox[{"1", ",", "2", ",", "3", ",", "5"}], "}"}]}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.518606310218062*^9, 3.518606310249092*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Map", "[", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"If", "[", 
+     RowBox[{
+      RowBox[{"#", "===", " ", "4"}], ",", " ", 
+      RowBox[{"#", " ", "\[Rule]", " ", "red"}], ",", " ", 
+      RowBox[{"#", "\[Rule]", " ", "blue"}]}], "]"}], "&"}], ",", " ", 
+   RowBox[{"Range", "[", "5", "]"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.5186063454103003`*^9, 3.518606363073039*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"1", "\[Rule]", 
+    RowBox[{"RGBColor", "[", 
+     RowBox[{
+      FractionBox["1", "3"], ",", 
+      FractionBox["1", "3"], ",", "1"}], "]"}]}], ",", 
+   RowBox[{"2", "\[Rule]", 
+    RowBox[{"RGBColor", "[", 
+     RowBox[{
+      FractionBox["1", "3"], ",", 
+      FractionBox["1", "3"], ",", "1"}], "]"}]}], ",", 
+   RowBox[{"3", "\[Rule]", 
+    RowBox[{"RGBColor", "[", 
+     RowBox[{
+      FractionBox["1", "3"], ",", 
+      FractionBox["1", "3"], ",", "1"}], "]"}]}], ",", 
+   RowBox[{"4", "\[Rule]", 
+    RowBox[{"RGBColor", "[", 
+     RowBox[{"1", ",", 
+      FractionBox["1", "3"], ",", 
+      FractionBox["1", "3"]}], "]"}]}], ",", 
+   RowBox[{"5", "\[Rule]", 
+    RowBox[{"RGBColor", "[", 
+     RowBox[{
+      FractionBox["1", "3"], ",", 
+      FractionBox["1", "3"], ",", "1"}], "]"}]}]}], "}"}]], "Output",
+ CellChangeTimes->{3.5186063634620028`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"1", "\[Rule]", 
+    RowBox[{"RGBColor", "[", 
+     RowBox[{
+      FractionBox["1", "3"], ",", 
+      FractionBox["1", "3"], ",", "1"}], "]"}]}], ",", 
+   RowBox[{"2", "\[Rule]", 
+    RowBox[{"RGBColor", "[", 
+     RowBox[{
+      FractionBox["1", "3"], ",", 
+      FractionBox["1", "3"], ",", "1"}], "]"}]}], ",", 
+   RowBox[{"3", "\[Rule]", 
+    RowBox[{"RGBColor", "[", 
+     RowBox[{
+      FractionBox["1", "3"], ",", 
+      FractionBox["1", "3"], ",", "1"}], "]"}]}], ",", " ", 
+   RowBox[{"4", "\[Rule]", 
+    RowBox[{"RGBColor", "[", 
+     RowBox[{"1", ",", 
+      FractionBox["1", "3"], ",", 
+      FractionBox["1", "3"]}], "]"}]}], ",", 
+   RowBox[{"5", "\[Rule]", 
+    RowBox[{"RGBColor", "[", 
+     RowBox[{
+      FractionBox["1", "3"], ",", 
+      FractionBox["1", "3"], ",", "1"}], "]"}]}]}], "}"}]], "Input",
+ CellChangeTimes->{{3.5186063170174093`*^9, 3.5186063316923857`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"1", "\[Rule]", 
+    RowBox[{"RGBColor", "[", 
+     RowBox[{
+      FractionBox["1", "3"], ",", 
+      FractionBox["1", "3"], ",", "1"}], "]"}]}], ",", 
+   RowBox[{"2", "\[Rule]", 
+    RowBox[{"RGBColor", "[", 
+     RowBox[{
+      FractionBox["1", "3"], ",", 
+      FractionBox["1", "3"], ",", "1"}], "]"}]}], ",", 
+   RowBox[{"3", "\[Rule]", 
+    RowBox[{"RGBColor", "[", 
+     RowBox[{
+      FractionBox["1", "3"], ",", 
+      FractionBox["1", "3"], ",", "1"}], "]"}]}], ",", 
+   RowBox[{"4", "\[Rule]", 
+    RowBox[{"RGBColor", "[", 
+     RowBox[{"1", ",", 
+      FractionBox["1", "3"], ",", 
+      FractionBox["1", "3"]}], "]"}]}], ",", 
+   RowBox[{"5", "\[Rule]", 
+    RowBox[{"RGBColor", "[", 
+     RowBox[{
+      FractionBox["1", "3"], ",", 
+      FractionBox["1", "3"], ",", "1"}], "]"}]}]}], "}"}]], "Output",
+ CellChangeTimes->{3.518606332892395*^9}]
+}, Open  ]]
+},
+WindowSize->{740, 656},
+WindowMargins->{{111, Automatic}, {Automatic, 0}},
+ShowSelection->True,
+FrontEndVersion->"8.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (February 23, \
+2011)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[579, 22, 173, 3, 27, "Input"],
+Cell[755, 27, 110, 1, 27, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[902, 33, 376, 9, 27, "Input"],
+Cell[1281, 44, 2642, 59, 417, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[3960, 108, 384, 9, 43, "Input"],
+Cell[4347, 119, 3964, 82, 361, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[8348, 206, 447, 9, 27, "Input"],
+Cell[8798, 217, 694, 17, 27, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[9529, 239, 400, 11, 27, "Input"],
+Cell[9932, 252, 1655, 41, 39, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[11624, 298, 201, 3, 27, "Input"],
+Cell[11828, 303, 874, 23, 105, "Output"]
+}, Open  ]],
+Cell[12717, 329, 182, 4, 27, "Input"],
+Cell[CellGroupData[{
+Cell[12924, 337, 222, 5, 27, "Input"],
+Cell[13149, 344, 92, 1, 27, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[13278, 350, 222, 5, 27, "Input"],
+Cell[13503, 357, 148, 2, 27, "Output"]
+}, Open  ]],
+Cell[13666, 362, 244, 7, 27, "Input"],
+Cell[13913, 371, 232, 7, 27, "Input"],
+Cell[CellGroupData[{
+Cell[14170, 382, 141, 2, 27, "Input"],
+Cell[14314, 386, 658, 19, 61, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[15009, 410, 372, 9, 27, "Input"],
+Cell[15384, 421, 1620, 54, 58, "Output"]
+}, Open  ]],
+Cell[17019, 478, 982, 22, 58, "Input"],
+Cell[18004, 502, 358, 9, 43, "Input"],
+Cell[CellGroupData[{
+Cell[18387, 515, 97, 1, 27, "Input"],
+Cell[18487, 518, 543, 14, 27, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[19067, 537, 139, 2, 27, "Input"],
+Cell[19209, 541, 9951, 176, 365, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[29197, 722, 1359, 30, 73, "Input"],
+Cell[30559, 754, 31567, 584, 365, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[62163, 1343, 157, 3, 27, "Input"],
+Cell[62323, 1348, 31559, 584, 367, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[93919, 1937, 288, 6, 27, "Input"],
+Cell[94210, 1945, 148, 2, 27, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[94395, 1952, 1746, 35, 58, "Input"],
+Cell[96144, 1989, 23790, 428, 360, "Output"]
+}, Open  ]],
+Cell[119949, 2420, 1782, 36, 58, "Input"],
+Cell[CellGroupData[{
+Cell[121756, 2460, 131, 2, 27, "Input"],
+Cell[121890, 2464, 495, 11, 23, "Message"],
+Cell[122388, 2477, 163, 3, 27, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[122588, 2485, 448, 8, 27, "Input"],
+Cell[123039, 2495, 620, 17, 43, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[123696, 2517, 469, 8, 27, "Input"],
+Cell[124168, 2527, 545, 15, 43, "Output"]
+}, Open  ]],
+Cell[124728, 2545, 1061, 23, 58, "Input"],
+Cell[125792, 2570, 372, 8, 27, "Input"],
+Cell[126167, 2580, 259, 6, 27, "Input"],
+Cell[126429, 2588, 1176, 32, 88, "Input",
+ CellID->101838956],
+Cell[CellGroupData[{
+Cell[127630, 2624, 2557, 43, 73, "Input"],
+Cell[130190, 2669, 21821, 409, 377, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[152048, 3083, 158, 3, 27, "Input"],
+Cell[152209, 3088, 21998, 413, 379, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[174244, 3506, 182, 3, 27, "Input"],
+Cell[174429, 3511, 99, 1, 27, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[174565, 3517, 173, 3, 27, "Input"],
+Cell[174741, 3522, 85, 1, 27, "Output"]
+}, Open  ]],
+Cell[174841, 3526, 388, 10, 27, "Input"],
+Cell[CellGroupData[{
+Cell[175254, 3540, 401, 10, 27, "Input"],
+Cell[175658, 3552, 912, 28, 84, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[176607, 3585, 942, 28, 84, "Input"],
+Cell[177552, 3615, 910, 28, 84, "Output"]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)

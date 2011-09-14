@@ -294,10 +294,10 @@ gaParams = Join[
     {
     target -> {0, 0.25},
     currentSpeed -> 0.01, 
-    task -> 2,
+    task -> 1,
     tmax -> 10,
-    expName -> Ao, (*Ap,*)
-    phase -> 3,
+    expName -> An, (*Ap,*)
+    phase -> 1,
     deltat -> 0.01,
     dataDeltat -> 0.1,
     lobotomise -> False,
@@ -317,7 +317,21 @@ mut = mutationRate = 1/geneCount;
 rec = 0.5; (* recombination *)
 end = 10^6;
 
+tailColour = Pink;
+footColour = Nest[Lighter,Blue,2];
+bodyColour = LightGray;
 
+tailColour = Nest[Lighter,Black,1];
+footColour = Gray;
 
-               
+tailStyle = {Thick, Dashed, tailColour};
+footStyle = {Thick, footColour};
+
+labels = {"n" -> "No morphological change",
+          "p" -> "Phylogenetic change",
+          "o" -> "Ontogenetic change",
+          p[x_] :> "Phase " <> ToString[x],
+          lt -> Subscript[l,t],
+          lf -> Subscript[l,f]
+         };
 

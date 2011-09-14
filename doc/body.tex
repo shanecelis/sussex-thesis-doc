@@ -38,7 +38,7 @@ begins as a ``tadpole'' bearing only a tail. It transforms into a
 \begin{figure}[h]
   \centering
   \figtitle{Body Plans} 
-  \includegraphics[scale=0.4]{fig/forms.pdf} 
+  \includegraphics[scale=0.4]{fig/forms-gs.pdf} 
   \vspace{-30pt}
   \caption[Body plans]{\label{morphology}Body plans parameterised by
     tail length $l_t$ and foot length $l_f$. a) represents the infant
@@ -71,7 +71,7 @@ respectively.  Eight corresponding motion variables $\{u_1, u_2,
 \begin{figure}  
   \centering
   \figtitle{Diagram of Configuration Variables} 
-  \includegraphics[scale=0.6]{fig/confvars.pdf} 
+  \includegraphics[scale=0.6]{fig/confvars-gs.pdf} 
   \caption[Diagram of configuration variables]{\label{confvars}Diagram
     of the configuration variables $\{q_1, q_2, \ldots, q_8\}$ that
     fully describe the physical state of the body at time $t$}
@@ -187,7 +187,7 @@ limb $T(q_i)$ is given in Equation~\ref{limb-torque}.
               \end{cases} 
 \end{eqnarray}
 
-\section{Genetic Encoding}
+\section{Representation: Genetic Encoding}
 
 The CTRNN controller is specified by a real vector gene $\bv g \in [0,
   1]^{105}$.  Each gene component $g_k$ is associated with one and
@@ -201,16 +201,28 @@ $\tau_i = 10^{-2 + 4 g_k}$.
 
 Morphological change is considered over phylogenetic and ontogenetic
 time.  Two adult forms are evolved: A) frog with a tail $({l_t},
-{l_f}) = (1,1).$ B) frog without a tail $({l_t}, {l_f}) =
-(0,1).$ The control case is no morphological change denoted $An$ and
-$Bn$.  The first experimental cases concern phylogenetic change
-denoted $Ap$ and $Bp$, which are divided into phases $p_i$.  The
-second experimental case concerns ontogenetic change denoted $Ao$ and
-$Bo$.  Figure~\ref{morph-regiment} shows the tail length ${l_t}$ in
-red and feet length ${l_f}$ in blue for each experimental case.
-The exact values used are recorded in the
-Appendix~\ref{morph-regiment-values}.
+{l_f}) = (1,1).$ B) frog without a tail $({l_t}, {l_f}) = (0,1).$ The
+control case is no morphological change denoted $An$ and $Bn$.  The
+first experimental cases concern phylogenetic change denoted $Ap$ and
+$Bp$, which are divided into phases $p_i$.  The second experimental
+case concerns ontogenetic change denoted $Ao$ and $Bo$.
+Figures~\ref{fig:morph-var-a} and \ref{fig:morph-var-b} shows the tail length
+${l_t}$ and feet length ${l_f}$ for each experimental case.  The exact
+values used are recorded in the Appendix~\ref{morph-regiment-values}.
 
+The overarching concern in choosing how the morphology would change
+was that one set of cases would conserve the infant form in the adult
+form $A$, and another case where it was not $B$.  One nice aspect of
+these cases is that the last phase of $Ap, Ao, Bp, Bo$ are directly
+comparable to $An$ and $Bn$ respectively.  Because the morphological
+settings are the same, one can determine whether evolution has
+actually gained an advantage by going through the preceeding phases or
+not.  Despite those advantages, the choice of how the morphology would
+change still has a lot of free parameters.  So it is inevitable that
+there are better ways, but one needs to start somewhere even if it is
+in the dark.
+
+\begin{comment}
 \begin{figure}
   \centering
   \figtitle{Variations of Morphological Change} 
@@ -220,8 +232,38 @@ Appendix~\ref{morph-regiment-values}.
     change]{\label{morph-regiment}An, Bn do not change morphology;
     Ap, Bp change morphology over phylogenetic time; Ao, Bo change
     morphology over ontogenetic and phylogenetic time.}
-
 \end{figure}
+\end{comment}
+
+\begin{figure}
+  \centering
+  \figtitle{Variations of Morphological Change for $A$} 
+  \hspace*{-30pt} 
+  \includegraphics[scale=1.0]{fig/morph-var-a.pdf} 
+  \vspace{-15pt}
+  \caption[Variations of morphological change]{\label{fig:morph-var-a}
+    Shows how the morphology is controlled for each phase $p_i$ for
+    adult forms $A$ where the infant form is conserved.  An
+    does not change its morphology; Ap changes its morphology over
+    phylogenetic time; Ao changes its morphology over ontogenetic and
+    phylogenetic time.}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \figtitle{Variations of Morphological Change for $B$} 
+  \hspace*{-30pt} 
+  \includegraphics[scale=1.0]{fig/morph-var-b.pdf} 
+  \vspace{-15pt}
+  \caption[Variations of morphological change]{\label{fig:morph-var-b}
+    Shows how the morphology is controlled for each phase $p_i$ for
+    adult forms $B$ where the infant form is not conserved.  Bn does not
+    change its morphology; Bp changes its morphology over phylogenetic
+    time; Bo changes its morphology over ontogenetic and phylogenetic
+    time.}
+\end{figure}
+
+
 
 \section{Controller Variation}
 
@@ -238,16 +280,19 @@ Figure~\ref{ctrnn-figures}.
 \begin{figure}[h]
   \centering
   \figtitle{Variation of CTRNN Controllers} 
-  \includegraphics[width=5in]{fig/ctrnn-figures.pdf}
+  \includegraphics[width=5in]{fig/ctrnn-figures-gs.pdf} 
   \vspace{-15pt}
   \caption[Variation of CTRNN controllers]{\label{ctrnn-figures}a)
     Fully connected CTRNN controller. b) Independent CTRNN controllers
-    for the tail and legs.}
+    for the tail and legs.  The dashed lines represent the connections
+    from the tail and to the motor neuron for the tail.  The solid
+    lines represent connections from or to a motor neuron for a
+    foot. }
 \end{figure}
 
 The sensors are altered for the ``lobotomised'' controller.  The tail
 brain does not receive proprioceptive sensors from the other limbs
-$\{s_7, s_8, \ldots, s_14\}$.  Likewise, the foot brain does not
+$\{s_7, s_8, \ldots, s_{14}\}$.  Likewise, the foot brain does not
 receive proprioceptive sensors from the tail $s_5$ and $s_6$.
 Otherwise, the sensors are the same.\footnote{Note on implementation:
   the ``lobotomised'' controller code is the same as the
@@ -274,14 +319,13 @@ Bongard's work has a task that is simpler for the infant than for the adult
 \end{comment}
 
 Instead of changing the target location, varying the velocity of
-current $\bv v_c$ is considered.  
-
-Each individual is affected similarly by the current--regardless of
-its morphology.\footnote{This differs from Bongard's work where the
-  task was easier for the infant form due to its morphology.}  In task
-1 the current assists the individual to the target.  In task 2 there
-is no current.  In task 3 the current pulls the individual laterally
-away from the target.  In task 4 the current is directly against the
+current $\bv v_c$ is considered.  Each individual is affected
+similarly by the current--regardless of its morphology.\footnote{This
+  differs from Bongard's work where the task was easier for the infant
+  form due to its morphology.}  In task 1 the current assists the
+individual to the target.  In task 2 there is no current.  In task 3
+the current pulls the individual laterally away from the target.  In
+task 4 the current is directly against the
 target. Figure~\ref{fig:tasks} shows a diagram of the tasks.  The
 tasks are meant to be in an ascending order of
 difficulty.\footnote{One could argue that the task 1 may in fact be
@@ -294,8 +338,45 @@ difficulty.\footnote{One could argue that the task 1 may in fact be
     of difficulty.}
 \end{figure} 
 
+\section{Evolutionary Algorithm}
+
+The evolutionary algorithm used is described in detail in
+\cite{Bongard:2011p3556}.  The algorithm is a variant of the steady
+state Age-Layered Population Structure (ALPS)
+\cite{Hornby:2009p3558,Hornby:2006p3649}.  The population is divided
+into layers based on the age of the individuals.  The bottom layer
+holds the youngest individuals and is periodically reset with new
+genetic material.  The top layer holds the oldest individuals.  By
+segregating individuals based on age, ALPS maintains population
+diversity and avoids premature convergence to local
+optima\cite{Hornby:2006p3649}.
 
 \begin{comment}
+The age of an individual $i$ is defined as $a_i = \lfloor
+\frac{n}{N(pop)} \rfloor$ where $n$ is the optimisation step and
+$N(pop)$ is the population size.
+\end{comment}
+
+Each individual has an age and each layer has an age limit.  An
+individual whose age is greater than this age limit is defined to be
+too old.  It may dislodge another individual $j$ in the next layer if
+its fitness $\bv f_i$ dominates $\bv f_j$\footnote{Note: in this case
+  lower values for fitness are considered better.}.  If it cannot
+dislodge any individuals, it is discarded.
+
+\begin{eqnarray}
+  \bv a \text{ dominates } \bv b \iff a_i < b_i ~ \forall i
+\end{eqnarray}
+
+An individual is dominated if any other individual in its layer
+dominates it.  In this ALPS variant, only non-dominated individuals
+within the layer are allowed to reproduce.  Reproduction happens as
+follows: A copy of the parent is made.  Each element of its genome has
+a $0.05$ chance of being reset to a random uniform value in the
+interval $[0, 1]$.  No crossover operation is used.
+
+\begin{comment}
+
 
   big conclusions:
    - tasks need not be easier because of morphology (if it works)
@@ -303,3 +384,100 @@ difficulty.\footnote{One could argue that the task 1 may in fact be
      - hmm, I could switch between an oscillator and a CTRNN
      - maybe even if nothing is conserved between the infant and adult form
 \end{comment}
+
+\chapter{Results}
+
+A run can be described by three pieces of information: The
+morphological variation $\{An, Bn, Ap, Bp, Ao, Bo\}$, the task
+$\{1,2,3\}$, and whether it is lobotomised $\{0, 1\}$.  A trial is
+usually comprised of 6 runs--one for each morphological variation--and
+it is described by the task and lobotomised state.
+
+\section{Results for Task 1}
+
+Figure~\ref{fig:evals-t1-l0} shows the results for task 1.
+Statiscally significant differences were found; however, the
+differences indicate that it takes longer for evolution to find a
+solution when the morphology changes phenogenetically or
+ontogenetically, which may be a reasonable expectation since one is
+asking for the optimisation procedure to effectively solve multiple
+problems in succession instead of one problem.  One of the aims of
+this work was to produce results similar to those found in
+\cite{Bongard:2011p3716}, and attempt to draw clearer boundaries
+between what kind of morphological change can accelerate evolution.
+Still it may be instructive to determine where all the evaluations
+were spent.
+
+\begin{figure}
+  \centering
+  \includegraphics[scale=1]{fig/evals-t1-l0.pdf} 
+  \caption[Total evaluations for task 1, fully
+    connected]{\label{fig:evals-t1-l0}This chart shows the mean number
+    of evaluations over 100 independent trials (100 * 6 runs) for each
+    of the morphological variations on task 1 with a fully connected
+    controller.  The bar represents the standard error.  The stars
+    indicate whether the difference in mean (e.g., $Ap$, $Ao$) is a
+    statistically significant compared to the control (e.g., $An$)
+    according to a Mann--Whitney U test.  }
+\end{figure}
+
+Figure~\ref{fig:step-evals-t1-l0} shows the mean number of evaluations
+per phase for the same set of results shown in
+Figure~\ref{fig:evals-t1-l0}.  Phase 1 and 2 both complete well before
+the only phase in $An$ and $Bn$, the baseline each are compared
+against.  Phase 3, however, takes a majority of the evaluations for
+most of the morphological variations.  Why is that?  Examining the
+most extreme case $Bp$ may be instructive.
+
+\begin{figure}
+  \centering
+  \includegraphics[scale=1]{fig/step-evals-t1-l0.pdf} 
+  \caption[Evaluations by phase for task 1, fully
+    connected]{\label{fig:step-evals-t1-l0}This chart shows the mean
+    number of evaluations per phase over 100 independent trials (100 *
+    6 runs) for each of the morphological variations on task 1 with a
+    fully connected controller.  }
+\end{figure}
+
+
+Figure~\ref{fig:morph-var-b} shows that phase 3 of $Bp$ changes both
+the tail $l_t$ and the feet $l_f$, essentially swaping the values.
+Perhaps the transition from the tail being the main source of
+locomotive power to the feet is the cause.  It could be that altering
+both variables simultaneously is not conducive to the kind of
+scaffolding that may be required to exhibit an acceleration of
+evolution.  That would be supported by examining phase 3 of $Ap$ which
+only alters the foot length $l_f$ and does not require as many
+evaluations.
+
+One further curiosity to note about figure~\ref{fig:steps-eval-t1-l0}
+is that phase 4 for $Ao$ and $Bo$ both require a fair amount of
+evaluations for what looks like a comparatively small change
+morphologically.  For the $Bo$ case, phase 4 appears to take as long
+as $Bn$ which suggests that the preceding phases have not accelerated
+evolution at all.  In fact, performing a Mann--Whitney U test on the
+two sets of data reveals they do not statistically differ ($p =
+0.74$).  Therefore, the morphological variation $Bo$ represents a case
+where the conditions assuredly do not accelerate evolution.
+
+Phase 4 of $Bo$ can be instructive in trying to determine what
+conditions are necessary.  Further more, it suggests a good experiment
+to determine whether any acceleration is happening: run each phase
+independent of the others with a random population and compare mean
+evaluations.  $Bn$ and phase 4 of $Bo$ are just such a case and can be
+compared directly.  In fact, the last phase of all the morphological
+variations are comparable in this way. The other cases do
+statistically differ according to the Mann--Whitney U test despite
+phase 4 of $Ao$ looking potentially close to $An$ ($p = 3.0 \times
+10^{-4}$).
+
+Examining phase 4 of $Ap$ and $Bp$ in isolation demonstrates two cases
+where the populations are primed to succeed by the preceeding phases.
+Granted the preceeding phases, especially phase 3, have made those
+gains not worthwhile commulatively, but they may be instructive yet.
+One oddity is comparing $Ap$ which only alters $l_f$ and $Bp$ which
+alters both $l_f$ and $l_t$ yet $Bp$ takes less time than $Ap$ ($p =
+8.1 \times 10^{-3}$), so the simultaneous changing of variables need
+not cause automatic concern.
+
+

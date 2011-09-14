@@ -41,9 +41,9 @@ int sim_uninit()
 int experiment_name(const char *name) 
 {
   /* Names must be in the same order as experimentNames in experiments.m. */
-  char *names[] = { "An", "Bn", "Ap", "Bp", "Ao", "Bo" };
-  int i, nameCount = 6;
-  for (i = 0; i < nameCount; i++)
+  char *names[] = { "An", "Bn", "Ap", "Bp", "Ao", "Bo", "Bq" };
+  int i, namesCount = 7;
+  for (i = 0; i < namesCount; i++)
   {
     if (strcmp(name, names[i]) == 0)
       return i + 1;

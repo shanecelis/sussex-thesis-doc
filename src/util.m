@@ -15,6 +15,13 @@ keys[a_] := a /. Rule[k_, v_] -> k
 
 values[a_] := a /. Rule[k_, v_] -> v
 
+mapThreadValues[fn_, {rules1_, rules2_}] := (
+  Assert[Complement[keys[rules1], keys[rules2]] === {}];
+  Assert[Complement[keys[rules2], keys[rules1]] === {}];
+  Map[# -> fn[# /. rules1, # /. rules2] &, keys[rules1]])
+
+mapValues[fn_, rules_] := rules /. Rule[k_, v_] :> Rule[k, fn[v]]
+
 justSymbol[s_Symbol] := s
 justSymbol[s_] := justSymbol[Head[s]]
 SetAttributes[justSymbol, Listable];

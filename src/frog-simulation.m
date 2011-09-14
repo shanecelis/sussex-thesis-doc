@@ -14,9 +14,6 @@ srt[graphic_, scaleBy_, rotateBy_, rotateAt_, translateTo_] :=
     Translate[Rotate[Scale[graphic, scaleBy], rotateBy, rotateAt], translateTo];
 
 
-tailColour = Pink;
-footColour = Nest[Lighter,Blue,2];
-bodyColour = LightGray;
 
 
 isWithinRange[{a_, b_}, x_] := 
@@ -33,14 +30,15 @@ chooseRange[range_, points_, nextRangeFunc_] :=
        chooseRange[nextRangeFunc[range], points, nextRangeFunc]]
 
 
-Options[drawFrog] = {showDistance -> False, 
+Options[drawFrog] = Join[{showDistance -> False, 
                      plotRange    -> Automatic,
                      toTarget     -> None,
                      showStart    -> False,
-                     showTarget   -> None};
+                     showTarget   -> None},
+                         Options[Graphics]];
 
 drawFrog[{t_, q1_,q2_,q3_,q4_, q5_, q6_, q7_, q8_}, r_, l_, fl_, 
-         OptionsPattern[]] := 
+         opts:OptionsPattern[]] := 
     Module[{body, tail, limb, foot5, foot6, foot7, foot8, distanceLine, 
             range, target, diskSize},
            body = Disk[{q1,q2},r 1.05 ];
@@ -87,7 +85,7 @@ drawFrog[{t_, q1_,q2_,q3_,q4_, q5_, q6_, q7_, q8_}, r_, l_, fl_,
                targetLine,
                startDisk,
                targetDisk
-                    }, PlotRange -> range, ImageSize -> imageSize]]
+                    }, FilterRules[{opts}, Options[Graphics]], PlotRange -> range, ImageSize -> imageSize]]
 
 
 (* Draw a wireframe frog. *)

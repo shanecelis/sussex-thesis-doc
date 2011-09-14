@@ -28,41 +28,9 @@ diffLinearFit[{{a_,b_},{c_,d_}}, fun_, var_] :=
        (d - b)/(c - a)]
 
 
-Options[showExperiment] = Options[Plot];
 
 
-showExperiment[phases_, timeShift_:1, opts:OptionsPattern[]] := 
-    Module[{tailGrowths, feetGrowths, tlpw,maxtime, flpw, phaseLines, visualSeparation},
-           tailGrowths = tailGrowth /. phases;
-           feetGrowths = feetGrowth /. phases;
-           visualSeparation = 0.01;
-           tlpw = Join@@MapIndexed[Function[{a,b},
-                                            Map[{timeShift, 1}(# + {b[[1]] - 1, .01})&, a]], 
-                                   tailGrowths];
-           flpw = Join@@MapIndexed[Function[{a,b},
-                                            Map[{timeShift, 1}(# + {b[[1]] - 1, -.01 })&, a]], 
-                                   feetGrowths];
-
-           maxtime =  Transpose[tlpw][[1]] //Max;
-           phaseLines = Map[{Text[Subscript["p", #],
-               (*"p" <> ToString[#], *)
-                                  {(# -.5)timeShift, 0}], 
-                             Line[{{# timeShift, -0.1}, 
-                                   {# timeShift, 1.1}}]}&, 
-                            Range[Length[phases]]];
-           Plot[{makeLinearPiecewise[tlpw][x], 
-                 makeLinearPiecewise[flpw][x]}, 
-                {x, 0, maxtime}, 
-                PlotStyle -> {{Thick, tailColour}, {Thick,footColour}}, 
-                (*PlotRange -> {Automatic, {-.1, 1.1}},*)
-                AxesOrigin -> {0,-.1},
-                Epilog -> {Dashed, phaseLines}, 
-                opts
-                (*PlotLegend -> {"tail", "foot"}, LegendPosition -> {1.1, -0.4}*)]
-          ]
-
-
-experimentNames = {An, Bn, Ap, Bp, Ao, Bo};
+experimentNames = {An, Bn, Ap, Bp, Ao, Bo, Bq};
 
 
 experimentIdeal[Bn] := {{tailGrowth -> {{0,0}, {1,0}}, feetGrowth -> {{0,1}, {1,1}}}}
@@ -85,6 +53,17 @@ experimentIdeal[Bp] := {
     {tailGrowth -> {{0,1/3}, {1,1/3}}, feetGrowth -> {{0,2/3}, {1,2/3}}},
     {tailGrowth -> {{0,0},   {1,0}},   feetGrowth -> {{0,3/3}, {1,3/3}}}
                   }
+
+experimentIdeal[Bq] := {
+    {tailGrowth -> {{0,1},   {1,1}},   feetGrowth -> {{0,0},   {1,0}}},
+    {tailGrowth -> {{0,1},   {1,3/3}}, feetGrowth -> {{0,1/3}, {1,1/3}}},
+    {tailGrowth -> {{0,2/3}, {1,2/3}}, feetGrowth -> {{0,1/3}, {1,1/3}}},
+    {tailGrowth -> {{0,2/3}, {1,2/3}}, feetGrowth -> {{0,2/3}, {1,2/3}}},
+    {tailGrowth -> {{0,1/3}, {1,1/3}}, feetGrowth -> {{0,2/3}, {1,2/3}}},
+    {tailGrowth -> {{0,1/3}, {1,1/3}},   feetGrowth -> {{0,3/3}, {1,3/3}}},
+    {tailGrowth -> {{0,0},   {1,0}},   feetGrowth -> {{0,3/3}, {1,3/3}}}
+                  }
+
 
 
 experimentIdeal[Ao] := {
@@ -163,14 +142,91 @@ experimentDiffFuncs[a_, timeShift_] :=
     Map[makeDiffLinearPiecewise, experimentPoints[a, timeShift],{2}]
 
 
+Options[showExperiment] = Join[{showTransitions -> False}, Options[Plot]];
+
+
+tadpoleFigure[tailLength_, feetLength_, q4_: 0, qf_: 0] := 
+ drawFrog[{0, 0, .5, 0, q4, qf, -qf, qf, -qf}, 1/2, tailLength 1.25, 
+  feetLength 1, showDistance ->  False, 
+  plotRange -> {1.2 {-1, 1}, 1.9 {-1, 1}}, ImageSize -> 30]
+
+showExperiment[phases_, timeShift_:1, opts:OptionsPattern[]] := 
+    Module[{tailGrowths, feetGrowths, tlpw,maxtime, flpw, phaseLines, 
+            visualSeparation, tlfun, flfun, transitions, padding},
+           tailGrowths = tailGrowth /. phases;
+           feetGrowths = feetGrowth /. phases;
+           visualSeparation = 0.02;
+           tlpw = Join@@MapIndexed[
+               Function[{a,b},
+                        Map[{timeShift, 1}(# + {b[[1]] - 1, visualSeparation})&, a]], 
+               tailGrowths];
+           flpw = Join@@MapIndexed[
+               Function[{a,b},
+                        Map[{timeShift, 1}(# + {b[[1]] - 1, -visualSeparation })&, a]], 
+               feetGrowths];
+
+           maxtime =  Transpose[tlpw][[1]] //Max;
+           phaseLines = Map[{Text[Subscript["p", #],
+               (*"p" <> ToString[#], *)
+                                  {(# -.5)timeShift, .1}], 
+                             Line[{{# timeShift, -0.1}, 
+                                   {# timeShift, 1.1}}]}&, 
+                            Range[Length[phases]]];
+           tlfun = makeLinearPiecewise[tlpw];
+           flfun = makeLinearPiecewise[flpw];
+           padding = PlotRange -> Automatic;
+           transitions = 
+           If[OptionValue[showTransitions],
+              padding = PlotRange -> {Automatic, {Automatic, 1.6}};
+              Map[Inset[tadpoleFigure[tlfun[# + .5], flfun[# + .5]], {# maxtime/Length[phases] + maxtime/(2 Length[phases]), 1.3}]&, 
+                  Range[0, Length[phases] - 1]],
+              {}];
+           Plot[{tlfun[x], 
+                 flfun[x]}, 
+                {x, 0, maxtime}, 
+                PlotStyle -> {{Thick, Dashed, tailColour}, {Thick, (*Dashed,*) footColour}}, 
+                (*PlotRange -> {Automatic, {-.1, 1.1}},*)
+                AxesOrigin -> {0,-.1},
+                Epilog -> {{Dotted, phaseLines}, transitions}, 
+                Ticks -> {Range[0, Length[phases]], {0, 1}},
+                PlotRangeClipping -> False,
+                Evaluate[padding],
+                (*AxesLabel -> {"", {lt, lf} /. labels},*)
+                Evaluate[FilterRules[{opts}, Options[Plot]]]
+                (*PlotLegend -> {"tail", "foot"}, LegendPosition -> {1.1, -0.4}*)]
+          ]
+
+
 showAllExperiments[] := 
     Module[{plots},
            plots = Map[showExperiment[experiment[#], 
                                       1, 
                                       PlotLabel -> ToString[#], 
-                                      ImageSize -> 300]&, 
+                                      ImageSize -> 250]&, 
                        experimentNames];
            Grid [Partition[plots,2,2, {1,1}, ""]]]
+
+showAExperiments[] := 
+    Module[{plots},
+           plots = Map[showExperiment[experiment[#], 
+                                      1, 
+                                      PlotLabel -> ToString[#], 
+                                      ImageSize -> 200,
+                                      showTransitions -> True]&, 
+                       
+                       {An, Ap, Ao}];
+           Grid [{plots}]]
+
+showBExperiments[] := 
+    Module[{plots},
+           plots = Map[showExperiment[experiment[#], 
+                                      1, 
+                                      PlotLabel -> ToString[#], 
+                                      ImageSize -> 200,
+                                      showTransitions -> True]&, 
+                       {Bn, Bp, Bo}];
+           Grid [{plots}]]
+
 
 
 showAllExperiments2[] := 
@@ -207,3 +263,4 @@ makeExperimentPointsWhich[a_, timeShift_, phase_] :=
             Range[0, Length[experimentPoints[a, timeShift]]]], 
         Table[-1., {pointsCount}](* {-1.}*)
              ]
+
