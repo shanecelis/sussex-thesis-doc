@@ -2,6 +2,34 @@
 
 (* ::Title:: *)
 (*Code*)
+
+expNameIndex = 1;
+taskIndex = 2;
+lobotomiseIndex = 3;
+bodyTypeIndex = 4;
+morphTypeIndex = 5;
+
+plotImageSize = 5 72; (* 5 inches *)
+
+maxEvaluations = {0, 30000};
+maxEvaluations = Automatic;
+(*maxEvaluations = {20000, 28000};*)
+statFunc = Median;
+statFunc = Mean;
+
+
+chartStyle = "DarkRainbow";
+
+noChangeColour = Nest[Lighter, Gray, 2];
+phyloChangeColour = Gray;
+ontoChangeColour = Nest[Darker, Gray, 2];
+
+chartColourRules = 
+    {An -> noChangeColour, Ap -> phyloChangeColour, Ao -> ontoChangeColour,
+     Bn -> noChangeColour, Bp -> phyloChangeColour, Bo -> ontoChangeColour,
+     Bq -> phyloChangeColour};
+
+
 importALPSGenes[filename_] := 
  Select[Import[lookupFile[filename], "Table"], Length[#] == geneCount &]
 
@@ -15,8 +43,6 @@ importGenesFromRun[resultName_, expName_, runNo_] := Module[{file},
       ToString[runNo] <> "-*.pop"]];
   importALPSGenes[file]]
 
-chartStyle = "DarkRainbow";
-
 importResultsOld[directoryName_] := Module[{files},
   files = FileNames["output.txt", {directoryName}, 3];
   combineResults[
@@ -29,14 +55,6 @@ importResults[directoryName_] := Module[{files},
    Map[{FileBaseName[DirectoryName[#, 2]] , Import[#, "Table"]} &, 
     files]]]
 
-noChangeColour = Nest[Lighter, Gray, 2];
-phyloChangeColour = Gray;
-ontoChangeColour = Nest[Darker, Gray, 2];
-
-chartColourRules = 
-    {An -> noChangeColour, Ap -> phyloChangeColour, Ao -> ontoChangeColour,
-     Bn -> noChangeColour, Bp -> phyloChangeColour, Bo -> ontoChangeColour};
-
 
 boxChartOfResults[res_String] := boxChartOfResults[importResults[res]]
 
@@ -47,15 +65,11 @@ boxChartOfResults[res_List] :=
 SetAttributes[parseDirName, Listable];
 
 
-NPorO[filename_] := Characters[ToString[parseDirName[filename][[1]]]][[2]]
+NPorO[filename_] := parseDirName[filename, 5]
 
-AorB[filename_] := Characters[ToString[parseDirName[filename][[1]]]][[1]]
+AorB[filename_] := parseDirName[filename, 4]
 
-expNameIndex = 1;
-taskIndex = 2;
-lobotomiseIndex = 3;
-bodyTypeIndex = 4;
-morphTypeIndex = 5;
+
 parseDirName[filename_String] := 
  Module[{strs},
   strs = StringCases[filename, 
@@ -71,14 +85,16 @@ chartOfResults[directoryName_String] :=
 chunk[x_, chunkSize_] := Floor[x/chunkSize] chunkSize
 
 barWithStandardError[{{xmin_, xmax_}, {ymin_, ymax_}}, y_, data_] := 
-    Module[{xmed, SE},
+    Module[{xmed, SE, maxMean},
            xmed = Mean[{xmin, xmax}];
            
            SE = data[[1,1]];
+           maxMean = data[[1,3]];
            {{Black, 
              Line[{{xmin, ymax + SE}, {xmax, ymax + SE}}],
              Line[{{xmed, ymax}, {xmed, ymax + SE}}],
-             Text[Style[data[[1,2]], Large], {xmed, chunk[ymax + 4 SE, 1000]}]
+             Text[Style[data[[1,2]], Large], {xmed, 
+                                              chunk[ymax + SE + .13 maxMean, 1000]}]
             }, 
             Rectangle[{xmin, ymin}, {xmax, ymax}]}]
 
@@ -89,30 +105,31 @@ chartLabelsHelper[dirnames_] :=
                   AorB[#],
                   ""]&, dirnames]];
 
-maxEvaluations = 25000;
+Options[chartOfResults] = {computeSigs -> True};
 
-chartOfResults[resArg_List] := 
-    Module[{means, SEs, fn, btypes, bsubtypes, sigs, data, res},
-           res = maxEvalsOfResults[Flatten[reorderResults[resArg]]];
+chartOfResults[resArg_List, opt:OptionsPattern[]] := 
+    Module[{means, SEs, fn, btypes, bsubtypes, sigs, data, res, maxMean},
+           res = maxEvalsOfResults[resArg];
            fn = Partition[#, 3]&;
-           means = N[Map[Mean,values[res]]];
+           means = N[Map[statFunc,values[res]]];
+           maxMean = Max[means];
            SEs = N[Map[standardErrorOfMean,values[res]]];
-           sigs = Sow[Map[computeSignificance, fn[res], {1}]];
+           sigs = If[OptionValue[computeSigs],
+                     Sow[Map[computeSignificance, fn[res], {1}]],
+                     {}];
            stars = sigToStars[Flatten[sigs]];
-           (*btypes = {"A", "B"};*)
            btypes = Union[Map[AorB, keys[res]]];
-           (*bsubtypes = {"n", "p", "o"};*)
-           bsubtypes = Take[Map[NPorO, keys[res]], 3];
-           data = MapThread[List, {SEs, stars}];
+           bsubtypes = Take[Map[NPorO, keys[res]], Min[Length[keys[res]],3]];
+           data = MapThread[List[#1,#2, maxMean]&, {SEs, stars}];
            BarChart[fn[MapThread[Rule, {means, data}]], 
-                    PlotRange -> {Automatic, {0, maxEvaluations}},
+                    PlotRange -> {Automatic, maxEvaluations},
                     ChartLegends -> label[bsubtypes /. labels],
                     ChartStyle -> parseDirName[keys[res], 1] /. chartColourRules, 
                     ChartLabels -> 
                     (*{None, None, label[parseDirName[keys[res],1]]] },*)
                         (*chartLabelsHelper[keys[res]], *)
            {label[btypes], label[bsubtypes,12] },
-                    PlotLabel ->  titleLabel["Total evaluations for" <> resultTitle[res]], 
+           PlotLabel ->  titleLabel["Median Evaluations for" <> resultTitle[res]], 
                     BarSpacing -> {0, 0.3},
                     ChartElementFunction -> barWithStandardError,
                     ImageSize -> plotImageSize,
@@ -120,39 +137,42 @@ chartOfResults[resArg_List] :=
                     myAxesLabel[{"Morphological Variation", "Evaluations" }]
                    ]]
 
-plotImageSize = 5 72; (* 5 inches *)
+
 
 chartStepsOfResults[resArg_List] := 
     Module[{means, SEs, fn, btypes, bsubtypes, sigs, data, res},
            res = evalsForPhasesOfResults[Flatten[reorderResults[resArg]]];
            res = mapValues[Map[cumulativeToNon,#]&,res];
            myres = res;
-           res = mapValues[N[Mean[#]]&, res];
+           res = mapValues[N[statFunc[#]]&, res];
            fn = Partition[#, 3]&;
            means = values[res];
+           maxPhases = Max[Map[Length, means]];
            (*means[[2;;3,3]] = 0;
            means[[5;;6,3]] = 0;*)
            BarChart[means, 
-                    PlotRange -> {Automatic, {0, maxEvaluations}},
+                    PlotRange -> {Automatic, maxEvaluations},
                     ChartLabels -> {label[parseDirName[keys[res],1]], None},
                     ChartStyle -> "GrayTones",
-                    ChartLegends -> label[{p[1], p[2], p[3], p[4]} /. labels],
+                    ChartLegends -> label[Map[p, Range[maxPhases]] /. labels],
                     ChartLayout -> "Stacked",
-                    PlotLabel ->  titleLabel["Evaluations by phase for" <> resultTitle[res]], 
+                    (*PlotLabel ->  
+                    titleLabel["Median Evaluations by Phase for" <> resultTitle[res]], *)
                     BarSpacing -> {0.0, 0.3}
                     (*AxesLabel -> {"Morphological Variation", "Evaluations"}*)
-                    ,myAxesLabel[{"Morphological Variation", "Evaluations" }],
+                    ,myAxesLabel[{"Morphological Variation", "Evaluations" }, {0, 0.07}],
                     ImageSize -> plotImageSize
                    ]]
-    
-myAxesLabel[{labelx_, labely_}] := 
+
+   
+myAxesLabel[{labelx_, labely_}, offset_:{0,0}] := 
     Sequence[PlotRangeClipping -> False,
-             ImagePadding -> {{Scaled[.11], Automatic}, 
-                              {Scaled[.09], Automatic}},
+             ImagePadding -> {{Scaled[.11 - .5 offset[[2]]], Automatic}, 
+                              {Scaled[.09 - offset[[1]]], Automatic}},
              Epilog -> {Text[Rotate[axesLabel[labelx],0], 
-                             Scaled[{.5, -.20}]],
+                             Scaled[{.5, -.20 + offset[[1]]}]],
                         Text[Rotate[axesLabel[labely],Pi/2], 
-                             Scaled[{-.15, .5}]]
+                             Scaled[{-.15 + offset[[2]], .5}]]
                        }]
                     
 
@@ -211,7 +231,7 @@ standardErrorOfMean[list_] :=
 
 
 reorderRules[rules_] := Module[{ordering},
-  ordering = {An, Ap, Ao, Bn, Bp, Bo};
+  ordering = {An, Ap, Ao, Bq, Bn, Bp, Bo};
   SortBy[rules, 
    Position[ordering, parseDirName[#[[1]]][[1]]][[1, 1]] &]]
 
@@ -239,10 +259,10 @@ resultTitle[res_] :=
   ks = parseDirName[First[keys[res]]];
   
   titlePieces = {(*"",*)
-    " task " <> ToString[ks[[2]]],
-    If[ks[[3]] == 1, " lobotomised", " fully connected"],
-    " body type " <> ks[[4]],
-    " morphological Var. " <> ks[[5]]};
+    " Task " <> ToString[ks[[2]]],
+    If[ks[[3]] == 1, " \nLobotomised CTRNN", " \nFully Connected CTRNN"],
+    " Body Type " <> ks[[4]],
+    " Morphological Var. " <> ks[[5]]};
   StringJoin[Riffle[Pick[titlePieces, Drop[nochange, 1], 1], ","]]]
 
 computeSignificance[res_List] := Module[{v, mtypes},
@@ -257,9 +277,11 @@ computeSignificance[res_List] := Module[{v, mtypes},
 sigToStars[sig_] := 
  Which[sig  < 0.001, "***", sig < 0.01, "**", sig < 0.05, "*", True, 
   ""]
+
+sigsToStars = sigToStars;
 SetAttributes[sigToStars, Listable]
 
-maxEvalsOfResults[res_] := mapValues[ #[[All, -1, -1]] &, res]
+maxEvalsOfResults[res_] := Flatten[reorderResults[mapValues[ #[[All, -1, -1]] &, res]]]
 
 evalsForPhasesOfResults[res_] := mapValues[ #[[All, All, -1]] &, res]
 

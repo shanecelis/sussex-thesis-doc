@@ -21,14 +21,16 @@
 
 #define MUT_PROB       0.05     // mutation probability
 #define MAX_OPT_STEPS  100000   // max optimisation steps
-#define LAYER_COUNT    15
+//#define LAYER_COUNT    15
+#define LAYER_COUNT    10
 #define POP_PER_LAYER  10
 #define POP            (LAYER_COUNT * POP_PER_LAYER)
 #define MAX_LAYER      (LAYER_COUNT - 1)
 #define BAD_FITNESS    666.0
 #define RESET_FREQ     (POP * 2)
 #define DISPLAY_FREQ   300
-#define MAX_SECONDS    (20 * 60) // 20 minutes maximum.
+//#define MAX_SECONDS    (20 * 60) // 20 minutes maximum.
+#define MAX_SECONDS    (40 * 60) // 20 minutes maximum.
 
 #define LAYER_OF_INDIV(i)    ((i) / POP_PER_LAYER)
 
@@ -45,9 +47,14 @@ int    ages[POP];
 double fitness_matrix[POP * FITNESS_COUNT];
 int    pareto_front[POP];
 int    t;                       /* optimisation step or time */
-int    max_age[LAYER_COUNT] = {1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 
+int    max_age[/*LAYER_COUNT*/] = {1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 
                                377, 610, 987, /*1597, 2584, 4181, 6765, 10946*/}; 
 
+/* The maximum possible age is a_max =  opt_steps/POP.
+   The evaluation rate is e_r =  ~21 evals/second.
+   max_evals = e_r * MAX_SECONDS
+   a_max ~= max_evals/POP.
+ */
 int    goal_indiv;
 int    phase;
 int    run_type = STANDARD_RUN;
@@ -62,6 +69,7 @@ double goal_fitness = 0.5;
 int    quiet;
 double mut_prob = MUT_PROB;
 int    reset_freq = RESET_FREQ;
+int    alps_status = ALPS_SUCC;
 
 //    experiment parameters
 char  *exp_name;
@@ -228,7 +236,7 @@ char *save_gene_for_phase_and_front(int pi /* population index */, const char *s
 void end_phase(int phase) {
   int i, fi, full_front[POP], age_max;
 
-  fprintf(table, "%d %d %d\n", phase, eval_fail_count, eval_succ_count);
+  fprintf(table, "%d %d %d\n", (alps_status == ALPS_FAIL ? -1 : 1) * phase, eval_fail_count, eval_succ_count);
 
   pareto_front_rowmajor(full_front, fitness_matrix, POP, FITNESS_COUNT);
   age_max = 0;
@@ -293,7 +301,10 @@ int run_alps(int *steps)
           LAYER_COUNT, POP_PER_LAYER, POP, mut_prob, MAX_SECONDS);
   fflush(stdout);
 
-  for (p = 0, phase = 1; p < phase_count; p++, phase = p + 1) {
+  for (p = 0, phase = 1; 
+       p < phase_count && elapsed_seconds() < MAX_SECONDS; 
+       p++, phase = p + 1) {
+
     if (p != 0) end_phase(p);
     start_phase(phase);
     for (i = 0; i < POP; i++) {
@@ -370,13 +381,16 @@ int run_alps(int *steps)
       }
     }
   }
+  if (t == MAX_OPT_STEPS || elapsed_seconds() > MAX_SECONDS) 
+    alps_status = ALPS_FAIL;
+  else
+    alps_status = ALPS_SUCC;
+
   end_phase(phase - 1);
   if (steps)
     *steps = t;
-  if (t == MAX_OPT_STEPS || elapsed_seconds() > MAX_SECONDS) 
-    return ALPS_FAIL;
-  else
-    return ALPS_SUCC;
+
+  return alps_status;
 }
 
 int main(int argc, char **argv) { 

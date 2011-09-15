@@ -450,7 +450,7 @@ evolution.  That would be supported by examining phase 3 of $Ap$ which
 only alters the foot length $l_f$ and does not require as many
 evaluations.
 
-One further curiosity to note about figure~\ref{fig:steps-eval-t1-l0}
+One further curiosity to note about figure~\ref{fig:step-evals-t1-l0}
 is that phase 4 for $Ao$ and $Bo$ both require a fair amount of
 evaluations for what looks like a comparatively small change
 morphologically.  For the $Bo$ case, phase 4 appears to take as long
@@ -480,4 +480,39 @@ alters both $l_f$ and $l_t$ yet $Bp$ takes less time than $Ap$ ($p =
 8.1 \times 10^{-3}$), so the simultaneous changing of variables need
 not cause automatic concern.
 
+\section{Results for Task 2}
 
+Task 2 was run similarly to task 1 with the exception that fewer
+trails were conducted.  The reason being that because the magnitudes
+were so different between the control and the experimental group, it
+does not require many runs to determine a statistical difference in
+the distributions.  
+
+The results for task 2 do not look dramatically different from task 1.
+One gratifying aspect is that task 2 does appear to be more difficult
+than task 1 as intended.  The median evaluations for $An$ task 1 and 2
+are 4562.5 and 6495; the distributions differ (Mann-Whitney U $=1122$,
+$n_1 = 100$, $n_2 = 32$, $\mu_1 < \mu_2$, $p = 0.0055 < 0.01$).
+
+\begin{figure}
+  \centering
+  \includegraphics[scale=1]{fig/evals-t2-l0.pdf} 
+  \caption[Total evaluations for task 2, fully
+    connected]{\label{fig:evals-t2-l0}This chart shows the mean number
+    of evaluations over 32 independent trials (32 * 6 runs) for each
+    of the morphological variations on task 2 with a fully connected
+    controller.  The bar represents the standard error.  The stars
+    indicate whether the difference in mean between the experimental
+    (e.g., $Ap$, $Ao$) is a statistically significant compared to the
+    control (e.g., $An$) according to a Mann--Whitney U test.  }
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[scale=1]{fig/step-evals-t2-l0.pdf} 
+  \caption[Evaluations by phase for task 2, fully
+    connected]{\label{fig:step-evals-t2-l0}This chart shows the mean
+    number of evaluations per phase over 32 independent trials (32 * 6
+    runs) for each of the morphological variations on task 1 with a
+    fully connected controller.  }
+\end{figure}
